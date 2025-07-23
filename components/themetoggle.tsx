@@ -1,43 +1,44 @@
-"use client";
+// app/components/ThemeToggle.tsx
+'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export default function ThemeToggle() {
-  const [darkMode, setDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
-    const stored = localStorage.getItem("theme");
-    const prefersDark = stored === "dark" || (!stored && window.matchMedia("(prefers-color-scheme: dark)").matches);
-    setDarkMode(prefersDark);
-    document.documentElement.classList.toggle("dark", prefersDark);
+    const stored = localStorage.getItem('darkMode');
+    if (stored === 'true') setIsDarkMode(true);
   }, []);
 
-  const toggleTheme = () => {
-    const newMode = !darkMode;
-    setDarkMode(newMode);
-    document.documentElement.classList.toggle("dark", newMode);
-    localStorage.setItem("theme", newMode ? "dark" : "light");
-  };
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('darkMode', 'true');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('darkMode', 'false');
+    }
+  }, [isDarkMode]);
 
   return (
     <div className="fixed bottom-4 right-4 flex flex-col items-end z-50">
-      {/* Switch */}
-      <button
-        onClick={toggleTheme}
-        className={`w-12 h-6 rounded-full p-1 flex items-center transition-colors ${
-          darkMode ? "bg-gray-700" : "bg-gray-300"
-        }`}
-        aria-label="Toggle dark mode"
-      >
-        <div
-          className={`w-4 h-4 bg-white rounded-full shadow-md transform transition-transform ${
-            darkMode ? "translate-x-6" : "translate-x-0"
-          }`}
+      <label className="flex items-center cursor-pointer">
+        <input
+          type="checkbox"
+          checked={isDarkMode}
+          onChange={() => setIsDarkMode(!isDarkMode)}
+          className="sr-only"
         />
-      </button>
-
-      {/* Popisek */}
-      <span className="text-xs text-gray-600 dark:text-gray-300 italic mt-1 pr-1 text-right">
+        <div className="w-12 h-6 bg-gray-300 rounded-full shadow-inner dark:bg-gray-600 transition">
+          <div
+            className={`w-6 h-6 bg-white rounded-full shadow transform transition-transform duration-300 ${
+              isDarkMode ? 'translate-x-6' : 'translate-x-0'
+            }`}
+          />
+        </div>
+      </label>
+      <span className="mt-2 text-xs text-gray-500 dark:text-gray-400 text-right max-w-[8rem]">
         of course you can switch to dark mode
       </span>
     </div>
