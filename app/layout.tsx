@@ -1,28 +1,24 @@
-// app/layout.tsx
-import '../styles/globals.css'
-import React, { ReactNode } from 'react'
-import Link from 'next/link'
+import './globals.css'
+import { Poppins } from 'next/font/google'
+import { DM_Serif_Display } from 'next/font/google'
 
-interface Props { children: ReactNode }
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-sans',
+})
 
-export const metadata = {
-  title: 'Monika Dvorackova - Artificial Intelligence Engineer & Consultant'
-}
+const dmSerif = DM_Serif_Display({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-display',
+})
 
-export default function RootLayout({ children }: Props) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="cs">
-      <body className="flex flex-col min-h-screen text-gray-900 bg-white">
-        <header className="py-6 px-8 border-b">
-          <h1 className="text-2xl font-bold">Monika Dvořáčková</h1>
-          <p className="text-sm text-gray-600">AI engineer & consultant</p>
-        </header>
-        <main className="flex-grow px-8 py-6">{children}</main>
-        <footer className="py-4 px-8 border-t text-sm flex space-x-4">
-          <Link href="https://github.com/monikadvorackova">GitHub</Link>
-          <Link href="https://www.linkedin.com/in/monikadvorackova">LinkedIn</Link>
-          <a href="mailto:monika@monikadvorackova.net">monika@monikadvorackova.net</a>
-        </footer>
+    <html lang="en" className={`${poppins.variable} ${dmSerif.variable}`}>
+      <body className="font-sans bg-white text-gray-900 flex flex-col min-h-screen">
+        {children}
       </body>
     </html>
   )
