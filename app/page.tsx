@@ -18,7 +18,7 @@ function CrossfadeWord({ word }: { word: string }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -4 }}
       transition={{ duration: 0.4 }}
-      className="inline-block align-baseline"
+      className="inline-block relative -top-[1px]"
     >
       {word}
     </motion.span>
@@ -100,10 +100,11 @@ export default function HomePage() {
         {/* Icons */}
         <div className="flex space-x-4 mt-6">
           <a
-            href="https://linkedin.com/in/monikadvorackova"
+            href="https://www.linkedin.com/in/monika-dvorackova/?locale=en_US"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-black text-white p-3 rounded-full hover:opacity-90"
+            className="bg-black text-white p-3 rounded-full hover:scale-110 transition-transform duration-300"
+            title="LinkedIn"
           >
             <FaLinkedin size={20} />
           </a>
@@ -111,7 +112,8 @@ export default function HomePage() {
             href="https://github.com/monikadvorackova"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-black text-white p-3 rounded-full hover:opacity-90"
+            className="bg-black text-white p-3 rounded-full hover:scale-110 transition-transform duration-300"
+            title="GitHub"
           >
             <FaGithub size={20} />
           </a>
@@ -119,14 +121,14 @@ export default function HomePage() {
             href="https://arxiv.org/search/?searchtype=author&query=Dvorackova%2C+M"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-black text-white p-3 rounded-full hover:opacity-90"
+            className="bg-black text-white p-3 rounded-full hover:scale-110 transition-transform duration-300"
             title="arXiv"
           >
             <ArxivIcon size={20} />
           </a>
           <a
             href="mailto:monika.dvorack@gmail.com"
-            className="bg-black text-white p-3 rounded-full hover:opacity-90"
+            className="bg-black text-white p-3 rounded-full hover:scale-110 transition-transform duration-300"
             title="Send Email"
           >
             <FaEnvelope size={20} />
@@ -138,12 +140,13 @@ export default function HomePage() {
           <div className="text-base md:text-lg font-normal mb-2">
             Book a consultation.
           </div>
-          <div className="pt-[1.25rem]">
+          <div className="pt-[0.3rem]">
             <a
               href="https://calendly.com/monika-dvorack/15min"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-gradient-to-r from-blue-600 to-blue-400 text-white p-3 rounded-md shadow-md hover:scale-105 hover:bg-blue-700 transition-transform duration-300"
+              className="bg-gradient-to-r from-blue-600 to-blue-400 text-white p-3 rounded-md shadow-md hover:scale-110 hover:bg-blue-700 transition-transform duration-300 animate-bounce"
+              title="Book via Calendly"
             >
               <FaCalendarAlt />
             </a>

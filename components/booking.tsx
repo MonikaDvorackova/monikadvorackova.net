@@ -14,7 +14,7 @@ export default function Booking() {
   return (
     <section className="w-full px-4 mt-10 flex flex-col items-center space-y-4">
       <a
-        href="https://www.linkedin.com/in/monikadvorackova"
+        href="https://www.linkedin.com/in/monika-dvorackova/?locale=en_US"
         target="_blank"
         rel="noopener noreferrer"
         className="text-white hover:text-gray-300 transition"
