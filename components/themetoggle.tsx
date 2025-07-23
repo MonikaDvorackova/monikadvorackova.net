@@ -7,18 +7,25 @@ export default function ThemeToggle() {
 
   useEffect(() => {
     const stored = localStorage.getItem('darkMode');
-    if (stored === 'true') setIsDarkMode(true);
+    if (stored === 'true') {
+      setIsDarkMode(true);
+      document.documentElement.classList.add('dark');
+    } else {
+      setIsDarkMode(false);
+      document.documentElement.classList.remove('dark');
+    }
   }, []);
 
-  useEffect(() => {
-    if (isDarkMode) {
+  const toggleTheme = () => {
+    const newMode = !isDarkMode;
+    setIsDarkMode(newMode);
+    localStorage.setItem('darkMode', newMode.toString());
+    if (newMode) {
       document.documentElement.classList.add('dark');
-      localStorage.setItem('darkMode', 'true');
     } else {
       document.documentElement.classList.remove('dark');
-      localStorage.setItem('darkMode', 'false');
     }
-  }, [isDarkMode]);
+  };
 
   return (
     <div className="fixed bottom-4 right-4 flex flex-col items-end z-50">
@@ -26,10 +33,10 @@ export default function ThemeToggle() {
         <input
           type="checkbox"
           checked={isDarkMode}
-          onChange={() => setIsDarkMode(!isDarkMode)}
+          onChange={toggleTheme}
           className="sr-only"
         />
-        <div className="w-12 h-6 bg-gray-300 dark:bg-gray-600 rounded-full shadow-inner transition">
+        <div className="w-12 h-6 bg-neutral-400 dark:bg-neutral-600 rounded-full shadow-inner transition-colors">
           <div
             className={`w-6 h-6 bg-white rounded-full shadow transform transition-transform duration-300 ${
               isDarkMode ? 'translate-x-6' : 'translate-x-0'
@@ -37,7 +44,7 @@ export default function ThemeToggle() {
           />
         </div>
       </label>
-      <span className="mt-2 text-xs text-black dark:text-white text-right max-w-[10rem]">
+      <span className="mt-2 text-xs text-neutral-700 dark:text-neutral-300 text-right max-w-[10rem]">
         of course you can switch to dark mode
       </span>
     </div>

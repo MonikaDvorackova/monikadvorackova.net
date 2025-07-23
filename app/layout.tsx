@@ -26,7 +26,7 @@ const dmSerif = DM_Serif_Display({
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${poppins.variable} ${dmSerif.variable}`}>
-      <body className="font-sans bg-gradient-to-br from-[#e4d6c5] to-[#c9b2a6] text-black dark:bg-neutral-900 dark:text-white flex flex-col min-h-screen relative">
+      <body className="font-sans bg-gradient-to-br from-[#e9dbce] to-[#d6c4ba] text-black dark:from-[#1e1e1e] dark:to-[#2a2a2a] dark:text-neutral-200 flex flex-col min-h-screen relative transition-colors duration-500">
         {children}
         <ThemeToggle />
       </body>
