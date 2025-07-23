@@ -1,4 +1,3 @@
-// app/components/ThemeToggle.tsx
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -30,7 +29,7 @@ export default function ThemeToggle() {
           onChange={() => setIsDarkMode(!isDarkMode)}
           className="sr-only"
         />
-        <div className="w-12 h-6 bg-gray-300 rounded-full shadow-inner dark:bg-gray-600 transition">
+        <div className="w-12 h-6 bg-gray-300 dark:bg-gray-600 rounded-full shadow-inner transition">
           <div
             className={`w-6 h-6 bg-white rounded-full shadow transform transition-transform duration-300 ${
               isDarkMode ? 'translate-x-6' : 'translate-x-0'
@@ -38,7 +37,7 @@ export default function ThemeToggle() {
           />
         </div>
       </label>
-      <span className="mt-2 text-xs text-gray-500 dark:text-gray-400 text-right max-w-[8rem]">
+      <span className="mt-2 text-xs text-black dark:text-white text-right max-w-[10rem]">
         of course you can switch to dark mode
       </span>
     </div>

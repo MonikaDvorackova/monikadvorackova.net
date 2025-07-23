@@ -1,4 +1,3 @@
-// app/layout.tsx
 import './globals.css';
 import { Poppins } from 'next/font/google';
 import { DM_Serif_Display } from 'next/font/google';
@@ -27,7 +26,7 @@ const dmSerif = DM_Serif_Display({
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${poppins.variable} ${dmSerif.variable}`}>
-      <body className="font-sans bg-neutral-100 text-gray-900 dark:bg-neutral-900 dark:text-neutral-100 flex flex-col min-h-screen relative">
+      <body className="font-sans bg-gradient-to-br from-[#e4d6c5] to-[#c9b2a6] text-black dark:bg-neutral-900 dark:text-white flex flex-col min-h-screen relative">
         {children}
         <ThemeToggle />
       </body>
