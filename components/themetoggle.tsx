@@ -7,23 +7,27 @@ export default function ThemeToggle() {
 
   useEffect(() => {
     const stored = localStorage.getItem('darkMode');
-    if (stored === 'true') {
-      setIsDarkMode(true);
-      document.documentElement.classList.add('dark');
-    } else {
-      setIsDarkMode(false);
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    const enabled = stored === 'true' || (!stored && prefersDark === false); // chceme defaultně světlo
+    setIsDarkMode(enabled);
+
+    if (enabled) {
       document.documentElement.classList.remove('dark');
+    } else {
+      document.documentElement.classList.add('dark');
     }
   }, []);
 
   const toggleTheme = () => {
     const newMode = !isDarkMode;
     setIsDarkMode(newMode);
-    localStorage.setItem('darkMode', newMode.toString());
     if (newMode) {
-      document.documentElement.classList.add('dark');
-    } else {
       document.documentElement.classList.remove('dark');
+      localStorage.setItem('darkMode', 'true');
+    } else {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('darkMode', 'false');
     }
   };
 
@@ -39,7 +43,7 @@ export default function ThemeToggle() {
         <div className="w-12 h-6 bg-neutral-400 dark:bg-neutral-600 rounded-full shadow-inner transition-colors">
           <div
             className={`w-6 h-6 bg-white rounded-full shadow transform transition-transform duration-300 ${
-              isDarkMode ? 'translate-x-6' : 'translate-x-0'
+              isDarkMode ? 'translate-x-6' : ''
             }`}
           />
         </div>
