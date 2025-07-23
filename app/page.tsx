@@ -44,7 +44,7 @@ export default function HomePage() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
-      className="min-h-screen w-full flex flex-col items-center justify-center text-center px-4 bg-gradient-to-br from-[#6b584c] via-[#8b7467] to-[#b19d91] text-neutral-800"
+      className="min-h-screen w-full flex flex-col items-center justify-center text-center px-4 bg-gradient-to-br from-[#2e221a] via-[#6d5a4c] to-[#e4d4c8] text-neutral-800"
     >
       <div className="flex flex-col items-center justify-center min-h-screen space-y-6 bg-white/20 dark:bg-white/10 backdrop-blur-sm p-4 rounded-xl shadow-lg">
         {/* Profile photo */}
@@ -64,7 +64,7 @@ export default function HomePage() {
         {/* Name */}
         <motion.h1
           whileHover={{ scale: 1.02 }}
-          className="text-2xl md:text-3xl font-bold hover:text-blue-700 transition-all"
+          className="text-3xl md:text-4xl font-bold hover:text-blue-700 transition-all"
         >
           Ing. et Ing. Mgr. Monika Dvorackova
         </motion.h1>
