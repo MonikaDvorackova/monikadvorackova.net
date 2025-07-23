@@ -25,9 +25,11 @@ export default function Booking() {
       <button
         type="button"
         onClick={() => {
-          // @ts-expect-error
+          // @ts-expect-error: external library typing mismatch
+
           if (window.Calendly) {
-            // @ts-expect-error
+            // @ts-expect-error: external library typing mismatch
+
             Calendly.initPopupWidget({
               url: 'https://calendly.com/monika-dvorack/15min',
             })
