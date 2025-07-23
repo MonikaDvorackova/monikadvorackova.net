@@ -1,4 +1,3 @@
-// app/layout.tsx
 'use client';
 
 import './globals.css';
@@ -17,6 +16,14 @@ const dmSerif = DM_Serif_Display({
   weight: '400',
   variable: '--font-display',
 });
+
+export const metadata = {
+  title: 'Monika Dvorackova',
+  description: 'AI engineer and legal tech consultant',
+  icons: {
+    icon: '/favicon.ico',
+  },
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -38,11 +45,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <html lang="en" className={`${poppins.variable} ${dmSerif.variable}`}>
-      <body className="font-sans bg-white text-gray-900 dark:bg-gray-900 dark:text-white flex flex-col min-h-screen">
+      <body className="font-sans bg-neutral-100 text-gray-900 dark:bg-neutral-900 dark:text-white flex flex-col min-h-screen relative">
         {children}
 
-        {/* Switch */}
-        <div className="fixed bottom-4 right-4 flex flex-col items-center z-50">
+        {/* Switch bottom-right */}
+        <div className="fixed bottom-4 right-4 flex flex-col items-end z-50">
           <label className="flex items-center cursor-pointer">
             <input
               type="checkbox"
@@ -52,13 +59,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             />
             <div className="w-12 h-6 bg-gray-300 rounded-full shadow-inner dark:bg-gray-600 transition">
               <div
-                className={`w-6 h-6 bg-white rounded-full shadow transform transition ${
-                  isDarkMode ? 'translate-x-6' : ''
+                className={`w-6 h-6 bg-white rounded-full shadow transform transition-transform duration-300 ${
+                  isDarkMode ? 'translate-x-6' : 'translate-x-0'
                 }`}
               />
             </div>
           </label>
-          <span className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+          <span className="mt-2 text-xs text-gray-500 dark:text-gray-400 text-right max-w-[8rem]">
             of course you can switch to dark mode
           </span>
         </div>
@@ -66,4 +73,3 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
-
