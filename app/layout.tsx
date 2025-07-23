@@ -2,7 +2,7 @@
 import './globals.css';
 import { Poppins } from 'next/font/google';
 import { DM_Serif_Display } from 'next/font/google';
-import ThemeToggle from './components/themetoggle';
+import ThemeToggle from '../components/themetoggle';
 
 export const metadata = {
   title: 'Monika Dvorackova',
