@@ -3,48 +3,38 @@
 import { useEffect, useState } from 'react';
 
 export default function ThemeToggle() {
+  const [mounted, setMounted] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  // Při načtení zkontroluje localStorage nebo systémový motiv
   useEffect(() => {
-    const stored = localStorage.getItem('darkMode');
-    if (stored !== null) {
-      setIsDarkMode(stored === 'true');
-    } else {
-      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      setIsDarkMode(systemPrefersDark);
-      localStorage.setItem('darkMode', systemPrefersDark.toString());
-    }
+    const stored = localStorage.getItem('theme');
+    const isDark = stored === 'dark'; // výchozí = světlo
+    setIsDarkMode(isDark);
+    document.documentElement.classList.toggle('dark', isDark);
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    setMounted(true);
   }, []);
 
-  // Aplikuje třídu na <html> podle aktuálního stavu
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-      document.documentElement.classList.remove('light');
-      localStorage.setItem('darkMode', 'true');
-    } else {
-      document.documentElement.classList.remove('dark');
-      document.documentElement.classList.add('light');
-      localStorage.setItem('darkMode', 'false');
-    }
-  }, [isDarkMode]);
+  const toggleTheme = () => {
+    const newTheme = isDarkMode ? 'light' : 'dark';
+    setIsDarkMode(!isDarkMode);
+    document.documentElement.classList.toggle('dark', newTheme === 'dark');
+    localStorage.setItem('theme', newTheme);
+  };
+
+  if (!mounted) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-2">
-      <span className="text-sm text-black dark:text-white">
+    <div className="fixed bottom-4 right-4 z-50 text-sm text-black dark:text-white flex flex-col items-end">
+      <span className="mb-1">
         Of course you can switch to {isDarkMode ? 'light' : 'dark'} mode
       </span>
-      <label className="relative inline-flex items-center cursor-pointer">
-        <input
-          type="checkbox"
-          checked={isDarkMode}
-          onChange={() => setIsDarkMode(!isDarkMode)}
-          className="sr-only peer"
-        />
-        <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer dark:bg-gray-700 peer-checked:bg-blue-600 transition-all" />
-        <div className="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow-md transition-transform peer-checked:translate-x-full" />
-      </label>
+      <button
+        onClick={toggleTheme}
+        className="px-4 py-2 bg-white dark:bg-black text-black dark:text-white rounded-full border border-black dark:border-white shadow-md hover:scale-105 transition-transform"
+      >
+        Toggle
+      </button>
     </div>
   );
 }
