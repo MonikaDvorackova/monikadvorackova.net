@@ -44,9 +44,9 @@ export default function HomePage() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
-      className="min-h-screen w-full flex flex-col items-center justify-center text-center px-4 bg-gradient-to-br from-[#3e3025] via-[#5e4c42] to-[#8d786a] text-neutral-800"
+      className="min-h-screen w-full flex flex-col items-center justify-center text-center px-4 bg-gradient-to-br from-[#f5f0ec] via-[#e9ddd7] to-[#d9c8c2] dark:from-[#3e3025] dark:via-[#5e4c42] dark:to-[#8d786a] text-neutral-800 dark:text-neutral-100"
     >
-      <div className="flex flex-col items-center justify-center min-h-screen space-y-6 bg-white/20 backdrop-blur-sm p-4 rounded-xl shadow-lg">
+      <div className="flex flex-col items-center justify-center min-h-screen space-y-6 bg-white/20 dark:bg-white/10 backdrop-blur-sm p-4 rounded-xl shadow-lg">
         {/* Profile photo */}
         <div className="relative w-48 h-48 mt-12 -mb-4 z-10">
           <div className="w-full h-full rounded-full overflow-hidden relative shadow-lg">
