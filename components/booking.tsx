@@ -25,9 +25,9 @@ export default function Booking() {
       <button
         type="button"
         onClick={() => {
-          // @ts-ignore
+          // @ts-expect-error
           if (window.Calendly) {
-            // @ts-ignore
+            // @ts-expect-error
             Calendly.initPopupWidget({
               url: 'https://calendly.com/monika-dvorack/15min',
             })
