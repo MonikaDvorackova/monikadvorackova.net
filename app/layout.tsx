@@ -1,7 +1,7 @@
 import './globals.css'
 import { Poppins } from 'next/font/google'
 import { DM_Serif_Display } from 'next/font/google'
-import ThemeToggle from '@/components/ThemeToggle'
+import ThemeToggle from '@/components/themetoggle'
 
 const poppins = Poppins({
   subsets: ['latin'],
