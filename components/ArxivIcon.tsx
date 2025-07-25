@@ -1,23 +1,23 @@
-import React from "react";
+import React from 'react'
 
-interface ArxivIconProps {
-  size?: number;
-  color?: string;
-}
-
-export default function ArxivIcon({ size = 20, color = "white" }: ArxivIconProps) {
+export default function ArxivIcon({
+  size = 20,
+  className = '',
+}: {
+  size?: number
+  className?: string
+}) {
   return (
     <svg
       width={size}
       height={size}
-      viewBox="0 0 225 225"
-      fill="none"
+      viewBox="0 0 24 24"
+      fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
-      <path
-        d="M112.5 0C50.4 0 0 50.4 0 112.5C0 174.6 50.4 225 112.5 225C174.6 225 225 174.6 225 112.5C225 50.4 174.6 0 112.5 0ZM169.5 162.225H143.325L112.5 112.725L81.675 162.225H55.5L97.65 99.225L55.5 38.775H81.675L112.5 84.15L143.325 38.775H169.5L127.35 99.225L169.5 162.225Z"
-        fill={color}
-      />
+      <title>arXiv</title>
+      <path d="M3 4c0-.55.45-1 1-1h16a1 1 0 011 1v16a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm13.707 2.293a1 1 0 00-1.414 0L12 9.586 8.707 6.293a1 1 0 00-1.414 1.414L10.586 11l-3.293 3.293a1 1 0 001.414 1.414L12 12.414l3.293 3.293a1 1 0 001.414-1.414L13.414 11l3.293-3.293a1 1 0 000-1.414z" />
     </svg>
-  );
+  )
 }
