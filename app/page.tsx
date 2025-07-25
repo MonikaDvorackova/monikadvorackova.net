@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { FaLinkedin, FaGithub, FaCalendarAlt, FaEnvelope } from "react-icons/fa";
-import { motion, AnimatePresence } from "framer-motion";
-import ArxivIcon from "../components/arxivicon";
+import { AnimatePresence, motion } from "framer-motion";
+import ArxivIcon from "../components/ArxivIcon";
 
 const aiWords = ["AI", "LLM Engineering", "AI Strategy", "AI Infrastructure"];
 const mlWords = ["Machine Learning", "Deep Learning", "Model Deployment"];
@@ -14,11 +14,11 @@ function CrossfadeWord({ word }: { word: string }) {
   return (
     <motion.span
       key={word}
-      initial={{ opacity: 0, y: 4 }}
+      initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -4 }}
+      exit={{ opacity: 0, y: -6 }}
       transition={{ duration: 0.4 }}
-      className="inline-block relative -top-[1px]"
+      className="inline-block"
     >
       {word}
     </motion.span>
@@ -35,44 +35,58 @@ export default function HomePage() {
       setAiIndex((i) => (i + 1) % aiWords.length);
       setMlIndex((i) => (i + 1) % mlWords.length);
       setLawIndex((i) => (i + 1) % lawWords.length);
-    }, 4500);
+    }, 4000);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <motion.section
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
-      className="min-h-screen w-full flex flex-col items-center justify-center text-center px-4
-  bg-gradient-to-br from-[#6f5848] via-[#8d7365] to-[#bba79b]
-  dark:from-[#1e1e1e] dark:via-[#2d2d2d] dark:to-[#3e3e3e]
-  text-[#2a2a2a] dark:text-[#f2f2f2]"
-    >
-      <div className="flex flex-col items-center justify-center min-h-screen space-y-6 bg-white/20 dark:bg-black/20 backdrop-blur-sm p-4 rounded-xl shadow-lg">
-        {/* Profile photo */}
-        <div className="relative w-48 h-48 mt-12 -mb-4 z-10">
-          <div className="w-full h-full rounded-full overflow-hidden relative shadow-lg">
+    <main className="relative min-h-screen w-full flex flex-col items-center justify-center text-center px-4 transition-colors duration-500 bg-background-light text-text-light dark:bg-background-dark dark:text-text-dark overflow-visible">
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="flex flex-col items-center space-y-6 z-10"
+      >
+        {/* Fotka + pramínek */}
+        <div className="relative w-48 h-48 mt-12 -mb-4">
+          <div
+            className="w-full h-full relative"
+            style={{
+              clipPath: "circle(50% at 50% 50%)",
+              overflow: "visible",
+            }}
+          >
             <Image
               src="/portrait.jpg"
-              alt="Portrait of Monika Dvorackova"
-              width={192}
-              height={192}
-              className="object-cover object-top scale-[1.15] -translate-y-6"
-              priority
+              alt="Portrait"
+              width={150}
+              height={150}
+              className="rounded-full object-cover scale-[1.18]"
+              style={{ objectPosition: "top center" }}
             />
           </div>
+
+          {/* Pramínek pod kruhem */}
+          <Image
+            src="/hair-strand.png"
+            alt="Hair Strand"
+            width={100}
+            height={40}
+            className="absolute top-[140px] left-[85px] -translate-x-1/2 transform -rotate-[7deg] scale-[1.40] z-0 blur-sm opacity-80"
+          />
         </div>
 
-        {/* Name */}
+        {/* Jméno */}
         <motion.h1
           whileHover={{ scale: 1.02 }}
-          className="text-2xl md:text-3xl font-bold hover:text-blue-700 transition-all"
+          style={{ fontSize: "1.10rem", lineHeight: "1.1" }}
+          className="font-medium hover:scale-110 transition-transform duration-300 tracking-tight"
         >
           Ing. et Ing. Mgr. Monika Dvorackova
         </motion.h1>
 
-        {/* Animated sentence */}
+        {/* Popis */}
         <div className="text-sm md:text-base font-medium max-w-xl leading-snug px-2">
           <p className="mb-0">
             I’m an engineer & consultant in{" "}
@@ -100,7 +114,7 @@ export default function HomePage() {
           </p>
         </div>
 
-        {/* Icons */}
+        {/* Ikony */}
         <div className="flex space-x-4 mt-6">
           <a
             href="https://www.linkedin.com/in/monika-dvorackova/?locale=en_US"
@@ -138,24 +152,27 @@ export default function HomePage() {
           </a>
         </div>
 
-        {/* Book a consultation */}
+        {/* Call to action */}
         <div className="mt-6 flex flex-col items-center">
-          <div className="text-base md:text-lg font-normal mb-2">
+          <div className="text-base md:text-lg font-normal mb-2 hover:scale-110 transition-transform duration-300">
             Book a consultation.
           </div>
           <div className="pt-[0.3rem]">
-            <a
-              href="https://calendly.com/monika-dvorack/15min"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-gradient-to-r from-blue-600 to-blue-400 text-white p-3 rounded-md shadow-md hover:scale-110 hover:bg-blue-700 transition-transform duration-300 animate-bounce"
-              title="Book via Calendly"
-            >
-              <FaCalendarAlt />
-            </a>
-          </div>
+          <a
+  href="https://calendly.com/monika-dvorack/15min"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="group bg-gradient-to-r from-blue-600 to-blue-400 text-white p-3 rounded-md shadow-md transition-all duration-300 rounded-md"
+  title="Book via Calendly"
+>
+  <FaCalendarAlt
+    size={20}
+    className="transition-all duration-300 group-hover:scale-110 group-hover:translate-y-1"
+  />
+</a>
+</div>
         </div>
-      </div>
-    </motion.section>
+      </motion.div>
+    </main>
   );
 }

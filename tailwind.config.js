@@ -1,12 +1,14 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class', // důležité pro přepínač
-  content: [
-    './app/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
-  ],
+  darkMode: 'class',
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'text-light': '#1a1a1a',
+        'text-dark': '#f5e9dd',
+        'background-light': '#f5e9dd',
+        'background-dark': '#121212',
+      }
+    }    
   },
   plugins: [],
 };

@@ -1,34 +1,18 @@
-import './globals.css';
-import { Poppins } from 'next/font/google';
-import { DM_Serif_Display } from 'next/font/google';
-import ThemeToggle from '../components/themetoggle';
+import "./globals.css";
 
 export const metadata = {
-  title: 'Monika Dvorackova',
-  description: 'AI engineer and legal tech consultant',
+  title: "Monika Dvořáčková",
+  description: "AI engineer and legal tech consultant",
   icons: {
-    icon: '/favicon.ico',
+    icon: "/favicon.ico",
   },
 };
 
-const poppins = Poppins({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
-  variable: '--font-sans',
-});
-
-const dmSerif = DM_Serif_Display({
-  subsets: ['latin'],
-  weight: '400',
-  variable: '--font-display',
-});
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${poppins.variable} ${dmSerif.variable}`} suppressHydrationWarning>
-      <body className="font-sans transition-colors duration-500 min-h-screen bg-gradient-to-br from-[#e7d9c8] to-[#d2bcb0] text-black dark:bg-neutral-900 dark:text-white">
+    <html lang="en" suppressHydrationWarning>
+      <body className="bg-background-light text-text-light dark:bg-background-dark dark:text-text-dark transition-colors duration-500">
         {children}
-        <ThemeToggle />
       </body>
     </html>
   );
