@@ -8,7 +8,7 @@ import ArxivIcon from "../components/ArxivIcon";
 
 const aiWords = ["AI", "LLM Engineering", "AI Strategy", "AI Infrastructure"];
 const mlWords = ["Machine Learning", "Deep Learning", "Model Deployment"];
-const lawWords = ["Lawyering", "Legal AI", "Tech Ethics", "Compliance"];
+const lawWords = ["ML & AI teaching", "Legal AI", "Tech Ethics", "Compliance"];
 
 function CrossfadeWord({ word }: { word: string }) {
   return (
@@ -113,9 +113,7 @@ export default function HomePage() {
               </span>
               .
             </p>
-            <p className="text-xs text-neutral-500 mt-2">
-              I also teach AI & ML courses every other weekend.
-            </p>
+
           </div>
 
           <div className="flex space-x-4 mt-6">
