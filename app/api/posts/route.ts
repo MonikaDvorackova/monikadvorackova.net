@@ -26,7 +26,7 @@ export async function GET() {
     posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
     return NextResponse.json(posts);
-  } catch (error) {
+  } catch (_) {
     return NextResponse.json({ error: "Error reading posts" }, { status: 500 });
   }
 }

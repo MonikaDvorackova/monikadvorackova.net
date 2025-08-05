@@ -40,8 +40,13 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen bg-background-light text-text-light dark:bg-background-dark dark:text-text-dark transition-colors duration-500">
-      {/* hlavní obsah s růstem */}
+    <div
+  className="flex flex-col min-h-screen text-text-light dark:text-text-dark transition-colors duration-500"
+  style={{
+    background: "linear-gradient(135deg, #e9d7cb, #d6c2b7)",
+  }}
+>
+
       <main className="flex-grow flex flex-col items-center justify-center px-4 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -3,7 +3,13 @@
 import { useState } from "react";
 import clsx from "clsx"; 
 
-export default function ClientBlog({ posts }: { posts: any[] }) {
+type Post = {
+  title: string;
+  date: string;
+};
+
+export default function ClientBlog({ posts }: { posts: Post[] }) {
+
   const displayPosts = Array(6).fill(posts).flat(); 
   const [pausedIndex, setPausedIndex] = useState<number | null>(null);
 
@@ -15,7 +21,7 @@ export default function ClientBlog({ posts }: { posts: any[] }) {
           animation: "scroll-loop 70s linear infinite",
         }}
       >
-        {displayPosts.map((post: any, idx: number) => (
+        {displayPosts.map((post: Post, idx: number) => (
           <div
             key={`${idx}-${post.title}`}
             onMouseEnter={() => setPausedIndex(idx)}

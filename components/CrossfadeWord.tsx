@@ -20,7 +20,7 @@ export default function CrossfadeWord({ word }: { word: string }) {
     }, 500); // stejná doba jako transition
 
     return () => clearTimeout(timeout);
-  }, [word]);
+  }, [word, currentWord]); // ✅ přidáno currentWord
 
   return (
     <span className="relative inline-block w-full h-full">
