@@ -1,41 +1,77 @@
-// app/blog/page.tsx
-import fs from 'fs'
-import path from 'path'
-import Link from 'next/link'
-import matter from 'gray-matter'
+"use client";
+
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import ClientBlog from "@/components/ClientBlog";
 
 interface Post {
-    slug: string
-    title: string
-    date: string
+  slug: string;
+  title: string;
+  date: string;
 }
 
+function CrossfadeWord({ word }: { word: string }) {
+  return (
+    <motion.span
+      key={word}
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -6 }}
+      transition={{ duration: 0.5 }}
+      className="inline-block"
+    >
+      {word}
+    </motion.span>
+  );
+}
+
+const blogTitles = [
+  "From Code to Compliance",
+  "Neural & Natural Law",
+  "Machines & Mandates",
+];
+
 export default function BlogPage() {
-    const postsDir = path.join(process.cwd(), 'posts')
-    const filenames = fs.readdirSync(postsDir).filter(f => /\.mdx?$/.test(f))
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [titleIndex, setTitleIndex] = useState(0);
 
-    const posts: Post[] = filenames.map(filename => {
-    const file = fs.readFileSync(path.join(postsDir, filename), 'utf8')
-    const { data } = matter(file)
-    return {
-        slug: filename.replace(/\.mdx?$/, ''),
-        title: data.title,
-        date: data.date
-    }
-    }).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  useEffect(() => {
+    fetch("/api/posts")
+      .then((res) => res.json() as Promise<Post[]>)
+      .then((data) => {
+        const unique = Array.from(new Map(data.map((p) => [p.slug, p])).values());
+        setPosts(unique);
+      });
+  }, []);
 
-    return (
-    <>
-        <h2 className="text-xl font-semibold mb-4">Blog</h2>
-        <ul className="list-disc pl-5 space-y-2">
-        {posts.map(post => (
-            <li key={post.slug}>
-            <Link href={`/blog/${post.slug}`} className="hover:underline">
-                {post.title} <span className="text-gray-500 text-sm">({post.date})</span>
-            </Link>
-            </li>
-        ))}
-        </ul>
-    </>
-    )
+  useEffect(() => {
+    const titleInterval = setInterval(() => {
+      setTitleIndex((i) => (i + 1) % blogTitles.length);
+    }, 4000);
+    return () => clearInterval(titleInterval);
+  }, []);
+
+  return (
+    <div className="min-h-screen flex flex-col justify-between bg-gradient-to-br from-[#fdf2e9] to-[#f8e9dc] text-neutral-900">
+      <main className="w-full flex flex-col items-center justify-center px-4 text-center pt-20 flex-1">
+        <div className="text-xl md:text-2xl font-semibold mb-3">
+          <AnimatePresence mode="wait">
+            <CrossfadeWord word={blogTitles[titleIndex]} />
+          </AnimatePresence>
+        </div>
+
+        <p className="text-sm italic text-neutral-600 mb-12 max-w-xl">
+          Thoughts & analysis on AI, law, and everything between.
+        </p>
+
+        <div className="w-full max-w-screen-lg">
+          <ClientBlog posts={posts} />
+        </div>
+      </main>
+
+      <footer className="w-full text-[10px] text-neutral-500 text-center pb-4">
+        © 2025 Monika Dvorackova
+      </footer>
+    </div>
+  );
 }

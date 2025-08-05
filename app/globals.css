@@ -2,38 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Google font */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-
-/* Fade-in animace */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fadeIn {
-  animation: fadeIn 1s ease-out both;
-}
-
-/* Základní styly */
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
   width: 100%;
-  background: linear-gradient(to bottom right, #e7d9c8, #d2bcb0);
-  color: #1a1a1a; /* přidáno pro viditelný text ve světlém režimu */
-  transition: background 0.5s ease, color 0.5s ease;
+  font-family: 'Inter', sans-serif;
 }
 
-/* Tmavý režim */
-html.dark, body.dark {
-  background: linear-gradient(to bottom right, #1e1e1e, #3e3e3e);
-  color: #f5e9dd; /* přidáno pro viditelný text v tmavém režimu */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+a {
+  text-decoration: none;
+}
+@keyframes scroll-loop {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-paused {
+  animation-play-state: paused !important;
 }
