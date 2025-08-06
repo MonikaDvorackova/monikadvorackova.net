@@ -8,6 +8,7 @@ interface Post {
   slug: string;
   title: string;
   date: string;
+  tags: string[];
 }
 
 function CrossfadeWord({ word }: { word: string }) {
@@ -17,7 +18,7 @@ function CrossfadeWord({ word }: { word: string }) {
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -6 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.4 }}
       className="inline-block"
     >
       {word}
@@ -54,13 +55,13 @@ export default function BlogPage() {
   return (
     <div className="min-h-screen flex flex-col justify-between bg-gradient-to-br from-[#fdf2e9] to-[#f8e9dc] text-neutral-900">
       <main className="w-full flex flex-col items-center justify-center px-4 text-center pt-20 flex-1">
-        <div className="text-xl md:text-2xl font-semibold mb-3">
+        <div className="text-base md:text-lg font-medium mb-2 min-h-[1.75rem]">
           <AnimatePresence mode="wait">
             <CrossfadeWord word={blogTitles[titleIndex]} />
           </AnimatePresence>
         </div>
 
-        <p className="text-sm italic text-neutral-600 mb-12 max-w-xl">
+        <p className="text-sm italic text-neutral-600 mb-10">
           Thoughts & analysis on AI, law, and everything between.
         </p>
 

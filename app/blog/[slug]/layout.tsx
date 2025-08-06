@@ -1,3 +1,5 @@
+// app/blog/[slug]/layout.tsx
+
 import fs from "fs/promises";
 import path from "path";
 import matter from "gray-matter";
@@ -28,9 +30,7 @@ export async function generateMetadata({
   params: { slug: string };
 }): Promise<Metadata> {
   const title = await getPostTitle(params.slug);
-  return {
-    title,
-  };
+  return { title };
 }
 
 export default function BlogPostLayout({
@@ -38,5 +38,10 @@ export default function BlogPostLayout({
 }: {
   children: ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    // Tento wrapper se použije jen pro /blog/[slug] stránky:
+    <div className="px-4 sm:px-6 lg:px-8">
+      <div className="max-w-3xl mx-auto">{children}</div>
+    </div>
+  );
 }

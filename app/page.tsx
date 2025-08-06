@@ -116,64 +116,63 @@ export default function HomePage() {
 
           </div>
 
-          <div className="flex space-x-4 mt-6">
-            <a
-              href="https://www.linkedin.com/in/monika-dvorackova/?locale=en_US"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="LinkedIn"
-            >
-              <FaLinkedin
-                size={20}
-                className="text-blue-600 hover:scale-110 transition-transform duration-300"
-              />
-            </a>
-            <a
-              href="https://github.com/monikadvorackova"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="GitHub"
-            >
-              <FaGithub
-                size={20}
-                className="text-blue-600 hover:scale-110 transition-transform duration-300"
-              />
-            </a>
-            <a
-              href="https://arxiv.org/search/?searchtype=author&query=Dvorackova%2C+M"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="arXiv"
-            >
-              <ArxivIcon
-                size={20}
-                className="text-blue-600 hover:scale-110 transition-transform duration-300"
-              />
-            </a>
-            <a
-              href="mailto:monika.dvorack@gmail.com"
-              title="Send Email"
-            >
-              <FaEnvelope
-                size={20}
-                className="text-blue-600 hover:scale-110 transition-transform duration-300"
-              />
-            </a>
-            <a
-              href="/blog"
-              title="Blog"
-            >
-              <FaFileAlt
-                size={20}
-                className="text-blue-600 hover:scale-110 transition-transform duration-300"
-              />
-            </a>
-          </div>
+          <div className="flex items-center justify-center gap-4 mt-6">
+  <a
+    href="https://www.linkedin.com/in/monika-dvorackova/?locale=en_US"
+    target="_blank"
+    rel="noopener noreferrer"
+    title="LinkedIn"
+  >
+    <FaLinkedin
+      size={20}
+      className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle"
+    />
+  </a>
+  <a
+    href="https://github.com/monikadvorackova"
+    target="_blank"
+    rel="noopener noreferrer"
+    title="GitHub"
+  >
+    <FaGithub
+      size={20}
+      className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle"
+    />
+  </a>
+  <a
+    href="https://arxiv.org/search/?searchtype=author&query=Dvorackova%2C+M"
+    target="_blank"
+    rel="noopener noreferrer"
+    title="arXiv"
+  >
+    <ArxivIcon
+      size={20}
+      className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle"
+    />
+  </a>
+  <a href="mailto:monika.dvorack@gmail.com" title="Send Email">
+    <FaEnvelope
+      size={20}
+      className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle"
+    />
+  </a>
+  <a href="/blog" title="Blog">
+  <FaFileAlt
+  style={{ width: "18px", height: "16px", marginTop: "2px" }}
+  className="text-blue-600 hover:scale-110 transition-transform duration-300"
+/>
+
+
+  </a>
+</div>
 
           <div className="mt-6 flex flex-col items-center">
-            <div className="text-base md:text-lg font-normal mb-2 hover:scale-110 transition-transform duration-300">
-              Book a consultation.
-            </div>
+          <div className="text-base md:text-lg font-normal mb-2 hover:scale-110 transition-transform duration-300 translate-y-[6px]">
+  Book a consultation.
+</div>
+
+
+
             <div className="pt-[0.3rem]">
               <a
                 href="https://calendly.com/monika-dvorack/15min"
@@ -184,7 +183,7 @@ export default function HomePage() {
               >
                 <FaCalendarAlt
                   size={20}
-                  className="text-blue-600 transition-all duration-300 group-hover:scale-110 group-hover:translate-y-1"
+                  className="text-blue-600 transition-all duration-300 group-hover:scale-110 group-hover:translate-y-1 translate-y-[8px]"
                 />
               </a>
             </div>

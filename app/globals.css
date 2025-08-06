@@ -21,6 +21,10 @@ html, body {
 a {
   text-decoration: none;
 }
+/* globals.css */
+
+/* globals.css */
+
 @keyframes scroll-loop {
   0% {
     transform: translateX(0%);
@@ -30,6 +34,51 @@ a {
   }
 }
 
+.animate-scroll-loop {
+  animation: scroll-loop 60s linear infinite;
+  will-change: transform;
+}
+
 .animate-paused {
   animation-play-state: paused !important;
 }
+
+/* Scrollbar hidden */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+
+a {
+  text-decoration: none;
+}
+
+/* Vynucené modré zobrazení pro kalendář i datum */
+.calendar-icon,
+.calendar-icon * {
+  color: #4f46e5 !important;    /* indigo-600 */
+  stroke: #4f46e5 !important;   /* pro lucide-react ikony */
+}
+
+/* Vynucené odsazení obsahu článku */
+.article-content {
+  padding-left: 1rem !important;   /* px-4 */
+  padding-right: 1rem !important;
+}
+@media (min-width: 640px) {
+  .article-content {
+    padding-left: 1.5rem !important; /* sm:px-6 */
+    padding-right: 1.5rem !important;
+  }
+}
+@media (min-width: 1024px) {
+  .article-content {
+    padding-left: 2rem !important;   /* lg:px-8 */
+    padding-right: 2rem !important;
+  }
+}
+

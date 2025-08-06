@@ -5,29 +5,31 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx}',
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  darkMode: 'class', // dark režim aktivovaný přes <html class="dark">
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        'text-light': '#1a1a1a',
-        'text-dark': '#f5e9dd',
-        'background': '#fd1e7',
-        'background-light': '#f5e9dd',
-        'background-dark': '#121212',
+        beige: '#f5e7df',
       },
       animation: {
-        'slide-in': 'slideIn 1s ease-out',
+        'fade-in': 'fadeIn 1s ease-out forwards',
+        'scroll-loop': 'scrollLoop 30s linear infinite',
       },
       keyframes: {
-        slideIn: {
-          '0%': { transform: 'translateX(-20px)', opacity: 0 },
-          '100%': { transform: 'translateX(0)', opacity: 1 },
+        fadeIn: {
+          '0%': { opacity: 0, transform: 'translateY(-10px)' },
+          '100%': { opacity: 1, transform: 'translateY(0)' },
+        },
+        scrollLoop: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
         },
       },
       fontFamily: {
         serif: ['"Playfair Display"', 'serif'],
+        sans: ['Inter', 'sans-serif'],
       },
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')],
 };
