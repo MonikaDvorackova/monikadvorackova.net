@@ -7,7 +7,6 @@ import type { Metadata } from "next";
 import matter from "gray-matter";
 import React from "react";
 import Markdown from "react-markdown";
-import { FaCalendarAlt } from "react-icons/fa";
 import ArticleHeader from "@/components/ArticleHeader";
 
 interface PostMeta {
