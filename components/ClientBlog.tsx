@@ -47,37 +47,25 @@ export default function ClientBlog({ posts }: { posts: Post[] }) {
             }}
           >
             <div className="flex justify-between items-end">
-              {/* Zobrazit pouze první štítek */}
-              {post.tags?.[0] ? (
+              {post.tags?.[0] && (
                 <Link
                   href={`/tags/${encodeURIComponent(post.tags[0])}`}
                   aria-label={`View all posts with tag: ${post.tags[0]}`}
+                  className="bg-[#004cff] text-white px-2 py-0.5 text-[10px] font-semibold rounded mr-1"
                 >
-                  <span
-                    style={{
-                      backgroundColor: "#004cff",
-                      color: "#ffffff",
-                      padding: "2px 6px",
-                      fontSize: 10,
-                      fontWeight: 600,
-                      borderRadius: 4,
-                      marginRight: 4,
-                    }}
-                  >
-                    {post.tags[0]}
-                  </span>
+                  {post.tags[0]}
                 </Link>
-              ) : (
-                <span />
               )}
 
               <span className="text-[10px] text-black/60">{post.date}</span>
             </div>
 
-            <Link href={`/blog/${post.slug}`} aria-label={`Open blog post: ${post.title}`}>
-              <div className="text-[11px] font-semibold leading-snug mt-1 whitespace-normal">
-                {post.title}
-              </div>
+            <Link
+              href={`/blog/${post.slug}`}
+              aria-label={`Open blog post: ${post.title}`}
+              className="text-[11px] font-semibold leading-snug mt-1 whitespace-normal"
+            >
+              {post.title}
             </Link>
           </div>
         ))}
