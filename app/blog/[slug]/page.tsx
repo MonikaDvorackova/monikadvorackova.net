@@ -1,5 +1,3 @@
-// app/blog/[slug]/page.tsx
-
 import fs from "fs/promises";
 import path from "path";
 import { notFound } from "next/navigation";
@@ -8,6 +6,7 @@ import matter from "gray-matter";
 import React from "react";
 import Markdown from "react-markdown";
 import ArticleHeader from "@/components/ArticleHeader";
+import Link from "next/link";
 
 interface PostMeta {
   title: string;
@@ -16,7 +15,7 @@ interface PostMeta {
 }
 
 interface Props {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }
 
 export const dynamic = "force-dynamic";
@@ -32,7 +31,7 @@ async function getPostRaw(slug: string) {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug } = params;
   const raw = await getPostRaw(slug);
   if (raw) {
     const data = matter(raw).data as PostMeta;
@@ -42,7 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function BlogPostPage({ params }: Props) {
-  const { slug } = await params;
+  const { slug } = params;
   const raw = await getPostRaw(slug);
   if (!raw) notFound();
 
@@ -56,33 +55,25 @@ export default async function BlogPostPage({ params }: Props) {
           <ArticleHeader />
           <hr className="border-gray-200 dark:border-gray-700 my-8" />
 
-{/* datum a štítky */}
-<div className="flex flex-col items-center mt-8 mb-6 gap-10">
-  {/* kalendář + datum */}
-  <div className="flex items-center gap-10">
-    <span className="text-xs text-indigo-600 gap-10">{meta.date}</span>
-  </div>
+          {/* datum a štítky */}
+          <div className="flex flex-col items-center mt-8 mb-6 gap-10">
+            {/* kalendář + datum */}
+            <div className="flex items-center gap-10">
+              <span className="text-xs text-indigo-600">{meta.date}</span>
+            </div>
 
-  {/* štítky */}
-  <div className="flex flex-wrap justify-center gap-x-3 gap-y-2">
-    {(data.tags || []).map((tag: string) => (
-      <span
-        key={tag}
-        style={{
-          backgroundColor: "#004cff",
-          color: "#ffffff",
-          padding: "4px 10px",
-          fontSize: 10,
-          fontWeight: 600,
-          borderRadius: 8,
-        }}
-      >
-        {tag}
-      </span>
-    ))}
-  </div>
-</div>
-
+            {/* hlavní štítek */}
+            {meta.tags && meta.tags.length > 0 && (
+              <div className="flex justify-center">
+                <Link
+                  href={`/blog/tag/${encodeURIComponent(meta.tags[0])}`}
+                  className="bg-blue-600 text-white px-3 py-1 text-[10px] font-semibold rounded-md hover:bg-blue-700 transition-colors"
+                >
+                  {meta.tags[0]}
+                </Link>
+              </div>
+            )}
+          </div>
 
           <main>
             <h1 style={{ fontWeight: 300, fontSize: "1.875rem", marginBottom: "1.5rem", color: "#111827" }}>
