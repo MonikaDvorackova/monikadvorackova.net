@@ -2,7 +2,14 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { FaLinkedin, FaGithub, FaCalendarAlt, FaEnvelope, FaFileAlt } from "react-icons/fa";
+import Link from "next/link"; // <== Přidán import
+import {
+  FaLinkedin,
+  FaGithub,
+  FaCalendarAlt,
+  FaEnvelope,
+  FaFileAlt,
+} from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
 import ArxivIcon from "../components/ArxivIcon";
 
@@ -41,12 +48,11 @@ export default function HomePage() {
 
   return (
     <div
-  className="flex flex-col min-h-screen text-text-light dark:text-text-dark transition-colors duration-500"
-  style={{
-    background: "linear-gradient(135deg, #e9d7cb, #d6c2b7)",
-  }}
->
-
+      className="flex flex-col min-h-screen text-text-light dark:text-text-dark transition-colors duration-500"
+      style={{
+        background: "linear-gradient(135deg, #e9d7cb, #d6c2b7)",
+      }}
+    >
       <main className="flex-grow flex flex-col items-center justify-center px-4 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -113,65 +119,60 @@ export default function HomePage() {
               </span>
               .
             </p>
-
           </div>
 
           <div className="flex items-center justify-center gap-4 mt-6">
-  <a
-    href="https://www.linkedin.com/in/monika-dvorackova/?locale=en_US"
-    target="_blank"
-    rel="noopener noreferrer"
-    title="LinkedIn"
-  >
-    <FaLinkedin
-      size={20}
-      className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle"
-    />
-  </a>
-  <a
-    href="https://github.com/monikadvorackova"
-    target="_blank"
-    rel="noopener noreferrer"
-    title="GitHub"
-  >
-    <FaGithub
-      size={20}
-      className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle"
-    />
-  </a>
-  <a
-    href="https://arxiv.org/search/?searchtype=author&query=Dvorackova%2C+M"
-    target="_blank"
-    rel="noopener noreferrer"
-    title="arXiv"
-  >
-    <ArxivIcon
-      size={20}
-      className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle"
-    />
-  </a>
-  <a href="mailto:monika.dvorack@gmail.com" title="Send Email">
-    <FaEnvelope
-      size={20}
-      className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle"
-    />
-  </a>
-  <a href="/blog" title="Blog">
-  <FaFileAlt
-  style={{ width: "18px", height: "16px", marginTop: "2px" }}
-  className="text-blue-600 hover:scale-110 transition-transform duration-300"
-/>
-
-
-  </a>
-</div>
+            <a
+              href="https://www.linkedin.com/in/monika-dvorackova/?locale=en_US"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="LinkedIn"
+            >
+              <FaLinkedin
+                size={20}
+                className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle"
+              />
+            </a>
+            <a
+              href="https://github.com/monikadvorackova"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="GitHub"
+            >
+              <FaGithub
+                size={20}
+                className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle"
+              />
+            </a>
+            <a
+              href="https://arxiv.org/search/?searchtype=author&query=Dvorackova%2C+M"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="arXiv"
+            >
+              <ArxivIcon
+                size={20}
+                className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle"
+              />
+            </a>
+            <a href="mailto:monika.dvorack@gmail.com" title="Send Email">
+              <FaEnvelope
+                size={20}
+                className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle"
+              />
+            </a>
+            <Link href="/blog" title="Blog">
+              <FaFileAlt
+                style={{ width: "18px", height: "16px", marginTop: "2px" }}
+                className="text-blue-600 hover:scale-110 transition-transform duration-300"
+              />
+            </Link>
+          </div>
 
           <div className="mt-6 flex flex-col items-center">
-          <div className="text-base md:text-lg font-normal mb-2 hover:scale-110 transition-transform duration-300 translate-y-[6px]">
-  Book a consultation.
-</div>
-
-
+            <div className="text-base md:text-lg font-normal mb-2 hover:scale-110 transition-transform duration-300 translate-y-[6px]">
+              Book a consultation.
+            </div>
 
             <div className="pt-[0.3rem]">
               <a
@@ -197,4 +198,3 @@ export default function HomePage() {
     </div>
   );
 }
-
