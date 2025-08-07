@@ -4,14 +4,11 @@ import matter from "gray-matter";
 import { Metadata } from "next";
 import { ReactNode } from "react";
 
-type LayoutProps = {
-  children: ReactNode;
-  params: { slug: string }; 
-};
-
 export async function generateMetadata({
   params,
-}: Pick<LayoutProps, "params">): Promise<Metadata> {
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
   const postsDir = path.join(process.cwd(), "posts");
   const mdPath = path.join(postsDir, `${params.slug}.md`);
   const mdxPath = path.join(postsDir, `${params.slug}.mdx`);
@@ -27,7 +24,11 @@ export async function generateMetadata({
   return { title: data.title || params.slug };
 }
 
-export default function BlogPostLayout({ children }: { children: ReactNode }) {
+export default function BlogPostLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">{children}</div>
