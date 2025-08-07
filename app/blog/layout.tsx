@@ -1,42 +1,11 @@
-import fs from "fs/promises";
-import path from "path";
-import matter from "gray-matter";
-import { Metadata } from "next";
+// app/blog/layout.tsx
+
 import { ReactNode } from "react";
 
-async function getPostTitle(slug: string): Promise<string> {
-  try {
-    const postsDir = path.join(process.cwd(), "posts");
-    const mdPath = path.join(postsDir, `${slug}.md`);
-    const mdxPath = path.join(postsDir, `${slug}.mdx`);
-    let file: string;
-    try {
-      file = await fs.readFile(mdPath, "utf-8");
-    } catch {
-      file = await fs.readFile(mdxPath, "utf-8");
-    }
-    const { data } = matter(file);
-    return data.title || slug;
-  } catch {
-    return slug;
-  }
-}
-
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
-  const title = await getPostTitle(params.slug);
-  return {
-    title,
-  };
-}
-
-export default function BlogPostLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
-  return <>{children}</>;
+export default function BlogLayout({ children }: { children: ReactNode }) {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-[#fdf2e9] to-[#f8e9dc] text-neutral-900">
+      {children}
+    </div>
+  );
 }
