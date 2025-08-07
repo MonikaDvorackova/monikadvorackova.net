@@ -1,20 +1,22 @@
-// app/blog/[slug]/layout.tsx
-
 import fs from "fs/promises";
 import path from "path";
 import matter from "gray-matter";
 import { Metadata } from "next";
 import { ReactNode } from "react";
 
-
-export async function generateMetadata({
-  params,
-}: {
+type LayoutProps = {
   params: { slug: string };
-}): Promise<Metadata> {
+  children: ReactNode;
+};
+
+export async function generateMetadata(
+  props: LayoutProps
+): Promise<Metadata> {
+  const slug = props.params.slug;
+
   const postsDir = path.join(process.cwd(), "posts");
-  const mdPath = path.join(postsDir, `${params.slug}.md`);
-  const mdxPath = path.join(postsDir, `${params.slug}.mdx`);
+  const mdPath = path.join(postsDir, `${slug}.md`);
+  const mdxPath = path.join(postsDir, `${slug}.mdx`);
   let file: string;
 
   try {
@@ -24,9 +26,8 @@ export async function generateMetadata({
   }
 
   const { data } = matter(file);
-  return { title: data.title || params.slug };
+  return { title: data.title || slug };
 }
-
 
 export default function BlogPostLayout({ children }: { children: ReactNode }) {
   return (
