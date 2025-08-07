@@ -58,7 +58,7 @@ export default async function BlogPostPage({ params }: Props) {
           {/* datum a štítky */}
           <div className="flex flex-col items-center mt-8 mb-6 gap-10">
             {/* kalendář + datum */}
-            <div className="flex items-center gap-10">
+            <div className="flex items-center gap-2">
               <span className="text-xs text-indigo-600">{meta.date}</span>
             </div>
 
@@ -76,7 +76,14 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
 
           <main>
-            <h1 style={{ fontWeight: 300, fontSize: "1.875rem", marginBottom: "1.5rem", color: "#111827" }}>
+            <h1
+              style={{
+                fontWeight: 300,
+                fontSize: "1.875rem",
+                marginBottom: "1.5rem",
+                color: "#111827",
+              }}
+            >
               {meta.title}
             </h1>
             <article style={{ textAlign: "justify", lineHeight: 1.75 }}>
@@ -95,7 +102,14 @@ export default async function BlogPostPage({ params }: Props) {
             </article>
           </main>
 
-          <footer style={{ fontSize: "0.625rem", textAlign: "center", padding: "2rem 0", color: "#6B7280" }}>
+          <footer
+            style={{
+              fontSize: "0.625rem",
+              textAlign: "center",
+              padding: "2rem 0",
+              color: "#6B7280",
+            }}
+          >
             © 2025 Monika Dvorackova
           </footer>
         </div>
