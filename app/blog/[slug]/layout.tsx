@@ -5,18 +5,16 @@ import { Metadata } from "next";
 import { ReactNode } from "react";
 
 type LayoutProps = {
-  params: { slug: string };
   children: ReactNode;
+  params: { slug: string }; 
 };
 
-export async function generateMetadata(
-  props: LayoutProps
-): Promise<Metadata> {
-  const slug = props.params.slug;
-
+export async function generateMetadata({
+  params,
+}: Pick<LayoutProps, "params">): Promise<Metadata> {
   const postsDir = path.join(process.cwd(), "posts");
-  const mdPath = path.join(postsDir, `${slug}.md`);
-  const mdxPath = path.join(postsDir, `${slug}.mdx`);
+  const mdPath = path.join(postsDir, `${params.slug}.md`);
+  const mdxPath = path.join(postsDir, `${params.slug}.mdx`);
   let file: string;
 
   try {
@@ -26,7 +24,7 @@ export async function generateMetadata(
   }
 
   const { data } = matter(file);
-  return { title: data.title || slug };
+  return { title: data.title || params.slug };
 }
 
 export default function BlogPostLayout({ children }: { children: ReactNode }) {
