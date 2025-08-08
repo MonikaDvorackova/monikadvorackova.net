@@ -12,7 +12,8 @@ type Post = {
 };
 
 export default function ClientBlog({ posts }: { posts: Post[] }) {
-  const displayPosts = Array(6).fill(posts).flat();
+  // Vytvoříme mnohem více duplikátů pro skutečně plynulý scroll
+  const displayPosts = Array(10).fill(posts).flat(); // 10 sad postů
   const [paused, setPaused] = useState(false);
 
   return (
@@ -30,15 +31,15 @@ export default function ClientBlog({ posts }: { posts: Post[] }) {
             onMouseLeave={() => setPaused(false)}
             className="relative rounded-2xl transition-transform duration-300 hover:scale-[1.03] hover:shadow-[0_4px_20px_rgba(0,0,0,0.25)]"
             style={{
-              width: 200,
-              height: 60,
+              width: 250,
+              height: 80,
               marginRight: 24,
               backgroundColor: "rgba(255,255,255,0.6)",
               color: "#000000",
               border: "1px solid rgba(0, 42, 255, 0.1)",
               boxShadow: "inset 0 0 0 1px rgba(8, 28, 244, 0.05)",
               flexShrink: 0,
-              padding: 12,
+              padding: 16,
               backdropFilter: "blur(6px)",
               display: "flex",
               flexDirection: "column",
@@ -52,6 +53,7 @@ export default function ClientBlog({ posts }: { posts: Post[] }) {
                   href={`/tags/${encodeURIComponent(post.tags[0])}`}
                   aria-label={`View all posts with tag: ${post.tags[0]}`}
                   className="bg-[#004cff] text-white px-2 py-0.5 text-[10px] font-semibold rounded mr-1"
+                  style={{ color: 'white' }}
                 >
                   {post.tags[0]}
                 </Link>

@@ -10,6 +10,7 @@ html, body {
   font-family: 'Inter', sans-serif;
 }
 
+/* Scrollbar hidden */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -21,9 +22,6 @@ html, body {
 a {
   text-decoration: none;
 }
-/* globals.css */
-
-/* globals.css */
 
 @keyframes scroll-loop {
   0% {
@@ -35,26 +33,15 @@ a {
 }
 
 .animate-scroll-loop {
-  animation: scroll-loop 60s linear infinite;
+  animation: scroll-loop 120s linear infinite;
+  animation-delay: 0s;
+  animation-fill-mode: both;
+  animation-play-state: running;
   will-change: transform;
 }
 
 .animate-paused {
   animation-play-state: paused !important;
-}
-
-/* Scrollbar hidden */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-
-a {
-  text-decoration: none;
 }
 
 /* Vynucené modré zobrazení pro kalendář i datum */

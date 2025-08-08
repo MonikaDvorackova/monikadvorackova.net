@@ -161,20 +161,14 @@ export default function HomePage() {
                 className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle"
               />
             </a>
-            <Link href="/blog" title="Blog">
-              <FaFileAlt
-                style={{ width: "18px", height: "16px", marginTop: "2px" }}
-                className="text-blue-600 hover:scale-110 transition-transform duration-300"
-              />
-            </Link>
           </div>
 
-          <div className="mt-6 flex flex-col items-center">
+          <div className="mt-8 flex flex-col items-center">
             <div className="text-base md:text-lg font-normal mb-2 hover:scale-110 transition-transform duration-300 translate-y-[6px]">
-              Book a consultation.
+              Consultation / Articles & SaaS
             </div>
 
-            <div className="pt-[0.3rem]">
+            <div className="pt-[0.3rem] flex gap-4">
               <a
                 href="https://calendly.com/monika-dvorack/15min"
                 target="_blank"
@@ -183,10 +177,20 @@ export default function HomePage() {
                 title="Book via Calendly"
               >
                 <FaCalendarAlt
-                  size={20}
+                  size={18}
                   className="text-blue-600 transition-all duration-300 group-hover:scale-110 group-hover:translate-y-1 translate-y-[8px]"
                 />
               </a>
+              <Link 
+                href="/blog" 
+                className="group transition-all duration-300"
+                title="View Articles & SaaS"
+              >
+                <FaFileAlt
+                  size={18}
+                  className="text-blue-600 transition-all duration-300 group-hover:scale-110 group-hover:translate-y-1 translate-y-[8px]"
+                />
+              </Link>
             </div>
           </div>
         </motion.div>

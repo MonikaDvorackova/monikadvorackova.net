@@ -35,6 +35,7 @@ const blogTitles = [
 export default function BlogPage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [titleIndex, setTitleIndex] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     fetch("/api/posts")
@@ -42,6 +43,8 @@ export default function BlogPage() {
       .then((data) => {
         const unique = Array.from(new Map(data.map((p) => [p.slug, p])).values());
         setPosts(unique);
+        // Nastavíme loaded po načtení postů
+        setTimeout(() => setIsLoaded(true), 300);
       });
   }, []);
 
@@ -53,26 +56,51 @@ export default function BlogPage() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-gradient-to-br from-[#fdf2e9] to-[#f8e9dc] text-neutral-900">
+    <motion.div 
+      className="min-h-screen flex flex-col justify-between bg-gradient-to-br from-[#fdf2e9] to-[#f8e9dc] text-neutral-900"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+    >
       <main className="w-full flex flex-col items-center justify-center px-4 text-center pt-20 flex-1">
-        <div className="text-base md:text-lg font-medium mb-2 min-h-[1.75rem]">
+        <motion.div 
+          className="text-base md:text-lg font-medium mb-2 min-h-[1.75rem]"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
           <AnimatePresence mode="wait">
             <CrossfadeWord word={blogTitles[titleIndex]} />
           </AnimatePresence>
-        </div>
+        </motion.div>
 
-        <p className="text-sm italic text-neutral-600 mb-10">
+        <motion.p 
+          className="text-sm italic text-neutral-600 mb-10"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
           Thoughts & analysis on AI, law, and everything between.
-        </p>
+        </motion.p>
 
-        <div className="w-full max-w-screen-lg">
+        <motion.div 
+          className="w-full max-w-screen-lg"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 40 }}
+          transition={{ duration: 1, delay: 0.6 }}
+        >
           <ClientBlog posts={posts} />
-        </div>
+        </motion.div>
       </main>
 
-      <footer className="w-full text-[10px] text-neutral-500 text-center pb-4">
+      <motion.footer 
+        className="w-full text-[10px] text-neutral-500 text-center pb-4"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.8 }}
+      >
         © 2025 Monika Dvorackova
-      </footer>
-    </div>
+      </motion.footer>
+    </motion.div>
   );
 }
