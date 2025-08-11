@@ -4,9 +4,8 @@ import type { Metadata } from "next";
 import ForceFavicon from "@/components/ForceFavicon";
 
 export const metadata: Metadata = {
-  title: "Monika Dvořáčková",
+  title: "Dvorackova",
   description: "Personal website and blog",
-  // Záměrně BEZ `icons` – ať není kolize
 };
 
 export default function RootLayout({
@@ -19,7 +18,6 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      {/* ŽÁDNÉ <head> ručně – necháme to na ForceFavicon */}
       <body>
         <ForceFavicon href={href} />
         {children}
