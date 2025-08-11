@@ -27,7 +27,6 @@ async function getPostTitle(slug: string): Promise<string> {
 export async function generateMetadata(
   props: { params: Promise<{ slug: string }> }
 ): Promise<Metadata> {
-  // awaitujeme params předtím, než je použijeme
   const { slug } = await props.params;
   const title = await getPostTitle(slug);
   return { title };
