@@ -1,27 +1,16 @@
-// app/layout.tsx
-import "./globals.css";
+// app/blog/layout.tsx
 import type { Metadata } from "next";
-import ForceFavicon from "@/components/ForceFavicon";
 
 export const metadata: Metadata = {
-  title: "Dvorackova",
-  description: "Personal website and blog",
+  title: "Blog - Dvorackova",
+  description: "Blog posts and articles",
 };
 
-export default function RootLayout({
+export default function BlogLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-
-  const href = "/favicon.png?v=1001";
-
-  return (
-    <html lang="en">
-      <body>
-        <ForceFavicon href={href} />
-        {children}
-      </body>
-    </html>
-  );
+  // No <html>/<head> here, and no globals.css import (root už natahuje)
+  return <>{children}</>;
 }

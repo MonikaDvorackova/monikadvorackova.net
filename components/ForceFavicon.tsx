@@ -3,33 +3,29 @@
 
 import { useEffect } from "react";
 
-type Props = {
-  href: string;
-};
-
-export default function ForceFavicon({ href }: Props) {
+export default function ForceFavicon({ href }: { href: string }) {
   useEffect(() => {
-    const existing = document.head.querySelectorAll<HTMLLinkElement>('link[rel~="icon"]');
-    existing.forEach(el => el.parentNode?.removeChild(el));
+    const id = "force-favicon-link";
 
-
-    const link = document.createElement("link");
-    link.rel = "icon";
-    link.type = "image/png";
+    // Create or update our own <link rel="icon">
+    let link = document.head.querySelector<HTMLLinkElement>(`link#${id}`);
+    if (!link) {
+      link = document.createElement("link");
+      link.id = id;
+      link.rel = "icon";
+      link.type = "image/png";
+      document.head.appendChild(link);
+    }
     link.href = href;
-    document.head.appendChild(link);
 
-
-    const shortcut = document.createElement("link");
-    shortcut.rel = "shortcut icon";
+    // Optional: ensure there's also a shortcut icon
+    let shortcut = document.head.querySelector<HTMLLinkElement>("link[rel='shortcut icon']");
+    if (!shortcut) {
+      shortcut = document.createElement("link");
+      shortcut.rel = "shortcut icon";
+      document.head.appendChild(shortcut);
+    }
     shortcut.href = href;
-    document.head.appendChild(shortcut);
-
-
-    console.log(
-      "[ForceFavicon] links:",
-      [...document.head.querySelectorAll('link[rel~=\"icon\"]')].map(l => l.outerHTML)
-    );
   }, [href]);
 
   return null;
