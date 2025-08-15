@@ -64,7 +64,7 @@ function FixedFooterPortal() {
   );
 }
 
-/* --- Overlay s kartami --- */
+/* --- Overlay s kartami (RESPONSIVE, stejný vizuál) --- */
 function ServicesOverlay({ show }: { show: boolean }) {
   useEffect(() => {
     const prev = document.body.style.overflow;
@@ -101,24 +101,31 @@ function ServicesOverlay({ show }: { show: boolean }) {
               variants={gridVariants}
               initial="hidden"
               animate="show"
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(3, 180px)",
-                gridTemplateRows: "repeat(2, 180px)",
-                gap: "44px",
-                justifyItems: "center",
-                alignItems: "center",
-              }}
+              style={
+                {
+                  display: "grid",
+                  gridTemplateColumns: "repeat(3, var(--card))",
+                  gridTemplateRows: "repeat(2, var(--card))",
+                  gap: "var(--gap)",
+                  justifyItems: "center",
+                  alignItems: "center",
+                  // CSS proměnné – škálují grid/karty na menších displejích (vizuál beze změny)
+                  ...( {
+                    ["--card"]: "clamp(100px, 28vw, 180px)", // min→ideál→max (původně 180px)
+                    ["--gap"]:  "clamp(8px, 3.8vw, 44px)",   // min→ideál→max (původně 44px)
+                  } as any),
+                } as React.CSSProperties
+              }
             >
               {SERVICES.map(({ icon: Icon, title, desc }) => (
                 <motion.div
                   key={title}
                   variants={itemVariants}
-                  className="group flex flex-col items-center justify-center text-center rounded-[20px] border border-neutral-200 bg-white transition-transform transition-shadow duration-300 ease-out hover:scale-105 hover:shadow-lg hover:border-neutral-300"
+                  className="group flex flex-col items-center justify-center text-center rounded-[20px] border border-blue-600 bg-white transition-transform transition-shadow duration-300 ease-out hover:scale-105 hover:shadow-lg hover:border-blue-700"
                   style={{
-                    width: 180,
-                    height: 180,
-                    padding: 14,
+                    width: "var(--card)",
+                    height: "var(--card)",
+                    padding: "clamp(10px, 2.6vw, 14px)", // na mobilu se jemně zmenší, max zůstává 14px
                     boxShadow: "0 10px 26px rgba(0,0,0,0.06)",
                     backgroundColor: "#ffffff",
                   }}
@@ -152,7 +159,6 @@ export default function HomePage() {
   const [showGrid, setShowGrid] = useState(false);
   const cooldownRef = useRef(false);
 
-  // Rotace slov
   useEffect(() => {
     const id = window.setInterval(() => {
       setAiIndex((i) => (i + 1) % aiWords.length);
@@ -162,7 +168,6 @@ export default function HomePage() {
     return () => window.clearInterval(id);
   }, []);
 
-  // Ovládání gridu
   useEffect(() => {
     const COOLDOWN = 350;
     let touchStartY: number | null = null;
@@ -201,7 +206,6 @@ export default function HomePage() {
       className="flex flex-col min-h-screen text-text-light dark:text-text-dark transition-colors duration-500"
       style={{ background: "linear-gradient(135deg, #e9d7cb, #d6c2b7)" }}
     >
-      {/* HERO */}
       {!showGrid && (
         <>
           <motion.main
@@ -301,17 +305,13 @@ export default function HomePage() {
             </div>
           </motion.main>
 
-          {/* Footer pro hero */}
           <footer className="text-[10px] text-neutral-500 text-center py-4 mt-auto">
             © 2025 Monika Dvorackova
           </footer>
         </>
       )}
 
-      {/* GRID overlay */}
       <ServicesOverlay show={showGrid} />
-
-      {/* Footer pro overlay (portal → mimo animovaný overlay) */}
       {showGrid && <FixedFooterPortal />}
     </div>
   );
