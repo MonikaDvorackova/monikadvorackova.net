@@ -64,8 +64,9 @@ function FixedFooterPortal() {
   );
 }
 
-/* --- Overlay s kartami (RESPONSIVE, beze změny vizuálu) --- */
+/* --- Overlay s kartami (responsivní) --- */
 function ServicesOverlay({ show }: { show: boolean }) {
+  // zamknutí scrollu stránky při otevření
   useEffect(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = show ? "hidden" : prev || "";
@@ -74,27 +75,17 @@ function ServicesOverlay({ show }: { show: boolean }) {
     };
   }, [show]);
 
-  const ease = [0.25, 1, 0.5, 1] as const;
+  const ease: [number, number, number, number] = [0.25, 1, 0.5, 1];
   const gridVariants = {
     hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { staggerChildren: 0.14, delayChildren: 0.18, ease } },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.14, delayChildren: 0.18, ease },
+    },
   };
   const itemVariants = {
     hidden: { opacity: 0, y: 14, scale: 0.98 },
     show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.55, ease } },
-  };
-
-  // Typed CSS variables for CSSProperties (no "any")
-  const gridStyle: React.CSSProperties & { ["--card"]: string; ["--gap"]: string } = {
-    display: "grid",
-    gridTemplateColumns: "repeat(3, var(--card))",
-    gridTemplateRows: "repeat(2, var(--card))",
-    gap: "var(--gap)",
-    justifyItems: "center",
-    alignItems: "center",
-    // škálování pro mobily
-    "--card": "clamp(100px, 28vw, 180px)",
-    "--gap": "clamp(8px, 3.8vw, 44px)",
   };
 
   return (
@@ -106,38 +97,49 @@ function ServicesOverlay({ show }: { show: boolean }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5, ease }}
-          className="fixed inset-0 z-[9999] flex items-center justify-center h-screen w-screen bg-gradient-to-br from-[#fdf2e9] to-[#f8e9dc]"
+          className="fixed inset-0 z-[9999] flex items-center justify-center h-screen w-screen
+                     bg-gradient-to-br from-[#fdf2e9] to-[#f8e9dc]"
           role="dialog"
           aria-modal="true"
           aria-label="Services"
         >
-          <div className="w-full h-full flex items-center justify-center px-14">
-            <motion.div variants={gridVariants} initial="hidden" animate="show" style={gridStyle}>
-              {SERVICES.map(({ icon: Icon, title, desc }) => {
-                const cardStyle: React.CSSProperties = {
-                  width: "var(--card)",
-                  height: "var(--card)",
-                  padding: "clamp(10px, 2.6vw, 14px)",
-                  boxShadow: "0 10px 26px rgba(0,0,0,0.06)",
-                  backgroundColor: "#ffffff",
-                };
-                return (
-                  <motion.div
-                    key={title}
-                    variants={itemVariants}
-                    className="group flex flex-col items-center justify-center text-center rounded-[20px] border border-blue-600 bg-white transition-transform transition-shadow duration-300 ease-out hover:scale-105 hover:shadow-lg hover:border-blue-700"
-                    style={cardStyle}
-                  >
-                    <div className="flex flex-col items-center justify-center gap-2 w-full max-w-[150px] mx-auto">
-                      <div className="h-[30px] w-full flex items-end justify-center">
-                        <Icon size={18} color="#2563EB" className="transition-transform duration-300 group-hover:scale-110" />
-                      </div>
-                      <h3 className="font-semibold text-black text-[11px] leading-tight">{title}</h3>
-                      <p className="text-[9.5px] leading-snug text-neutral-700">{desc}</p>
+          <div className="w-full h-full flex items-center justify-center px-4 sm:px-8 md:px-14 pb-[env(safe-area-inset-bottom)]">
+            <motion.div
+              variants={gridVariants}
+              initial="hidden"
+              animate="show"
+              className="grid grid-cols-2 md:grid-cols-3 place-items-center
+                         gap-[clamp(10px,4vw,44px)]"
+            >
+              {SERVICES.map(({ icon: Icon, title, desc }) => (
+                <motion.div
+                  key={title}
+                  variants={itemVariants}
+                  className="group flex flex-col items-center justify-center text-center
+                             rounded-[20px] border border-blue-600 bg-white
+                             transition-transform transition-shadow duration-300 ease-out
+                             hover:scale-105 hover:shadow-lg hover:border-blue-700
+                             w-full max-w-[180px] aspect-square
+                             p-[clamp(10px,2.6vw,14px)]
+                             shadow-[0_10px_26px_rgba(0,0,0,0.06)]"
+                >
+                  <div className="flex flex-col items-center justify-center gap-2 w-full max-w-[150px] mx-auto">
+                    <div className="h-[30px] w-full flex items-end justify-center">
+                      <Icon
+                        size={18}
+                        color="#2563EB"
+                        className="transition-transform duration-300 group-hover:scale-110"
+                      />
                     </div>
-                  </motion.div>
-                );
-              })}
+                    <h3 className="font-semibold text-black text-[11px] leading-tight">
+                      {title}
+                    </h3>
+                    <p className="text-[9.5px] leading-snug text-neutral-700">
+                      {desc}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
             </motion.div>
           </div>
         </motion.section>
@@ -145,6 +147,7 @@ function ServicesOverlay({ show }: { show: boolean }) {
     </AnimatePresence>
   );
 }
+
 
 /* --- Stránka --- */
 export default function HomePage() {
