@@ -64,24 +64,19 @@ function FixedFooterPortal() {
   );
 }
 
-/* --- Overlay s kartami (responsivní) --- */
+/* --- Overlay s kartami (responsivní + bílá karta + modrá hrana) --- */
 function ServicesOverlay({ show }: { show: boolean }) {
-  // zamknutí scrollu stránky při otevření
   useEffect(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = show ? "hidden" : prev || "";
-    return () => {
-      document.body.style.overflow = prev || "";
-    };
+    return () => { document.body.style.overflow = prev || ""; };
   }, [show]);
 
   const ease: [number, number, number, number] = [0.25, 1, 0.5, 1];
+
   const gridVariants = {
     hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { staggerChildren: 0.14, delayChildren: 0.18, ease },
-    },
+    show: { opacity: 1, transition: { staggerChildren: 0.14, delayChildren: 0.18, ease } },
   };
   const itemVariants = {
     hidden: { opacity: 0, y: 14, scale: 0.98 },
@@ -109,27 +104,25 @@ function ServicesOverlay({ show }: { show: boolean }) {
               initial="hidden"
               animate="show"
               className="grid grid-cols-2 md:grid-cols-3 place-items-center
-                         gap-[clamp(10px,4vw,44px)]"
+                         gap-[clamp(14px,5vw,44px)]"
             >
               {SERVICES.map(({ icon: Icon, title, desc }) => (
                 <motion.div
                   key={title}
                   variants={itemVariants}
                   className="group flex flex-col items-center justify-center text-center
-                             rounded-[20px] border border-blue-600 bg-white
+                             rounded-[20px] border
+                             bg-white dark:bg-white !bg-white
                              transition-transform transition-shadow duration-300 ease-out
                              hover:scale-105 hover:shadow-lg hover:border-blue-700
                              w-full max-w-[180px] aspect-square
                              p-[clamp(10px,2.6vw,14px)]
                              shadow-[0_10px_26px_rgba(0,0,0,0.06)]"
+                  style={{ borderColor: "#2563EB", backgroundColor: "#ffffff" }}
                 >
                   <div className="flex flex-col items-center justify-center gap-2 w-full max-w-[150px] mx-auto">
                     <div className="h-[30px] w-full flex items-end justify-center">
-                      <Icon
-                        size={18}
-                        color="#2563EB"
-                        className="transition-transform duration-300 group-hover:scale-110"
-                      />
+                      <Icon size={18} color="#2563EB" className="transition-transform duration-300 group-hover:scale-110" />
                     </div>
                     <h3 className="font-semibold text-black text-[11px] leading-tight">
                       {title}
