@@ -84,7 +84,7 @@ function ServicesOverlay({ show }: { show: boolean }) {
 
   return (
     <AnimatePresence>
-      {show && (
+      {show ? (
         <motion.section
           key="services-overlay"
           initial={{ opacity: 0 }}
@@ -139,7 +139,7 @@ function ServicesOverlay({ show }: { show: boolean }) {
             </motion.div>
           </div>
         </motion.section>
-      )}
+      ) : null}
     </AnimatePresence>
   );
 }
@@ -162,35 +162,73 @@ export default function HomePage() {
     return () => window.clearInterval(id);
   }, []);
 
-  // Ovládání gridu
+  // Ovládání gridu (silně typované handlery, bez unused expressions)
   useEffect(() => {
     const COOLDOWN = 350;
     let touchStartY: number | null = null;
-    const lock = () => { cooldownRef.current = true; window.setTimeout(() => (cooldownRef.current = false), COOLDOWN); };
-    const open  = () => { if (!showGrid && !cooldownRef.current) { setShowGrid(true);  lock(); } };
-    const close = () => { if ( showGrid && !cooldownRef.current) { setShowGrid(false); lock(); } };
 
-    const onWheel = (e: WheelEvent) => { e.deltaY > 0 ? open() : close(); };
-    const onKey   = (e: KeyboardEvent) => {
-      if (["PageDown","ArrowDown"," "].includes(e.key)) open();
-      if (["PageUp","ArrowUp","Escape"].includes(e.key)) close();
+    const lock = (): void => {
+      cooldownRef.current = true;
+      window.setTimeout(() => {
+        cooldownRef.current = false;
+      }, COOLDOWN);
     };
-    const onTouchStart = (e: TouchEvent) => { touchStartY = e.touches[0].clientY; };
-    const onTouchMove  = (e: TouchEvent) => {
+
+    const open = (): void => {
+      if (!showGrid && !cooldownRef.current) {
+        setShowGrid(true);
+        lock();
+      }
+    };
+    const close = (): void => {
+      if (showGrid && !cooldownRef.current) {
+        setShowGrid(false);
+        lock();
+      }
+    };
+
+    const onWheel: (e: WheelEvent) => void = (e) => {
+      if (e.deltaY > 0) {
+        open();
+      } else {
+        close();
+      }
+    };
+
+    const onKey: (e: KeyboardEvent) => void = (e) => {
+      const k = e.key;
+      if (k === "PageDown" || k === "ArrowDown" || k === " ") {
+        open();
+      } else if (k === "PageUp" || k === "ArrowUp" || k === "Escape") {
+        close();
+      }
+    };
+
+    const onTouchStart: (e: TouchEvent) => void = (e) => {
+      touchStartY = e.touches[0]?.clientY ?? null;
+    };
+
+    const onTouchMove: (e: TouchEvent) => void = (e) => {
       if (touchStartY == null) return;
-      const dy = touchStartY - e.touches[0].clientY;
-      dy > 10 ? open() : dy < -10 && close();
+      const currentY = e.touches[0]?.clientY ?? touchStartY;
+      const dy = touchStartY - currentY;
+      if (dy > 10) {
+        open();
+      } else if (dy < -10) {
+        close();
+      }
     };
 
     window.addEventListener("wheel", onWheel, { passive: true });
     window.addEventListener("keydown", onKey);
     window.addEventListener("touchstart", onTouchStart, { passive: true });
     window.addEventListener("touchmove", onTouchMove, { passive: true });
+
     return () => {
-      window.removeEventListener("wheel", onWheel as any);
-      window.removeEventListener("keydown", onKey as any);
-      window.removeEventListener("touchstart", onTouchStart as any);
-      window.removeEventListener("touchmove", onTouchMove as any);
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
     };
   }, [showGrid]);
 
@@ -202,7 +240,7 @@ export default function HomePage() {
       style={{ background: "linear-gradient(135deg, #e9d7cb, #d6c2b7)" }}
     >
       {/* HERO */}
-      {!showGrid && (
+      {!showGrid ? (
         <>
           <motion.main
             key="hero"
@@ -306,13 +344,13 @@ export default function HomePage() {
             © 2025 Monika Dvorackova
           </footer>
         </>
-      )}
+      ) : null}
 
       {/* GRID overlay */}
       <ServicesOverlay show={showGrid} />
 
       {/* Footer pro overlay (portal → mimo animovaný overlay) */}
-      {showGrid && <FixedFooterPortal />}
+      {showGrid ? <FixedFooterPortal /> : null}
     </div>
   );
 }

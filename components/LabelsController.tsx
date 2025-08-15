@@ -16,47 +16,60 @@ export default function LabelsController() {
   useEffect(() => {
     const COOLDOWN = 350;
 
-    const lock = () => {
+    const lock = (): void => {
       lockRef.current = true;
-      window.setTimeout(() => (lockRef.current = false), COOLDOWN);
+      window.setTimeout(() => {
+        lockRef.current = false;
+      }, COOLDOWN);
     };
 
-    const onWheel = (e: WheelEvent) => {
-      if (lockRef.current) return;
-      if (e.deltaY > 0 && !open) {
+    const openOverlay = (): void => {
+      if (!open && !lockRef.current) {
         setOpen(true);
         lock();
-      } else if (e.deltaY < 0 && open) {
+      }
+    };
+
+    const closeOverlay = (): void => {
+      if (open && !lockRef.current) {
         setOpen(false);
         lock();
       }
     };
 
-    const onTouchStart = (e: TouchEvent) => {
-      touchStartYRef.current = e.touches[0].clientY;
+    const onWheel = (e: WheelEvent): void => {
+      if (lockRef.current) return;
+      if (e.deltaY > 0) {
+        openOverlay();
+      } else if (e.deltaY < 0) {
+        closeOverlay();
+      }
     };
-    const onTouchMove = (e: TouchEvent) => {
+
+    const onTouchStart = (e: TouchEvent): void => {
+      touchStartYRef.current = e.touches[0]?.clientY ?? null;
+    };
+
+    const onTouchMove = (e: TouchEvent): void => {
       if (lockRef.current) return;
       const start = touchStartYRef.current;
       if (start == null) return;
-      const dy = start - e.touches[0].clientY; // swipe up = +
-      if (dy > 8 && !open) {
-        setOpen(true);
-        lock();
-      } else if (dy < -8 && open) {
-        setOpen(false);
-        lock();
+      const currentY = e.touches[0]?.clientY ?? start;
+      const dy = start - currentY; // swipe up = +
+      if (dy > 8) {
+        openOverlay();
+      } else if (dy < -8) {
+        closeOverlay();
       }
     };
 
-    const onKey = (e: KeyboardEvent) => {
+    const onKey = (e: KeyboardEvent): void => {
       if (lockRef.current) return;
-      if ((e.key === "ArrowDown" || e.key === "PageDown" || e.key === " ") && !open) {
-        setOpen(true);
-        lock();
-      } else if ((e.key === "ArrowUp" || e.key === "PageUp" || e.key === "Escape") && open) {
-        setOpen(false);
-        lock();
+      const k = e.key;
+      if (k === "PageDown" || k === "ArrowDown" || k === " ") {
+        openOverlay();
+      } else if (k === "PageUp" || k === "ArrowUp" || k === "Escape") {
+        closeOverlay();
       }
     };
 
@@ -66,10 +79,10 @@ export default function LabelsController() {
     window.addEventListener("keydown", onKey);
 
     return () => {
-      window.removeEventListener("wheel", onWheel as any);
-      window.removeEventListener("touchstart", onTouchStart as any);
-      window.removeEventListener("touchmove", onTouchMove as any);
-      window.removeEventListener("keydown", onKey as any);
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("keydown", onKey);
     };
   }, [open]);
 
@@ -78,11 +91,11 @@ export default function LabelsController() {
   return createPortal(
     <>
       <AnimatePresence>
-        {open && <LabelsOverlay onClose={() => setOpen(false)} />}
+        {open ? <LabelsOverlay onClose={() => setOpen(false)} /> : null}
       </AnimatePresence>
 
-      {/* Nenápadný toggler – pro případ, že gesta na zařízení neodpálí eventy */}
-      {!open && (
+      {/* Nenápadný toggler – když gesta na zařízení neodpálí eventy */}
+      {!open ? (
         <button
           type="button"
           aria-label="Show focus labels"
@@ -90,7 +103,7 @@ export default function LabelsController() {
           className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[9999] h-3 w-3 rounded-full bg-blue-600/80 hover:bg-blue-600 focus:outline-none"
           title="Open labels"
         />
-      )}
+      ) : null}
     </>,
     document.body
   );
