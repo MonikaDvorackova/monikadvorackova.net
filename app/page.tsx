@@ -23,7 +23,7 @@ import {
 import ArxivIcon from "../components/ArxivIcon";
 import { createPortal } from "react-dom";
 
-
+/* --- Rotující slova v hero --- */
 const aiWords = ["AI", "LLM Engineering", "AI Strategy", "AI Infrastructure"];
 const mlWords = ["Machine Learning", "Deep Learning", "Model Deployment"];
 const lawWords = ["ML & AI teaching", "Legal AI", "Tech Ethics", "Compliance"];
@@ -43,7 +43,7 @@ function CrossfadeWord({ word }: { word: string }) {
   );
 }
 
-
+/* --- Data pro 3×2 grid --- */
 const SERVICES = [
   { icon: FiCpu,       title: "LLM Consulting",          desc: "From strategy to delivery: selection, context design, evaluation and productionization." },
   { icon: FiSearch,    title: "RAG Audits",              desc: "RAG quality audits and fixes: retrieval quality, chunking, prompts, memory and telemetry." },
@@ -53,7 +53,7 @@ const SERVICES = [
   { icon: FiBookOpen,  title: "Teaching & Advisory",     desc: "Workshops and mentoring on LLMs, RAG, MLOps, and responsible AI." },
 ] as const;
 
-
+/* --- Footer ukotvený přes portal (pro overlay režim) --- */
 function FixedFooterPortal() {
   if (typeof window === "undefined") return null;
   return createPortal(
@@ -64,8 +64,7 @@ function FixedFooterPortal() {
   );
 }
 
-// v app/page.tsx
-
+/* --- Overlay s kartami --- */
 function ServicesOverlay({ show }: { show: boolean }) {
   useEffect(() => {
     const prev = document.body.style.overflow;
@@ -76,11 +75,11 @@ function ServicesOverlay({ show }: { show: boolean }) {
   const ease = [0.25, 1, 0.5, 1] as const;
   const gridVariants = {
     hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { staggerChildren: 0.12, delayChildren: 0.12, ease } },
+    show:   { opacity: 1, transition: { staggerChildren: 0.14, delayChildren: 0.18, ease } },
   };
   const itemVariants = {
     hidden: { opacity: 0, y: 14, scale: 0.98 },
-    show:   { opacity: 1, y: 0, scale: 1, transition: { duration: 0.45, ease } },
+    show:   { opacity: 1, y: 0, scale: 1, transition: { duration: 0.55, ease } },
   };
 
   return (
@@ -91,42 +90,47 @@ function ServicesOverlay({ show }: { show: boolean }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.35, ease }}
-          className="fixed inset-0 z-[9999] flex items-center justify-center w-screen h-screen bg-gradient-to-br from-[#fdf2e9] to-[#f8e9dc] overscroll-none"
+          transition={{ duration: 0.5, ease }}
+          className="fixed inset-0 z-[9999] flex items-center justify-center h-screen w-screen bg-gradient-to-br from-[#fdf2e9] to-[#f8e9dc]"
           role="dialog"
           aria-modal="true"
           aria-label="Services"
         >
-          <div className="w-full h-full flex items-center justify-center px-4 sm:px-8">
+          <div className="w-full h-full flex items-center justify-center px-14">
             <motion.div
               variants={gridVariants}
               initial="hidden"
               animate="show"
-              className="
-                grid w-full
-                grid-cols-1 sm:grid-cols-2 lg:grid-cols-3
-                gap-4 sm:gap-5
-                max-w-md sm:max-w-2xl md:max-w-4xl xl:max-w-6xl
-              "
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(3, 180px)",
+                gridTemplateRows: "repeat(2, 180px)",
+                gap: "44px",
+                justifyItems: "center",
+                alignItems: "center",
+              }}
             >
               {SERVICES.map(({ icon: Icon, title, desc }) => (
                 <motion.div
                   key={title}
                   variants={itemVariants}
-                  className="
-                    group w-full
-                    rounded-2xl border border-neutral-200 bg-white
-                    p-4 sm:p-5
-                    shadow-sm hover:shadow-md hover:border-neutral-300
-                    transition
-                    flex items-center justify-center text-center
-                    min-h-[150px] sm:min-h-[170px]
-                  "
+                  className="group flex flex-col items-center justify-center text-center rounded-[20px] border border-neutral-200 bg-white transition-transform transition-shadow duration-300 ease-out hover:scale-105 hover:shadow-lg hover:border-neutral-300"
+                  style={{
+                    width: 180,
+                    height: 180,
+                    padding: 14,
+                    boxShadow: "0 10px 26px rgba(0,0,0,0.06)",
+                    backgroundColor: "#ffffff",
+                  }}
                 >
-                  <div className="flex flex-col items-center gap-2 max-w-[30ch]">
-                    <Icon className="h-5 w-5 text-blue-600 transition-transform duration-300 group-hover:scale-110" />
-                    <h3 className="font-semibold text-black text-sm leading-tight">{title}</h3>
-                    <p className="text-[clamp(11px,3.4vw,13px)] leading-snug text-neutral-700">
+                  <div className="flex flex-col items-center justify-center gap-2 w-full max-w-[150px] mx-auto">
+                    <div className="h-[30px] w-full flex items-end justify-center">
+                      <Icon size={18} color="#2563EB" className="transition-transform duration-300 group-hover:scale-110" />
+                    </div>
+                    <h3 className="font-semibold text-black text-[11px] leading-tight">
+                      {title}
+                    </h3>
+                    <p className="text-[9.5px] leading-snug text-neutral-700">
                       {desc}
                     </p>
                   </div>
@@ -140,7 +144,7 @@ function ServicesOverlay({ show }: { show: boolean }) {
   );
 }
 
-
+/* --- Stránka --- */
 export default function HomePage() {
   const [aiIndex, setAiIndex] = useState(0);
   const [mlIndex, setMlIndex] = useState(0);
@@ -148,7 +152,7 @@ export default function HomePage() {
   const [showGrid, setShowGrid] = useState(false);
   const cooldownRef = useRef(false);
 
-
+  // Rotace slov
   useEffect(() => {
     const id = window.setInterval(() => {
       setAiIndex((i) => (i + 1) % aiWords.length);
@@ -158,72 +162,35 @@ export default function HomePage() {
     return () => window.clearInterval(id);
   }, []);
 
+  // Ovládání gridu
   useEffect(() => {
     const COOLDOWN = 350;
     let touchStartY: number | null = null;
+    const lock = () => { cooldownRef.current = true; window.setTimeout(() => (cooldownRef.current = false), COOLDOWN); };
+    const open  = () => { if (!showGrid && !cooldownRef.current) { setShowGrid(true);  lock(); } };
+    const close = () => { if ( showGrid && !cooldownRef.current) { setShowGrid(false); lock(); } };
 
-    const lock = (): void => {
-      cooldownRef.current = true;
-      window.setTimeout(() => {
-        cooldownRef.current = false;
-      }, COOLDOWN);
+    const onWheel = (e: WheelEvent) => { e.deltaY > 0 ? open() : close(); };
+    const onKey   = (e: KeyboardEvent) => {
+      if (["PageDown","ArrowDown"," "].includes(e.key)) open();
+      if (["PageUp","ArrowUp","Escape"].includes(e.key)) close();
     };
-
-    const open = (): void => {
-      if (!showGrid && !cooldownRef.current) {
-        setShowGrid(true);
-        lock();
-      }
-    };
-    const close = (): void => {
-      if (showGrid && !cooldownRef.current) {
-        setShowGrid(false);
-        lock();
-      }
-    };
-
-    const onWheel: (e: WheelEvent) => void = (e) => {
-      if (e.deltaY > 0) {
-        open();
-      } else {
-        close();
-      }
-    };
-
-    const onKey: (e: KeyboardEvent) => void = (e) => {
-      const k = e.key;
-      if (k === "PageDown" || k === "ArrowDown" || k === " ") {
-        open();
-      } else if (k === "PageUp" || k === "ArrowUp" || k === "Escape") {
-        close();
-      }
-    };
-
-    const onTouchStart: (e: TouchEvent) => void = (e) => {
-      touchStartY = e.touches[0]?.clientY ?? null;
-    };
-
-    const onTouchMove: (e: TouchEvent) => void = (e) => {
+    const onTouchStart = (e: TouchEvent) => { touchStartY = e.touches[0].clientY; };
+    const onTouchMove  = (e: TouchEvent) => {
       if (touchStartY == null) return;
-      const currentY = e.touches[0]?.clientY ?? touchStartY;
-      const dy = touchStartY - currentY;
-      if (dy > 10) {
-        open();
-      } else if (dy < -10) {
-        close();
-      }
+      const dy = touchStartY - e.touches[0].clientY;
+      dy > 10 ? open() : dy < -10 && close();
     };
 
     window.addEventListener("wheel", onWheel, { passive: true });
     window.addEventListener("keydown", onKey);
     window.addEventListener("touchstart", onTouchStart, { passive: true });
     window.addEventListener("touchmove", onTouchMove, { passive: true });
-
     return () => {
-      window.removeEventListener("wheel", onWheel);
-      window.removeEventListener("keydown", onKey);
-      window.removeEventListener("touchstart", onTouchStart);
-      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("wheel", onWheel as any);
+      window.removeEventListener("keydown", onKey as any);
+      window.removeEventListener("touchstart", onTouchStart as any);
+      window.removeEventListener("touchmove", onTouchMove as any);
     };
   }, [showGrid]);
 
@@ -235,7 +202,7 @@ export default function HomePage() {
       style={{ background: "linear-gradient(135deg, #e9d7cb, #d6c2b7)" }}
     >
       {/* HERO */}
-      {!showGrid ? (
+      {!showGrid && (
         <>
           <motion.main
             key="hero"
@@ -339,13 +306,13 @@ export default function HomePage() {
             © 2025 Monika Dvorackova
           </footer>
         </>
-      ) : null}
+      )}
 
       {/* GRID overlay */}
       <ServicesOverlay show={showGrid} />
 
       {/* Footer pro overlay (portal → mimo animovaný overlay) */}
-      {showGrid ? <FixedFooterPortal /> : null}
+      {showGrid && <FixedFooterPortal />}
     </div>
   );
 }
