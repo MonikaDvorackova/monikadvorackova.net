@@ -90,49 +90,49 @@ function ServicesOverlay({ show }: { show: boolean }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5, ease }}
-          className="fixed inset-0 z-[9999] flex items-center justify-center h-screen w-screen bg-gradient-to-br from-[#fdf2e9] to-[#f8e9dc] overflow-auto py-12 md:py-16"
+          className="fixed inset-0 z-[9999] flex items-center justify-center h-screen w-screen
+                     bg-gradient-to-br from-[#fdf2e9] to-[#f8e9dc]
+                     overflow-y-auto py-10 sm:py-12"
           role="dialog"
           aria-modal="true"
           aria-label="Services"
         >
-          <div className="w-full flex items-center justify-center px-4 sm:px-6 md:px-10 pt-8 md:pt-12 pb-10 md:pb-14">
+          <div className="w-full h-full flex items-center justify-center px-4 sm:px-6 md:px-10">
             <motion.div
               variants={gridVariants}
               initial="hidden"
               animate="show"
-              className="
-                grid
-                grid-cols-3
-                max-[1023px]:grid-cols-2
-                max-[639px]:grid-cols-1
-                justify-items-center
-                items-start
-                gap-x-12 gap-y-28
-                w-full max-w-[1100px] mx-auto
-              "
+              className="grid grid-cols-3 max-[640px]:grid-cols-2 max-[380px]:grid-cols-1
+              justify-center items-start w-fit mx-auto"
+   
+              /* >>> jediný rozhodující krok: vynucené mezery <<< */
+              style={{ rowGap: "64px", columnGap: "48px" }}  // 64px mezi řádky, 48px mezi sloupci
             >
               {SERVICES.map(({ icon: Icon, title, desc }) => (
                 <motion.div
                   key={title}
                   variants={itemVariants}
-                  className="group place-self-center flex flex-col items-center justify-center text-center rounded-[20px] border bg-white shadow-[0_10px_26px_rgba(0,0,0,0.06)] transition-transform transition-shadow duration-300 ease-out hover:scale-105 hover:shadow-lg aspect-square w-full max-w-[240px]"
-                  style={{
-                    border: "1px solid rgba(0, 42, 255, 0.1)",
-                    boxShadow: "inset 0 0 0 1px rgba(8, 28, 244, 0.05), 0 10px 26px rgba(0,0,0,0.06)",
-                    backgroundColor: "#ffffff",
-                    padding: "clamp(10px, 2.6vw, 8px)",
-                  }}
+                  className="group flex flex-col items-center justify-center text-center
+                             rounded-[20px] border transition-transform transition-shadow duration-300 ease-out
+                             hover:scale-105 hover:shadow-lg
+                             bg-white shadow-[0_10px_26px_rgba(0,0,0,0.06)]
+                             aspect-square w-[240px] max-[640px]:w-[200px] max-[380px]:w-full"
+                             style={{
+                              border: "1px solid rgba(0, 42, 255, 0.1)",
+                              boxShadow:
+                                "inset 0 0 0 1px rgba(8, 28, 244, 0.05), 0 10px 26px rgba(0,0,0,0.06)",
+                              backgroundColor: "#ffffff",
+                              padding: "clamp(10px, 2.6vw, 14px)",
+                            }}
+                            
+                            
                 >
                   <div className="flex flex-col items-center justify-center gap-2 w-full max-w-[90%] mx-auto">
                     <div className="h-[30px] w-full flex items-end justify-center">
                       <Icon size={18} color="#2563EB" className="transition-transform duration-300 group-hover:scale-110" />
                     </div>
-                    <h3 className="font-semibold text-[11px] leading-tight" style={{ color: "#000000" }}>
-                      {title}
-                    </h3>
-                    <p className="text-[9.5px] leading-snug" style={{ color: "#2563EB" }}>
-                      {desc}
-                    </p>
+                    <h3 className="font-semibold text-black text-[11px] leading-tight">{title}</h3>
+                    <p className="text-[9.5px] leading-snug text-neutral-700">{desc}</p>
                   </div>
                 </motion.div>
               ))}
@@ -143,6 +143,8 @@ function ServicesOverlay({ show }: { show: boolean }) {
     </AnimatePresence>
   );
 }
+
+
 
 export default function HomePage() {
   const [aiIndex, setAiIndex] = useState(0);
