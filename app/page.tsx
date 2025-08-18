@@ -4,9 +4,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { FaLinkedin, FaGithub, FaCalendarAlt, FaEnvelope, FaFileAlt } from "react-icons/fa";
+import {
+  FaLinkedin,
+  FaGithub,
+  FaCalendarAlt,
+  FaEnvelope,
+  FaFileAlt,
+} from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiCpu, FiSearch, FiServer, FiShield, FiBarChart2, FiBookOpen } from "react-icons/fi";
+import {
+  FiCpu,
+  FiSearch,
+  FiServer,
+  FiShield,
+  FiBarChart2,
+  FiBookOpen,
+} from "react-icons/fi";
 import ArxivIcon from "../components/ArxivIcon";
 import { createPortal } from "react-dom";
 
@@ -72,7 +85,6 @@ function ServicesOverlay({ show }: { show: boolean }) {
     <AnimatePresence>
       {show && (
         <motion.section
-          id="services-overlay"
           key="services-overlay"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -93,7 +105,7 @@ function ServicesOverlay({ show }: { show: boolean }) {
               animate="show"
               className="grid max-[480px]:grid-cols-1 max-[815px]:grid-cols-2 min-[816px]:grid-cols-3
                          justify-center items-start w-fit max-[480px]:w-full mx-auto"
-              style={{ rowGap: "64px", columnGap: "48px" }}
+              style={{ rowGap: "64px", columnGap: "48px" }}  // desktop původní mezery
             >
               {SERVICES.map(({ icon: Icon, title, desc }) => (
                 <motion.div
@@ -106,7 +118,8 @@ function ServicesOverlay({ show }: { show: boolean }) {
                              w-full sm:w-[200px] min-[816px]:w-[240px] sm:aspect-square"
                   style={{
                     border: "1px solid rgba(0, 42, 255, 0.1)",
-                    boxShadow: "inset 0 0 0 1px rgba(8, 28, 244, 0.05), 0 10px 26px rgba(0,0,0,0.06)",
+                    boxShadow:
+                      "inset 0 0 0 1px rgba(8, 28, 244, 0.05), 0 10px 26px rgba(0,0,0,0.06)",
                     backgroundColor: "#ffffff",
                     padding: "clamp(10px, 2.6vw, 14px)",
                   }}
@@ -123,35 +136,43 @@ function ServicesOverlay({ show }: { show: boolean }) {
             </motion.div>
           </div>
 
-          {/* MOBILE-ONLY OVERRIDES */}
+          {/* MOBILE-ONLY OVERRIDES — DESKTOP SE NEDOTÝKAJÍ */}
           <style jsx global>{`
-            @media (max-width: 480px) {
-              /* a) poslední karta nezmizí za spodní lištu */
-              #services-overlay { padding-bottom: calc(120px + env(safe-area-inset-bottom)) !important; }
+  @media (max-width: 480px) {
+    #services-overlay {
+      padding-bottom: max(220px, calc(20vh + env(safe-area-inset-bottom))) !important;
+      scroll-padding-bottom: max(220px, calc(20vh + env(safe-area-inset-bottom))) !important;
+    }
 
-              /* b) přesné centrování a šířka karty */
-              #services-grid {
-                width: 100% !important;
-                margin-left: auto !important;
-                margin-right: auto !important;
-                row-gap: 28px !important;
-                column-gap: 12px !important;
-                justify-items: center !important; /* centrování položek gridu */
-              }
+    #services-grid {
+      width: 100% !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      padding-left: 16px !important;   /* drží symetrii vůči okrajům */
+      padding-right: 16px !important;
+      box-sizing: border-box !important;
+      row-gap: 28px !important;
+      column-gap: 12px !important;
+      justify-items: center !important; 
+      align-items: start !important;
+    }
 
-              .service-card {
-                width: 100% !important;     /* využije šířku kontejneru (který má px-4) */
-                max-width: 560px;            /* bezpečný strop */
-                aspect-ratio: unset !important;
-              }
+    .service-card {
+      width: 100% !important;   
+      max-width: 560px;         
+      aspect-ratio: unset !important;
+    }
 
-              /* drobné zmenšení obsahu pro mobil */
-              .service-icon { height: 22px !important; }
-              .service-icon svg { width: 18px !important; height: 18px !important; }
-              .service-title { font-size: 10px !important; }
-              .service-desc { font-size: 9px !important; line-height: 1.25 !important; }
-            }
-          `}</style>
+    .service-icon { height: 22px !important; }
+    .service-icon svg { width: 18px !important; height: 18px !important; }
+    .service-title { font-size: 10px !important; }
+    .service-desc  { font-size: 9px !important; line-height: 1.25 !important; }
+
+
+    #services-grid > .service-card:last-child { margin-bottom: 24vh !important; }
+  }
+`}</style>
+
         </motion.section>
       )}
     </AnimatePresence>
@@ -182,19 +203,35 @@ export default function HomePage() {
       cooldownRef.current = true;
       window.setTimeout(() => (cooldownRef.current = false), COOLDOWN);
     };
-    const open = () => { if (!showGrid && !cooldownRef.current) { setShowGrid(true); setCooldown(); } };
-    const close = () => { if (showGrid && !cooldownRef.current) { setShowGrid(false); setCooldown(); } };
+    const open = () => {
+      if (!showGrid && !cooldownRef.current) {
+        setShowGrid(true);
+        setCooldown();
+      }
+    };
+    const close = () => {
+      if (showGrid && !cooldownRef.current) {
+        setShowGrid(false);
+        setCooldown();
+      }
+    };
 
-    const onWheel = (e: WheelEvent) => { if (e.deltaY > 0) open(); else close(); };
+    const onWheel = (e: WheelEvent) => {
+      if (e.deltaY > 0) open();
+      else close();
+    };
     const onKey = (e: KeyboardEvent) => {
       if (["PageDown", "ArrowDown", " "].includes(e.key)) open();
       else if (["PageUp", "ArrowUp", "Escape"].includes(e.key)) close();
     };
-    const onTouchStart = (e: TouchEvent) => { touchStartY = e.touches[0].clientY; };
+    const onTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+    };
     const onTouchMove = (e: TouchEvent) => {
       if (touchStartY == null) return;
       const dy = touchStartY - e.touches[0].clientY;
-      if (dy > 10) open(); else if (dy < -10) close();
+      if (dy > 10) open();
+      else if (dy < -10) close();
     };
 
     window.addEventListener("wheel", onWheel, { passive: true });
@@ -212,9 +249,10 @@ export default function HomePage() {
   const ease = [0.22, 1, 0.36, 1] as const;
 
   return (
-    <div className="flex flex-col min-h-screen text-text-light dark:text-text-dark transition-colors duration-500"
-         style={{ background: "linear-gradient(135deg, #e9d7cb, #d6c2b7)" }}>
-      {/* beze změny – desktop/hero */}
+    <div
+      className="flex flex-col min-h-screen text-text-light dark:text-text-dark transition-colors duration-500"
+      style={{ background: "linear-gradient(135deg, #e9d7cb, #d6c2b7)" }}
+    >
       {!showGrid && (
         <>
           <motion.main
@@ -227,28 +265,53 @@ export default function HomePage() {
           >
             <div className="flex flex-col items-center space-y-6 z-10">
               <div className="relative w-48 h-48 mt-12 -mb-4">
-                <div className="w-full h-full relative" style={{ clipPath: "circle(50% at 50% 50%)", overflow: "visible" }}>
-                  <Image src="/portrait.jpg" alt="Portrait" width={150} height={150}
-                         className="rounded-full object-cover scale-[1.18]" style={{ objectPosition: "top center" }} />
+                <div
+                  className="w-full h-full relative"
+                  style={{ clipPath: "circle(50% at 50% 50%)", overflow: "visible" }}
+                >
+                  <Image
+                    src="/portrait.jpg"
+                    alt="Portrait"
+                    width={150}
+                    height={150}
+                    className="rounded-full object-cover scale-[1.18]"
+                    style={{ objectPosition: "top center" }}
+                  />
                 </div>
               </div>
 
-              <motion.h1 whileHover={{ scale: 1.02 }} style={{ fontSize: "1.10rem", lineHeight: "1.1" }}
-                         className="font-medium hover:scale-110 transition-transform duration-300 tracking-tight">
+              <motion.h1
+                whileHover={{ scale: 1.02 }}
+                style={{ fontSize: "1.10rem", lineHeight: "1.1" }}
+                className="font-medium hover:scale-110 transition-transform duration-300 tracking-tight"
+              >
                 Ing. et Ing. Mgr. Monika Dvorackova
               </motion.h1>
 
               <div className="text-sm md:text-base font-medium max-w-xl leading-snug px-2">
                 <p className="mb-0">
                   I’m an engineer & consultant in{" "}
-                  <span className="inline-block align-baseline"><AnimatePresence mode="wait"><CrossfadeWord word={aiWords[aiIndex]} /></AnimatePresence></span>,
-                  helping companies implement{" "}
-                  <span className="inline-block align-baseline"><AnimatePresence mode="wait"><CrossfadeWord word={mlWords[mlIndex]} /></AnimatePresence></span>{" "}
+                  <span className="inline-block align-baseline">
+                    <AnimatePresence mode="wait">
+                      <CrossfadeWord word={aiWords[aiIndex]} />
+                    </AnimatePresence>
+                  </span>
+                  , helping companies implement{" "}
+                  <span className="inline-block align-baseline">
+                    <AnimatePresence mode="wait">
+                      <CrossfadeWord word={mlWords[mlIndex]} />
+                    </AnimatePresence>
+                  </span>{" "}
                   solutions.
                 </p>
                 <p className="italic mt-0">
                   And occasionally, a bit of{" "}
-                  <span className="inline-block align-baseline"><AnimatePresence mode="wait"><CrossfadeWord word={lawWords[lawIndex]} /></AnimatePresence></span>.
+                  <span className="inline-block align-baseline">
+                    <AnimatePresence mode="wait">
+                      <CrossfadeWord word={lawWords[lawIndex]} />
+                    </AnimatePresence>
+                  </span>
+                  .
                 </p>
               </div>
 
@@ -272,8 +335,13 @@ export default function HomePage() {
                   Consultation / Articles & SaaS
                 </div>
                 <div className="pt-[0.3rem] flex gap-4">
-                  <a href="https://calendly.com/monika-dvorack/15min" target="_blank" rel="noopener noreferrer"
-                     className="group transition-all duration-300" title="Book via Calendly">
+                  <a
+                    href="https://calendly.com/monika-dvorack/15min"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group transition-all duration-300"
+                    title="Book via Calendly"
+                  >
                     <FaCalendarAlt size={18} className="text-blue-600 transition-all duration-300 group-hover:scale-110 group-hover:translate-y-1 translate-y-[8px]" />
                   </a>
                   <Link href="/blog" className="group transition-all duration-300" title="View Articles & SaaS">
