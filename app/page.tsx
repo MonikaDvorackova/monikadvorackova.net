@@ -102,8 +102,8 @@ function ServicesOverlay({ show }: { show: boolean }) {
               variants={gridVariants}
               initial="hidden"
               animate="show"
-              className="grid grid-cols-3 max-[640px]:grid-cols-2 max-[380px]:grid-cols-1
-              justify-center items-start w-fit mx-auto"
+              className="grid max-[480px]:grid-cols-1 max-[815px]:grid-cols-2 min-[816px]:grid-cols-3
+              justify-center items-start w-fit max-[480px]:w-full mx-auto"
    
               /* >>> jediný rozhodující krok: vynucené mezery <<< */
               style={{ rowGap: "64px", columnGap: "48px" }}  // 64px mezi řádky, 48px mezi sloupci
@@ -129,10 +129,10 @@ function ServicesOverlay({ show }: { show: boolean }) {
                 >
                   <div className="flex flex-col items-center justify-center gap-2 w-full max-w-[90%] mx-auto">
                     <div className="h-[30px] w-full flex items-end justify-center">
-                      <Icon size={18} color="#2563EB" className="transition-transform duration-300 group-hover:scale-110" />
+                      <Icon size={18} color="#004CFF" className="transition-transform duration-300 group-hover:scale-110" />
                     </div>
                     <h3 className="font-semibold text-black text-[11px] leading-tight">{title}</h3>
-                    <p className="text-[9.5px] leading-snug text-neutral-700">{desc}</p>
+                    <p className="text-[9.5px] text-[#004CFF] leading-snug text-neutral-700">{desc}</p>
                   </div>
                 </motion.div>
               ))}
@@ -143,6 +143,7 @@ function ServicesOverlay({ show }: { show: boolean }) {
     </AnimatePresence>
   );
 }
+
 
 
 
