@@ -92,19 +92,19 @@ function ServicesOverlay({ show }: { show: boolean }) {
   transition={{ duration: 0.5, ease }}
   className="fixed inset-0 z-[9999] flex items-center justify-center w-screen
              bg-gradient-to-br from-[#fdf2e9] to-[#f8e9dc]
-             overflow-hidden                 /* mobil bez scrollu */
-             md:overflow-y-auto md:h-screen  /* desktop beze změny */
-             md:py-12"
+             overflow-y-auto                /* mobil smí scrollovat */
+             md:h-screen md:py-12"          /* desktop beze změny */
   style={{
-    minHeight: '100dvh',                     
-    height: '100svh' as any,                
-    paddingTop: '10px',                      
-    paddingBottom: '18vh',                   
+    minHeight: '100dvh',                     // přesná výška viewportu na mobilech
+    height: '100svh',
+    paddingTop: '10px',
+    paddingBottom: 'calc(env(safe-area-inset-bottom) + 120px)', // aby poslední karta nebyla pod spodní lištou
   }}
   role="dialog"
   aria-modal="true"
   aria-label="Services"
 >
+
 
           <div className="w-full h-full flex items-center justify-center px-4 sm:px-6 md:px-10">
             <motion.div
@@ -113,8 +113,8 @@ function ServicesOverlay({ show }: { show: boolean }) {
               initial="hidden"
               animate="show"
               className="grid max-[480px]:grid-cols-1 max-[815px]:grid-cols-2 min-[816px]:grid-cols-3
-                         justify-center items-start w-fit max-[480px]:w-full mx-auto"
-              style={{ rowGap: "64px", columnGap: "48px" }}  // desktop původní mezery
+                         justify-center items-start w-fit max-[480px]:w-full mx-auto max-[815px]:place-items-center"
+              style={{ rowGap: "64px", columnGap: "48px" }}  
             >
               {SERVICES.map(({ icon: Icon, title, desc }) => (
                 <motion.div
