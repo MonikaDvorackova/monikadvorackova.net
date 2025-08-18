@@ -103,10 +103,8 @@ function ServicesOverlay({ show }: { show: boolean }) {
               initial="hidden"
               animate="show"
               className="grid max-[480px]:grid-cols-1 max-[815px]:grid-cols-2 min-[816px]:grid-cols-3
-              justify-center items-start w-fit max-[480px]:w-full mx-auto"
-   
-              /* >>> jediný rozhodující krok: vynucené mezery <<< */
-              style={{ rowGap: "64px", columnGap: "48px" }}  // 64px mezi řádky, 48px mezi sloupci
+                         justify-center items-start w-fit max-[480px]:w-full mx-auto"
+              style={{ rowGap: "64px", columnGap: "48px" }}
             >
               {SERVICES.map(({ icon: Icon, title, desc }) => (
                 <motion.div
@@ -116,16 +114,14 @@ function ServicesOverlay({ show }: { show: boolean }) {
                              rounded-[20px] border transition-transform transition-shadow duration-300 ease-out
                              hover:scale-105 hover:shadow-lg
                              bg-white shadow-[0_10px_26px_rgba(0,0,0,0.06)]
-                             aspect-square w-[240px] max-[640px]:w-[200px] max-[380px]:w-full"
-                             style={{
-                              border: "1px solid rgba(0, 42, 255, 0.1)",
-                              boxShadow:
-                                "inset 0 0 0 1px rgba(8, 28, 244, 0.05), 0 10px 26px rgba(0,0,0,0.06)",
-                              backgroundColor: "#ffffff",
-                              padding: "clamp(10px, 2.6vw, 14px)",
-                            }}
-                            
-                            
+                             w-full sm:w-[200px] min-[816px]:w-[240px] sm:aspect-square"
+                  style={{
+                    border: "1px solid rgba(0, 42, 255, 0.1)",
+                    boxShadow:
+                      "inset 0 0 0 1px rgba(8, 28, 244, 0.05), 0 10px 26px rgba(0,0,0,0.06)",
+                    backgroundColor: "#ffffff",
+                    padding: "clamp(10px, 2.6vw, 14px)",
+                  }}
                 >
                   <div className="flex flex-col items-center justify-center gap-2 w-full max-w-[90%] mx-auto">
                     <div className="h-[30px] w-full flex items-end justify-center">
@@ -143,9 +139,6 @@ function ServicesOverlay({ show }: { show: boolean }) {
     </AnimatePresence>
   );
 }
-
-
-
 
 export default function HomePage() {
   const [aiIndex, setAiIndex] = useState(0);
