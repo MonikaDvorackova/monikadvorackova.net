@@ -99,18 +99,19 @@ function ServicesOverlay({ show }: { show: boolean }) {
         >
           <div className="w-full h-full flex items-center justify-center px-4 sm:px-6 md:px-10">
             <motion.div
+              id="services-grid"
               variants={gridVariants}
               initial="hidden"
               animate="show"
               className="grid max-[480px]:grid-cols-1 max-[815px]:grid-cols-2 min-[816px]:grid-cols-3
                          justify-center items-start w-fit max-[480px]:w-full mx-auto"
-              style={{ rowGap: "64px", columnGap: "48px" }}
+              style={{ rowGap: "64px", columnGap: "48px" }}  // desktop původní mezery
             >
               {SERVICES.map(({ icon: Icon, title, desc }) => (
                 <motion.div
                   key={title}
                   variants={itemVariants}
-                  className="group flex flex-col items-center justify-center text-center
+                  className="service-card group flex flex-col items-center justify-center text-center
                              rounded-[20px] border transition-transform transition-shadow duration-300 ease-out
                              hover:scale-105 hover:shadow-lg
                              bg-white shadow-[0_10px_26px_rgba(0,0,0,0.06)]
@@ -124,16 +125,28 @@ function ServicesOverlay({ show }: { show: boolean }) {
                   }}
                 >
                   <div className="flex flex-col items-center justify-center gap-2 w-full max-w-[90%] mx-auto">
-                    <div className="h-[30px] w-full flex items-end justify-center">
+                    <div className="service-icon h-[30px] w-full flex items-end justify-center">
                       <Icon size={18} color="#004CFF" className="transition-transform duration-300 group-hover:scale-110" />
                     </div>
-                    <h3 className="font-semibold text-black text-[11px] leading-tight">{title}</h3>
-                    <p className="text-[9.5px] text-[#004CFF] leading-snug text-neutral-700">{desc}</p>
+                    <h3 className="service-title font-semibold text-black text-[11px] leading-tight">{title}</h3>
+                    <p className="service-desc text-[9.5px] text-[#004CFF] leading-snug">{desc}</p>
                   </div>
                 </motion.div>
               ))}
             </motion.div>
           </div>
+
+          {/* MOBILE-ONLY OVERRIDES — DESKTOP SE NEDOTÝKAJÍ */}
+          <style jsx global>{`
+            @media (max-width: 480px) {
+              #services-grid { row-gap: 28px !important; column-gap: 16px !important; }
+              .service-card { width: 92vw !important; max-width: 360px; aspect-ratio: unset !important; }
+              .service-icon { height: 22px !important; }
+              .service-icon svg { width: 18px !important; height: 18px !important; }
+              .service-title { font-size: 10px !important; }
+              .service-desc { font-size: 9px !important; line-height: 1.25 !important; }
+            }
+          `}</style>
         </motion.section>
       )}
     </AnimatePresence>
