@@ -65,9 +65,7 @@ function ServicesOverlay({ show }: { show: boolean }) {
   useEffect(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = show ? "hidden" : prev || "";
-    return () => {
-      document.body.style.overflow = prev || "";
-    };
+    return () => { document.body.style.overflow = prev || ""; };
   }, [show]);
 
   const ease: [number, number, number, number] = [0.25, 1, 0.5, 1];
@@ -90,38 +88,36 @@ function ServicesOverlay({ show }: { show: boolean }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5, ease }}
-          className="fixed inset-0 z-[9999] flex items-center justify-center w-screen
-                     bg-gradient-to-br from-[#fdf2e9] to-[#f8e9dc]
-                     py-0 sm:py-12"
-          style={{
-            minHeight: "100dvh",
-            height: "100svh",
-          }}
+          className="fixed inset-0 z-[9999] w-screen bg-gradient-to-br from-[#fdf2e9] to-[#f8e9dc] overflow-hidden"
+          style={{ height: "100svh" }}
           role="dialog"
           aria-modal="true"
           aria-label="Services"
         >
-          {/* ======= MOBIL ≤480px: 1 sloupec, bez scrollu, přesně na střed ======= */}
-          <div className="hidden max-[480px]:grid grid-cols-1 place-items-center h-full w-full px-4"
-               style={{
-                 rowGap: "2.2dvh",
-                 paddingTop: "calc(env(safe-area-inset-top) + 0.8dvh)",
-                 paddingBottom: "calc(env(safe-area-inset-bottom) + 0.8dvh)",
-               }}>
+
+          {/* MOBIL ≤480px: 6 karet bez scrollu, dokonale vystředěné */}
+          <div
+            className="hidden max-[480px]:flex flex-col items-center justify-evenly h-full w-full"
+            style={{
+              paddingTop: "env(safe-area-inset-top)",
+              paddingBottom: "env(safe-area-inset-bottom)",
+            }}
+          >
             {SERVICES.map(({ icon: Icon, title, desc }) => (
               <motion.div
                 key={`m-${title}`}
                 variants={itemVariants}
-                className="group flex flex-col items-center justify-center text-center rounded-[20px] border
-                           bg-white shadow-[0_10px_26px_rgba(0,0,0,0.06)]"
+                className="group flex flex-col items-center justify-center text-center rounded-[20px] border bg-white shadow-[0_10px_26px_rgba(0,0,0,0.06)]"
                 style={{
                   width: "92vw",
-                  height: "14.5dvh",           // 6 karet + mezery = plná výška, bez posuvníku
+                  maxWidth: 560,
+                  height: "13.5svh",      // 6 řádků + mezery = přesně 100svh, žádný posuvník
                   minHeight: 88,
-                  maxHeight: 140,
+                  maxHeight: 130,
                   border: "1px solid rgba(0, 42, 255, 0.1)",
                   boxShadow: "inset 0 0 0 1px rgba(8, 28, 244, 0.05), 0 10px 26px rgba(0,0,0,0.06)",
-                  padding: "12px",
+                  padding: 12,
+                  boxSizing: "border-box",
                 }}
               >
                 <div className="flex flex-col items-center justify-center gap-1.5 w-full max-w-[92%] mx-auto">
@@ -135,29 +131,23 @@ function ServicesOverlay({ show }: { show: boolean }) {
             ))}
           </div>
 
-          {/* ======= DESKTOP/TABLET: původní rozvržení beze změny ======= */}
+          {/* DESKTOP/TABLET: beze změny */}
           <div className="block max-[480px]:hidden w-full h-full flex items-center justify-center px-4 sm:px-6 md:px-10">
             <motion.div
               variants={gridVariants}
               initial="hidden"
               animate="show"
-              className="grid max-[815px]:grid-cols-2 min-[816px]:grid-cols-3
-                         justify-center items-start w-fit mx-auto"
+              className="grid max-[815px]:grid-cols-2 min-[816px]:grid-cols-3 justify-center items-start w-fit mx-auto"
               style={{ rowGap: "64px", columnGap: "48px" }}
             >
               {SERVICES.map(({ icon: Icon, title, desc }) => (
                 <motion.div
                   key={title}
                   variants={itemVariants}
-                  className="group flex flex-col items-center justify-center text-center
-                             rounded-[20px] border transition-transform transition-shadow duration-300 ease-out
-                             hover:scale-105 hover:shadow-lg
-                             bg-white shadow-[0_10px_26px_rgba(0,0,0,0.06)]
-                             w-full sm:w-[200px] min-[816px]:w-[240px] sm:aspect-square"
+                  className="group flex flex-col items-center justify-center text-center rounded-[20px] border transition-transform transition-shadow duration-300 ease-out hover:scale-105 hover:shadow-lg bg-white shadow-[0_10px_26px_rgba(0,0,0,0.06)] w-full sm:w-[200px] min-[816px]:w-[240px] sm:aspect-square"
                   style={{
                     border: "1px solid rgba(0, 42, 255, 0.1)",
-                    boxShadow:
-                      "inset 0 0 0 1px rgba(8, 28, 244, 0.05), 0 10px 26px rgba(0,0,0,0.06)",
+                    boxShadow: "inset 0 0 0 1px rgba(8, 28, 244, 0.05), 0 10px 26px rgba(0,0,0,0.06)",
                     backgroundColor: "#ffffff",
                     padding: "clamp(10px, 2.6vw, 14px)",
                   }}
@@ -178,6 +168,7 @@ function ServicesOverlay({ show }: { show: boolean }) {
     </AnimatePresence>
   );
 }
+
 
 
 export default function HomePage() {
