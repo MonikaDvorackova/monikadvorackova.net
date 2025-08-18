@@ -85,18 +85,27 @@ function ServicesOverlay({ show }: { show: boolean }) {
     <AnimatePresence>
       {show && (
         <motion.section
-          key="services-overlay"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5, ease }}
-          className="fixed inset-0 z-[9999] flex items-center justify-center h-screen w-screen
-                     bg-gradient-to-br from-[#fdf2e9] to-[#f8e9dc]
-                     overflow-y-auto py-10 sm:py-12"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Services"
-        >
+  key="services-overlay"
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  exit={{ opacity: 0 }}
+  transition={{ duration: 0.5, ease }}
+  className="fixed inset-0 z-[9999] flex items-center justify-center w-screen
+             bg-gradient-to-br from-[#fdf2e9] to-[#f8e9dc]
+             overflow-hidden                 /* mobil bez scrollu */
+             md:overflow-y-auto md:h-screen  /* desktop beze změny */
+             md:py-12"
+  style={{
+    minHeight: '100dvh',                     
+    height: '100svh' as any,                
+    paddingTop: '10px',                      
+    paddingBottom: '18vh',                   
+  }}
+  role="dialog"
+  aria-modal="true"
+  aria-label="Services"
+>
+
           <div className="w-full h-full flex items-center justify-center px-4 sm:px-6 md:px-10">
             <motion.div
               id="services-grid"
