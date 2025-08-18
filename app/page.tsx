@@ -136,11 +136,14 @@ function ServicesOverlay({ show }: { show: boolean }) {
             </motion.div>
           </div>
 
-          {/* MOBILE-ONLY OVERRIDES — DESKTOP SE NEDOTÝKAJÍ */}
+          {/* MOBILE-ONLY OVERRIDES  */}
           <style jsx global>{`
   @media (max-width: 480px) {
     #services-overlay {
+      min-height: 100dvh;
+      padding-top: max(140px, calc(12vh + env(safe-area-inset-top))) !important;
       padding-bottom: max(220px, calc(20vh + env(safe-area-inset-bottom))) !important;
+      scroll-padding-top: max(140px, calc(12vh + env(safe-area-inset-top))) !important;
       scroll-padding-bottom: max(220px, calc(20vh + env(safe-area-inset-bottom))) !important;
     }
 
@@ -148,30 +151,32 @@ function ServicesOverlay({ show }: { show: boolean }) {
       width: 100% !important;
       margin-left: auto !important;
       margin-right: auto !important;
-      padding-left: 16px !important;   /* drží symetrii vůči okrajům */
+      padding-left: 16px !important;
       padding-right: 16px !important;
       box-sizing: border-box !important;
       row-gap: 28px !important;
       column-gap: 12px !important;
-      justify-items: center !important; 
+      justify-items: center !important;
       align-items: start !important;
     }
 
     .service-card {
-      width: 100% !important;   
-      max-width: 560px;         
+      width: 100% !important;
+      max-width: 560px;
       aspect-ratio: unset !important;
     }
 
     .service-icon { height: 22px !important; }
     .service-icon svg { width: 18px !important; height: 18px !important; }
     .service-title { font-size: 10px !important; }
-    .service-desc  { font-size: 9px !important; line-height: 1.25 !important; }
+    .service-desc { font-size: 9px !important; line-height: 1.25 !important; }
 
 
-    #services-grid > .service-card:last-child { margin-bottom: 24vh !important; }
+    #services-grid > .service-card:first-child { margin-top: 8px !important; }
+    #services-grid > .service-card:last-child  { margin-bottom: 24vh !important; }
   }
 `}</style>
+
 
         </motion.section>
       )}
