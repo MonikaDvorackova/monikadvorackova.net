@@ -89,13 +89,12 @@ function ServicesOverlay({ show }: { show: boolean }) {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5, ease }}
           className="fixed inset-0 z-[9999] w-screen bg-gradient-to-br from-[#fdf2e9] to-[#f8e9dc] overflow-hidden"
-          style={{ height: "100svh" }}
+          style={{ height: "100svh", minHeight: "100dvh" }}
           role="dialog"
           aria-modal="true"
           aria-label="Services"
         >
-
-          {/* MOBIL ≤480px: 6 karet bez scrollu, dokonale vystředěné */}
+          {/* Mobile ≤480px */}
           <div
             className="hidden max-[480px]:flex flex-col items-center justify-evenly h-full w-full"
             style={{
@@ -111,16 +110,17 @@ function ServicesOverlay({ show }: { show: boolean }) {
                 style={{
                   width: "92vw",
                   maxWidth: 560,
-                  height: "13.5svh",      // 6 řádků + mezery = přesně 100svh, žádný posuvník
-                  minHeight: 88,
-                  maxHeight: 130,
+                  height: "13svh",
+                  minHeight: 90,
+                  maxHeight: 124,
                   border: "1px solid rgba(0, 42, 255, 0.1)",
-                  boxShadow: "inset 0 0 0 1px rgba(8, 28, 244, 0.05), 0 10px 26px rgba(0,0,0,0.06)",
+                  boxShadow:
+                    "inset 0 0 0 1px rgba(8, 28, 244, 0.05), 0 10px 26px rgba(0,0,0,0.06)",
                   padding: 12,
                   boxSizing: "border-box",
                 }}
               >
-                <div className="flex flex-col items-center justify-center gap-1.5 w-full max-w-[92%] mx-auto">
+                <div className="flex flex-col items-center justify-center gap-1.5 w-full max-w-[92%] mx-auto pt-2">
                   <div className="h-[22px] w-full flex items-end justify-center">
                     <Icon size={16} color="#004CFF" />
                   </div>
@@ -131,7 +131,7 @@ function ServicesOverlay({ show }: { show: boolean }) {
             ))}
           </div>
 
-          {/* DESKTOP/TABLET: beze změny */}
+          {/* Tablet/Desktop (unchanged) */}
           <div className="block max-[480px]:hidden w-full h-full flex items-center justify-center px-4 sm:px-6 md:px-10">
             <motion.div
               variants={gridVariants}
@@ -147,14 +147,19 @@ function ServicesOverlay({ show }: { show: boolean }) {
                   className="group flex flex-col items-center justify-center text-center rounded-[20px] border transition-transform transition-shadow duration-300 ease-out hover:scale-105 hover:shadow-lg bg-white shadow-[0_10px_26px_rgba(0,0,0,0.06)] w-full sm:w-[200px] min-[816px]:w-[240px] sm:aspect-square"
                   style={{
                     border: "1px solid rgba(0, 42, 255, 0.1)",
-                    boxShadow: "inset 0 0 0 1px rgba(8, 28, 244, 0.05), 0 10px 26px rgba(0,0,0,0.06)",
+                    boxShadow:
+                      "inset 0 0 0 1px rgba(8, 28, 244, 0.05), 0 10px 26px rgba(0,0,0,0.06)",
                     backgroundColor: "#ffffff",
                     padding: "clamp(10px, 2.6vw, 14px)",
                   }}
                 >
                   <div className="flex flex-col items-center justify-center gap-2 w-full max-w-[90%] mx-auto">
-                  <div className="h-[30px] w-full flex items-end justify-center mt-[6px] max-[480px]:mt-[10px]">
-                      <Icon size={18} color="#004CFF" className="transition-transform duration-300 group-hover:scale-110" />
+                    <div className="h-[30px] w-full flex items-end justify-center">
+                      <Icon
+                        size={18}
+                        color="#004CFF"
+                        className="transition-transform duration-300 group-hover:scale-110"
+                      />
                     </div>
                     <h3 className="font-semibold text-black text-[11px] leading-tight">{title}</h3>
                     <p className="text-[9.5px] text-[#004CFF] leading-snug text-neutral-700">{desc}</p>
@@ -168,8 +173,6 @@ function ServicesOverlay({ show }: { show: boolean }) {
     </AnimatePresence>
   );
 }
-
-
 
 export default function HomePage() {
   const [aiIndex, setAiIndex] = useState(0);
