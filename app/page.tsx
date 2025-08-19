@@ -153,7 +153,7 @@ function ServicesOverlay({ show }: { show: boolean }) {
                   }}
                 >
                   <div className="flex flex-col items-center justify-center gap-2 w-full max-w-[90%] mx-auto">
-                    <div className="h-[30px] w-full flex items-end justify-center">
+                  <div className="h-[30px] w-full flex items-end justify-center mt-[6px] max-[480px]:mt-[10px]">
                       <Icon size={18} color="#004CFF" className="transition-transform duration-300 group-hover:scale-110" />
                     </div>
                     <h3 className="font-semibold text-black text-[11px] leading-tight">{title}</h3>
