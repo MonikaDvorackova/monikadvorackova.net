@@ -94,12 +94,13 @@ function ServicesOverlay({ show }: { show: boolean }) {
           aria-modal="true"
           aria-label="Services"
         >
-          {/* Mobile ≤480px */}
+          {/* MOBILE ≤480px — bez scrollu, vycentrované, vyrovnané mezery */}
           <div
-            className="hidden max-[480px]:flex flex-col items-center justify-evenly h-full w-full"
+            className="hidden max-[480px]:flex flex-col items-center w-full h-full"
             style={{
               paddingTop: "env(safe-area-inset-top)",
               paddingBottom: "env(safe-area-inset-bottom)",
+              gap: "12px",
             }}
           >
             {SERVICES.map(({ icon: Icon, title, desc }) => (
@@ -110,9 +111,11 @@ function ServicesOverlay({ show }: { show: boolean }) {
                 style={{
                   width: "92vw",
                   maxWidth: 560,
-                  height: "13svh",
-                  minHeight: 90,
-                  maxHeight: 124,
+                  margin: "0 auto",
+                  height:
+                    "calc((100svh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 60px) / 6)",
+                  minHeight: 92,
+                  maxHeight: 126,
                   border: "1px solid rgba(0, 42, 255, 0.1)",
                   boxShadow:
                     "inset 0 0 0 1px rgba(8, 28, 244, 0.05), 0 10px 26px rgba(0,0,0,0.06)",
@@ -120,18 +123,22 @@ function ServicesOverlay({ show }: { show: boolean }) {
                   boxSizing: "border-box",
                 }}
               >
-                <div className="flex flex-col items-center justify-center gap-1.5 w-full max-w-[92%] mx-auto pt-2">
+                <div className="flex flex-col items-center justify-center gap-1.5 w-full max-w-[92%] mx-auto pt-1">
                   <div className="h-[22px] w-full flex items-end justify-center">
                     <Icon size={16} color="#004CFF" />
                   </div>
-                  <h3 className="font-semibold text-black text-[12px] leading-tight">{title}</h3>
-                  <p className="text-[11px] leading-snug text-[#004CFF]">{desc}</p>
+                  <h3 className="font-semibold text-black text-[12px] leading-tight">
+                    {title}
+                  </h3>
+                  <p className="text-[11px] leading-snug text-[#004CFF]">
+                    {desc}
+                  </p>
                 </div>
               </motion.div>
             ))}
           </div>
 
-          {/* Tablet/Desktop (unchanged) */}
+          {/* TABLET/DESKTOP — beze změn */}
           <div className="block max-[480px]:hidden w-full h-full flex items-center justify-center px-4 sm:px-6 md:px-10">
             <motion.div
               variants={gridVariants}
@@ -161,8 +168,12 @@ function ServicesOverlay({ show }: { show: boolean }) {
                         className="transition-transform duration-300 group-hover:scale-110"
                       />
                     </div>
-                    <h3 className="font-semibold text-black text-[11px] leading-tight">{title}</h3>
-                    <p className="text-[9.5px] text-[#004CFF] leading-snug text-neutral-700">{desc}</p>
+                    <h3 className="font-semibold text-black text-[11px] leading-tight">
+                      {title}
+                    </h3>
+                    <p className="text-[9.5px] text-[#004CFF] leading-snug text-neutral-700">
+                      {desc}
+                    </p>
                   </div>
                 </motion.div>
               ))}
