@@ -31,17 +31,25 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
-      {/* ↑↑↑ ZVÝŠENÉ MOBILNÍ OKRAJE: max-sm:px-8 */}
-      <div className="px-16 sm:px-12 max-sm:px-8">
+      <div className="px-6 sm:px-12 lg:px-16">
         <div className="max-w-[800px] mx-auto">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
             <ArticleHeader />
           </motion.div>
 
-          <motion.hr className="border-gray-200 dark:border-gray-700 my-8" initial={{ opacity: 0, scaleX: 0 }} animate={{ opacity: 1, scaleX: 1 }} transition={{ duration: 0.8, delay: 0.4 }} />
+          <motion.hr
+            className="border-gray-200 dark:border-gray-700 my-8"
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={{ opacity: 1, scaleX: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          />
 
-          {/* TAGS — mezery + bílé písmo */}
-          <div className="flex flex-wrap justify-center mb-2" style={{ gap: "8px" }}>
+          {/* TAGS */}
+          <div className="flex flex-wrap justify-center mb-2 gap-2">
             {(meta.tags || []).map((tag, index) => (
               <motion.div
                 key={tag}
@@ -52,8 +60,7 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
                 <Link
                   href={`/tags/${encodeURIComponent(tag)}`}
                   aria-label={`View all posts with tag: ${tag}`}
-                  className="inline-block bg-[#004cff] px-3 py-1 text-[12px] font-semibold rounded-none"
-                  style={{ color: "white" }} // bílé písmo
+                  className="inline-block bg-[#004cff] px-3 py-1 text-[12px] font-semibold rounded-none text-white"
                 >
                   {tag}
                 </Link>
@@ -61,8 +68,14 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
             ))}
           </div>
 
-          <motion.main initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 1.0 }}>
-            <h1 className="text-3xl font-light text-neutral-900 mb-3 text-center">{meta.title}</h1>
+          <motion.main
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 1.0 }}
+          >
+            <h1 className="text-3xl font-light text-neutral-900 mb-3 text-center">
+              {meta.title}
+            </h1>
 
             {meta.resources?.length ? (
               <div className="flex justify-center mb-6">
@@ -77,15 +90,36 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
 
             {meta.tldr ? <TLDR text={meta.tldr} /> : null}
 
-            <article className="text-justify leading-[1.75]">
+            {/* článek se zarovnaným textem + okraje */}
+            <article className="prose prose-sm max-w-prose mx-auto px-4 text-justify leading-[1.75]">
               <Markdown
                 components={{
-                  h1: ({ children }) => <h1 className="text-lg font-light text-neutral-900 mb-4 text-center">{children}</h1>,
-                  h2: ({ children }) => <h2 className="text-base font-light text-neutral-800 mb-3 text-center">{children}</h2>,
-                  p:  ({ children }) => <p className="text-sm text-neutral-900 leading-relaxed mb-3">{children}</p>,
+                  h1: ({ children }) => (
+                    <h1 className="text-lg font-light text-neutral-900 mb-4 text-center">
+                      {children}
+                    </h1>
+                  ),
+                  h2: ({ children }) => (
+                    <h2 className="text-base font-light text-neutral-800 mb-3 text-center">
+                      {children}
+                    </h2>
+                  ),
+                  p: ({ children }) => (
+                    <p className="text-sm text-neutral-900 leading-relaxed mb-3">
+                      {children}
+                    </p>
+                  ),
                   strong: ({ children }) => {
-                    const txt = React.Children.toArray(children).join("").toLowerCase();
-                    return txt === "neural" || txt === "natural law" ? <>{children}</> : <strong className="font-semibold text-neutral-900">{children}</strong>;
+                    const txt = React.Children.toArray(children)
+                      .join("")
+                      .toLowerCase();
+                    return txt === "neural" || txt === "natural law" ? (
+                      <>{children}</>
+                    ) : (
+                      <strong className="font-semibold text-neutral-900">
+                        {children}
+                      </strong>
+                    );
                   },
                 }}
               >
@@ -94,7 +128,12 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
             </article>
           </motion.main>
 
-          <motion.footer className="text-[10px] font-light text-neutral-900 py-8 text-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 1.2 }}>
+          <motion.footer
+            className="text-[10px] font-light text-neutral-900 py-8 text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 1.2 }}
+          >
             © 2025 Monika Dvorackova
           </motion.footer>
         </div>
