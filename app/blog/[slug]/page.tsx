@@ -95,10 +95,12 @@ function parseResources(raw: unknown): Resource[] {
   return out;
 }
 
+// app/blog/[slug]/page.tsx
+
 export default async function BlogPostPage(
-  props: { params: { slug: string } }
+  props: { params: Promise<{ slug: string }> }   
 ) {
-  const { slug } = props.params;
+  const { slug } = await props.params;            
   const raw = await getPostRaw(slug);
   if (!raw) notFound();
 
@@ -122,3 +124,4 @@ export default async function BlogPostPage(
 
   return <AnimatedBlogPost meta={meta} content={content} />;
 }
+
