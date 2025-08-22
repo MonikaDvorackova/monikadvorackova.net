@@ -31,7 +31,8 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
-      <div className="px-16 sm:px-12 max-sm:px-8">
+      {/* mobile-first padding: na mobilu px-6, na větších stejné jako dřív */}
+      <div className="px-6 sm:px-12 lg:px-16">
         <div className="max-w-[800px] mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}>
             <ArticleHeader />
@@ -39,7 +40,7 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
 
           <motion.hr className="border-gray-200 dark:border-gray-700 my-8" initial={{ opacity: 0, scaleX: 0 }} animate={{ opacity: 1, scaleX: 1 }} transition={{ duration: 0.8, delay: 0.4 }} />
 
-          {/* TAGS */}
+          {/* TAGS — beze změn */}
           <div className="flex flex-wrap justify-center mb-2" style={{ gap: "8px" }}>
             {(meta.tags || []).map((tag, index) => (
               <motion.div
@@ -76,22 +77,21 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
 
             {meta.tldr ? <TLDR text={meta.tldr} /> : null}
 
-            <article className="text-justify leading-[1.75] px-0 max-sm:px-4">
-  <Markdown
-    components={{
-      h1: ({ children }) => <h1 className="text-lg font-light text-neutral-900 mb-4 text-center">{children}</h1>,
-      h2: ({ children }) => <h2 className="text-base font-light text-neutral-800 mb-3 text-center">{children}</h2>,
-      p:  ({ children }) => <p className="text-sm text-neutral-900 leading-relaxed mb-3">{children}</p>,
-      strong: ({ children }) => {
-        const txt = React.Children.toArray(children).join("").toLowerCase();
-        return txt === "neural" || txt === "natural law" ? <>{children}</> : <strong className="font-semibold text-neutral-900">{children}</strong>;
-      },
-    }}
-  >
-    {content}
-  </Markdown>
-</article>
-
+            <article className="text-justify leading-[1.75]">
+              <Markdown
+                components={{
+                  h1: ({ children }) => <h1 className="text-lg font-light text-neutral-900 mb-4 text-center">{children}</h1>,
+                  h2: ({ children }) => <h2 className="text-base font-light text-neutral-800 mb-3 text-center">{children}</h2>,
+                  p:  ({ children }) => <p className="text-sm text-neutral-900 leading-relaxed mb-3">{children}</p>,
+                  strong: ({ children }) => {
+                    const txt = React.Children.toArray(children).join("").toLowerCase();
+                    return txt === "neural" || txt === "natural law" ? <>{children}</> : <strong className="font-semibold text-neutral-900">{children}</strong>;
+                  },
+                }}
+              >
+                {content}
+              </Markdown>
+            </article>
           </motion.main>
 
           <motion.footer className="text-[10px] font-light text-neutral-900 py-8 text-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 1.2 }}>
