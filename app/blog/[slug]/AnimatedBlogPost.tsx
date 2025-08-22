@@ -31,7 +31,8 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
-      <div className="px-16 sm:px-12 max-sm:px-6">
+      {/* ↑↑↑ ZVÝŠENÉ MOBILNÍ OKRAJE: max-sm:px-8 */}
+      <div className="px-16 sm:px-12 max-sm:px-8">
         <div className="max-w-[800px] mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}>
             <ArticleHeader />
