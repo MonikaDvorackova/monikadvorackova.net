@@ -31,7 +31,6 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
-      {/* ↑↑↑ ZVÝŠENÉ MOBILNÍ OKRAJE: max-sm:px-8 */}
       <div className="px-16 sm:px-12 max-sm:px-8">
         <div className="max-w-[800px] mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}>
@@ -40,7 +39,7 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
 
           <motion.hr className="border-gray-200 dark:border-gray-700 my-8" initial={{ opacity: 0, scaleX: 0 }} animate={{ opacity: 1, scaleX: 1 }} transition={{ duration: 0.8, delay: 0.4 }} />
 
-          {/* TAGS — mezery + bílé písmo */}
+          {/* TAGS */}
           <div className="flex flex-wrap justify-center mb-2" style={{ gap: "8px" }}>
             {(meta.tags || []).map((tag, index) => (
               <motion.div
@@ -53,7 +52,7 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
                   href={`/tags/${encodeURIComponent(tag)}`}
                   aria-label={`View all posts with tag: ${tag}`}
                   className="inline-block bg-[#004cff] px-3 py-1 text-[12px] font-semibold rounded-none"
-                  style={{ color: "white" }} // bílé písmo
+                  style={{ color: "white" }}
                 >
                   {tag}
                 </Link>
@@ -77,7 +76,8 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
 
             {meta.tldr ? <TLDR text={meta.tldr} /> : null}
 
-            <article className="text-justify leading-[1.75]">
+            {/* jen přidané okraje na mobilu */}
+            <article className="text-justify leading-[1.75] max-sm:mx-4">
               <Markdown
                 components={{
                   h1: ({ children }) => <h1 className="text-lg font-light text-neutral-900 mb-4 text-center">{children}</h1>,
