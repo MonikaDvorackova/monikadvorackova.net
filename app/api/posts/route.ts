@@ -1,11 +1,31 @@
 // app/api/posts/route.ts
-
 import { NextResponse } from "next/server";
 import path from "path";
 import { promises as fs } from "fs";
 import matter from "gray-matter";
 
 export const dynamic = "force-dynamic";
+
+type ResourceType =
+  | "github" | "arxiv" | "wandb" | "mlflow" | "model" | "website"
+  | "pdf" | "dataset" | "demo" | "colab" | "kaggle";
+
+type Resource = { type: ResourceType; href: string; label?: string };
+
+const ALLOWED: readonly ResourceType[] = [
+  "github","arxiv","wandb","mlflow","model","website","pdf","dataset","demo","colab","kaggle",
+] as const;
+
+function normalizeResources(input: unknown): Resource[] {
+  const arr = Array.isArray(input) ? input : (input ? [input] : []);
+  return arr
+    .map((it: any) => ({
+      type: String(it?.type || "").toLowerCase() as ResourceType,
+      href: String(it?.href || ""),
+      label: it?.label ? String(it.label) : undefined,
+    }))
+    .filter(r => r.href && (ALLOWED as readonly string[]).includes(r.type));
+}
 
 export async function GET() {
   try {
@@ -18,15 +38,20 @@ export async function GET() {
         const fileContent = await fs.readFile(filePath, "utf8");
         const { data } = matter(fileContent);
 
+        const resources = normalizeResources((data as any).resources);
+        const tags = Array.isArray((data as any).tags)
+          ? (data as any).tags.map(String)
+          : (data as any).tags
+          ? [String((data as any).tags)]
+          : [];
+
         return {
           slug: filename.replace(/\.mdx?$/, ""),
-          title: data.title || "Untitled",
-          date: data.date || "1970-01-01",
-          tags: Array.isArray(data.tags)
-            ? data.tags.map(String)
-            : data.tags
-            ? [String(data.tags)]
-            : [],
+          title: (data as any).title || "Untitled",
+          date: (data as any).date || "1970-01-01",
+          tags,
+          tldr: (data as any).tldr ?? "",
+          resources,
         };
       })
     );

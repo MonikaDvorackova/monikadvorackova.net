@@ -1,7 +1,7 @@
 // app/page.tsx
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -11,7 +11,7 @@ import {
   FaEnvelope,
   FaFileAlt,
 } from "react-icons/fa";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, PanInfo } from "framer-motion";
 import {
   FiCpu,
   FiSearch,
@@ -22,6 +22,7 @@ import {
 } from "react-icons/fi";
 import ArxivIcon from "../components/ArxivIcon";
 import { createPortal } from "react-dom";
+import { useRouter } from "next/navigation";
 
 const aiWords = ["AI", "LLM Engineering", "AI Strategy", "AI Infrastructure"];
 const mlWords = ["Machine Learning", "Deep Learning", "Model Deployment"];
@@ -94,7 +95,7 @@ function ServicesOverlay({ show }: { show: boolean }) {
           aria-modal="true"
           aria-label="Services"
         >
-          {/* MOBILE ≤480px — bez scrollu, vycentrované, vyrovnané mezery */}
+          {/* MOBILE ≤480px */}
           <div
             className="hidden max-[480px]:flex flex-col items-center w-full h-full"
             style={{
@@ -138,7 +139,7 @@ function ServicesOverlay({ show }: { show: boolean }) {
             ))}
           </div>
 
-          {/* TABLET/DESKTOP — beze změn */}
+          {/* TABLET/DESKTOP */}
           <div className="block max-[480px]:hidden w-full h-full flex items-center justify-center px-4 sm:px-6 md:px-10">
             <motion.div
               variants={gridVariants}
@@ -191,6 +192,7 @@ export default function HomePage() {
   const [lawIndex, setLawIndex] = useState(0);
   const [showGrid, setShowGrid] = useState(false);
   const cooldownRef = useRef(false);
+  const router = useRouter();
 
   useEffect(() => {
     const id = window.setInterval(() => {
@@ -201,6 +203,7 @@ export default function HomePage() {
     return () => window.clearInterval(id);
   }, []);
 
+  // --- Overlay ovládání (vertikální posun/klávesy/touch) ---
   useEffect(() => {
     const COOLDOWN = 350;
     let touchStartY: number | null = null;
@@ -254,6 +257,35 @@ export default function HomePage() {
 
   const ease = [0.22, 1, 0.36, 1] as const;
 
+  // --- SWIPE RIGHT→LEFT pro /blog (touchpad i touch) ---
+  const triggeredRef = useRef(false);
+  const goBlog = useCallback(() => {
+    if (triggeredRef.current) return;
+    triggeredRef.current = true;
+    router.push("/blog");
+    // reset po krátké době, aby šlo gesto použít znovu po návratu
+    setTimeout(() => { triggeredRef.current = false; }, 1200);
+  }, [router]);
+
+  const X_THRESHOLD = 80;     // minimální horizontální posun (px) doleva
+  const V_THRESHOLD = 0.3;    // minimální rychlost (framer velocity)
+  const WHEEL_THRESHOLD = -100; // deltaX pro trackpad (< 0 = doleva)
+
+  const onPanEnd = (_: any, info: PanInfo) => {
+    const { offset, velocity } = info; // offset.x záporný = doleva
+    const horizontal = Math.abs(offset.x) > Math.abs((info.offset as any).y ?? 0);
+    if (horizontal && offset.x <= -X_THRESHOLD && Math.abs(velocity.x) >= V_THRESHOLD) {
+      goBlog();
+    }
+  };
+
+  const onWheel = (e: React.WheelEvent) => {
+    // reaguj jen na výrazný horizontální posun doleva (touchpad), ignoruj vertikální scroll
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && e.deltaX <= WHEEL_THRESHOLD) {
+      goBlog();
+    }
+  };
+
   return (
     <div
       className="flex flex-col min-h-screen text-text-light dark:text-text-dark transition-colors duration-500"
@@ -269,93 +301,104 @@ export default function HomePage() {
             transition={{ duration: 0.6, ease }}
             className="flex-grow flex flex-col items-center justify-center px-4 text-center"
           >
-            <div className="flex flex-col items-center space-y-6 z-10">
-              <div className="relative w-48 h-48 mt-12 -mb-4">
-                <div
-                  className="w-full h-full relative"
-                  style={{ clipPath: "circle(50% at 50% 50%)", overflow: "visible" }}
-                >
-                  <Image
-                    src="/portrait.jpg"
-                    alt="Portrait"
-                    width={150}
-                    height={150}
-                    className="rounded-full object-cover scale-[1.18]"
-                    style={{ objectPosition: "top center" }}
-                  />
-                </div>
-              </div>
-
-              <motion.h1
-                whileHover={{ scale: 1.02 }}
-                style={{ fontSize: "1.10rem", lineHeight: "1.1" }}
-                className="font-medium hover:scale-110 transition-transform duration-300 tracking-tight"
-              >
-                Ing. et Ing. Mgr. Monika Dvorackova
-              </motion.h1>
-
-              <div className="text-sm md:text-base font-medium max-w-xl leading-snug px-2">
-                <p className="mb-0">
-                  I’m an engineer & consultant in{" "}
-                  <span className="inline-block align-baseline">
-                    <AnimatePresence mode="wait">
-                      <CrossfadeWord word={aiWords[aiIndex]} />
-                    </AnimatePresence>
-                  </span>
-                  , helping companies implement{" "}
-                  <span className="inline-block align-baseline">
-                    <AnimatePresence mode="wait">
-                      <CrossfadeWord word={mlWords[mlIndex]} />
-                    </AnimatePresence>
-                  </span>{" "}
-                  solutions.
-                </p>
-                <p className="italic mt-0">
-                  And occasionally, a bit of{" "}
-                  <span className="inline-block align-baseline">
-                    <AnimatePresence mode="wait">
-                      <CrossfadeWord word={lawWords[lawIndex]} />
-                    </AnimatePresence>
-                  </span>
-                  .
-                </p>
-              </div>
-
-              <div className="flex items-center justify-center gap-4 mt-6">
-                <a href="https://www.linkedin.com/in/monika-dvorackova/?locale=en_US" target="_blank" rel="noopener noreferrer" title="LinkedIn">
-                  <FaLinkedin size={20} className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle" />
-                </a>
-                <a href="https://github.com/monikadvorackova" target="_blank" rel="noopener noreferrer" title="GitHub">
-                  <FaGithub size={20} className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle" />
-                </a>
-                <a href="https://arxiv.org/search/?searchtype=author&query=Dvorackova%2C+M" target="_blank" rel="noopener noreferrer" title="arXiv">
-                  <ArxivIcon size={20} className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle" />
-                </a>
-                <a href="mailto:monika.dvorack@gmail.com" title="Send Email">
-                  <FaEnvelope size={20} className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle" />
-                </a>
-              </div>
-
-              <div className="mt-8 flex flex-col items-center">
-                <div className="text-base md:text-lg font-normal mb-2 hover:scale-110 transition-transform duration-300 translate-y-[6px]">
-                  Consultation / Articles & SaaS
-                </div>
-                <div className="pt-[0.3rem] flex gap-4">
-                  <a
-                    href="https://calendly.com/monika-dvorack/15min"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group transition-all duration-300"
-                    title="Book via Calendly"
+            {/* SWIPE WRAPPER – nereálné přetažení, jen gesto */}
+            <motion.div
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.15}
+              onPanEnd={onPanEnd}
+              onWheel={onWheel}
+              className="w-full"
+              aria-label="Swipe left on the hero to open blog posts"
+            >
+              <div className="flex flex-col items-center space-y-6 z-10">
+                <div className="relative w-48 h-48 mt-12 -mb-4">
+                  <div
+                    className="w-full h-full relative"
+                    style={{ clipPath: "circle(50% at 50% 50%)", overflow: "visible" }}
                   >
-                    <FaCalendarAlt size={18} className="text-blue-600 transition-all duration-300 group-hover:scale-110 group-hover:translate-y-1 translate-y-[8px]" />
+                    <Image
+                      src="/portrait.jpg"
+                      alt="Portrait"
+                      width={150}
+                      height={150}
+                      className="rounded-full object-cover scale-[1.18]"
+                      style={{ objectPosition: "top center" }}
+                    />
+                  </div>
+                </div>
+
+                <motion.h1
+                  whileHover={{ scale: 1.02 }}
+                  style={{ fontSize: "1.10rem", lineHeight: "1.1" }}
+                  className="font-medium hover:scale-110 transition-transform duration-300 tracking-tight"
+                >
+                  Ing. et Ing. Mgr. Monika Dvorackova
+                </motion.h1>
+
+                <div className="text-sm md:text-base font-medium max-w-xl leading-snug px-2">
+                  <p className="mb-0">
+                    I’m an engineer & consultant in{" "}
+                    <span className="inline-block align-baseline">
+                      <AnimatePresence mode="wait">
+                        <CrossfadeWord word={aiWords[aiIndex]} />
+                      </AnimatePresence>
+                    </span>
+                    , helping companies implement{" "}
+                    <span className="inline-block align-baseline">
+                      <AnimatePresence mode="wait">
+                        <CrossfadeWord word={mlWords[mlIndex]} />
+                      </AnimatePresence>
+                    </span>{" "}
+                    solutions.
+                  </p>
+                  <p className="italic mt-0">
+                    And occasionally, a bit of{" "}
+                    <span className="inline-block align-baseline">
+                      <AnimatePresence mode="wait">
+                        <CrossfadeWord word={lawWords[lawIndex]} />
+                      </AnimatePresence>
+                    </span>
+                    .
+                  </p>
+                </div>
+
+                <div className="flex items-center justify-center gap-4 mt-6">
+                  <a href="https://www.linkedin.com/in/monika-dvorackova/?locale=en_US" target="_blank" rel="noopener noreferrer" title="LinkedIn">
+                    <FaLinkedin size={20} className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle" />
                   </a>
-                  <Link href="/blog" className="group transition-all duration-300" title="View Articles & SaaS">
-                    <FaFileAlt size={18} className="text-blue-600 transition-all duration-300 group-hover:scale-110 group-hover:translate-y-1 translate-y-[8px]" />
-                  </Link>
+                  <a href="https://github.com/monikadvorackova" target="_blank" rel="noopener noreferrer" title="GitHub">
+                    <FaGithub size={20} className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle" />
+                  </a>
+                  <a href="https://arxiv.org/search/?searchtype=author&query=Dvorackova%2C+M" target="_blank" rel="noopener noreferrer" title="arXiv">
+                    <ArxivIcon size={20} className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle" />
+                  </a>
+                  <a href="mailto:monika.dvorack@gmail.com" title="Send Email">
+                    <FaEnvelope size={20} className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle" />
+                  </a>
+                </div>
+
+                <div className="mt-8 flex flex-col items-center">
+                  <div className="text-base md:text-lg font-normal mb-2 hover:scale-110 transition-transform duration-300 translate-y-[6px]">
+                    Consultation / Articles & SaaS
+                  </div>
+                  <div className="pt-[0.3rem] flex gap-4">
+                    <a
+                      href="https://calendly.com/monika-dvorack/15min"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group transition-all duration-300"
+                      title="Book via Calendly"
+                    >
+                      <FaCalendarAlt size={18} className="text-blue-600 transition-all duration-300 group-hover:scale-110 group-hover:translate-y-1 translate-y-[8px]" />
+                    </a>
+                    <Link href="/blog" className="group transition-all duration-300" title="View Articles & SaaS">
+                      <FaFileAlt size={18} className="text-blue-600 transition-all duration-300 group-hover:scale-110 group-hover:translate-y-1 translate-y-[8px]" />
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </motion.main>
 
           <footer className="text-[10px] text-neutral-500 text-center py-4 mt-auto">

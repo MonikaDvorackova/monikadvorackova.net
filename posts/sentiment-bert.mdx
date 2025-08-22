@@ -12,6 +12,15 @@ tags:
   - Weights & Biases
   - Experiment Tracking
   - NLP
+tldr: "End-to-end sentiment pipeline: noisy CSV → cleaning & dedup → XLM-RoBERTa fine-tuning with class-weighted loss (max_len 128–256). Decision threshold tuned on VALID. Experiments tracked in W&B/MLflow. Public deliverable: a reusable W&B dashboard you can duplicate and feed with your own runs."
+resources:
+  - type: github
+    href: "https://github.com/monikadvorackova/bert-sentiment"   
+  - type: colab
+    href: "https://colab.research.google.com/drive/XXXXXXXX"     
+    label: "Colab Notebook"
+  - type: wandb
+    href: "https://wandb.ai/<org>/<project>/reports/<report-id>" 
 ---
 
 Real-world datasets are rarely as clean as textbook examples. In practice, you often face strong class imbalance — for example, when most user reviews are harmless while only a minority need to be flagged. A trivial classifier that always predicts the majority class can achieve high accuracy, but it fails at the very task it was designed for.  

@@ -11,6 +11,21 @@ interface Post {
   tags: string[];
 }
 
+type ResourceType =
+  | "github" | "arxiv" | "wandb" | "mlflow" | "model" | "website"
+  | "pdf" | "dataset" | "demo" | "colab" | "kaggle";
+
+type Resource = { type: ResourceType; href: string; label?: string };
+
+interface Post {
+  slug: string;
+  title: string;
+  date: string;
+  tags: string[];
+  tldr?: string;
+  resources?: Resource[];   
+}
+
 function CrossfadeWord({ word }: { word: string }) {
   return (
     <motion.span
