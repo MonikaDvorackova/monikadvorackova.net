@@ -6,10 +6,10 @@ import { useRouter } from "next/navigation";
 
 type Props = {
   children: React.ReactNode;
-  to?: string;        // "/blog" nebo "#blog"
-  xThreshold?: number; // kolik px musíš „odtáhnout“ doleva (touch)
-  vThreshold?: number; // minimální rychlost
-  wheelThreshold?: number; // deltaX pro touchpad
+  to?: string;          // "/blog" or "#blog"
+  xThreshold?: number;  // how many px you must drag left (touch)
+  vThreshold?: number;  // minimum velocity
+  wheelThreshold?: number; // deltaX threshold for touchpad
 };
 
 export default function HeroSwipeLink({
@@ -20,7 +20,7 @@ export default function HeroSwipeLink({
   wheelThreshold = -80,
 }: Props) {
   const router = useRouter();
-  const triggeredRef = useRef(false);
+  const triggeredRef = useRef<boolean>(false);
 
   const go = () => {
     if (triggeredRef.current) return;
@@ -34,22 +34,22 @@ export default function HeroSwipeLink({
   };
 
   // touch/mouse drag (Framer Motion)
-  const onPanEnd = (_: any, info: PanInfo) => {
-    const { offset, velocity } = info; // offset.x záporný = doleva
+  const onPanEnd = (_e: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+    const { offset, velocity } = info; // offset.x negative = left
     if (offset.x <= -xThreshold && Math.abs(velocity.x) >= vThreshold) {
       go();
     }
   };
 
-  // trackpad: horizontální gesto (deltaX < 0 = doleva)
+  // trackpad: horizontal gesture (deltaX < 0 = left)
   const onWheel = (e: React.WheelEvent) => {
-    // ignoruj vertikální scroll, reaguj jen na výrazný posun doleva
+    // ignore vertical scroll, react only to significant left swipe
     if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && e.deltaX <= wheelThreshold) {
       go();
     }
   };
 
-  // klávesnice jako přístupnostní fallback (šipka vlevo)
+  // keyboard accessibility fallback (Left Arrow)
   const onKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowLeft") go();
   };
@@ -62,7 +62,7 @@ export default function HeroSwipeLink({
       onWheel={onWheel}
       onPanEnd={onPanEnd}
       drag="x"
-      dragConstraints={{ left: 0, right: 0 }} // jen horizontální gesto, bez posunu UI
+      dragConstraints={{ left: 0, right: 0 }} // horizontal gesture only, without UI shift
       dragElastic={0.15}
       className="outline-none"
       aria-label="Swipe left to open blog posts"

@@ -203,7 +203,7 @@ export default function HomePage() {
     return () => window.clearInterval(id);
   }, []);
 
-  // --- Overlay ovládání (vertikální posun/klávesy/touch) ---
+  // --- Overlay control (vertical scroll/keys/touch) ---
   useEffect(() => {
     const COOLDOWN = 350;
     let touchStartY: number | null = null;
@@ -257,30 +257,33 @@ export default function HomePage() {
 
   const ease = [0.22, 1, 0.36, 1] as const;
 
-  // --- SWIPE RIGHT→LEFT pro /blog (touchpad i touch) ---
+  // --- SWIPE RIGHT→LEFT for /blog (touchpad & touch) ---
   const triggeredRef = useRef(false);
   const goBlog = useCallback(() => {
     if (triggeredRef.current) return;
     triggeredRef.current = true;
     router.push("/blog");
-    // reset po krátké době, aby šlo gesto použít znovu po návratu
+    // reset after a short delay so the gesture can be reused after navigating back
     setTimeout(() => { triggeredRef.current = false; }, 1200);
   }, [router]);
 
-  const X_THRESHOLD = 80;     // minimální horizontální posun (px) doleva
-  const V_THRESHOLD = 0.3;    // minimální rychlost (framer velocity)
-  const WHEEL_THRESHOLD = -100; // deltaX pro trackpad (< 0 = doleva)
+  const X_THRESHOLD = 80;       // minimum horizontal drag (px) left
+  const V_THRESHOLD = 0.3;      // minimum framer velocity
+  const WHEEL_THRESHOLD = -100; // deltaX for trackpad (< 0 = left)
 
-  const onPanEnd = (_: any, info: PanInfo) => {
-    const { offset, velocity } = info; // offset.x záporný = doleva
-    const horizontal = Math.abs(offset.x) > Math.abs((info.offset as any).y ?? 0);
+  const onPanEnd = (
+    _e: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo
+  ) => {
+    const { offset, velocity } = info; // offset.x negative = left
+    const horizontal = Math.abs(offset.x) > Math.abs(offset.y);
     if (horizontal && offset.x <= -X_THRESHOLD && Math.abs(velocity.x) >= V_THRESHOLD) {
       goBlog();
     }
   };
 
   const onWheel = (e: React.WheelEvent) => {
-    // reaguj jen na výrazný horizontální posun doleva (touchpad), ignoruj vertikální scroll
+    // react only to significant horizontal left swipe (touchpad), ignore vertical scroll
     if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && e.deltaX <= WHEEL_THRESHOLD) {
       goBlog();
     }
@@ -301,7 +304,7 @@ export default function HomePage() {
             transition={{ duration: 0.6, ease }}
             className="flex-grow flex flex-col items-center justify-center px-4 text-center"
           >
-            {/* SWIPE WRAPPER – nereálné přetažení, jen gesto */}
+            {/* SWIPE WRAPPER – non-real drag, gesture only */}
             <motion.div
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
