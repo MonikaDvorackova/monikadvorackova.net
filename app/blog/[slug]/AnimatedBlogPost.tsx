@@ -31,8 +31,7 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
-      {/* mobile-first padding: na mobilu px-6, na větších stejné jako dřív */}
-      <div className="px-6 sm:px-12 lg:px-16">
+      <div className="px-16 sm:px-12 max-sm:px-8">
         <div className="max-w-[800px] mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}>
             <ArticleHeader />
@@ -40,7 +39,7 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
 
           <motion.hr className="border-gray-200 dark:border-gray-700 my-8" initial={{ opacity: 0, scaleX: 0 }} animate={{ opacity: 1, scaleX: 1 }} transition={{ duration: 0.8, delay: 0.4 }} />
 
-          {/* TAGS — beze změn */}
+          {/* TAGS */}
           <div className="flex flex-wrap justify-center mb-2" style={{ gap: "8px" }}>
             {(meta.tags || []).map((tag, index) => (
               <motion.div
@@ -77,7 +76,8 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
 
             {meta.tldr ? <TLDR text={meta.tldr} /> : null}
 
-            <article className="text-justify leading-[1.75]">
+            {/* JEDINÁ ZMĚNA: mobilní okraje pro článek přes styled-jsx */}
+            <article className="text-justify leading-[1.75] article-content">
               <Markdown
                 components={{
                   h1: ({ children }) => <h1 className="text-lg font-light text-neutral-900 mb-4 text-center">{children}</h1>,
@@ -92,6 +92,16 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
                 {content}
               </Markdown>
             </article>
+
+            {/* lokální CSS jen pro mobilní okraje článku */}
+            <style jsx>{`
+              @media (max-width: 640px) {
+                .article-content {
+                  padding-left: 16px;
+                  padding-right: 16px;
+                }
+              }
+            `}</style>
           </motion.main>
 
           <motion.footer className="text-[10px] font-light text-neutral-900 py-8 text-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 1.2 }}>
