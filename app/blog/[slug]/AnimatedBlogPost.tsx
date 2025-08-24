@@ -77,7 +77,7 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
             {meta.tldr ? <TLDR text={meta.tldr} /> : null}
 
 
-            <article className="text-justify leading-[1.75] px-4 sm:px-0">
+            <article className="text-justify leading-[1.75] sm:max-w-none sm:px-0 max-w-full px-4">
   <Markdown
     components={{
       h1: ({ children }) => <h1 className="text-lg font-light text-neutral-900 mb-4 text-center">{children}</h1>,
