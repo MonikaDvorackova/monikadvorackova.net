@@ -98,8 +98,8 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
   <style jsx global>{`
     @media (max-width: 640px) {
       .mobile-pad {
-        padding-left: max(24x, env(safe-area-inset-left));
-        padding-right: max(24px, env(safe-area-inset-right));
+        padding-left: max(32px, env(safe-area-inset-left));
+        padding-right: max(32px, env(safe-area-inset-right));
         box-sizing: border-box;
         width: 100%;
         margin: 0 auto;
