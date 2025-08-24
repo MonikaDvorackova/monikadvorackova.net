@@ -76,14 +76,20 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
 
             {meta.tldr ? <TLDR text={meta.tldr} /> : null}
 
-{/* === ČLÁNEK: mobilní okraje jen uvnitř článku === */}
-<article className="text-justify leading-[1.75]">
-  <div className="px-4 sm:px-0">
+{/* === ČLÁNEK: mobilní padding fix === */}
+<div className="sm:px-0 px-4">
+  <article className="text-justify leading-[1.75]">
     <Markdown
       components={{
-        h1: ({ children }) => <h1 className="text-lg font-light text-neutral-900 mb-4 text-center">{children}</h1>,
-        h2: ({ children }) => <h2 className="text-base font-light text-neutral-800 mb-3 text-center">{children}</h2>,
-        p:  ({ children }) => <p className="text-sm text-neutral-900 leading-relaxed mb-3">{children}</p>,
+        h1: ({ children }) => (
+          <h1 className="text-lg font-light text-neutral-900 mb-4 text-center">{children}</h1>
+        ),
+        h2: ({ children }) => (
+          <h2 className="text-base font-light text-neutral-800 mb-3 text-center">{children}</h2>
+        ),
+        p: ({ children }) => (
+          <p className="text-sm text-neutral-900 leading-relaxed mb-3">{children}</p>
+        ),
         strong: ({ children }) => {
           const txt = React.Children.toArray(children).join("").toLowerCase();
           return txt === "neural" || txt === "natural law"
@@ -94,10 +100,8 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
     >
       {content}
     </Markdown>
-  </div>
-</article>
-
-
+  </article>
+</div>
 
             {/* DESKTOP: beze změn (žádný padding navíc) */}
             <article className="hidden sm:block text-justify leading-[1.75]">
