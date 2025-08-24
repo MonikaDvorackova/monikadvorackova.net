@@ -76,62 +76,40 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
 
             {meta.tldr ? <TLDR text={meta.tldr} /> : null}
 
+            {/* === ČLÁNEK === */}
+            {/* MOBIL: padding po stranách */}
+            <article className="block sm:hidden text-justify leading-[1.75] px-4">
+              <Markdown
+                components={{
+                  h1: ({ children }) => <h1 className="text-lg font-light text-neutral-900 mb-4 text-center">{children}</h1>,
+                  h2: ({ children }) => <h2 className="text-base font-light text-neutral-800 mb-3 text-center">{children}</h2>,
+                  p:  ({ children }) => <p className="text-sm text-neutral-900 leading-relaxed mb-3">{children}</p>,
+                  strong: ({ children }) => {
+                    const txt = React.Children.toArray(children).join("").toLowerCase();
+                    return txt === "neural" || txt === "natural law" ? <>{children}</> : <strong className="font-semibold text-neutral-900">{children}</strong>;
+                  },
+                }}
+              >
+                {content}
+              </Markdown>
+            </article>
 
-{/* MOBILE verze – jen na šířkách < 640px, má vnitřní okraje */}
-<article className="block sm:hidden text-justify leading-[1.75] px-4">
-  <Markdown
-    components={{
-      h1: ({ children }) => <h1 className="text-lg font-light text-neutral-900 mb-4 text-center">{children}</h1>,
-      h2: ({ children }) => <h2 className="text-base font-light text-neutral-800 mb-3 text-center">{children}</h2>,
-      p:  ({ children }) => <p className="text-sm text-neutral-900 leading-relaxed mb-3">{children}</p>,
-      strong: ({ children }) => {
-        const txt = React.Children.toArray(children).join("").toLowerCase();
-        return txt === "neural" || txt === "natural law" ? <>{children}</> : <strong className="font-semibold text-neutral-900">{children}</strong>;
-      },
-    }}
-  >
-    {content}
-  </Markdown>
-</article>
-
-<article className="text-justify leading-[1.75] px-4 sm:px-0">
-  <Markdown
-    components={{
-      h1: ({ children }) => (
-        <h1 className="text-lg font-light text-neutral-900 mb-4 text-center">{children}</h1>
-      ),
-      h2: ({ children }) => (
-        <h2 className="text-base font-light text-neutral-800 mb-3 text-center">{children}</h2>
-      ),
-      p: ({ children }) => (
-        <p className="text-sm text-neutral-900 leading-relaxed mb-3">{children}</p>
-      ),
-      strong: ({ children }) => {
-        const txt = React.Children.toArray(children).join("").toLowerCase();
-        return txt === "neural" || txt === "natural law" ? (
-          <>{children}</>
-        ) : (
-          <strong className="font-semibold text-neutral-900">{children}</strong>
-        );
-      },
-    }}
-  >
-    {content}
-  </Markdown>
-</article>
-
-
-
-
-            {/* lokální CSS jen pro mobilní okraje článku */}
-            <style jsx>{`
-              @media (max-width: 640px) {
-                .article-content {
-                  padding-left: 16px;
-                  padding-right: 16px;
-                }
-              }
-            `}</style>
+            {/* DESKTOP: beze změn (žádný padding navíc) */}
+            <article className="hidden sm:block text-justify leading-[1.75]">
+              <Markdown
+                components={{
+                  h1: ({ children }) => <h1 className="text-lg font-light text-neutral-900 mb-4 text-center">{children}</h1>,
+                  h2: ({ children }) => <h2 className="text-base font-light text-neutral-800 mb-3 text-center">{children}</h2>,
+                  p:  ({ children }) => <p className="text-sm text-neutral-900 leading-relaxed mb-3">{children}</p>,
+                  strong: ({ children }) => {
+                    const txt = React.Children.toArray(children).join("").toLowerCase();
+                    return txt === "neural" || txt === "natural law" ? <>{children}</> : <strong className="font-semibold text-neutral-900">{children}</strong>;
+                  },
+                }}
+              >
+                {content}
+              </Markdown>
+            </article>
           </motion.main>
 
           <motion.footer className="text-[10px] font-light text-neutral-900 py-8 text-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 1.2 }}>
