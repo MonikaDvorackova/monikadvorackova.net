@@ -94,21 +94,32 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
   </Markdown>
 </article>
 
-<article className="hidden sm:block text-justify leading-[1.75]">
+<article className="text-justify leading-[1.75] px-4 sm:px-0">
   <Markdown
     components={{
-      h1: ({ children }) => <h1 className="text-lg font-light text-neutral-900 mb-4 text-center">{children}</h1>,
-      h2: ({ children }) => <h2 className="text-base font-light text-neutral-800 mb-3 text-center">{children}</h2>,
-      p:  ({ children }) => <p className="text-sm text-neutral-900 leading-relaxed mb-3">{children}</p>,
+      h1: ({ children }) => (
+        <h1 className="text-lg font-light text-neutral-900 mb-4 text-center">{children}</h1>
+      ),
+      h2: ({ children }) => (
+        <h2 className="text-base font-light text-neutral-800 mb-3 text-center">{children}</h2>
+      ),
+      p: ({ children }) => (
+        <p className="text-sm text-neutral-900 leading-relaxed mb-3">{children}</p>
+      ),
       strong: ({ children }) => {
         const txt = React.Children.toArray(children).join("").toLowerCase();
-        return txt === "neural" || txt === "natural law" ? <>{children}</> : <strong className="font-semibold text-neutral-900">{children}</strong>;
+        return txt === "neural" || txt === "natural law" ? (
+          <>{children}</>
+        ) : (
+          <strong className="font-semibold text-neutral-900">{children}</strong>
+        );
       },
     }}
   >
     {content}
   </Markdown>
 </article>
+
 
 
 
