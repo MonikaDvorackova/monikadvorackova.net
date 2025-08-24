@@ -76,23 +76,40 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
 
             {meta.tldr ? <TLDR text={meta.tldr} /> : null}
 
-            {/* === ČLÁNEK === */}
-            {/* MOBIL: padding po stranách */}
-            <article className="block sm:hidden text-justify leading-[1.75] px-4">
-              <Markdown
-                components={{
-                  h1: ({ children }) => <h1 className="text-lg font-light text-neutral-900 mb-4 text-center">{children}</h1>,
-                  h2: ({ children }) => <h2 className="text-base font-light text-neutral-800 mb-3 text-center">{children}</h2>,
-                  p:  ({ children }) => <p className="text-sm text-neutral-900 leading-relaxed mb-3">{children}</p>,
-                  strong: ({ children }) => {
-                    const txt = React.Children.toArray(children).join("").toLowerCase();
-                    return txt === "neural" || txt === "natural law" ? <>{children}</> : <strong className="font-semibold text-neutral-900">{children}</strong>;
-                  },
-                }}
-              >
-                {content}
-              </Markdown>
-            </article>
+{/* === ČLÁNEK === */}
+{/* MOBIL: širší okraje, žádný full-bleed — desktop beze změny */}
+<div className="sm:hidden px-5">
+  <article className="text-justify leading-[1.75]">
+    <Markdown
+      components={{
+        h1: ({ children }) => (
+          <h1 className="text-lg font-light text-neutral-900 mb-4 text-center">
+            {children}
+          </h1>
+        ),
+        h2: ({ children }) => (
+          <h2 className="text-base font-light text-neutral-800 mb-3 text-center">
+            {children}
+          </h2>
+        ),
+        p: ({ children }) => (
+          <p className="text-sm text-neutral-900 leading-relaxed mb-3">
+            {children}
+          </p>
+        ),
+        strong: ({ children }) => {
+          const txt = String(React.Children.toArray(children).join("")).toLowerCase();
+          return txt === "neural" || txt === "natural law"
+            ? <>{children}</>
+            : <strong className="font-semibold text-neutral-900">{children}</strong>;
+        },
+      }}
+    >
+      {content}
+    </Markdown>
+  </article>
+</div>
+
 
             {/* DESKTOP: beze změn (žádný padding navíc) */}
             <article className="hidden sm:block text-justify leading-[1.75]">
