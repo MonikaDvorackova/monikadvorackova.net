@@ -9,7 +9,7 @@ import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
 
-// --- Sdílené typy ---
+// --- typy pro resources ---
 export type ResourceType =
   | "github" | "arxiv" | "wandb" | "mlflow" | "model" | "website"
   | "pdf" | "dataset" | "demo" | "colab" | "kaggle";
@@ -18,7 +18,7 @@ export type Resource = { type: ResourceType; href: string; label?: string };
 
 type BlogPostMeta = {
   title: string;
-  date: string;          // ISO
+  date: string;
   tags: string[];
   tldr?: string;
   citations?: number;
@@ -37,12 +37,12 @@ async function readPostRaw(slug: string): Promise<string | null> {
   for (const ext of [".mdx", ".md"] as const) {
     try {
       return await fs.readFile(path.join(postsDir, `${slug}${ext}`), "utf8");
-    } catch { /* try next ext */ }
+    } catch { /* try next */ }
   }
   return null;
 }
 
-// --- Parsing helpers ---
+// --- parsing helpers ---
 function isResourceType(x: unknown): x is ResourceType {
   return typeof x === "string" && (VALID_TYPES as readonly string[]).includes(x);
 }
@@ -64,60 +64,60 @@ function parseResources(raw: unknown): Resource[] {
 }
 
 function parseTags(raw: unknown): string[] {
-  return Array.isArray(raw)
-    ? (raw as unknown[]).map(String)
-    : raw ? [String(raw)] : [];
+  return Array.isArray(raw) ? (raw as unknown[]).map(String) : raw ? [String(raw)] : [];
 }
 
 function estimateReadingTimeMinutes(markdownContent: string): number {
-  // hrubý odhad: 200 slov/min
-  const words = markdownContent
-    .replace(/[`*#>\-\[\]\(\)_]/g, " ") // odstranění markdown znaků
-    .split(/\s+/)
-    .filter(Boolean).length;
+  const words = markdownContent.replace(/[`*#>\-\[\]\(\)_]/g, " ")
+    .split(/\s+/).filter(Boolean).length;
   return Math.max(1, Math.round(words / 200));
 }
 
-// --- Page metadata (SEO/OG) ---
+// --- Metadata (pozor: params je Promise) ---
 export async function generateMetadata(
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ): Promise<Metadata> {
-  const raw = await readPostRaw(params.slug);
+  const { slug } = await params;
+  const raw = await readPostRaw(slug);
   if (!raw) return { title: "Not found" };
   const { data } = matter(raw);
-  const title = String((data as Record<string, unknown>).title ?? "Untitled");
-  const desc = String((data as Record<string, unknown>).tldr ?? "");
-  const date = String((data as Record<string, unknown>).date ?? "");
+  const d = data as Record<string, unknown>;
+
+  const title = String(d.title ?? "Untitled");
+  const desc = d.tldr ? String(d.tldr) : undefined;
+  const date = d.date ? String(d.date) : undefined;
 
   const urlBase = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, "") || "";
-  const canonical = urlBase ? `${urlBase}/blog/${params.slug}` : undefined;
+  const canonical = urlBase ? `${urlBase}/blog/${slug}` : undefined;
 
   return {
     title,
-    description: desc || undefined,
+    description: desc,
     alternates: { canonical },
     openGraph: {
       type: "article",
       title,
-      description: desc || undefined,
+      description: desc,
       url: canonical,
       locale: "en_US",
       siteName: "Monika Dvorackova",
-      publishedTime: date || undefined,
+      publishedTime: date,
     },
     twitter: {
       card: "summary_large_image",
       title,
-      description: desc || undefined,
+      description: desc,
     },
   };
 }
 
-// --- Page component ---
+// --- Stránka (pozor: params je Promise) ---
 export default async function BlogPostPage(
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
-  const raw = await readPostRaw(params.slug);
+  const { slug } = await params;
+
+  const raw = await readPostRaw(slug);
   if (!raw) notFound();
 
   const { data, content } = matter(raw);
