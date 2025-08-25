@@ -7,68 +7,40 @@ import matter from "gray-matter";
 export const dynamic = "force-dynamic";
 
 type ResourceType =
-  | "github"
-  | "arxiv"
-  | "wandb"
-  | "mlflow"
-  | "model"
-  | "website"
-  | "pdf"
-  | "dataset"
-  | "demo"
-  | "colab"
-  | "kaggle";
+  | "github" | "arxiv" | "wandb" | "mlflow" | "model" | "website"
+  | "pdf" | "dataset" | "demo" | "colab" | "kaggle";
 
 type Resource = { type: ResourceType; href: string; label?: string };
 
 const ALLOWED: readonly ResourceType[] = [
-  "github",
-  "arxiv",
-  "wandb",
-  "mlflow",
-  "model",
-  "website",
-  "pdf",
-  "dataset",
-  "demo",
-  "colab",
-  "kaggle",
+  "github","arxiv","wandb","mlflow","model","website",
+  "pdf","dataset","demo","colab","kaggle",
 ] as const;
 
 function isResourceType(x: string): x is ResourceType {
   return (ALLOWED as readonly string[]).includes(x);
 }
 
-type ResourceCandidate = {
-  type?: unknown;
-  href?: unknown;
-  label?: unknown;
-};
+type ResourceCandidate = { type?: unknown; href?: unknown; label?: unknown };
 
 function normalizeResources(input: unknown): Resource[] {
   const arr: unknown[] = Array.isArray(input) ? input : input != null ? [input] : [];
-
-  const normalized: Resource[] = arr
+  return arr
     .map((it): Resource | null => {
       if (!it || typeof it !== "object") return null;
-
       const cand = it as ResourceCandidate;
       const typeStr = String(cand.type ?? "").toLowerCase();
       const hrefStr = String(cand.href ?? "");
       const labelStr = cand.label != null ? String(cand.label) : undefined;
-
       if (!hrefStr) return null;
       if (!isResourceType(typeStr)) return null;
-
       return { type: typeStr as ResourceType, href: hrefStr, label: labelStr };
     })
     .filter((r): r is Resource => r !== null);
-
-  return normalized;
 }
 
 function normalizeTags(input: unknown): string[] {
-  if (Array.isArray(input)) return input.map((t) => String(t));
+  if (Array.isArray(input)) return input.map(String);
   if (input == null) return [];
   return [String(input)];
 }
@@ -77,21 +49,43 @@ function normalizeString(input: unknown, fallback = ""): string {
   return input != null ? String(input) : fallback;
 }
 
+// ——— reading time helpers ———
+function stripMarkdown(md: string): string {
+  return md
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/`[^`]*`/g, " ")
+    .replace(/\!\[[^\]]*\]\([^\)]*\)/g, " ")
+    .replace(/\[[^\]]*\]\([^\)]*\)/g, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/[#>*_~\-`]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+function countWords(md: string): number {
+  const cleaned = stripMarkdown(md);
+  return cleaned ? cleaned.split(" ").length : 0;
+}
+function readingMinutesFromContent(content: string, wpm = 200): number {
+  return Math.max(1, Math.round(countWords(content) / wpm));
+}
+
 interface FrontMatter {
   title?: unknown;
   date?: unknown;
   tags?: unknown;
   tldr?: unknown;
   resources?: unknown;
+  readingMinutes?: unknown; // volitelně přímo ve frontmatteru
 }
 
 interface PostMeta {
   slug: string;
   title: string;
-  date: string; // ISO string (as written in the MDX)
+  date: string;      // ISO string (jak je v MD/MDX)
   tags: string[];
   tldr: string;
   resources: Resource[];
+  readingMinutes: number; // ← přidáno
 }
 
 export async function GET() {
@@ -108,10 +102,15 @@ export async function GET() {
 
         const resources = normalizeResources(data.resources);
         const tags = normalizeTags(data.tags);
-
         const title = normalizeString(data.title, "Untitled");
         const date = normalizeString(data.date, "1970-01-01");
         const tldr = normalizeString(data.tldr, "");
+
+        // reading time: preferuj frontmatter, jinak spočítej z obsahu
+        const readingMinutes =
+          typeof data.readingMinutes === "number"
+            ? data.readingMinutes
+            : readingMinutesFromContent(fm.content);
 
         return {
           slug: filename.replace(/\.mdx?$/, ""),
@@ -120,12 +119,12 @@ export async function GET() {
           tags,
           tldr,
           resources,
+          readingMinutes,
         };
       })
     );
 
     posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-
     return NextResponse.json(posts);
   } catch (error) {
     console.error("Error reading posts:", error);

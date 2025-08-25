@@ -4,13 +4,6 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ClientBlog from "@/components/ClientBlog";
 
-interface Post {
-  slug: string;
-  title: string;
-  date: string;
-  tags: string[];
-}
-
 type ResourceType =
   | "github" | "arxiv" | "wandb" | "mlflow" | "model" | "website"
   | "pdf" | "dataset" | "demo" | "colab" | "kaggle";
@@ -23,7 +16,8 @@ interface Post {
   date: string;
   tags: string[];
   tldr?: string;
-  resources?: Resource[];   
+  resources?: Resource[];
+  readingMinutes?: number; // ← přidáno pro zobrazení „X min read“ v ClientBlog
 }
 
 function CrossfadeWord({ word }: { word: string }) {
@@ -56,9 +50,9 @@ export default function BlogPage() {
     fetch("/api/posts")
       .then((res) => res.json() as Promise<Post[]>)
       .then((data) => {
+        // deduplikace podle slugu
         const unique = Array.from(new Map(data.map((p) => [p.slug, p])).values());
         setPosts(unique);
-        // Nastavíme loaded po načtení postů
         setTimeout(() => setIsLoaded(true), 300);
       });
   }, []);
@@ -71,14 +65,14 @@ export default function BlogPage() {
   }, []);
 
   return (
-    <motion.div 
+    <motion.div
       className="min-h-screen flex flex-col justify-between bg-gradient-to-br from-[#fdf2e9] to-[#f8e9dc] text-neutral-900"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
       <main className="w-full flex flex-col items-center justify-center px-4 text-center pt-20 flex-1">
-        <motion.div 
+        <motion.div
           className="text-base md:text-lg font-medium mb-2 min-h-[1.75rem]"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -89,7 +83,7 @@ export default function BlogPage() {
           </AnimatePresence>
         </motion.div>
 
-        <motion.p 
+        <motion.p
           className="text-sm italic text-neutral-600 mb-10"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -98,7 +92,7 @@ export default function BlogPage() {
           Thoughts & analysis on AI, law, and everything between.
         </motion.p>
 
-        <motion.div 
+        <motion.div
           className="w-full max-w-screen-lg"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 40 }}
@@ -108,7 +102,7 @@ export default function BlogPage() {
         </motion.div>
       </main>
 
-      <motion.footer 
+      <motion.footer
         className="w-full text-[10px] text-neutral-500 text-center pb-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

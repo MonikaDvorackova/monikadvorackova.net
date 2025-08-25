@@ -12,6 +12,7 @@ type Post = {
   slug: string;
   tags: string[];
   resources?: ResourceItem[];
+  readingMinutes?: number;
 };
 
 export default function ClientBlog({ posts }: { posts: Post[] }) {
@@ -59,7 +60,8 @@ export default function ClientBlog({ posts }: { posts: Post[] }) {
                   {post.tags[0]}
                 </Link>
               )}
-              <span className="text-[10px] text-black/60">{post.date}</span>
+              <span className="text-[10px] text-black/60">{post.date}
+              {typeof post.readingMinutes === "number" ? ` · ${post.readingMinutes} min read` : ""}</span>
             </div>
 
             {/* druhý řádek: ikonky */}

@@ -74,9 +74,15 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
               </div>
             ) : null}
 
-            {meta.tldr ? <TLDR text={meta.tldr} /> : null}
 
-{/* === ČLÁNEK (mobilní okraje jen na ≤640px) === */}
+{meta.tldr ? (
+  <div className="mobile-pad">
+    <TLDR text={meta.tldr} />
+  </div>
+) : null}
+
+
+
 <article className="text-justify leading-[1.75]">
   <div className="mobile-pad">
     <Markdown
@@ -94,7 +100,7 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
     </Markdown>
   </div>
 
-  {/* Jen mobil: boční padding + safe-area, desktop beze změny */}
+
   <style jsx global>{`
     @media (max-width: 640px) {
       .mobile-pad {
@@ -104,7 +110,7 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
         width: 100%;
         margin: 0 auto;
       }
-      /* zabrání přetečení obsahu na mobilu */
+
       .mobile-pad img,
       .mobile-pad video,
       .mobile-pad pre,
@@ -117,8 +123,6 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
   `}</style>
 </article>
 
-
-            {/* DESKTOP: beze změn (žádný padding navíc) */}
             <article className="hidden sm:block text-justify leading-[1.75]">
               <Markdown
                 components={{

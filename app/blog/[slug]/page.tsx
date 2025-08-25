@@ -7,8 +7,6 @@ import React from "react";
 import AnimatedBlogPost from "./AnimatedBlogPost";
 import type { Metadata } from "next";
 
-export const dynamic = "force-dynamic";
-
 // --- typy pro resources ---
 export type ResourceType =
   | "github" | "arxiv" | "wandb" | "mlflow" | "model" | "website"
@@ -73,14 +71,14 @@ function estimateReadingTimeMinutes(markdownContent: string): number {
   return Math.max(1, Math.round(words / 200));
 }
 
-// --- Metadata (pozor: params je Promise) ---
+// --- Metadata ---
 export async function generateMetadata(
   { params }: { params: Promise<{ slug: string }> }
 ): Promise<Metadata> {
   const { slug } = await params;
   const raw = await readPostRaw(slug);
   if (!raw) return { title: "Not found" };
-  const { data } = matter(raw);
+  const { data, content } = matter(raw);
   const d = data as Record<string, unknown>;
 
   const title = String(d.title ?? "Untitled");
@@ -100,7 +98,7 @@ export async function generateMetadata(
       description: desc,
       url: canonical,
       locale: "en_US",
-      siteName: "Monika Dvorackova",
+      siteName: "Monika Dvořáčková",
       publishedTime: date,
     },
     twitter: {
@@ -111,7 +109,7 @@ export async function generateMetadata(
   };
 }
 
-// --- Stránka (pozor: params je Promise) ---
+// --- Stránka ---
 export default async function BlogPostPage(
   { params }: { params: Promise<{ slug: string }> }
 ) {
@@ -133,5 +131,27 @@ export default async function BlogPostPage(
     readingTimeMin: estimateReadingTimeMinutes(content),
   };
 
-  return <AnimatedBlogPost meta={meta} content={content} />;
+  return (
+    <>
+      {/* JSON-LD pro SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            headline: meta.title,
+            datePublished: meta.date,
+            description: meta.tldr,
+            author: {
+              "@type": "Person",
+              name: "Monika Dvořáčková",
+            },
+            timeRequired: `PT${meta.readingTimeMin}M`,
+          }),
+        }}
+      />
+      <AnimatedBlogPost meta={meta} content={content} />
+    </>
+  );
 }
