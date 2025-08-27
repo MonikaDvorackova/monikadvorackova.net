@@ -7,7 +7,7 @@ import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "Monika Dvořáčková",
-  description: "AI • ML • Law – blog & projects by Monika Dvořáčková",
+  description: "AI • ML • Law - blog & projects by Monika Dvořáčková",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

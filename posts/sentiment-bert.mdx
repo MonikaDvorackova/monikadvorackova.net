@@ -1,6 +1,6 @@
 ---
-title: "When BERT Meets Sentiment: Tackling Imbalanced Text Classification"
-date: "2025-08-20"
+title: "From Accuracy to Utility: Lessons from NLP Projects"
+date: 2025-08-27
 category: "Applied NLP"
 tags:
   - BERT
@@ -22,43 +22,48 @@ resources:
   - type: wandb
     href: "https://wandb.ai/<org>/<project>/reports/<report-id>" 
 ---
+# From Accuracy to Utility: Lessons from NLP Projects
 
-Real-world datasets are rarely as clean as textbook examples. In practice, you often face strong class imbalance — for example, when most user reviews are harmless while only a minority need to be flagged. A trivial classifier that always predicts the majority class can achieve high accuracy, but it fails at the very task it was designed for.  
+## Beyond Accuracy  
 
-This project explored how to adapt **XLM-RoBERTa** (a multilingual transformer model) for such a setting.  
+One of the recurring lessons:  
+- **Accuracy is not enough**  
+- In imbalanced settings, metrics like **macro-F1, precision/recall trade-offs, or PR-AUC** are far more informative  
+- Threshold tuning often matters as much as the underlying architecture  
 
-## The Setup  
+---
 
-- **Model:** `xlm-roberta-base` fine-tuned for binary classification  
-- **Data:** ~80% “approve” vs. 20% “hide”  
-- **Challenge:** prevent the model from collapsing into predicting the majority class only  
-- **Approach:**  
-  - Tokenization with maximum length 256  
-  - Cross-entropy loss with **class weights** derived from label distribution  
-  - **AdamW optimizer** with weight decay  
-  - **Linear scheduler with warmup** to stabilize learning  
+## Iterative Process  
 
-## Experiment Tracking  
+A robust NLP project is never a single run — it’s a series of experiments. Typical steps involve:  
 
-Modern ML isn’t just about training a model — it’s about knowing *why* it behaves the way it does. To keep the process reproducible and transparent, runs were logged in **MLflow** (artifacts, parameters, metrics) and visualized in **Weights & Biases dashboards**.  
+- adjusting maximum sequence length, dropout, and learning rates  
+- balancing loss functions with class weights or sampling  
+- exploring optimizers and schedulers  
+- applying techniques like EMA, label smoothing, or gradient accumulation  
 
-This made it possible to:  
-- compare learning curves between experiments,  
-- monitor validation accuracy and F1,  
-- adjust thresholds and observe their effect on minority-class recall.  
+What looks like trial-and-error becomes a **scientific process** when documented.  
 
-## Key Findings  
+---
 
-- **Validation accuracy** hovered around 0.80, but that number alone was misleading given the imbalance.  
-- **Weighted F1** provided a better view: >0.80 on validation.  
-- **Minority class (HIDE)** remained the hardest to capture, but threshold tuning improved recall significantly.  
-- Logging everything made failures as valuable as successes — one run predicted “HIDE” for nearly everything, highlighting the importance of careful learning rate selection.  
+## Tracking and Reproducibility  
 
-## Reflections  
+Modern ML practice is inseparable from **experiment tracking**:  
 
-The interesting part wasn’t just the final number, but the *process*:  
-- how to deal with imbalance,  
-- which metrics matter beyond accuracy,  
-- how experiment tracking tools turn trial-and-error into a reproducible workflow.  
+- **MLflow** for storing artifacts, metrics, and parameters  
+- **Weights & Biases (W&B)** for visualizing learning curves, validation performance, and threshold sweeps  
+- **Notion or similar tools** as a lab notebook to capture the “story” of the experiments  
 
-It’s less about building a perfect model and more about building a **scientific practice** around applied NLP.  
+This turns raw training logs into a transparent and reproducible workflow — where each run, successful or not, contributes to understanding.  
+
+---
+
+## Key Takeaway  
+
+The most important insight is not about squeezing the last percentage point of accuracy, but about:  
+
+- choosing the **right metric for the real-world task**  
+- designing a process that can be explained and reproduced  
+- building **trust** in the model through transparency and iteration  
+
+In applied NLP, it’s less about chasing a perfect number, and more about cultivating a **scientific practice** around model development.  
