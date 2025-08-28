@@ -7,7 +7,7 @@ import React from "react";
 import AnimatedBlogPost from "./AnimatedBlogPost";
 import type { Metadata } from "next";
 
-// --- typy pro resources ---
+// --- types for resources ---
 export type ResourceType =
   | "github" | "arxiv" | "wandb" | "mlflow" | "model" | "website"
   | "pdf" | "dataset" | "demo" | "colab" | "kaggle";
@@ -28,6 +28,20 @@ const VALID_TYPES = [
   "github","arxiv","wandb","mlflow","model","website",
   "pdf","dataset","demo","colab","kaggle",
 ] as const satisfies readonly ResourceType[];
+
+// ---- date normalization (YYYY-MM-DD) ----
+function normalizeDate(input: unknown): string {
+  if (input instanceof Date && !isNaN(input.getTime())) return input.toISOString().slice(0, 10);
+  if (typeof input === "string") {
+    const s = input.trim();
+    const m = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if (m) return `${m[1]}-${m[2]}-${m[3]}`;
+    const d = new Date(s);
+    if (!isNaN(d.getTime())) return d.toISOString().slice(0, 10);
+    return s;
+  }
+  return "";
+}
 
 // --- IO helpers ---
 async function readPostRaw(slug: string): Promise<string | null> {
@@ -83,7 +97,7 @@ export async function generateMetadata(
 
   const title = String(d.title ?? "Untitled");
   const desc = d.tldr ? String(d.tldr) : undefined;
-  const date = d.date ? String(d.date) : undefined;
+  const date = d.date ? normalizeDate(d.date) : undefined;
 
   const urlBase = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, "") || "";
   const canonical = urlBase ? `${urlBase}/blog/${slug}` : undefined;
@@ -109,7 +123,7 @@ export async function generateMetadata(
   };
 }
 
-// --- Stránka ---
+// --- Page ---
 export default async function BlogPostPage(
   { params }: { params: Promise<{ slug: string }> }
 ) {
@@ -123,7 +137,7 @@ export default async function BlogPostPage(
 
   const meta: BlogPostMeta = {
     title: String(d.title ?? "Untitled"),
-    date: String(d.date ?? ""),
+    date: normalizeDate(d.date),
     tags: parseTags(d.tags),
     tldr: d.tldr ? String(d.tldr) : undefined,
     citations: typeof d.citations === "number" ? (d.citations as number) : undefined,
@@ -133,7 +147,7 @@ export default async function BlogPostPage(
 
   return (
     <>
-      {/* JSON-LD pro SEO */}
+      {/* JSON-LD for SEO */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

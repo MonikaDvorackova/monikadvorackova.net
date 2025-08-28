@@ -49,6 +49,22 @@ function normalizeString(input: unknown, fallback = ""): string {
   return input != null ? String(input) : fallback;
 }
 
+// ---- date normalization: keep cards compact (YYYY-MM-DD) ----
+function normalizeDate(input: unknown): string {
+  if (input instanceof Date && !isNaN(input.getTime())) {
+    return input.toISOString().slice(0, 10);
+  }
+  if (typeof input === "string") {
+    const s = input.trim();
+    const m = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if (m) return `${m[1]}-${m[2]}-${m[3]}`;
+    const d = new Date(s);
+    if (!isNaN(d.getTime())) return d.toISOString().slice(0, 10);
+    return s;
+  }
+  return "1970-01-01";
+}
+
 // ——— reading time helpers ———
 function stripMarkdown(md: string): string {
   return md
@@ -75,17 +91,17 @@ interface FrontMatter {
   tags?: unknown;
   tldr?: unknown;
   resources?: unknown;
-  readingMinutes?: unknown; // volitelně přímo ve frontmatteru
+  readingMinutes?: unknown;
 }
 
 interface PostMeta {
   slug: string;
   title: string;
-  date: string;      // ISO string (jak je v MD/MDX)
+  date: string;      // normalized YYYY-MM-DD
   tags: string[];
   tldr: string;
   resources: Resource[];
-  readingMinutes: number; // ← přidáno
+  readingMinutes: number;
 }
 
 export async function GET() {
@@ -103,10 +119,8 @@ export async function GET() {
         const resources = normalizeResources(data.resources);
         const tags = normalizeTags(data.tags);
         const title = normalizeString(data.title, "Untitled");
-        const date = normalizeString(data.date, "1970-01-01");
+        const date = normalizeDate(data.date);
         const tldr = normalizeString(data.tldr, "");
-
-        // reading time: preferuj frontmatter, jinak spočítej z obsahu
         const readingMinutes =
           typeof data.readingMinutes === "number"
             ? data.readingMinutes

@@ -17,7 +17,7 @@ interface Post {
   tags: string[];
   tldr?: string;
   resources?: Resource[];
-  readingMinutes?: number; // ← přidáno pro zobrazení „X min read“ v ClientBlog
+  readingMinutes?: number; // ← pro „X min read“ v ClientBlog
 }
 
 function CrossfadeWord({ word }: { word: string }) {
@@ -47,13 +47,38 @@ export default function BlogPage() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    fetch("/api/posts")
-      .then((res) => res.json() as Promise<Post[]>)
+    fetch("/api/posts", { cache: "no-store" })
+      .then(async (res) => {
+        if (!res.ok) {
+          const text = await res.text().catch(() => "");
+          throw new Error(`GET /api/posts failed: ${res.status} ${text}`);
+        }
+        return res.json() as Promise<unknown>;
+      })
       .then((data) => {
-        // deduplikace podle slugu
-        const unique = Array.from(new Map(data.map((p) => [p.slug, p])).values());
+        if (!Array.isArray(data)) {
+          console.error("Unexpected /api/posts payload:", data);
+          return;
+        }
+        // Deduplicate by slug + assert minimal shape
+        const cleaned = data
+          .filter((p: any) => p && typeof p.slug === "string" && typeof p.title === "string")
+          .map((p: any) => ({
+            slug: String(p.slug),
+            title: String(p.title),
+            date: String(p.date ?? ""),
+            tags: Array.isArray(p.tags) ? p.tags.map(String) : [],
+            tldr: p.tldr != null ? String(p.tldr) : undefined,
+            resources: Array.isArray(p.resources) ? p.resources : undefined,
+            readingMinutes: typeof p.readingMinutes === "number" ? p.readingMinutes : undefined,
+          })) as Post[];
+
+        const unique = Array.from(new Map(cleaned.map((p) => [p.slug, p])).values());
         setPosts(unique);
         setTimeout(() => setIsLoaded(true), 300);
+      })
+      .catch((err) => {
+        console.error(err);
       });
   }, []);
 
