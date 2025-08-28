@@ -14,8 +14,8 @@ type Post = {
 };
 
 export default function ClientBlog({ posts }: { posts: Post[] }) {
-  // vykreslíme A + A kvůli bezešvé smyčce
-  const trackPosts = posts.length ? [...posts, ...posts] : [];
+  // Dvojitý track pro bezešvou smyčku (A + A)
+  const trackPosts: Post[] = posts.length ? [...posts, ...posts] : [];
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
 
@@ -26,9 +26,9 @@ export default function ClientBlog({ posts }: { posts: Post[] }) {
 
     let raf = 0;
     let last = performance.now();
-    let x = 0;                  // aktuální posun v px (kladný směr doleva)
+    let x = 0;               // aktuální posun v px (kladný = doleva)
     let paused = false;
-    const speed = 30;           // px / s -> klidně uprav
+    const speed = 30;        // px/s – uprav dle chuti
 
     const onEnter = () => { paused = true; };
     const onLeave = () => { paused = false; };
@@ -38,13 +38,10 @@ export default function ClientBlog({ posts }: { posts: Post[] }) {
     wrapper.addEventListener("touchstart", onEnter, { passive: true });
     wrapper.addEventListener("touchend", onLeave);
 
-    // počkej na fonty, ať se nemění metrika -> žádné první „cuknutí“
-    const start = async () => {
-      // @ts-ignore
-      await (document.fonts?.ready ?? Promise.resolve());
-      last = performance.now();
-      loop(last);
-    };
+    // Spusť po načtení fontů, aby nebyl úvodní layout shift
+    type DocWithFonts = Document & { fonts?: { ready: Promise<void> } };
+    const fontsReady: Promise<void> =
+      ((document as DocWithFonts).fonts?.ready) ?? Promise.resolve();
 
     const loop = (now: number) => {
       const dt = (now - last) / 1000;
@@ -52,15 +49,17 @@ export default function ClientBlog({ posts }: { posts: Post[] }) {
 
       if (!paused) {
         x += speed * dt;
-        // šířka půlky tracku (protože je A + A)
-        const half = track.scrollWidth / 2;
-        if (x >= half) x -= half;           // „wrap“ bez skoku
+        const half = track.scrollWidth / 2; // šířka jedné poloviny (A)
+        if (half > 0 && x >= half) x -= half; // wrap bez skoku
         track.style.transform = `translate3d(${-x}px,0,0)`;
       }
       raf = requestAnimationFrame(loop);
     };
 
-    start();
+    fontsReady.then(() => {
+      last = performance.now();
+      raf = requestAnimationFrame(loop);
+    });
 
     return () => {
       cancelAnimationFrame(raf);
@@ -81,7 +80,7 @@ export default function ClientBlog({ posts }: { posts: Post[] }) {
         >
           {trackPosts.map((post, idx) => (
             <div
-              key={`${idx}-${post.slug}`}
+              key={`${post.slug}-card-${idx}`} // ✅ unikátní i pro A + A
               className="relative rounded-2xl transition-transform duration-300 hover:scale-[1.03] hover:shadow-[0_4px_20px_rgba(0,0,0,0.25)]"
               style={{
                 width: 250,
@@ -101,7 +100,7 @@ export default function ClientBlog({ posts }: { posts: Post[] }) {
                 contain: "layout paint",
               }}
             >
-              {/* horní řádek se štítkem a datem */}
+              {/* horní řádek: tag vlevo, datum vpravo */}
               <div className="flex justify-between items-end whitespace-nowrap">
                 {post.tags?.[0] && (
                   <Link

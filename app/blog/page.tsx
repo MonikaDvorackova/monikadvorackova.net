@@ -17,7 +17,7 @@ interface Post {
   tags: string[];
   tldr?: string;
   resources?: Resource[];
-  readingMinutes?: number; // ← pro „X min read“ v ClientBlog
+  readingMinutes?: number;
 }
 
 function CrossfadeWord({ word }: { word: string }) {
@@ -41,6 +41,44 @@ const blogTitles = [
   "Machines & Mandates",
 ];
 
+// ---------- helpers ----------
+function isResourceArray(v: unknown): v is Resource[] {
+  return Array.isArray(v) && v.every(
+    (r) =>
+      r &&
+      typeof r === "object" &&
+      typeof (r as Resource).type === "string" &&
+      typeof (r as Resource).href === "string"
+  );
+}
+
+function normalizePosts(data: unknown): Post[] {
+  if (!Array.isArray(data)) return [];
+
+  const out: Post[] = [];
+  for (const item of data) {
+    if (!item || typeof item !== "object") continue;
+    const obj = item as Record<string, unknown>;
+
+    if (typeof obj.slug !== "string" || typeof obj.title !== "string") continue;
+
+    out.push({
+      slug: obj.slug,
+      title: obj.title,
+      date: typeof obj.date === "string" ? obj.date : "",
+      tags: Array.isArray(obj.tags) ? obj.tags.map(String) : [],
+      tldr: typeof obj.tldr === "string" ? obj.tldr : undefined,
+      resources: isResourceArray(obj.resources) ? obj.resources : undefined,
+      readingMinutes:
+        typeof obj.readingMinutes === "number" ? obj.readingMinutes : undefined,
+    });
+  }
+
+  // deduplicate by slug
+  return Array.from(new Map(out.map((p) => [p.slug, p])).values());
+}
+
+// ---------- component ----------
 export default function BlogPage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [titleIndex, setTitleIndex] = useState(0);
@@ -56,25 +94,8 @@ export default function BlogPage() {
         return res.json() as Promise<unknown>;
       })
       .then((data) => {
-        if (!Array.isArray(data)) {
-          console.error("Unexpected /api/posts payload:", data);
-          return;
-        }
-        // Deduplicate by slug + assert minimal shape
-        const cleaned = data
-          .filter((p: any) => p && typeof p.slug === "string" && typeof p.title === "string")
-          .map((p: any) => ({
-            slug: String(p.slug),
-            title: String(p.title),
-            date: String(p.date ?? ""),
-            tags: Array.isArray(p.tags) ? p.tags.map(String) : [],
-            tldr: p.tldr != null ? String(p.tldr) : undefined,
-            resources: Array.isArray(p.resources) ? p.resources : undefined,
-            readingMinutes: typeof p.readingMinutes === "number" ? p.readingMinutes : undefined,
-          })) as Post[];
-
-        const unique = Array.from(new Map(cleaned.map((p) => [p.slug, p])).values());
-        setPosts(unique);
+        const cleaned = normalizePosts(data);
+        setPosts(cleaned);
         setTimeout(() => setIsLoaded(true), 300);
       })
       .catch((err) => {
