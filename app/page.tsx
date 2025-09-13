@@ -66,7 +66,9 @@ function ServicesOverlay({ show }: { show: boolean }) {
   useEffect(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = show ? "hidden" : prev || "";
-    return () => { document.body.style.overflow = prev || ""; };
+    return () => {
+      document.body.style.overflow = prev || "";
+    };
   }, [show]);
 
   const ease: [number, number, number, number] = [0.25, 1, 0.5, 1];
@@ -263,19 +265,20 @@ export default function HomePage() {
     if (triggeredRef.current) return;
     triggeredRef.current = true;
     router.push("/blog");
-    // reset after a short delay so the gesture can be reused after navigating back
-    setTimeout(() => { triggeredRef.current = false; }, 1200);
+    setTimeout(() => {
+      triggeredRef.current = false;
+    }, 1200);
   }, [router]);
 
-  const X_THRESHOLD = 80;       // minimum horizontal drag (px) left
-  const V_THRESHOLD = 0.3;      // minimum framer velocity
-  const WHEEL_THRESHOLD = -100; // deltaX for trackpad (< 0 = left)
+  const X_THRESHOLD = 80;
+  const V_THRESHOLD = 0.3;
+  const WHEEL_THRESHOLD = -100;
 
   const onPanEnd = (
     _e: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo
   ) => {
-    const { offset, velocity } = info; // offset.x negative = left
+    const { offset, velocity } = info;
     const horizontal = Math.abs(offset.x) > Math.abs(offset.y);
     if (horizontal && offset.x <= -X_THRESHOLD && Math.abs(velocity.x) >= V_THRESHOLD) {
       goBlog();
@@ -283,7 +286,6 @@ export default function HomePage() {
   };
 
   const onWheel = (e: React.WheelEvent) => {
-    // react only to significant horizontal left swipe (touchpad), ignore vertical scroll
     if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && e.deltaX <= WHEEL_THRESHOLD) {
       goBlog();
     }
@@ -304,7 +306,6 @@ export default function HomePage() {
             transition={{ duration: 0.6, ease }}
             className="flex-grow flex flex-col items-center justify-center px-4 text-center"
           >
-            {/* SWIPE WRAPPER – non-real drag, gesture only */}
             <motion.div
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
@@ -316,8 +317,20 @@ export default function HomePage() {
             >
               <div className="flex flex-col items-center space-y-6 z-10">
                 <div className="relative w-48 h-48 mt-12 -mb-4">
+                  {/* Hair strand overlay */}
+                  <Image
+  src="/hair-strand.png"
+  alt=""
+  width={160}
+  height={220}
+  draggable={false}
+  className="absolute bottom-[-6px] right-[2px] w-[120px] md:w-[180px] h-auto pointer-events-none select-none z-[3]"
+  style={{ transform: "rotate(-5deg)" }}
+/>
+
+                  {/* Portrait */}
                   <div
-                    className="w-full h-full relative"
+                    className="w-full h-full relative z-[4]"
                     style={{ clipPath: "circle(50% at 50% 50%)", overflow: "visible" }}
                   >
                     <Image
@@ -367,17 +380,44 @@ export default function HomePage() {
                 </div>
 
                 <div className="flex items-center justify-center gap-4 mt-6">
-                  <a href="https://www.linkedin.com/in/monika-dvorackova/?locale=en_US" target="_blank" rel="noopener noreferrer" title="LinkedIn">
-                    <FaLinkedin size={20} className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle" />
+                  <a
+                    href="https://www.linkedin.com/in/monika-dvorackova/?locale=en_US"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="LinkedIn"
+                  >
+                    <FaLinkedin
+                      size={20}
+                      className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle"
+                    />
                   </a>
-                  <a href="https://github.com/monikadvorackova" target="_blank" rel="noopener noreferrer" title="GitHub">
-                    <FaGithub size={20} className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle" />
+                  <a
+                    href="https://github.com/monikadvorackova"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="GitHub"
+                  >
+                    <FaGithub
+                      size={20}
+                      className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle"
+                    />
                   </a>
-                  <a href="https://arxiv.org/search/?searchtype=author&query=Dvorackova%2C+M" target="_blank" rel="noopener noreferrer" title="arXiv">
-                    <ArxivIcon size={20} className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle" />
+                  <a
+                    href="https://arxiv.org/search/?searchtype=author&query=Dvorackova%2C+M"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="arXiv"
+                  >
+                    <ArxivIcon
+                      size={20}
+                      className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle"
+                    />
                   </a>
                   <a href="mailto:monika.dvorack@gmail.com" title="Send Email">
-                    <FaEnvelope size={20} className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle" />
+                    <FaEnvelope
+                      size={20}
+                      className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle"
+                    />
                   </a>
                 </div>
 
@@ -393,10 +433,20 @@ export default function HomePage() {
                       className="group transition-all duration-300"
                       title="Book via Calendly"
                     >
-                      <FaCalendarAlt size={18} className="text-blue-600 transition-all duration-300 group-hover:scale-110 group-hover:translate-y-1 translate-y-[8px]" />
+                      <FaCalendarAlt
+                        size={18}
+                        className="text-blue-600 transition-all duration-300 group-hover:scale-110 group-hover:translate-y-1 translate-y-[8px]"
+                      />
                     </a>
-                    <Link href="/blog" className="group transition-all duration-300" title="View Articles & SaaS">
-                      <FaFileAlt size={18} className="text-blue-600 transition-all duration-300 group-hover:scale-110 group-hover:translate-y-1 translate-y-[8px]" />
+                    <Link
+                      href="/blog"
+                      className="group transition-all duration-300"
+                      title="View Articles & SaaS"
+                    >
+                      <FaFileAlt
+                        size={18}
+                        className="text-blue-600 transition-all duration-300 group-hover:scale-110 group-hover:translate-y-1 translate-y-[8px]"
+                      />
                     </Link>
                   </div>
                 </div>
