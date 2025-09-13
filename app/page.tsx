@@ -324,7 +324,7 @@ export default function HomePage() {
   width={160}
   height={220}
   draggable={false}
-  className="absolute bottom-[-6px] right-[2px] w-[120px] md:w-[180px] h-auto pointer-events-none select-none z-[3]"
+  className="absolute bottom-[-6px] right-[1px] w-[120px] md:w-[180px] h-auto pointer-events-none select-none z-[3]"
   style={{ transform: "rotate(-5deg)" }}
 />
 
