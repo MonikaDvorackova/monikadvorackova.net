@@ -28,6 +28,7 @@ const aiWords = ["AI", "LLM Engineering", "AI Strategy", "AI Infrastructure"];
 const mlWords = ["Machine Learning", "Deep Learning", "Model Deployment"];
 const lawWords = ["ML & AI teaching", "Legal AI", "Tech Ethics", "Compliance"];
 
+
 function CrossfadeWord({ word }: { word: string }) {
   return (
     <motion.span
@@ -56,7 +57,7 @@ function FixedFooterPortal() {
   if (typeof window === "undefined") return null;
   return createPortal(
     <footer className="text-[10px] text-neutral-500 text-center py-4 fixed bottom-0 left-0 w-full bg-transparent z-[10000] pointer-events-none">
-      <span className="pointer-events-auto">© 2025 Monika Dvorackova</span>
+      <span className="pointer-events-auto">© 2026 Monika Dvorackova</span>
     </footer>,
     document.body
   );
@@ -139,6 +140,7 @@ function ServicesOverlay({ show }: { show: boolean }) {
                 </div>
               </motion.div>
             ))}
+            
           </div>
 
           {/* TABLET/DESKTOP */}
@@ -455,7 +457,7 @@ export default function HomePage() {
           </motion.main>
 
           <footer className="text-[10px] text-neutral-500 text-center py-4 mt-auto">
-            © 2025 Monika Dvorackova
+            © 2026 Monika Dvorackova
           </footer>
         </>
       )}
