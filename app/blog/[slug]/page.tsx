@@ -92,7 +92,7 @@ export async function generateMetadata(
   const { slug } = await params;
   const raw = await readPostRaw(slug);
   if (!raw) return { title: "Not found" };
-  const { data, content } = matter(raw);
+  const { data } = matter(raw);
   const d = data as Record<string, unknown>;
 
   const title = String(d.title ?? "Untitled");
