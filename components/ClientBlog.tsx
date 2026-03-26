@@ -10,11 +10,11 @@ type Post = {
   date: string;
   slug: string;
   tags: string[];
+  tldr?: string;
   resources?: ResourceItem[];
 };
 
 export default function ClientBlog({ posts }: { posts: Post[] }) {
-  // Dvojitý track pro bezešvou smyčku (A + A)
   const trackPosts: Post[] = posts.length ? [...posts, ...posts] : [];
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
@@ -26,9 +26,9 @@ export default function ClientBlog({ posts }: { posts: Post[] }) {
 
     let raf = 0;
     let last = performance.now();
-    let x = 0;               // aktuální posun v px (kladný = doleva)
+    let x = 0;
     let paused = false;
-    const speed = 30;        // px/s – uprav dle chuti
+    const speed = 28;
 
     const onEnter = () => { paused = true; };
     const onLeave = () => { paused = false; };
@@ -38,7 +38,6 @@ export default function ClientBlog({ posts }: { posts: Post[] }) {
     wrapper.addEventListener("touchstart", onEnter, { passive: true });
     wrapper.addEventListener("touchend", onLeave);
 
-    // Spusť po načtení fontů, aby nebyl úvodní layout shift
     type DocWithFonts = Document & { fonts?: { ready: Promise<void> } };
     const fontsReady: Promise<void> =
       ((document as DocWithFonts).fonts?.ready) ?? Promise.resolve();
@@ -46,11 +45,10 @@ export default function ClientBlog({ posts }: { posts: Post[] }) {
     const loop = (now: number) => {
       const dt = (now - last) / 1000;
       last = now;
-
       if (!paused) {
         x += speed * dt;
-        const half = track.scrollWidth / 2; // šířka jedné poloviny (A)
-        if (half > 0 && x >= half) x -= half; // wrap bez skoku
+        const half = track.scrollWidth / 2;
+        if (half > 0 && x >= half) x -= half;
         track.style.transform = `translate3d(${-x}px,0,0)`;
       }
       raf = requestAnimationFrame(loop);
@@ -70,8 +68,10 @@ export default function ClientBlog({ posts }: { posts: Post[] }) {
     };
   }, [posts.length]);
 
+  if (!posts.length) return null;
+
   return (
-    <div className="overflow-hidden w-full mt-16 px-6">
+    <div className="overflow-hidden w-full px-6">
       <div ref={wrapperRef} className="relative select-none">
         <div
           ref={trackRef}
@@ -80,60 +80,68 @@ export default function ClientBlog({ posts }: { posts: Post[] }) {
         >
           {trackPosts.map((post, idx) => (
             <div
-              key={`${post.slug}-card-${idx}`} // ✅ unikátní i pro A + A
-              className="relative rounded-2xl transition-transform duration-300 hover:scale-[1.03] hover:shadow-[0_4px_20px_rgba(0,0,0,0.25)]"
+              key={`${post.slug}-card-${idx}`}
+              className="relative rounded-2xl transition-transform duration-300 hover:scale-[1.03] hover:shadow-[0_6px_24px_rgba(0,0,0,0.18)]"
               style={{
-                width: 250,
-                height: 80,
-                marginRight: 24,
-                backgroundColor: "rgba(255,255,255,0.6)",
+                width: 260,
+                minHeight: 138,
+                marginRight: 20,
+                backgroundColor: "rgba(255,255,255,0.72)",
                 color: "#000",
-                border: "1px solid rgba(0,42,255,0.1)",
-                boxShadow: "inset 0 0 0 1px rgba(8,28,244,0.05)",
+                border: "1px solid rgba(0,42,255,0.12)",
+                boxShadow: "inset 0 0 0 1px rgba(8,28,244,0.06), 0 4px 16px rgba(0,0,0,0.07)",
                 flexShrink: 0,
-                padding: 16,
-                backdropFilter: "blur(6px)",
+                padding: "14px 16px 12px",
+                backdropFilter: "blur(8px)",
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "space-between",
+                gap: 6,
                 borderRadius: "1rem",
                 contain: "layout paint",
               }}
             >
-              {/* horní řádek: tag vlevo, datum vpravo */}
-              <div className="flex justify-between items-end whitespace-nowrap">
-                {post.tags?.[0] && (
-                  <Link
-                    href={`/tags/${encodeURIComponent(post.tags[0])}`}
-                    aria-label={`View all posts with tag: ${post.tags[0]}`}
-                    className="bg-[#004cff] text-white px-2 py-0.5 text-[10px] font-semibold rounded mr-1"
-                    style={{ color: "white" }}
-                  >
-                    {post.tags[0]}
-                  </Link>
-                )}
-                <span className="text-[10px] text-black/60">{post.date}</span>
+              {/* top row: resource icons left, date right */}
+              <div className="flex justify-between items-center">
+                {post.resources?.length ? (
+                  <div className="flex items-center" style={{ gap: 6 }}>
+                    <ResourceIcons
+                      resources={post.resources.slice(0, 3)}
+                      showLabels={false}
+                      sizeClassName="h-[14px] w-[14px]"
+                    />
+                  </div>
+                ) : <span />}
+                <span className="text-[10px] text-black/50 tabular-nums">{post.date}</span>
               </div>
 
-              {/* ikonky */}
-              {post.resources?.length ? (
-                <div className="flex mt-1" style={{ gap: "6px" }}>
-                  <ResourceIcons
-                    resources={post.resources.slice(0, 3)}
-                    showLabels={false}
-                    sizeClassName="h-4 w-4"
-                  />
-                </div>
-              ) : null}
-
-              {/* titulek */}
+              {/* title */}
               <Link
                 href={`/blog/${post.slug}`}
-                aria-label={`Open blog post: ${post.title}`}
-                className="text-[11px] font-semibold leading-snug mt-1 whitespace-normal line-clamp-2"
+                aria-label={`Open: ${post.title}`}
+                className="text-[12px] font-semibold leading-snug line-clamp-2 hover:text-[#004cff] transition-colors"
               >
                 {post.title}
               </Link>
+
+              {/* TLDR */}
+              {post.tldr && (
+                <p className="text-[10px] leading-[1.5] text-black/55 line-clamp-2 mt-auto">
+                  {post.tldr}
+                </p>
+              )}
+
+              {/* tag pill at the bottom */}
+              {post.tags?.[0] && (
+                <div className="mt-auto pt-1">
+                  <Link
+                    href={`/tags/${encodeURIComponent(post.tags[0])}`}
+                    aria-label={`Tag: ${post.tags[0]}`}
+                    className="inline-block bg-[#004cff] text-white px-2 py-0.5 text-[9px] font-semibold rounded"
+                  >
+                    {post.tags[0]}
+                  </Link>
+                </div>
+              )}
             </div>
           ))}
         </div>

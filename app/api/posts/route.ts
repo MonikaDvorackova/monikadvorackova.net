@@ -92,6 +92,7 @@ interface FrontMatter {
   tldr?: unknown;
   resources?: unknown;
   readingMinutes?: unknown;
+  type?: unknown;
 }
 
 interface PostMeta {
@@ -102,6 +103,7 @@ interface PostMeta {
   tldr: string;
   resources: Resource[];
   readingMinutes: number;
+  type: string;      // "article" | "software" — defaults to "article"
 }
 
 export async function GET() {
@@ -134,6 +136,7 @@ export async function GET() {
           tldr,
           resources,
           readingMinutes,
+          type: normalizeString(data.type, "article"),
         };
       })
     );
