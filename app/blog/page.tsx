@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import ClientBlog from "@/components/ClientBlog";
+import WritingList from "@/components/WritingList";
 
 type ResourceType =
   | "github" | "arxiv" | "wandb" | "mlflow" | "model" | "website"
@@ -18,28 +19,8 @@ interface Post {
   tldr?: string;
   resources?: Resource[];
   readingMinutes?: number;
+  type: string;
 }
-
-function CrossfadeWord({ word }: { word: string }) {
-  return (
-    <motion.span
-      key={word}
-      initial={{ opacity: 0, y: 6 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -6 }}
-      transition={{ duration: 0.4 }}
-      className="inline-block"
-    >
-      {word}
-    </motion.span>
-  );
-}
-
-const blogTitles = [
-  "From Code to Compliance",
-  "Neural & Natural Law",
-  "Machines & Mandates",
-];
 
 // ---------- helpers ----------
 function isResourceArray(v: unknown): v is Resource[] {
@@ -54,14 +35,11 @@ function isResourceArray(v: unknown): v is Resource[] {
 
 function normalizePosts(data: unknown): Post[] {
   if (!Array.isArray(data)) return [];
-
   const out: Post[] = [];
   for (const item of data) {
     if (!item || typeof item !== "object") continue;
     const obj = item as Record<string, unknown>;
-
     if (typeof obj.slug !== "string" || typeof obj.title !== "string") continue;
-
     out.push({
       slug: obj.slug,
       title: obj.title,
@@ -71,17 +49,27 @@ function normalizePosts(data: unknown): Post[] {
       resources: isResourceArray(obj.resources) ? obj.resources : undefined,
       readingMinutes:
         typeof obj.readingMinutes === "number" ? obj.readingMinutes : undefined,
+      type: typeof obj.type === "string" ? obj.type : "article",
     });
   }
-
-  // deduplicate by slug
   return Array.from(new Map(out.map((p) => [p.slug, p])).values());
+}
+
+// ---------- section label ----------
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex items-center gap-3 w-full max-w-2xl mx-auto px-6 mb-5">
+      <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-black/35">
+        {children}
+      </span>
+      <div className="flex-1 h-px bg-black/10" />
+    </div>
+  );
 }
 
 // ---------- component ----------
 export default function BlogPage() {
   const [posts, setPosts] = useState<Post[]>([]);
-  const [titleIndex, setTitleIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -94,8 +82,7 @@ export default function BlogPage() {
         return res.json() as Promise<unknown>;
       })
       .then((data) => {
-        const cleaned = normalizePosts(data);
-        setPosts(cleaned);
+        setPosts(normalizePosts(data));
         setTimeout(() => setIsLoaded(true), 300);
       })
       .catch((err) => {
@@ -103,12 +90,8 @@ export default function BlogPage() {
       });
   }, []);
 
-  useEffect(() => {
-    const titleInterval = setInterval(() => {
-      setTitleIndex((i) => (i + 1) % blogTitles.length);
-    }, 4000);
-    return () => clearInterval(titleInterval);
-  }, []);
+  const softwarePosts = posts.filter((p) => p.type === "software");
+  const articlePosts = posts.filter((p) => p.type !== "software");
 
   return (
     <motion.div
@@ -117,35 +100,34 @@ export default function BlogPage() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
-      <main className="w-full flex flex-col items-center justify-center px-4 text-center pt-20 flex-1">
-        <motion.div
-          className="text-base md:text-lg font-medium mb-2 min-h-[1.75rem]"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <AnimatePresence mode="wait">
-            <CrossfadeWord word={blogTitles[titleIndex]} />
-          </AnimatePresence>
-        </motion.div>
+      <main className="w-full flex flex-col items-center pt-20 pb-16 flex-1 gap-12">
 
-        <motion.p
-          className="text-sm italic text-neutral-600 mb-10"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-        >
-          Thoughts & analysis on AI, law, and everything between.
-        </motion.p>
+        {/* ── Software ── */}
+        {softwarePosts.length > 0 && (
+          <motion.section
+            className="w-full flex flex-col items-center gap-0"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 24 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            <SectionLabel>Software</SectionLabel>
+            <ClientBlog posts={softwarePosts} />
+          </motion.section>
+        )}
 
-        <motion.div
-          className="w-full max-w-screen-lg"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 40 }}
-          transition={{ duration: 1, delay: 0.6 }}
-        >
-          <ClientBlog posts={posts} />
-        </motion.div>
+        {/* ── Writing ── */}
+        {articlePosts.length > 0 && (
+          <motion.section
+            className="w-full flex flex-col items-center gap-0"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 24 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+          >
+            <SectionLabel>Writing</SectionLabel>
+            <WritingList posts={articlePosts} />
+          </motion.section>
+        )}
+
       </main>
 
       <motion.footer
@@ -154,7 +136,7 @@ export default function BlogPage() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.8 }}
       >
-        © 2025 Monika Dvorackova
+        © 2026 Monika Dvorackova
       </motion.footer>
     </motion.div>
   );
