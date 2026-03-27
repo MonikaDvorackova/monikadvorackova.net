@@ -58,11 +58,11 @@ function normalizePosts(data: unknown): Post[] {
 // ---------- section label ----------
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex items-center gap-3 w-full max-w-2xl mx-auto px-6 mb-5">
-      <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-black/35">
+    <div className="w-full mb-5">
+      <div className="text-center text-[10px] font-semibold tracking-[0.18em] uppercase text-black/35">
         {children}
-      </span>
-      <div className="flex-1 h-px bg-black/10" />
+      </div>
+      <div className="mt-2 h-px w-full bg-black/10" />
     </div>
   );
 }
@@ -94,50 +94,50 @@ export default function BlogPage() {
   const articlePosts = posts.filter((p) => p.type !== "software");
 
   return (
-    <motion.div
-      className="min-h-screen flex flex-col justify-between bg-gradient-to-br from-[#fdf2e9] to-[#f8e9dc] text-neutral-900"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
-    >
-      <main className="w-full flex flex-col items-center pt-20 pb-16 flex-1 gap-12">
+    <div className="min-h-screen w-full bg-gradient-to-br from-[#fdf2e9] to-[#f8e9dc] text-neutral-900">
+      <motion.div
+        className="min-h-screen w-full flex flex-col"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6 }}
+      >
+        <main className="w-full flex-1 flex items-center justify-center overflow-x-hidden">
+          <div className="w-full max-w-5xl mx-auto px-6 pb-24 flex flex-col gap-12">
 
         {/* ── Software ── */}
         {softwarePosts.length > 0 && (
           <motion.section
-            className="w-full flex flex-col items-center gap-0"
+            className="w-full mb-14"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 24 }}
             transition={{ duration: 0.8, delay: 0.3 }}
           >
-            <SectionLabel>Software</SectionLabel>
-            <ClientBlog posts={softwarePosts} />
+            <div className="w-full max-w-2xl mx-auto">
+              <SectionLabel>Software</SectionLabel>
+              <ClientBlog posts={softwarePosts} />
+            </div>
           </motion.section>
         )}
 
         {/* ── Writing ── */}
         {articlePosts.length > 0 && (
           <motion.section
-            className="w-full flex flex-col items-center gap-0"
+            className="w-full"
+            style={{ marginTop: softwarePosts.length > 0 ? 60 : 0 }}
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 24 }}
             transition={{ duration: 0.8, delay: 0.5 }}
           >
-            <SectionLabel>Writing</SectionLabel>
-            <WritingList posts={articlePosts} />
+            <div className="w-full max-w-3xl mx-auto">
+              <SectionLabel>Writings</SectionLabel>
+              <WritingList posts={articlePosts} />
+            </div>
           </motion.section>
         )}
 
-      </main>
-
-      <motion.footer
-        className="w-full text-[10px] text-neutral-500 text-center pb-4"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.8 }}
-      >
-        © 2026 Monika Dvorackova
-      </motion.footer>
-    </motion.div>
+          </div>
+        </main>
+      </motion.div>
+    </div>
   );
 }
