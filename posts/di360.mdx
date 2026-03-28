@@ -1,0 +1,144 @@
+---
+title: "DI360"
+date: "2026-03-27"
+type: "software"
+category: "Decision Intelligence"
+tags:
+  - Python
+  - FastAPI
+  - PostgreSQL
+  - Multi agent systems
+  - Scoring
+  - Interpretable assessment
+  - Decision intelligence
+  - Behavioral analytics
+  - API
+  - Observability
+  - Psychometrics
+  - Production
+  - SaaS
+tldr: "Decision intelligence infrastructure for modelling behavioural patterns across agents and complex systems, with modular scoring, FastAPI, PostgreSQL, and live assessment at https://di360.com."
+resources:
+  - type: "github"
+    href: "https://github.com/MonikaDvorackova/synwe"
+    label: "GitHub"
+  - type: "website"
+    href: "https://di360.com"
+    label: "Live"
+---
+
+## DI360 — Decision Intelligence Infrastructure
+
+## Why DI360 exists
+
+DI360 is built on the belief that decision making should be treated as a system, not as a side effect of behaviour. In modern AI environments, decisions are no longer isolated outputs. They emerge from interactions between agents that react to each other, operate under uncertainty, and continuously adapt their behaviour.
+
+Observing outputs is not enough. Tracking metrics is not enough. Even explainability layers are not enough if the underlying decision process remains implicit.
+
+If you cannot capture how decisions are formed, you do not have control over the system. You cannot reliably audit it, and you cannot trust it at scale. DI360 addresses this directly by focusing not on what the system did, but on how the decision process unfolded.
+
+## Conceptual foundation
+
+DI360 is grounded in the idea that decision making is a strategy evolving over time. It draws inspiration from game theory and multi agent systems, where each decision is part of a broader interaction between actors operating with incomplete information.
+
+At the same time, DI360 deliberately avoids theoretical overreach. It does not attempt to solve games, compute equilibria, or infer hidden utility functions.
+
+Instead, DI360 focuses on what is observable and reconstructable. It captures how agents behave, how they respond to each other, how their decisions shift under changing conditions, and which behavioural patterns stabilize over time.
+
+DI360 does not prescribe how systems should decide. It makes their decision behaviour visible.
+
+## Architecture
+
+The architecture of DI360 is event driven by design, allowing decision making to be captured as a continuous and structured process. Every input into the system is represented as a structured event linked to an agent, a context, and its surrounding interactions.
+
+These events are first normalized and validated to ensure consistency across heterogeneous data sources. They are then mapped to decision dimensions that represent specific aspects of behaviour. On top of this mapping, scoring and aggregation are applied to construct an interpretable model of decision dynamics.
+
+A key aspect of the architecture is its treatment of state. State is not stored as an independent object but derived from the evolving structure of interactions. Each decision is interpreted in the context of prior actions and relationships between agents.
+
+The result is not a static snapshot but a time aware model of decision behaviour that can always be decomposed back into its underlying events.
+
+## Current scoring model
+
+DI360 already includes an active scoring model that operates on top of defined decision dimensions. The system maps incoming events to behavioural dimensions and applies scoring functions that transform interactions into quantifiable signals.
+
+These dimensions capture patterns such as decision velocity, risk orientation, uncertainty handling, and conflict response. The scoring is not a one time computation but an aggregated signal over time, reflecting the evolution of behaviour.
+
+The model is implemented and actively used. It is also exposed through the public interface available at https://di360.com, where the scoring can be observed in practice.
+
+DI360 is not a conceptual framework. It is a running system producing real outputs.
+
+## Technology
+
+The technology stack behind DI360 is intentionally pragmatic, but not simplistic. It is designed to support systems where multiple agents interact, influence each other, and continuously adapt their behaviour over time.
+
+At its core, DI360 is built in Python, enabling fast iteration on scoring logic and behavioural models. FastAPI provides a clean integration layer, allowing DI360 to connect directly to agent based systems.
+
+Agents are treated as first class entities. Each interaction is captured as a structured event with a clear actor, context, and relation to other agents. This enables modelling behaviour across interacting entities rather than isolated actions.
+
+PostgreSQL is used as the underlying data layer, preserving relationships between events, temporal ordering, and context.
+
+Supporting code and reference material for the stack are published in the open [GitHub repository](https://github.com/MonikaDvorackova/synwe).
+
+DI360 does not attempt to simulate agents or run reinforcement learning environments. It operates on real interactions. It captures how agents behave in production systems, not how they might behave in synthetic scenarios.
+
+This distinction is intentional. Simulations are useful, but they often diverge from reality. DI360 is designed for real systems, where decisions are messy, constrained, and context dependent.
+
+The result is a system that models multi agent behaviour without becoming a simulation engine. It remains deployable, understandable, and aligned with production needs.
+
+## How it works
+
+DI360 works by transforming real interactions into a structured representation of decision behaviour. It operates directly on observed inputs from agents, users, or systems.
+
+Each interaction is captured as an event with an actor, context, and relation to other events. These events are mapped to decision dimensions such as decision velocity, risk orientation, or uncertainty handling.
+
+Scoring functions convert interactions into signals, which are aggregated over time into a dynamic behavioural profile.
+
+The output is an assessment that combines structure with interpretability.
+
+Example output:
+
+```json
+{
+  "decision_profile": {
+    "decision_velocity": "high",
+    "risk_orientation": "elevated",
+    "uncertainty_handling": "unstable",
+    "conflict_response": "reactive"
+  },
+  "stability": {
+    "trend": "decreasing",
+    "variance": "high"
+  },
+  "explanation": {
+    "key_signals": [
+      "rapid decisions under incomplete information",
+      "inconsistent responses to similar inputs",
+      "escalation in conflicting scenarios"
+    ]
+  }
+}
+```
+
+This output is not a label. It is a structured representation of behaviour that can be inspected, compared, and monitored over time.
+
+DI360 makes decision behaviour visible and actionable.
+
+## Commercial model and adoption
+
+DI360 is designed as a flexible infrastructure layer. The psychometric model is modular and configurable, allowing clients to define their own decision dimensions and scoring logic.
+
+This makes DI360 highly adaptable across domains and significantly increases its commercial potential.
+
+It is particularly suited for white label integration, where companies embed DI360 into their own products while keeping full control over branding and user experience.
+
+DI360 is not a single product. It is a decision intelligence layer that adapts to the system in which it is deployed.
+
+## Positioning
+
+DI360 is not a traditional analytics tool and not a simulation engine. It does not attempt to solve games or optimize strategies.
+
+It operates within multi agent environments and captures decision behaviour as it emerges from real interactions.
+
+Decision making becomes observable, analyzable, and reconstructable.
+
+DI360 does not attempt to control decision making. It makes it observable.

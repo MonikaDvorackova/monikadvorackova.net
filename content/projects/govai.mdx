@@ -1,0 +1,92 @@
+---
+title: "GovAI"
+date: "2026-03-25"
+type: "project"
+category: "AI Governance"
+tags: "Rust, Python, PostgreSQL, Event Sourcing, AI Governance"
+tldr: "Event-sourced governance infrastructure for AI systems with explicit, validated lifecycle transitions and reconstructable decision history."
+---
+
+## Overview
+
+GovAI is governance infrastructure for AI systems that are already too complex to be governed by policy documents and good intentions. The goal is not to “track” models, datasets, and approvals; tracking is easy and largely useless under pressure. The goal is to make lifecycle transitions admissible only when the system can prove, from durable history, that the prerequisites were satisfied at the time the transition was attempted. Anything less collapses into hand-waving the moment an LLM deployment is stressed by incidents, fast iteration, or organizational entropy.
+
+The design is intentionally opinionated. Mutable systems are great for product features and terrible for governance. Retroactive narratives assembled from logs, dashboards, and ticket workflows are not evidence; they are stories. GovAI treats history as the product, state as a projection, and validation as an admission control problem with explicit semantics that can be inspected, replayed, and challenged.
+
+## Why this exists
+
+Work with LLM systems keeps forcing the same failure pattern into view: the platform can always tell you what is currently true, and it can almost never tell you why it is allowed to be true in a way that survives scrutiny. A dashboard says “production uses model X.” A pipeline run says “promotion passed.” A ticket says “approved.” None of that composes into a proof that the exact artifact now serving traffic was evaluated under the right suite, under the right thresholds, under the right policy regime, with approvals that actually applied to that artifact rather than a neighboring build or a stale snapshot.
+
+Logs do not fix this. Logs are partial, lossy, and written from the perspective of whatever service happened to emit them. Retention policies delete the inconvenient parts right when the question becomes serious. Correlation IDs drift. Replays are brittle. Even perfect logs would still be insufficient because logs describe what code did, not what the system was permitted to do. Governance is about admissibility, not observability.
+
+Workflow tools do not fix this either. Approvals in a ticketing system are not enforcement. A checklist step that says “run evaluation” is not a guarantee that the evaluation ran, that it ran on the correct artifact, or that its results were interpreted under the policy regime that was supposed to apply. Those tools are useful for humans coordinating work; they are structurally incapable of being a deterministic authority for system transitions.
+
+GovAI exists because governance cannot live outside the runtime boundary and still claim to govern runtime behavior. Once the gap between “what we intended” and “what we deployed” becomes measurable, the only responsible response is to make the gap unrepresentable.
+
+## Why this topic matters
+
+LLM platforms are uniquely good at producing governance failure modes while appearing operationally fine. The serving path is usually stable, fast, and easy to measure; the provenance path is volatile, asynchronous, and full of invisible coupling. Prompt templates change without changing model weights. Retrieval corpora change without a deploy. Safety filters change as a hotfix. Evaluation harnesses change because someone patched a test. A model card PDF gets updated because an auditor asked, not because the system changed. The “system” becomes a distributed set of artifacts evolving at different cadences, owned by different teams, and joined by best-effort glue.
+
+Under that volatility, mutable state is an accelerant. A relational row that says “status = promoted” cannot carry the chain of admissibility that should have made promotion possible. A service that “sets the status” is forced to also become the historian, the judge, and the archivist. In practice, it becomes none of them. When something goes wrong, the platform can produce a timeline, but it cannot produce a justification. That is the point at which governance stops being governance and starts being incident theater.
+
+## Architectural model
+
+GovAI treats governance as a state machine whose transitions must be explicit, typed, and validated. Event sourcing is not chosen because it is fashionable or because it makes debugging easier. It is chosen because governance requires a durable, replayable account of what the system was permitted to become, and that account must be complete by construction rather than assembled after the fact.
+
+Commands express intent. Events express admitted reality. A command can be rejected without leaving residue. An event can exist only if admission logic can prove the prerequisites from prior events and from policy constraints that are themselves versioned and explicit. Validation must happen before persistence because persistence is the moment the system commits to a historical claim. If the system records “model promoted” and later discovers the evaluation was missing or the approval was invalid, the system has already created audit debt that cannot be erased without lying about history.
+
+Derived state exists to make the system usable, not to define what is true. Projections can be wrong, stale, or rebuilt; the event log cannot be approximate. Deterministic replay is the mechanism that converts governance from narrative to falsifiable semantics. Given the same event stream and the same admission logic, the same derived state must be produced, or the system is broken in a way that governance cannot tolerate.
+
+`event → validate → persist → derive state`
+
+## Architecture
+
+Three layers exist because governance fails when authority is smeared across integration glue, business services, and database writes. A boundary layer receives intent from pipelines, services, and dashboards. A core evaluates admissibility and emits events. A persistence layer durably stores history and maintains read-optimized projections. Anything else is a slow drift into a system where everyone can mutate state and nobody can explain it.
+
+Python lives at the boundary because ML infrastructure is Python-shaped in practice. Pipelines, evaluators, artifact registries, and operational tooling are built there, and the boundary has to meet the ecosystem where it exists rather than where it should exist. The constraint is severe: boundary code is not allowed to decide whether a transition is valid. It can enrich a command, authenticate it, batch it, and route it, but it cannot manufacture admissibility.
+
+Rust sits at the core because the core is where correctness is expensive and where ambiguity is lethal. The core defines the transition graph, evaluates preconditions, enforces policy, and decides whether an event may exist at all. Centralizing this logic is not a microservice aesthetic; it is a line of defense against the common pattern where orchestration code “knows” the rules, database triggers “enforce” some of them, and downstream consumers “assume” the rest.
+
+PostgreSQL stores the event log and the projections because governance is not a latency game; it is a consistency game. A transaction that appends an event and updates projections must be atomic enough that the system can recover under retries without inventing states or losing history. Projection schemas must be explicit and evolvable. Operational queries must be supported without turning the event store into a dumping ground of JSON blobs that can only be interpreted by bespoke code in a single service.
+
+## Stack decisions
+
+Python at the boundary is a concession to reality and a deliberate containment strategy. Integration surfaces change weekly. Evaluation harnesses get patched mid-incident. Pipelines are reconfigured by teams who have never read the governance core. A boundary layer that cannot keep up becomes a bypass, and bypasses are how governance dies. Python keeps integration adaptable while the architecture keeps it non-authoritative.
+
+Rust is used for the core because the core is a correctness boundary, not a convenience layer. Governance logic is full of edge cases that are easy to “handle later” until later becomes an audit or an outage. Strong typing forces domain concepts to be explicit. Exhaustive handling of error paths forces admission control to fail closed. The trade-off is real: iteration costs more, extensions require design discipline, and quick hacks are harder. Those are the correct constraints for a component whose job is to prevent a platform from lying to itself.
+
+PostgreSQL is chosen because the workload demands transactional durability, not novelty. Event histories need to be append-only, queryable, and protected by a persistence layer that operators understand and can keep alive during bad days. Projection tables need relational structure because audit views and eligibility checks are inherently relational queries over time, policy regimes, and artifact graphs. Alternative stacks can work, but many of them push complexity into bespoke projection management and weak transactional coupling, which is where correctness quietly bleeds out under retries and partial failures.
+
+## Example event
+
+Model promotion is where weak governance patterns go to die, because promotion is the moment the platform claims it has earned the right to expose an artifact to higher stakes. A governance system that records promotions without being able to prove admissibility is a system that will eventually promote something it cannot defend. GovAI treats a promotion event as a historical claim that validation succeeded under a specific policy regime, using evidence that is already present in immutable history.
+
+```json
+{
+  "event_type": "model_promoted",
+  "model_id": "model_123",
+  "evaluation_id": "eval_789",
+  "approved_by": "user_456",
+  "timestamp": "2026-03-25T10:15:00Z"
+}
+```
+
+Admission requires more than the presence of fields. The referenced evaluation must exist as prior validated history and must be bound to the same immutable artifact identity that is being promoted, not to a neighboring build with the same display name. Threshold satisfaction must be evaluated under the policy configuration that was active at the time, not under a later interpretation after someone adjusted guardrails. The approver must be admissible under the relevant regime, including separation-of-duties constraints and revocation semantics that are easy to ignore until they matter. Lifecycle sequencing must remain consistent, preventing promotion when a block is active, when registration is incomplete, or when intermediate approvals are required but absent. If the core cannot prove any prerequisite from history, the only acceptable outcome is rejection without persistence.
+
+## Open source rationale
+
+Governance infrastructure should not be opaque. A closed governance core asks everyone downstream to accept “trust me” as a substitute for semantics. That may work for product features; it does not work for a component whose job is to decide what is allowed to exist in history. Auditability is not just about producing reports; it is about being able to inspect the exact transition logic and policy evaluation that admitted a particular event.
+
+Open source creates two constraints that matter. First, it makes validity falsifiable: given an event stream and a version of the core, anyone can replay and verify the derived state and the admissibility of transitions. Second, it forces policy changes to be explicit and reviewable. When admissibility logic changes, the change shows up as code with a diff, a version, and a test surface, rather than as an operational tweak that no one can later correlate with why a transition was accepted.
+
+## Why this is commercially viable
+
+GovAI is infrastructure, not a feature, which is why it is commercially viable. Once a platform relies on an event log as the authoritative record of admissible transitions, ripping it out means giving up deterministic reconstruction, giving up a consistent admission authority, and returning to a world where governance is assembled from partial artifacts. Integration creates dependency because the value comes from being the place where history is made durable and admissibility is enforced, not from being a dashboard widget.
+
+Value comes from eliminating classes of failure that otherwise become recurring operational tax. Incident response becomes faster because the system can replay and prove what happened instead of inventing a timeline from log shards. Compliance work becomes cheaper because evidence is produced by construction rather than curated after the fact. Platform teams stop re-implementing inconsistent gating logic across pipelines because admission control is centralized and explicit. The commercial surface area surrounds the open core: managed operation with availability guarantees, hardened multi-tenant isolation, compliance-grade retention and access control, high-throughput boundary ingestion, projection packages tuned for audit and reporting workflows, and support for policy versioning and controlled rollout under production load. Paying for those capabilities is rational because the alternative is paying the same cost repeatedly in outages, audit fire drills, and brittle, duplicated governance logic.
+
+## Scope
+
+GovAI provides technical governance primitives for AI lifecycle transitions: command admission, validation, immutable event history, and deterministic derivation of operational state from that history. It enforces the difference between an intention to change state and a permitted state transition by refusing to persist events that cannot be justified from prior validated history and active policy constraints. The core is designed to be strict because strictness is the only reliable defense against the pressure to “just ship” and clean up governance later.
+
+Policy authorship is not provided. Legal interpretation is not provided. Organizational decision-making is not replaced. GovAI does not decide which rules should exist; it provides a mechanism by which rules, once defined, become enforceable at the exact moment transitions are attempted. The system is also not a generic observability layer; it is deliberately narrower and harsher. Anything that cannot be proven from durable history is treated as inadmissible, even when that is inconvenient, because the alternative is a platform that can tell you what it is doing while failing to justify why it was allowed to do it.
