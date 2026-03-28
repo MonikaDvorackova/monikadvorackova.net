@@ -2,7 +2,6 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import { FaGithub, FaExternalLinkAlt, FaFilePdf } from "react-icons/fa";
 import { SiArxiv, SiWeightsandbiases, SiMlflow, SiGooglecolab, SiKaggle } from "react-icons/si";
 
@@ -59,7 +58,14 @@ export default function ResourceIcons({
     switch (type) {
       case "github":  return <FaGithub className={sizeClassName} color="#171515" />;
       case "arxiv":   return <SiArxiv className={sizeClassName} color="#B31B1B" />;
-      case "wandb":   return <SiWeightsandbiases className={sizeClassName} color="#FFBE00" />;
+      case "wandb":
+        return (
+          <SiWeightsandbiases
+            className={sizeClassName}
+            color="#B45309"
+            style={{ filter: "drop-shadow(0 0 0.4px rgba(0,0,0,0.25))" }}
+          />
+        );
       case "mlflow":  return <SiMlflow className={sizeClassName} color="#0194E2" />;
       case "colab":   return <SiGooglecolab className={sizeClassName} color="#F9AB00" />;
       case "kaggle":  return <SiKaggle className={sizeClassName} color="#20BEFF" />;
@@ -69,19 +75,20 @@ export default function ResourceIcons({
       case "dataset": return <DatasetIcon className={`${sizeClassName} text-neutral-900 dark:text-neutral-100`} />;
       case "demo":    return <DemoIcon className={`${sizeClassName} text-neutral-900 dark:text-neutral-100`} />;
       default:
-        return <span className={`inline-block ${sizeClassName} text-[10px] leading-none font-semibold`}>{type.toUpperCase()}</span>;
+        return <span className={`inline-block ${sizeClassName} text-[9px] leading-none font-semibold`}>{type.toUpperCase()}</span>;
     }
   };
 
   return (
-    <div className={`not-prose flex items-center flex-wrap ${className}`} data-test="resource-icons">
+    <div
+      className={`not-prose flex flex-wrap items-center gap-x-3 gap-y-2 ${className}`}
+      style={{ columnGap: 14, rowGap: 8 }}
+      data-test="resource-icons"
+    >
       {resources.map((r, i) => {
         const key = `${r.type}-${r.href}-${i}`;
         const icon = iconFor((r.type || "").toLowerCase());
         const label = r.label || r.type;
-
-
-        const itemStyle: React.CSSProperties = i === 0 ? {} : { marginLeft: "12px" };
 
         const child = (
           <span className="inline-flex items-center align-middle">
@@ -91,20 +98,19 @@ export default function ResourceIcons({
         );
 
         return r.href ? (
-          <Link
+          <a
             key={key}
             href={r.href}
             target="_blank"
             rel="noopener noreferrer"
             aria-label={label}
             title={label}
-            className="inline-flex items-center"
-            style={itemStyle}
+            className="inline-flex shrink-0 items-center"
           >
             {child}
-          </Link>
+          </a>
         ) : (
-          <span key={key} className="inline-flex items-center" style={itemStyle}>
+          <span key={key} className="inline-flex items-center">
             {child}
           </span>
         );
