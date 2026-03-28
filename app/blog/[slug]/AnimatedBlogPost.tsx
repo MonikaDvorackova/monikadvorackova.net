@@ -39,13 +39,13 @@ function extractText(children: React.ReactNode): string {
 function MarkdownComponents() {
   return {
     h1: ({ children }: { children?: React.ReactNode }) => (
-      <h1 className="text-lg font-light text-neutral-900 mb-4 text-center">{children}</h1>
+      <h1 className="text-base font-light text-neutral-900 mb-4 text-center">{children}</h1>
     ),
     h2: ({ children }: { children?: React.ReactNode }) => (
-      <h2 className="text-base font-light text-neutral-800 mb-3 text-center">{children}</h2>
+      <h2 className="text-sm font-light text-neutral-800 mb-3 text-center">{children}</h2>
     ),
     p: ({ children }: { children?: React.ReactNode }) => (
-      <p className="text-sm text-neutral-900 leading-relaxed mb-3">{children}</p>
+      <p className="text-xs text-neutral-900 leading-relaxed mb-3">{children}</p>
     ),
     table: ({ children }: { children?: React.ReactNode }) => (
       <table
@@ -125,7 +125,7 @@ function MarkdownComponents() {
       if (inline) {
         return (
           <code
-            className="font-mono font-bold text-[0.95rem] leading-[1.7] text-[#2563eb]"
+            className="font-mono font-bold text-[0.88rem] leading-[1.65] text-[#2563eb]"
             style={{ fontWeight: 700 }}
             {...props}
           >
@@ -140,7 +140,7 @@ function MarkdownComponents() {
           style={{ marginLeft: "auto", marginRight: "auto", width: "fit-content", maxWidth: "100%" }}
         >
           <code
-            className="block whitespace-pre font-mono font-bold text-[0.95rem] leading-[1.7] text-[#2563eb]"
+            className="block whitespace-pre font-mono font-bold text-[0.88rem] leading-[1.65] text-[#2563eb]"
             style={{ fontWeight: 700 }}
             {...props}
           >
@@ -162,7 +162,7 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
-      <div className="px-16 sm:px-12 max-sm:px-8">
+      <div className="page-gutter-x">
         <div className="max-w-[800px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -190,7 +190,7 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
                 <Link
                   href={`/tags/${encodeURIComponent(tag)}`}
                   aria-label={`View all posts with tag: ${tag}`}
-                  className="inline-block bg-[#004cff] px-3 py-1 text-[12px] font-semibold rounded-none"
+                  className="inline-block bg-[#004cff] px-3 py-1 text-[11px] font-semibold rounded-none"
                   style={{ color: "white" }}
                 >
                   {tag}
@@ -204,7 +204,7 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.0 }}
           >
-            <h1 className="text-3xl font-light text-neutral-900 mb-3 text-center">
+            <h1 className="text-2xl font-light text-neutral-900 mb-3 text-center">
               {meta.title}
             </h1>
 
@@ -233,23 +233,19 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
               </div>
 
               <style jsx global>{`
-                @media (max-width: 640px) {
-                  .mobile-pad {
-                    padding-left: max(32px, env(safe-area-inset-left));
-                    padding-right: max(32px, env(safe-area-inset-right));
-                    box-sizing: border-box;
-                    width: 100%;
-                    margin: 0 auto;
-                  }
+                .mobile-pad {
+                  box-sizing: border-box;
+                  width: 100%;
+                  margin: 0 auto;
+                }
 
-                  .mobile-pad img,
-                  .mobile-pad video,
-                  .mobile-pad pre,
-                  .mobile-pad code,
-                  .mobile-pad table {
-                    max-width: 100%;
-                    overflow-wrap: anywhere;
-                  }
+                .mobile-pad img,
+                .mobile-pad video,
+                .mobile-pad pre,
+                .mobile-pad code,
+                .mobile-pad table {
+                  max-width: 100%;
+                  overflow-wrap: anywhere;
                 }
 
                 .mermaid-rendered svg {
@@ -258,16 +254,10 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
                 }
               `}</style>
             </article>
-
-            <article className="hidden sm:block text-justify leading-[1.75]">
-              <Markdown remarkPlugins={[remarkGfm]} components={components}>
-                {content}
-              </Markdown>
-            </article>
           </motion.main>
 
           <motion.footer
-            className="text-[10px] font-light text-neutral-900 py-8 text-center"
+            className="text-[9px] font-light text-neutral-900 py-8 text-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 1.2 }}

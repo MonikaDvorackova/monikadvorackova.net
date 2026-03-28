@@ -11,16 +11,26 @@ type Post = {
   tags: string[];
   tldr?: string;
   resources?: ResourceItem[];
+  readingMinutes?: number;
 };
 
-function BlogCard({ post }: { post: Post }) {
+function BlogCard({
+  post,
+  solo = false,
+  onPointerInsideCard,
+}: {
+  post: Post;
+  solo?: boolean;
+  onPointerInsideCard?: () => void;
+}) {
   return (
     <div
-      className="relative rounded-2xl transition-transform duration-300 hover:scale-[1.03] hover:shadow-[0_6px_24px_rgba(0,0,0,0.18)]"
+      className="relative overflow-visible rounded-2xl transition-transform duration-300 hover:scale-[1.01] hover:shadow-[0_6px_24px_rgba(0,0,0,0.18)] focus-visible:ring-2 focus-visible:ring-[#004cff]/50"
+      onPointerEnter={onPointerInsideCard}
       style={{
         width: 260,
         minHeight: 138,
-        marginRight: 20,
+        marginRight: solo ? 0 : 20,
         backgroundColor: "rgba(255,255,255,0.72)",
         color: "#000",
         border: "1px solid rgba(0,42,255,0.12)",
@@ -36,32 +46,36 @@ function BlogCard({ post }: { post: Post }) {
         contain: "layout paint",
       }}
     >
-      <div className="flex items-center justify-between">
-        {post.resources?.length ? (
-          <div className="flex items-center" style={{ gap: 6 }}>
-            <ResourceIcons
-              resources={post.resources.slice(0, 3)}
-              showLabels={false}
-              sizeClassName="h-[14px] w-[14px]"
-            />
-          </div>
-        ) : (
-          <span />
-        )}
+      <div className="flex min-h-[56px] items-start justify-between gap-2">
+        <Link
+          href={`/blog/${post.slug}`}
+          aria-label={`Open: ${post.title}`}
+          title={post.title}
+          className="min-w-0 flex-1 self-start text-[11px] font-semibold leading-snug text-[#004cff] line-clamp-2 hover:opacity-90 transition-opacity"
+        >
+          {post.title}
+        </Link>
 
-        <span className="text-[10px] text-black/50 tabular-nums">{post.date}</span>
+        <div className="flex min-h-[56px] shrink-0 flex-col items-end justify-start gap-1">
+          <span className="text-[9px] font-medium tabular-nums text-black">{post.date}</span>
+          <span className="mb-0.5 text-[9px] tabular-nums text-black leading-tight">
+            {Math.max(1, post.readingMinutes ?? 1)} min
+          </span>
+          <div className="mt-1 flex min-h-[15px] w-full items-end justify-end">
+            {post.resources?.length ? (
+              <ResourceIcons
+                resources={post.resources.slice(0, 8)}
+                showLabels={false}
+                sizeClassName="h-[13px] w-[13px]"
+                className="justify-end"
+              />
+            ) : null}
+          </div>
+        </div>
       </div>
 
-      <Link
-        href={`/blog/${post.slug}`}
-        aria-label={`Open: ${post.title}`}
-        className="text-[12px] font-semibold leading-snug line-clamp-2 hover:text-[#004cff] transition-colors"
-      >
-        {post.title}
-      </Link>
-
       {post.tldr && (
-        <p className="text-[10px] leading-[1.5] text-black/55 line-clamp-2 mt-auto">
+        <p className="mt-auto whitespace-pre-line text-[9px] leading-[1.5] text-black">
           {post.tldr}
         </p>
       )}
@@ -88,13 +102,14 @@ function BlogCard({ post }: { post: Post }) {
 export default function ClientBlog({ posts }: { posts: Post[] }) {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
+  const pausedRef = useRef(false);
 
-  const shouldMarquee = posts.length >= 1;
+  const useMarquee = posts.length >= 2;
   const firstLoop = posts;
   const secondLoop = posts;
 
   useEffect(() => {
-    if (!shouldMarquee) return;
+    if (!useMarquee) return;
 
     const wrapper = wrapperRef.current;
     const track = trackRef.current;
@@ -103,23 +118,10 @@ export default function ClientBlog({ posts }: { posts: Post[] }) {
     let raf = 0;
     let last = performance.now();
     let x = 0;
-    let paused = false;
-    const speed = 28;
-    let startX = 0;
+    const speedDesktop = 22;
+    const speedMobile = 14;
+    let speed = window.matchMedia("(max-width: 639px)").matches ? speedMobile : speedDesktop;
     let centerPad = 0;
-
-    const onEnter = () => {
-      paused = true;
-    };
-
-    const onLeave = () => {
-      paused = false;
-    };
-
-    wrapper.addEventListener("mouseenter", onEnter);
-    wrapper.addEventListener("mouseleave", onLeave);
-    wrapper.addEventListener("touchstart", onEnter, { passive: true });
-    wrapper.addEventListener("touchend", onLeave);
 
     type DocWithFonts = Document & { fonts?: { ready: Promise<void> } };
     const fontsReady: Promise<void> =
@@ -129,8 +131,7 @@ export default function ClientBlog({ posts }: { posts: Post[] }) {
       const half = track.scrollWidth / 2;
       if (half <= 0) return;
       centerPad = Math.max(0, (wrapper.clientWidth - half) / 2);
-      startX = 0;
-      x = startX;
+      x = 0;
       track.style.transform = `translate3d(${centerPad - x}px,0,0)`;
     };
 
@@ -138,7 +139,7 @@ export default function ClientBlog({ posts }: { posts: Post[] }) {
       const dt = (now - last) / 1000;
       last = now;
 
-      if (!paused) {
+      if (!pausedRef.current) {
         x += speed * dt;
         const half = track.scrollWidth / 2;
         if (half > 0 && x >= half) x -= half;
@@ -154,32 +155,44 @@ export default function ClientBlog({ posts }: { posts: Post[] }) {
       raf = requestAnimationFrame(loop);
     });
 
-    const onResize = () => recomputeStart();
+    const onResize = () => {
+      speed = window.matchMedia("(max-width: 639px)").matches ? speedMobile : speedDesktop;
+      recomputeStart();
+    };
     window.addEventListener("resize", onResize);
 
     return () => {
       cancelAnimationFrame(raf);
-      wrapper.removeEventListener("mouseenter", onEnter);
-      wrapper.removeEventListener("mouseleave", onLeave);
-      wrapper.removeEventListener("touchstart", onEnter);
-      wrapper.removeEventListener("touchend", onLeave);
       window.removeEventListener("resize", onResize);
     };
-  }, [shouldMarquee, posts.length]);
+  }, [useMarquee, posts.length]);
 
   if (!posts.length) return null;
+
+  if (posts.length === 1) {
+    return (
+      <div className="w-full flex justify-center">
+        <BlogCard post={posts[0]} solo />
+      </div>
+    );
+  }
 
   return (
     <div className="w-full">
       <div
         ref={wrapperRef}
         className="relative w-full overflow-hidden select-none"
+        onPointerEnter={() => {
+          pausedRef.current = true;
+        }}
+        onPointerLeave={() => {
+          pausedRef.current = false;
+        }}
         style={{
-          // keep motion focused in center; fade/clip before page edges
           WebkitMaskImage:
-            "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.10) 10%, rgba(0,0,0,0.55) 18%, black 30%, black 70%, rgba(0,0,0,0.55) 82%, rgba(0,0,0,0.10) 90%, transparent 100%)",
+            "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.06) 14%, rgba(0,0,0,0.35) 22%, black 38%, black 62%, rgba(0,0,0,0.35) 78%, rgba(0,0,0,0.06) 86%, transparent 100%)",
           maskImage:
-            "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.10) 10%, rgba(0,0,0,0.55) 18%, black 30%, black 70%, rgba(0,0,0,0.55) 82%, rgba(0,0,0,0.10) 90%, transparent 100%)",
+            "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.06) 14%, rgba(0,0,0,0.35) 22%, black 38%, black 62%, rgba(0,0,0,0.35) 78%, rgba(0,0,0,0.06) 86%, transparent 100%)",
         }}
       >
         <div
@@ -188,11 +201,23 @@ export default function ClientBlog({ posts }: { posts: Post[] }) {
           style={{ transform: "translate3d(0,0,0)" }}
         >
           {firstLoop.map((post) => (
-            <BlogCard key={`${post.slug}-card-a`} post={post} />
+            <BlogCard
+              key={`${post.slug}-card-a`}
+              post={post}
+              onPointerInsideCard={() => {
+                pausedRef.current = true;
+              }}
+            />
           ))}
 
           {secondLoop.map((post) => (
-            <BlogCard key={`${post.slug}-card-b`} post={post} />
+            <BlogCard
+              key={`${post.slug}-card-b`}
+              post={post}
+              onPointerInsideCard={() => {
+                pausedRef.current = true;
+              }}
+            />
           ))}
         </div>
       </div>
