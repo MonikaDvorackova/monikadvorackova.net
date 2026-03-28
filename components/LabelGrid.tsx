@@ -15,20 +15,20 @@ const DEFAULT_LABELS = [
 type Props = {
   labels?: string[];
   selected?: string[];
-  onToggle?: (label: string) => void;
+  onToggleAction?: (label: string) => void;
   className?: string;
 };
 
 export default function LabelGrid({
   labels = DEFAULT_LABELS,
   selected,
-  onToggle,
+  onToggleAction,
   className,
 }: Props) {
   const isSelected = (t: string) => !!selected?.includes(t);
 
   return (
-    <div className={`w-full max-w-5xl mx-auto px-4 ${className ?? ""}`}>
+    <div className={`w-full max-w-5xl mx-auto ${className ?? ""}`}>
       {/* mobil: chips s wrapem; od sm: grid 2–3 sloupce */}
       <ul
         role="list"
@@ -37,10 +37,10 @@ export default function LabelGrid({
         {labels.map((t) => {
           const active = isSelected(t);
           return (
-            <li key={t} role="listitem" className="sm:contents">
+            <li key={t} className="w-auto sm:w-full">
               <button
                 type="button"
-                onClick={onToggle ? () => onToggle(t) : undefined}
+                onClick={onToggleAction ? () => onToggleAction(t) : undefined}
                 aria-pressed={active}
                 title={t}
                 className={[
@@ -49,7 +49,7 @@ export default function LabelGrid({
                   // tap target 44px
                   "h-11 min-h-[44px] min-w-[44px]",
                   // padding + velikost písma adaptivně
-                  "px-4 text-[clamp(12px,3.2vw,14px)] font-medium",
+                  "px-4 text-[clamp(11px,3vw,13px)] font-medium",
                   "rounded-full border transition-colors whitespace-nowrap",
                   active
                     ? "bg-blue-600 text-white border-blue-600"
