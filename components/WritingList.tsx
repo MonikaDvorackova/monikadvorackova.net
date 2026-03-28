@@ -1,6 +1,8 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Link from "next/link";
+import ResourceIcons, { type Resource as ResourceItem } from "@/components/ResourceIcons";
 
 type Post = {
   title: string;
@@ -9,85 +11,227 @@ type Post = {
   tags: string[];
   tldr?: string;
   readingMinutes?: number;
+  resources?: ResourceItem[];
 };
 
+function WritingCard({
+  post,
+  solo = false,
+  onPointerInsideCard,
+}: {
+  post: Post;
+  solo?: boolean;
+  onPointerInsideCard?: () => void;
+}) {
+  const href = `/blog/${post.slug}`;
+
+  return (
+    <div
+      className="group relative block overflow-visible rounded-2xl transition-transform duration-300 hover:scale-[1.01] hover:shadow-[0_6px_24px_rgba(0,0,0,0.18)] focus-within:ring-2 focus-within:ring-[#004cff]/50"
+      onPointerEnter={onPointerInsideCard}
+      style={{
+        width: 420,
+        minHeight: 78,
+        marginRight: solo ? 0 : 16,
+        backgroundColor: "rgba(255,255,255,0.72)",
+        color: "#000",
+        border: "1px solid rgba(0,42,255,0.12)",
+        boxShadow: "inset 0 0 0 1px rgba(8,28,244,0.06), 0 4px 16px rgba(0,0,0,0.07)",
+        padding: "12px 16px 10px",
+        backdropFilter: "blur(8px)",
+        borderRadius: "1rem",
+        contain: "layout paint",
+        flexShrink: 0,
+      }}
+    >
+      <div className="flex h-full flex-col">
+        <div className="flex min-h-[56px] items-start justify-between gap-3">
+          <Link
+            href={href}
+            className="min-w-0 flex-1 self-start line-clamp-2 text-[11px] font-semibold leading-snug text-[#004cff] transition-opacity group-hover:opacity-90"
+            title={post.title}
+          >
+            {post.title}
+          </Link>
+
+          <div className="flex min-h-[56px] shrink-0 flex-col items-end justify-start gap-1 text-right">
+            <div className="text-[9px] font-medium tabular-nums text-black">{post.date}</div>
+            <div className="mb-0.5 text-[9px] tabular-nums text-black leading-tight">
+              {Math.max(1, typeof post.readingMinutes === "number" ? post.readingMinutes : 1)} min
+            </div>
+            <div className="mt-1 flex min-h-[15px] w-full items-end justify-end">
+              {post.resources?.length ? (
+                <ResourceIcons
+                  resources={post.resources.slice(0, 8)}
+                  showLabels={false}
+                  sizeClassName="h-[13px] w-[13px]"
+                  className="justify-end"
+                />
+              ) : null}
+            </div>
+          </div>
+        </div>
+
+        {post.tldr ? (
+          <Link
+            href={href}
+            className="mt-2 block text-black no-underline visited:text-black hover:text-black focus-visible:text-black"
+            style={{ color: "#000" }}
+          >
+            <p
+              className="line-clamp-3 text-[9px] leading-[1.5]"
+              style={{ color: "#000", WebkitTextFillColor: "#000" }}
+            >
+              {post.tldr}
+            </p>
+          </Link>
+        ) : (
+          <div className="mt-2" />
+        )}
+
+        <div className="mt-auto pt-3">
+          {post.tags?.length ? (
+            <div className="flex flex-wrap gap-x-[10px] gap-y-2">
+              {post.tags.slice(0, 3).map((tag) => (
+                <span
+                  key={tag}
+                  className="inline-flex items-center whitespace-nowrap rounded px-2.5 py-1 text-[9px] font-semibold leading-none"
+                  style={{
+                    backgroundColor: "#004cff",
+                    color: "#fff",
+                    WebkitTextFillColor: "#fff",
+                  }}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          ) : (
+            <div style={{ height: 12 }} />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function WritingList({ posts }: { posts: Post[] }) {
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const pausedRef = useRef(false);
+  const useMarquee = posts.length >= 2;
+  const firstLoop = posts;
+  const secondLoop = posts;
+
+  useEffect(() => {
+    if (!useMarquee) return;
+
+    const wrapper = wrapperRef.current;
+    const track = trackRef.current;
+    if (!wrapper || !track) return;
+
+    let raf = 0;
+    let last = performance.now();
+    let x = 0;
+    let centerPad = 0;
+    const speedDesktop = 20;
+    const speedMobile = 14;
+    let speed = window.matchMedia("(max-width: 639px)").matches ? speedMobile : speedDesktop;
+
+    type DocWithFonts = Document & { fonts?: { ready: Promise<void> } };
+    const fontsReady: Promise<void> =
+      ((document as DocWithFonts).fonts?.ready) ?? Promise.resolve();
+
+    const recomputeStart = () => {
+      const half = track.scrollWidth / 2;
+      if (half <= 0) return;
+      centerPad = Math.max(0, (wrapper.clientWidth - half) / 2);
+      x = 0;
+      track.style.transform = `translate3d(${centerPad - x}px,0,0)`;
+    };
+
+    const loop = (now: number) => {
+      const dt = (now - last) / 1000;
+      last = now;
+      if (!pausedRef.current) {
+        x += speed * dt;
+        const half = track.scrollWidth / 2;
+        if (half > 0 && x >= half) x -= half;
+        track.style.transform = `translate3d(${centerPad - x}px,0,0)`;
+      }
+      raf = requestAnimationFrame(loop);
+    };
+
+    fontsReady.then(() => {
+      recomputeStart();
+      last = performance.now();
+      raf = requestAnimationFrame(loop);
+    });
+
+    const onResize = () => {
+      speed = window.matchMedia("(max-width: 639px)").matches ? speedMobile : speedDesktop;
+      recomputeStart();
+    };
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", onResize);
+    };
+  }, [useMarquee, posts.length]);
+
   if (!posts.length) return null;
+
+  if (posts.length === 1) {
+    return (
+      <div className="w-full flex justify-center">
+        <WritingCard post={posts[0]} solo />
+      </div>
+    );
+  }
 
   return (
     <div className="w-full">
-      <div className="flex flex-col items-center gap-4">
-        {posts.map((post) => (
-          <Link
-            key={post.slug}
-            href={`/blog/${post.slug}`}
-            className="group relative block overflow-hidden rounded-2xl transition-transform duration-300 hover:scale-[1.03] hover:shadow-[0_6px_24px_rgba(0,0,0,0.18)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#004cff]/50"
-            style={{
-              width: "clamp(340px, 62vw, 520px)",
-              height: 78,
-              backgroundColor: "rgba(255,255,255,0.72)",
-              color: "#000",
-              border: "1px solid rgba(0,42,255,0.12)",
-              boxShadow:
-                "inset 0 0 0 1px rgba(8,28,244,0.06), 0 4px 16px rgba(0,0,0,0.07)",
-              padding: "12px 16px 10px",
-              backdropFilter: "blur(8px)",
-              borderRadius: "1rem",
-              contain: "layout paint",
-            }}
-          >
-            <div className="flex h-full flex-col">
-              <div className="flex items-start justify-between gap-3">
-                <div className="min-w-0">
-                  <div className="line-clamp-2 text-[12px] font-semibold leading-snug transition-colors group-hover:text-[#004cff]">
-                    {post.title}
-                  </div>
-                </div>
-
-                <div className="shrink-0 text-right">
-                  <div className="text-[10px] text-black/50 tabular-nums">{post.date}</div>
-                  {typeof post.readingMinutes === "number" && post.readingMinutes > 0 ? (
-                    <div className="mt-0.5 text-[10px] text-black/35 tabular-nums">
-                      {post.readingMinutes} min
-                    </div>
-                  ) : null}
-                </div>
-              </div>
-
-              {post.tldr ? (
-                <p className="mt-2 line-clamp-3 text-[10px] leading-[1.5] text-black/55">
-                  {post.tldr}
-                </p>
-              ) : (
-                <div className="mt-2" />
-              )}
-
-              <div className="mt-auto pt-3">
-                {post.tags?.length ? (
-                  <div className="flex flex-wrap">
-                    {post.tags.slice(0, 3).map((tag) => (
-                      <span
-                        key={tag}
-                        className="inline-flex items-center whitespace-nowrap rounded px-2.5 py-1 text-[10px] font-semibold leading-none"
-                        style={{
-                          backgroundColor: "#004cff",
-                          color: "#fff",
-                          WebkitTextFillColor: "#fff",
-                          marginRight: 10,
-                          marginBottom: 8,
-                        }}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                ) : (
-                  <div style={{ height: 12 }} />
-                )}
-              </div>
-            </div>
-          </Link>
-        ))}
+      <div
+        ref={wrapperRef}
+        className="relative w-full overflow-hidden select-none"
+        onPointerEnter={() => {
+          pausedRef.current = true;
+        }}
+        onPointerLeave={() => {
+          pausedRef.current = false;
+        }}
+        style={{
+          WebkitMaskImage:
+            "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.06) 14%, rgba(0,0,0,0.35) 22%, black 38%, black 62%, rgba(0,0,0,0.35) 78%, rgba(0,0,0,0.06) 86%, transparent 100%)",
+          maskImage:
+            "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.06) 14%, rgba(0,0,0,0.35) 22%, black 38%, black 62%, rgba(0,0,0,0.35) 78%, rgba(0,0,0,0.06) 86%, transparent 100%)",
+        }}
+      >
+        <div
+          ref={trackRef}
+          className="flex w-max will-change-transform pl-1 pr-1"
+          style={{ transform: "translate3d(0,0,0)" }}
+        >
+          {firstLoop.map((post) => (
+            <WritingCard
+              key={`${post.slug}-writing-a`}
+              post={post}
+              onPointerInsideCard={() => {
+                pausedRef.current = true;
+              }}
+            />
+          ))}
+          {secondLoop.map((post) => (
+            <WritingCard
+              key={`${post.slug}-writing-b`}
+              post={post}
+              onPointerInsideCard={() => {
+                pausedRef.current = true;
+              }}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

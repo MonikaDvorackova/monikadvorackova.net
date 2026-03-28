@@ -4,6 +4,15 @@
 
 /* globals.css */
 
+:root {
+  --page-gutter-x: clamp(1rem, 4vw + 0.5rem, 3.5rem);
+}
+
+.page-gutter-x {
+  padding-left: max(var(--page-gutter-x), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--page-gutter-x), env(safe-area-inset-right, 0px));
+}
+
 html,
 body {
   margin: 0;

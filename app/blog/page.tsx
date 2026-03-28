@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import ClientBlog from "@/components/ClientBlog";
+import PublicationsList, { PUBLICATIONS_DATA } from "@/components/PublicationsList";
 import WritingList from "@/components/WritingList";
 
 type ResourceType =
@@ -22,7 +23,6 @@ interface Post {
   type: string;
 }
 
-// ---------- helpers ----------
 function isResourceArray(v: unknown): v is Resource[] {
   return Array.isArray(v) && v.every(
     (r) =>
@@ -55,19 +55,33 @@ function normalizePosts(data: unknown): Post[] {
   return Array.from(new Map(out.map((p) => [p.slug, p])).values());
 }
 
-// ---------- section label ----------
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="w-full mb-5">
+    <div className="w-full pb-3">
       <div className="text-center text-[10px] font-semibold tracking-[0.18em] uppercase text-black/35">
         {children}
       </div>
-      <div className="mt-2 h-px w-full bg-black/10" />
     </div>
   );
 }
 
-// ---------- component ----------
+function SectionPanel({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      className="overflow-visible rounded-2xl bg-white/35 py-4 backdrop-blur-sm sm:py-5"
+      style={{
+        marginTop: 10,
+        paddingLeft: "clamp(0.75rem, 2.5vw, 1.25rem)",
+        paddingRight: "clamp(0.75rem, 2.5vw, 1.25rem)",
+        boxShadow:
+          "inset 0 1px 0 rgba(255,255,255,0.5), 0 6px 28px rgba(0,0,0,0.05)",
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
 export default function BlogPage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -79,7 +93,14 @@ export default function BlogPage() {
           const text = await res.text().catch(() => "");
           throw new Error(`GET /api/posts failed: ${res.status} ${text}`);
         }
-        return res.json() as Promise<unknown>;
+        const text = await res.text();
+        if (!text.trim()) return [];
+        try {
+          return JSON.parse(text) as unknown;
+        } catch (e) {
+          console.error("GET /api/posts: invalid or empty JSON", e);
+          return [];
+        }
       })
       .then((data) => {
         setPosts(normalizePosts(data));
@@ -91,7 +112,15 @@ export default function BlogPage() {
   }, []);
 
   const softwarePosts = posts.filter((p) => p.type === "software");
-  const articlePosts = posts.filter((p) => p.type !== "software");
+  const articlePosts = posts.filter(
+    (p) => p.type !== "software" && p.type !== "publication"
+  );
+
+  const hasSoftware = softwarePosts.length > 0;
+  const hasPublications = PUBLICATIONS_DATA.length > 0;
+  const hasWritings = articlePosts.length > 0;
+  const publicationsTopPad = hasSoftware;
+  const writingsTopPad = hasSoftware || hasPublications;
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-[#fdf2e9] to-[#f8e9dc] text-neutral-900">
@@ -101,40 +130,65 @@ export default function BlogPage() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
       >
-        <main className="w-full flex-1 flex items-center justify-center overflow-x-hidden">
-          <div className="w-full max-w-5xl mx-auto px-6 pb-24 flex flex-col gap-12">
+        <main className="w-full flex flex-1 min-h-0 items-center justify-center overflow-x-hidden py-16">
+          <div className="page-gutter-x w-full max-w-5xl mx-auto flex flex-col pb-36">
+            {hasSoftware && (
+              <motion.section
+                className="w-full"
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 24 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+              >
+                <div className="w-full max-w-3xl mx-auto">
+                  <SectionLabel>Software</SectionLabel>
+                  <SectionPanel>
+                    <ClientBlog posts={softwarePosts} />
+                  </SectionPanel>
+                </div>
+              </motion.section>
+            )}
 
-        {/* ── Software ── */}
-        {softwarePosts.length > 0 && (
-          <motion.section
-            className="w-full mb-14"
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 24 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          >
-            <div className="w-full max-w-2xl mx-auto">
-              <SectionLabel>Software</SectionLabel>
-              <ClientBlog posts={softwarePosts} />
-            </div>
-          </motion.section>
-        )}
+            {hasPublications && (
+              <div
+                className="w-full"
+                style={{ marginTop: publicationsTopPad ? 64 : undefined }}
+              >
+                <motion.section
+                  className="w-full"
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 24 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                >
+                  <div className="w-full max-w-3xl mx-auto">
+                    <SectionLabel>Publications</SectionLabel>
+                    <SectionPanel>
+                      <PublicationsList />
+                    </SectionPanel>
+                  </div>
+                </motion.section>
+              </div>
+            )}
 
-        {/* ── Writing ── */}
-        {articlePosts.length > 0 && (
-          <motion.section
-            className="w-full"
-            style={{ marginTop: softwarePosts.length > 0 ? 60 : 0 }}
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 24 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-          >
-            <div className="w-full max-w-3xl mx-auto">
-              <SectionLabel>Writings</SectionLabel>
-              <WritingList posts={articlePosts} />
-            </div>
-          </motion.section>
-        )}
-
+            {hasWritings && (
+              <div
+                className="w-full"
+                style={{ marginTop: writingsTopPad ? 64 : undefined }}
+              >
+                <motion.section
+                  className="w-full"
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 24 }}
+                  transition={{ duration: 0.8, delay: 0.5 }}
+                >
+                  <div className="w-full max-w-3xl mx-auto">
+                    <SectionLabel>Writings</SectionLabel>
+                    <SectionPanel>
+                      <WritingList posts={articlePosts} />
+                    </SectionPanel>
+                  </div>
+                </motion.section>
+              </div>
+            )}
           </div>
         </main>
       </motion.div>

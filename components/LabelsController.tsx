@@ -91,7 +91,7 @@ export default function LabelsController() {
   return createPortal(
     <>
       <AnimatePresence>
-        {open ? <LabelsOverlay onClose={() => setOpen(false)} /> : null}
+        {open ? <LabelsOverlay onCloseAction={() => setOpen(false)} /> : null}
       </AnimatePresence>
 
       {/* Nenápadný toggler – když gesta na zařízení neodpálí eventy */}
