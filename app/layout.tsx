@@ -1,8 +1,7 @@
 // app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Analytics } from "@vercel/analytics/next";
+import VercelMetrics from "@/components/VercelMetrics";
 
 export const metadata: Metadata = {
   title: "Monika Dvořáčková",
@@ -10,11 +9,8 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  
-
   return (
     <html lang="en">
-      <head>{}</head>
       <body className="min-h-screen w-full">
         {children}
         <footer
@@ -38,9 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           © 2026 Monika Dvorackova
         </footer>
-        <SpeedInsights />
-        <Analytics />
-
+        <VercelMetrics />
       </body>
     </html>
   );
