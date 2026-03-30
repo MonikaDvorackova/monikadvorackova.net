@@ -131,7 +131,7 @@ export default function BlogPage() {
         transition={{ duration: 0.6 }}
       >
         <main className="w-full flex flex-1 min-h-0 items-center justify-center overflow-x-hidden py-16">
-          <div className="page-gutter-x w-full max-w-5xl mx-auto flex flex-col pb-36">
+          <div className="mx-auto w-full max-w-2xl px-4 sm:px-6 flex flex-col pb-36">
             {hasSoftware && (
               <motion.section
                 className="w-full"
@@ -139,7 +139,7 @@ export default function BlogPage() {
                 animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 24 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
-                <div className="w-full max-w-3xl mx-auto">
+                <div className="w-full mx-auto">
                   <SectionLabel>Software</SectionLabel>
                   <SectionPanel>
                     <ClientBlog posts={softwarePosts} />
@@ -159,7 +159,7 @@ export default function BlogPage() {
                   animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 24 }}
                   transition={{ duration: 0.8, delay: 0.4 }}
                 >
-                  <div className="w-full max-w-3xl mx-auto">
+                  <div className="w-full mx-auto">
                     <SectionLabel>Publications</SectionLabel>
                     <SectionPanel>
                       <PublicationsList />
@@ -180,7 +180,7 @@ export default function BlogPage() {
                   animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 24 }}
                   transition={{ duration: 0.8, delay: 0.5 }}
                 >
-                  <div className="w-full max-w-3xl mx-auto">
+                  <div className="w-full mx-auto">
                     <SectionLabel>Writings</SectionLabel>
                     <SectionPanel>
                       <WritingList posts={articlePosts} />
