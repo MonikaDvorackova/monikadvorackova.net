@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import ResourceIcons, { type Resource as ResourceItem } from "@/components/ResourceIcons";
 
@@ -25,11 +25,12 @@ function BlogCard({
 }) {
   return (
     <div
-      className="relative overflow-visible rounded-2xl transition-transform duration-300 hover:scale-[1.01] hover:shadow-[0_6px_24px_rgba(0,0,0,0.18)] focus-visible:ring-2 focus-visible:ring-[#004cff]/50"
+      className="relative overflow-visible rounded-2xl transition-transform duration-300 hover:scale-[1.01] hover:shadow-[0_6px_24px_rgba(0,0,0,0.18)] focus-visible:ring-2 focus-visible:ring-[#004cff]/50 h-auto p-4 sm:p-6"
       onPointerEnter={onPointerInsideCard}
       style={{
-        width: 260,
-        minHeight: 138,
+        width: solo ? "100%" : 260,
+        maxWidth: solo ? 420 : undefined,
+        minHeight: solo ? undefined : 138,
         marginRight: solo ? 0 : 20,
         backgroundColor: "rgba(255,255,255,0.72)",
         color: "#000",
@@ -37,7 +38,6 @@ function BlogCard({
         boxShadow:
           "inset 0 0 0 1px rgba(8,28,244,0.06), 0 4px 16px rgba(0,0,0,0.07)",
         flexShrink: 0,
-        padding: "14px 16px 12px",
         backdropFilter: "blur(8px)",
         display: "flex",
         flexDirection: "column",
@@ -51,7 +51,7 @@ function BlogCard({
           href={`/blog/${post.slug}`}
           aria-label={`Open: ${post.title}`}
           title={post.title}
-          className="min-w-0 flex-1 self-start text-[11px] font-semibold leading-snug text-[#004cff] line-clamp-2 hover:opacity-90 transition-opacity"
+          className="min-w-0 flex-1 self-start text-base sm:text-lg font-semibold leading-snug text-[#004cff] line-clamp-2 hover:opacity-90 transition-opacity"
         >
           {post.title}
         </Link>
@@ -75,7 +75,7 @@ function BlogCard({
       </div>
 
       {post.tldr && (
-        <p className="mt-auto whitespace-pre-line text-[9px] leading-[1.5] text-black">
+        <p className="mt-auto whitespace-pre-line text-sm sm:text-base leading-[1.5] text-black">
           {post.tldr}
         </p>
       )}
@@ -104,7 +104,23 @@ export default function ClientBlog({ posts }: { posts: Post[] }) {
   const trackRef = useRef<HTMLDivElement | null>(null);
   const pausedRef = useRef(false);
 
-  const useMarquee = posts.length >= 2;
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    const update = () => setIsMobile(mq.matches);
+    update();
+
+    if (mq.addEventListener) mq.addEventListener("change", update);
+    else mq.addListener(update);
+
+    return () => {
+      if (mq.removeEventListener) mq.removeEventListener("change", update);
+      else mq.removeListener(update);
+    };
+  }, []);
+
+  const useMarquee = posts.length >= 2 && !isMobile;
   const firstLoop = posts;
   const secondLoop = posts;
 
@@ -168,6 +184,16 @@ export default function ClientBlog({ posts }: { posts: Post[] }) {
   }, [useMarquee, posts.length]);
 
   if (!posts.length) return null;
+
+  if (isMobile) {
+    return (
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-center">
+        {posts.map((post) => (
+          <BlogCard key={post.slug} post={post} solo />
+        ))}
+      </div>
+    );
+  }
 
   if (posts.length === 1) {
     return (

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import ResourceIcons, { type Resource as ResourceItem } from "@/components/ResourceIcons";
 
@@ -27,17 +27,17 @@ function WritingCard({
 
   return (
     <div
-      className="group relative block overflow-visible rounded-2xl transition-transform duration-300 hover:scale-[1.01] hover:shadow-[0_6px_24px_rgba(0,0,0,0.18)] focus-within:ring-2 focus-within:ring-[#004cff]/50"
+      className="group relative block overflow-visible rounded-2xl transition-transform duration-300 hover:scale-[1.01] hover:shadow-[0_6px_24px_rgba(0,0,0,0.18)] focus-within:ring-2 focus-within:ring-[#004cff]/50 h-auto p-4 sm:p-6"
       onPointerEnter={onPointerInsideCard}
       style={{
-        width: 420,
-        minHeight: 78,
+        width: solo ? "100%" : 420,
+        maxWidth: solo ? 420 : undefined,
+        minHeight: solo ? undefined : 78,
         marginRight: solo ? 0 : 16,
         backgroundColor: "rgba(255,255,255,0.72)",
         color: "#000",
         border: "1px solid rgba(0,42,255,0.12)",
         boxShadow: "inset 0 0 0 1px rgba(8,28,244,0.06), 0 4px 16px rgba(0,0,0,0.07)",
-        padding: "12px 16px 10px",
         backdropFilter: "blur(8px)",
         borderRadius: "1rem",
         contain: "layout paint",
@@ -48,7 +48,7 @@ function WritingCard({
         <div className="flex min-h-[56px] items-start justify-between gap-3">
           <Link
             href={href}
-            className="min-w-0 flex-1 self-start line-clamp-2 text-[11px] font-semibold leading-snug text-[#004cff] transition-opacity group-hover:opacity-90"
+            className="min-w-0 flex-1 self-start line-clamp-2 text-base sm:text-lg font-semibold leading-snug text-[#004cff] transition-opacity group-hover:opacity-90"
             title={post.title}
           >
             {post.title}
@@ -79,7 +79,7 @@ function WritingCard({
             style={{ color: "#000" }}
           >
             <p
-              className="line-clamp-3 text-[9px] leading-[1.5]"
+              className="line-clamp-3 text-sm sm:text-base leading-[1.5]"
               style={{ color: "#000", WebkitTextFillColor: "#000" }}
             >
               {post.tldr}
@@ -119,7 +119,24 @@ export default function WritingList({ posts }: { posts: Post[] }) {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const pausedRef = useRef(false);
-  const useMarquee = posts.length >= 2;
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    const update = () => setIsMobile(mq.matches);
+    update();
+
+    if (mq.addEventListener) mq.addEventListener("change", update);
+    else mq.addListener(update);
+
+    return () => {
+      if (mq.removeEventListener) mq.removeEventListener("change", update);
+      else mq.removeListener(update);
+    };
+  }, []);
+
+  const useMarquee = posts.length >= 2 && !isMobile;
   const firstLoop = posts;
   const secondLoop = posts;
 
@@ -181,6 +198,16 @@ export default function WritingList({ posts }: { posts: Post[] }) {
   }, [useMarquee, posts.length]);
 
   if (!posts.length) return null;
+
+  if (isMobile) {
+    return (
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-center">
+        {posts.map((post) => (
+          <WritingCard key={post.slug} post={post} solo />
+        ))}
+      </div>
+    );
+  }
 
   if (posts.length === 1) {
     return (
