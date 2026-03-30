@@ -144,8 +144,9 @@ export default function WritingList({ posts }: { posts: Post[] }) {
 
   const mobileContentKey = posts.map((p) => p.slug).join("|");
   useMobileScrollerAutoplay(mobileScrollerRef, isMobile && posts.length > 0, mobileContentKey, {
-    speedPxPerSec: 22,
+    speedPxPerSec: 11,
     idleResumeMs: 900,
+    seamlessLoop: true,
   });
 
   useEffect(() => {
@@ -229,6 +230,11 @@ export default function WritingList({ posts }: { posts: Post[] }) {
         >
           {posts.map((post) => (
             <div key={post.slug}>
+              <WritingCard post={post} solo />
+            </div>
+          ))}
+          {posts.map((post) => (
+            <div key={`${post.slug}-loop`}>
               <WritingCard post={post} solo />
             </div>
           ))}
