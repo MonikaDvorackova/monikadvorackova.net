@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
 
 export type PublicationItem = {
@@ -57,14 +57,14 @@ function PublicationCard({
       : estimateReadingMinutes(item.title, item.subtitle, item.blurb);
 
   const cardStyle: CSSProperties = {
-    width: solo ? "100%" : 420,
-    maxWidth: solo ? 420 : undefined,
-    minHeight: solo ? undefined : 96,
+    width: 420,
+    minHeight: 96,
     marginRight: solo ? 0 : 16,
     backgroundColor: "rgba(255,255,255,0.72)",
     color: "#000",
     border: "1px solid rgba(0,42,255,0.12)",
     boxShadow: "inset 0 0 0 1px rgba(8,28,244,0.06), 0 4px 16px rgba(0,0,0,0.07)",
+    padding: "12px 16px 10px",
     backdropFilter: "blur(8px)",
     borderRadius: "1rem",
     contain: "layout paint",
@@ -78,7 +78,7 @@ function PublicationCard({
           <div className="min-w-0 flex-1 self-start">
             <div className="flex items-start gap-2">
               <div
-                className="line-clamp-3 text-base sm:text-lg font-semibold leading-snug text-[#004cff] transition-opacity group-hover:opacity-90"
+                className="line-clamp-3 text-[11px] font-semibold leading-snug text-[#004cff] transition-opacity group-hover:opacity-90"
                 title={item.title}
               >
                 {item.title}
@@ -91,7 +91,7 @@ function PublicationCard({
               ) : null}
             </div>
             {item.subtitle ? (
-              <p className="mt-1 text-sm sm:text-base leading-snug text-black">{item.subtitle}</p>
+              <p className="mt-1 text-[9px] leading-snug text-black">{item.subtitle}</p>
             ) : null}
           </div>
 
@@ -112,16 +112,14 @@ function PublicationCard({
             >
               {item.caption ?? "External"}
             </div>
-            <div className="mb-0.5 text-sm sm:text-base tabular-nums text-black leading-tight">
+            <div className="mb-0.5 text-[9px] tabular-nums text-black leading-tight">
               {readingMinutes} min
             </div>
             <div className="mt-1 min-h-[15px] w-full shrink-0" aria-hidden />
           </div>
         </div>
 
-        <p className="mt-2 line-clamp-3 text-sm sm:text-base leading-[1.35] text-black">
-          {item.blurb}
-        </p>
+        <p className="mt-2 line-clamp-3 text-[9px] leading-[1.35] text-black">{item.blurb}</p>
 
         <div className="mt-auto pt-3">
           <div className="flex flex-wrap gap-x-[10px] gap-y-2">
@@ -164,7 +162,7 @@ function PublicationCard({
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`${item.title}${item.subtitle ? `. ${item.subtitle}` : ""}. Opens in a new tab.`}
-        className={`${cardHoverClass} cursor-pointer h-auto p-4 sm:p-6`}
+        className={`${cardHoverClass} cursor-pointer`}
         style={cardStyle}
         onPointerEnter={onPointerInsideCard}
       >
@@ -174,11 +172,7 @@ function PublicationCard({
   }
 
   return (
-    <div
-      className={`${cardHoverClass} cursor-default h-auto p-4 sm:p-6`}
-      style={cardStyle}
-      onPointerEnter={onPointerInsideCard}
-    >
+    <div className={`${cardHoverClass} cursor-default`} style={cardStyle} onPointerEnter={onPointerInsideCard}>
       {inner}
     </div>
   );
@@ -189,24 +183,7 @@ export default function PublicationsList() {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const pausedRef = useRef(false);
-
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 639px)");
-    const update = () => setIsMobile(mq.matches);
-    update();
-
-    if (mq.addEventListener) mq.addEventListener("change", update);
-    else mq.addListener(update);
-
-    return () => {
-      if (mq.removeEventListener) mq.removeEventListener("change", update);
-      else mq.removeListener(update);
-    };
-  }, []);
-
-  const useMarquee = items.length >= 2 && !isMobile;
+  const useMarquee = items.length >= 2;
   const firstLoop = items;
   const secondLoop = items;
 
@@ -268,16 +245,6 @@ export default function PublicationsList() {
   }, [useMarquee, items.length]);
 
   if (!items.length) return null;
-
-  if (isMobile) {
-    return (
-      <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-center">
-        {items.map((item) => (
-          <PublicationCard key={item.id} item={item} solo />
-        ))}
-      </div>
-    );
-  }
 
   if (items.length === 1) {
     return (
