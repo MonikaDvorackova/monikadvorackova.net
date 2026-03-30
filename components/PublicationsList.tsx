@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
 
 export type PublicationItem = {
@@ -57,14 +57,14 @@ function PublicationCard({
       : estimateReadingMinutes(item.title, item.subtitle, item.blurb);
 
   const cardStyle: CSSProperties = {
-    width: 420,
-    minHeight: 96,
+    width: solo ? "min(86vw, 360px)" : 420,
+    minHeight: solo ? undefined : 96,
     marginRight: solo ? 0 : 16,
     backgroundColor: "rgba(255,255,255,0.72)",
     color: "#000",
     border: "1px solid rgba(0,42,255,0.12)",
     boxShadow: "inset 0 0 0 1px rgba(8,28,244,0.06), 0 4px 16px rgba(0,0,0,0.07)",
-    padding: "12px 16px 10px",
+    padding: solo ? "16px 16px 14px" : "12px 16px 10px",
     backdropFilter: "blur(8px)",
     borderRadius: "1rem",
     contain: "layout paint",
@@ -183,7 +183,24 @@ export default function PublicationsList() {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const pausedRef = useRef(false);
-  const useMarquee = items.length >= 2;
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    const update = () => setIsMobile(mq.matches);
+    update();
+
+    if (mq.addEventListener) mq.addEventListener("change", update);
+    else mq.addListener(update);
+
+    return () => {
+      if (mq.removeEventListener) mq.removeEventListener("change", update);
+      else mq.removeListener(update);
+    };
+  }, []);
+
+  const useMarquee = items.length >= 2 && !isMobile;
   const firstLoop = items;
   const secondLoop = items;
 
@@ -245,6 +262,36 @@ export default function PublicationsList() {
   }, [useMarquee, items.length]);
 
   if (!items.length) return null;
+
+  if (isMobile) {
+    return (
+      <div
+        className="relative w-full overflow-x-auto overflow-y-hidden select-none no-scrollbar"
+        style={{
+          WebkitOverflowScrolling: "touch",
+          scrollSnapType: "x mandatory",
+          paddingLeft: 8,
+          paddingRight: 28,
+        }}
+      >
+        <div
+          className="flex w-max"
+          style={{
+            gap: 14,
+            paddingTop: 2,
+            paddingBottom: 2,
+            touchAction: "pan-x",
+          }}
+        >
+          {items.map((item) => (
+            <div key={item.id} style={{ scrollSnapAlign: "start" }}>
+              <PublicationCard item={item} solo />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   if (items.length === 1) {
     return (

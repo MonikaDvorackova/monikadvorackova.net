@@ -130,7 +130,7 @@ export default function BlogPage() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
       >
-        <main className="w-full flex flex-1 min-h-0 items-center justify-center overflow-x-hidden py-16">
+        <main className="w-full flex flex-1 min-h-0 items-center justify-center overflow-x-hidden py-12 sm:py-16">
           <div className="page-gutter-x w-full max-w-5xl mx-auto flex flex-col pb-36">
             {hasSoftware && (
               <motion.section
@@ -151,7 +151,7 @@ export default function BlogPage() {
             {hasPublications && (
               <div
                 className="w-full"
-                style={{ marginTop: publicationsTopPad ? 64 : undefined }}
+                style={{ marginTop: publicationsTopPad ? 40 : undefined }}
               >
                 <motion.section
                   className="w-full"
@@ -172,7 +172,7 @@ export default function BlogPage() {
             {hasWritings && (
               <div
                 className="w-full"
-                style={{ marginTop: writingsTopPad ? 64 : undefined }}
+                style={{ marginTop: writingsTopPad ? 40 : undefined }}
               >
                 <motion.section
                   className="w-full"
