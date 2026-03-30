@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
+import { useMobileScrollerAutoplay } from "@/hooks/useMobileScrollerAutoplay";
 
 export type PublicationItem = {
   id: string;
@@ -184,7 +185,6 @@ export default function PublicationsList() {
   const trackRef = useRef<HTMLDivElement | null>(null);
   const pausedRef = useRef(false);
   const mobileScrollerRef = useRef<HTMLDivElement | null>(null);
-  const mobilePausedRef = useRef(false);
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -205,6 +205,12 @@ export default function PublicationsList() {
   const useMarquee = items.length >= 2 && !isMobile;
   const firstLoop = items;
   const secondLoop = items;
+
+  const mobileContentKey = items.map((i) => i.id).join("|");
+  useMobileScrollerAutoplay(mobileScrollerRef, isMobile && items.length > 0, mobileContentKey, {
+    speedPxPerSec: 22,
+    idleResumeMs: 900,
+  });
 
   useEffect(() => {
     if (!useMarquee) return;
@@ -263,74 +269,6 @@ export default function PublicationsList() {
     };
   }, [useMarquee, items.length]);
 
-  useEffect(() => {
-    if (!isMobile) return;
-
-    const scroller = mobileScrollerRef.current;
-    if (!scroller) return;
-
-    let raf = 0;
-    let last = performance.now();
-    let resumeTimer: ReturnType<typeof setTimeout> | null = null;
-    let dir: 1 | -1 = 1;
-
-    const speedPxPerSec = 6;
-    const idleDelayMs = 900;
-
-    const pauseNow = () => {
-      mobilePausedRef.current = true;
-      if (resumeTimer) clearTimeout(resumeTimer);
-      resumeTimer = setTimeout(() => {
-        mobilePausedRef.current = false;
-        last = performance.now();
-      }, idleDelayMs);
-    };
-
-    const onPointerDown = () => pauseNow();
-    const onTouchStart = () => pauseNow();
-    const onTouchMove = () => pauseNow();
-    const onWheel = () => pauseNow();
-
-    scroller.addEventListener("pointerdown", onPointerDown, { passive: true });
-    scroller.addEventListener("touchstart", onTouchStart, { passive: true });
-    scroller.addEventListener("touchmove", onTouchMove, { passive: true });
-    scroller.addEventListener("wheel", onWheel, { passive: true });
-
-    const loop = (now: number) => {
-      const dt = (now - last) / 1000;
-      last = now;
-
-      if (!mobilePausedRef.current) {
-        const max = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
-        if (max > 0) {
-          const next = scroller.scrollLeft + dir * speedPxPerSec * dt;
-          if (next >= max) {
-            scroller.scrollLeft = max;
-            dir = -1;
-          } else if (next <= 0) {
-            scroller.scrollLeft = 0;
-            dir = 1;
-          } else {
-            scroller.scrollLeft = next;
-          }
-        }
-      }
-
-      raf = requestAnimationFrame(loop);
-    };
-
-    raf = requestAnimationFrame(loop);
-
-    return () => {
-      cancelAnimationFrame(raf);
-      if (resumeTimer) clearTimeout(resumeTimer);
-      scroller.removeEventListener("pointerdown", onPointerDown);
-      scroller.removeEventListener("touchstart", onTouchStart);
-      scroller.removeEventListener("touchmove", onTouchMove);
-      scroller.removeEventListener("wheel", onWheel);
-    };
-  }, [isMobile]);
-
   if (!items.length) return null;
 
   if (isMobile) {
@@ -340,7 +278,6 @@ export default function PublicationsList() {
         className="relative w-full overflow-x-auto overflow-y-hidden select-none no-scrollbar"
         style={{
           WebkitOverflowScrolling: "touch",
-          scrollSnapType: "x proximity",
           paddingLeft: 8,
           paddingRight: 28,
         }}
@@ -355,7 +292,7 @@ export default function PublicationsList() {
           }}
         >
           {items.map((item) => (
-            <div key={item.id} style={{ scrollSnapAlign: "start" }}>
+            <div key={item.id}>
               <PublicationCard item={item} solo />
             </div>
           ))}

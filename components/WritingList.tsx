@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import ResourceIcons, { type Resource as ResourceItem } from "@/components/ResourceIcons";
+import { useMobileScrollerAutoplay } from "@/hooks/useMobileScrollerAutoplay";
 
 type Post = {
   title: string;
@@ -120,7 +121,6 @@ export default function WritingList({ posts }: { posts: Post[] }) {
   const trackRef = useRef<HTMLDivElement | null>(null);
   const pausedRef = useRef(false);
   const mobileScrollerRef = useRef<HTMLDivElement | null>(null);
-  const mobilePausedRef = useRef(false);
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -141,6 +141,12 @@ export default function WritingList({ posts }: { posts: Post[] }) {
   const useMarquee = posts.length >= 2 && !isMobile;
   const firstLoop = posts;
   const secondLoop = posts;
+
+  const mobileContentKey = posts.map((p) => p.slug).join("|");
+  useMobileScrollerAutoplay(mobileScrollerRef, isMobile && posts.length > 0, mobileContentKey, {
+    speedPxPerSec: 22,
+    idleResumeMs: 900,
+  });
 
   useEffect(() => {
     if (!useMarquee) return;
@@ -199,74 +205,6 @@ export default function WritingList({ posts }: { posts: Post[] }) {
     };
   }, [useMarquee, posts.length]);
 
-  useEffect(() => {
-    if (!isMobile) return;
-
-    const scroller = mobileScrollerRef.current;
-    if (!scroller) return;
-
-    let raf = 0;
-    let last = performance.now();
-    let resumeTimer: ReturnType<typeof setTimeout> | null = null;
-    let dir: 1 | -1 = 1;
-
-    const speedPxPerSec = 6;
-    const idleDelayMs = 900;
-
-    const pauseNow = () => {
-      mobilePausedRef.current = true;
-      if (resumeTimer) clearTimeout(resumeTimer);
-      resumeTimer = setTimeout(() => {
-        mobilePausedRef.current = false;
-        last = performance.now();
-      }, idleDelayMs);
-    };
-
-    const onPointerDown = () => pauseNow();
-    const onTouchStart = () => pauseNow();
-    const onTouchMove = () => pauseNow();
-    const onWheel = () => pauseNow();
-
-    scroller.addEventListener("pointerdown", onPointerDown, { passive: true });
-    scroller.addEventListener("touchstart", onTouchStart, { passive: true });
-    scroller.addEventListener("touchmove", onTouchMove, { passive: true });
-    scroller.addEventListener("wheel", onWheel, { passive: true });
-
-    const loop = (now: number) => {
-      const dt = (now - last) / 1000;
-      last = now;
-
-      if (!mobilePausedRef.current) {
-        const max = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
-        if (max > 0) {
-          const next = scroller.scrollLeft + dir * speedPxPerSec * dt;
-          if (next >= max) {
-            scroller.scrollLeft = max;
-            dir = -1;
-          } else if (next <= 0) {
-            scroller.scrollLeft = 0;
-            dir = 1;
-          } else {
-            scroller.scrollLeft = next;
-          }
-        }
-      }
-
-      raf = requestAnimationFrame(loop);
-    };
-
-    raf = requestAnimationFrame(loop);
-
-    return () => {
-      cancelAnimationFrame(raf);
-      if (resumeTimer) clearTimeout(resumeTimer);
-      scroller.removeEventListener("pointerdown", onPointerDown);
-      scroller.removeEventListener("touchstart", onTouchStart);
-      scroller.removeEventListener("touchmove", onTouchMove);
-      scroller.removeEventListener("wheel", onWheel);
-    };
-  }, [isMobile]);
-
   if (!posts.length) return null;
 
   if (isMobile) {
@@ -276,7 +214,6 @@ export default function WritingList({ posts }: { posts: Post[] }) {
         className="relative w-full overflow-x-auto overflow-y-hidden select-none no-scrollbar"
         style={{
           WebkitOverflowScrolling: "touch",
-          scrollSnapType: "x proximity",
           paddingLeft: 8,
           paddingRight: 28,
         }}
@@ -291,7 +228,7 @@ export default function WritingList({ posts }: { posts: Post[] }) {
           }}
         >
           {posts.map((post) => (
-            <div key={post.slug} style={{ scrollSnapAlign: "start" }}>
+            <div key={post.slug}>
               <WritingCard post={post} solo />
             </div>
           ))}
