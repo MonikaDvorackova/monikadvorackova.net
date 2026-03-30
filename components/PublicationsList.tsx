@@ -208,8 +208,9 @@ export default function PublicationsList() {
 
   const mobileContentKey = items.map((i) => i.id).join("|");
   useMobileScrollerAutoplay(mobileScrollerRef, isMobile && items.length > 0, mobileContentKey, {
-    speedPxPerSec: 22,
+    speedPxPerSec: 11,
     idleResumeMs: 900,
+    seamlessLoop: true,
   });
 
   useEffect(() => {
@@ -293,6 +294,11 @@ export default function PublicationsList() {
         >
           {items.map((item) => (
             <div key={item.id}>
+              <PublicationCard item={item} solo />
+            </div>
+          ))}
+          {items.map((item) => (
+            <div key={`${item.id}-loop`}>
               <PublicationCard item={item} solo />
             </div>
           ))}

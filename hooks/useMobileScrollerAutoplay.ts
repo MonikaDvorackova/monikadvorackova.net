@@ -5,6 +5,8 @@ import { useLayoutEffect, type RefObject } from "react";
 type Options = {
   speedPxPerSec?: number;
   idleResumeMs?: number;
+  /** When true, parent must render two identical item sequences; scroll wraps at half of scrollWidth. */
+  seamlessLoop?: boolean;
 };
 
 /**
@@ -17,8 +19,9 @@ export function useMobileScrollerAutoplay(
   contentKey: string,
   options?: Options
 ) {
-  const speedPxPerSec = options?.speedPxPerSec ?? 20;
+  const speedPxPerSec = options?.speedPxPerSec ?? 11;
   const idleResumeMs = options?.idleResumeMs ?? 900;
+  const seamlessLoop = options?.seamlessLoop ?? false;
 
   useLayoutEffect(() => {
     if (!run) return;
@@ -56,15 +59,26 @@ export function useMobileScrollerAutoplay(
       if (!paused) {
         const maxScroll = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
         if (maxScroll > 0) {
-          const next = scroller.scrollLeft + dir * speedPxPerSec * dt;
-          if (next >= maxScroll) {
-            scroller.scrollLeft = maxScroll;
-            dir = -1;
-          } else if (next <= 0) {
-            scroller.scrollLeft = 0;
-            dir = 1;
+          if (seamlessLoop) {
+            const loopW = scroller.scrollWidth / 2;
+            if (loopW > 0) {
+              let next = scroller.scrollLeft + speedPxPerSec * dt;
+              while (next >= loopW) {
+                next -= loopW;
+              }
+              scroller.scrollLeft = next;
+            }
           } else {
-            scroller.scrollLeft = next;
+            const next = scroller.scrollLeft + dir * speedPxPerSec * dt;
+            if (next >= maxScroll) {
+              scroller.scrollLeft = maxScroll;
+              dir = -1;
+            } else if (next <= 0) {
+              scroller.scrollLeft = 0;
+              dir = 1;
+            } else {
+              scroller.scrollLeft = next;
+            }
           }
         }
       }
@@ -81,5 +95,5 @@ export function useMobileScrollerAutoplay(
       scroller.removeEventListener("touchstart", onTouchStart);
       scroller.removeEventListener("wheel", onWheel);
     };
-  }, [run, contentKey, speedPxPerSec, idleResumeMs]);
+  }, [run, contentKey, speedPxPerSec, idleResumeMs, seamlessLoop]);
 }
