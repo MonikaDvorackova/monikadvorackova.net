@@ -58,14 +58,14 @@ function PublicationCard({
       : estimateReadingMinutes(item.title, item.subtitle, item.blurb);
 
   const cardStyle: CSSProperties = {
-    width: solo ? "100%" : 420,
-    maxWidth: solo ? 420 : undefined,
+    width: solo ? "min(86vw, 360px)" : 420,
     minHeight: solo ? undefined : 96,
     marginRight: solo ? 0 : 16,
     backgroundColor: "rgba(255,255,255,0.72)",
     color: "#000",
     border: "1px solid rgba(0,42,255,0.12)",
     boxShadow: "inset 0 0 0 1px rgba(8,28,244,0.06), 0 4px 16px rgba(0,0,0,0.07)",
+    padding: solo ? "16px 16px 14px" : "12px 16px 10px",
     backdropFilter: "blur(8px)",
     borderRadius: "1rem",
     contain: "layout paint",
@@ -79,7 +79,7 @@ function PublicationCard({
           <div className="min-w-0 flex-1 self-start">
             <div className="flex items-start gap-2">
               <div
-                className="line-clamp-3 text-base sm:text-lg font-semibold leading-snug text-[#004cff] transition-opacity group-hover:opacity-90"
+                className="line-clamp-3 text-[11px] font-semibold leading-snug text-[#004cff] transition-opacity group-hover:opacity-90"
                 title={item.title}
               >
                 {item.title}
@@ -92,7 +92,7 @@ function PublicationCard({
               ) : null}
             </div>
             {item.subtitle ? (
-              <p className="mt-1 text-sm sm:text-base leading-snug text-black">{item.subtitle}</p>
+              <p className="mt-1 text-[9px] leading-snug text-black">{item.subtitle}</p>
             ) : null}
           </div>
 
@@ -113,14 +113,14 @@ function PublicationCard({
             >
               {item.caption ?? "External"}
             </div>
-            <div className="mb-0.5 text-sm sm:text-base tabular-nums text-black leading-tight">
+            <div className="mb-0.5 text-[9px] tabular-nums text-black leading-tight">
               {readingMinutes} min
             </div>
             <div className="mt-1 min-h-[15px] w-full shrink-0" aria-hidden />
           </div>
         </div>
 
-        <p className="mt-2 line-clamp-3 text-sm sm:text-base leading-[1.35] text-black">{item.blurb}</p>
+        <p className="mt-2 line-clamp-3 text-[9px] leading-[1.35] text-black">{item.blurb}</p>
 
         <div className="mt-auto pt-3">
           <div className="flex flex-wrap gap-x-[10px] gap-y-2">
@@ -163,7 +163,7 @@ function PublicationCard({
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`${item.title}${item.subtitle ? `. ${item.subtitle}` : ""}. Opens in a new tab.`}
-        className={`${cardHoverClass} cursor-pointer h-auto p-4 sm:p-6`}
+        className={`${cardHoverClass} cursor-pointer`}
         style={cardStyle}
         onPointerEnter={onPointerInsideCard}
       >
@@ -173,11 +173,7 @@ function PublicationCard({
   }
 
   return (
-    <div
-      className={`${cardHoverClass} cursor-default h-auto p-4 sm:p-6`}
-      style={cardStyle}
-      onPointerEnter={onPointerInsideCard}
-    >
+    <div className={`${cardHoverClass} cursor-default`} style={cardStyle} onPointerEnter={onPointerInsideCard}>
       {inner}
     </div>
   );
@@ -211,7 +207,7 @@ export default function PublicationsList() {
   const secondLoop = items;
 
   const mobileContentKey = items.map((i) => i.id).join("|");
-  useMobileScrollerAutoplay(mobileScrollerRef, isMobile && items.length >= 2, mobileContentKey, {
+  useMobileScrollerAutoplay(mobileScrollerRef, isMobile && items.length > 0, mobileContentKey, {
     speedPxPerSec: 11,
     idleResumeMs: 900,
     seamlessLoop: true,
@@ -276,14 +272,6 @@ export default function PublicationsList() {
 
   if (!items.length) return null;
 
-  if (items.length === 1) {
-    return (
-      <div className="w-full flex justify-center">
-        <PublicationCard item={items[0]} solo />
-      </div>
-    );
-  }
-
   if (isMobile) {
     return (
       <div
@@ -315,6 +303,14 @@ export default function PublicationsList() {
             </div>
           ))}
         </div>
+      </div>
+    );
+  }
+
+  if (items.length === 1) {
+    return (
+      <div className="w-full flex justify-center">
+        <PublicationCard item={items[0]} solo />
       </div>
     );
   }

@@ -26,11 +26,10 @@ function BlogCard({
 }) {
   return (
     <div
-      className="relative overflow-visible rounded-2xl transition-transform duration-300 hover:scale-[1.01] hover:shadow-[0_6px_24px_rgba(0,0,0,0.18)] focus-visible:ring-2 focus-visible:ring-[#004cff]/50 h-auto p-4 sm:p-6"
+      className="relative overflow-visible rounded-2xl transition-transform duration-300 hover:scale-[1.01] hover:shadow-[0_6px_24px_rgba(0,0,0,0.18)] focus-visible:ring-2 focus-visible:ring-[#004cff]/50"
       onPointerEnter={onPointerInsideCard}
       style={{
-        width: solo ? "100%" : 260,
-        maxWidth: solo ? 420 : undefined,
+        width: solo ? "min(86vw, 360px)" : 260,
         minHeight: solo ? undefined : 138,
         marginRight: solo ? 0 : 20,
         backgroundColor: "rgba(255,255,255,0.72)",
@@ -39,35 +38,40 @@ function BlogCard({
         boxShadow:
           "inset 0 0 0 1px rgba(8,28,244,0.06), 0 4px 16px rgba(0,0,0,0.07)",
         flexShrink: 0,
+        padding: solo ? "16px 16px 14px" : "14px 16px 12px",
         backdropFilter: "blur(8px)",
         display: "flex",
         flexDirection: "column",
-        gap: 6,
+        gap: solo ? 8 : 6,
         borderRadius: "1rem",
         contain: "layout paint",
       }}
     >
-      <div className="flex min-h-[56px] items-start justify-between gap-2">
+      <div className="flex items-start justify-between gap-3">
         <Link
           href={`/blog/${post.slug}`}
           aria-label={`Open: ${post.title}`}
           title={post.title}
-          className="min-w-0 flex-1 self-start text-base sm:text-lg font-semibold leading-snug text-[#004cff] line-clamp-2 hover:opacity-90 transition-opacity"
+          className="min-w-0 flex-1 self-start text-[13px] sm:text-[11px] font-semibold leading-snug text-[#004cff] line-clamp-2 hover:opacity-90 transition-opacity"
         >
           {post.title}
         </Link>
 
-        <div className="flex min-h-[56px] shrink-0 flex-col items-end justify-start gap-1">
-          <span className="text-[9px] font-medium tabular-nums text-black">{post.date}</span>
-          <span className="mb-0.5 text-[9px] tabular-nums text-black leading-tight">
-            {Math.max(1, post.readingMinutes ?? 1)} min
-          </span>
-          <div className="mt-1 flex min-h-[15px] w-full items-end justify-end">
+        <div className="shrink-0 text-right">
+          <div className="flex items-center justify-end gap-2">
+            <span className="text-[10px] sm:text-[9px] font-medium tabular-nums text-black/80 sm:text-black">
+              {post.date}
+            </span>
+            <span className="text-[10px] sm:text-[9px] tabular-nums text-black/70 sm:text-black leading-tight">
+              {Math.max(1, post.readingMinutes ?? 1)} min
+            </span>
+          </div>
+          <div className="mt-2 flex min-h-[15px] w-full items-end justify-end">
             {post.resources?.length ? (
               <ResourceIcons
-                resources={post.resources.slice(0, 8)}
+                resources={post.resources.slice(0, 6)}
                 showLabels={false}
-                sizeClassName="h-[13px] w-[13px]"
+                sizeClassName="h-[14px] w-[14px]"
                 className="justify-end"
               />
             ) : null}
@@ -76,17 +80,17 @@ function BlogCard({
       </div>
 
       {post.tldr && (
-        <p className="mt-auto whitespace-pre-line text-sm sm:text-base leading-[1.5] text-black">
+        <p className="mt-1 whitespace-pre-line line-clamp-3 sm:line-clamp-none text-[11px] sm:text-[9px] leading-[1.55] text-black/80 sm:text-black">
           {post.tldr}
         </p>
       )}
 
       {post.tags?.[0] && (
-        <div className="mt-auto pt-1">
+        <div className="mt-auto pt-2">
           <Link
             href={`/tags/${encodeURIComponent(post.tags[0])}`}
             aria-label={`Tag: ${post.tags[0]}`}
-            className="inline-block bg-[#004cff] text-white px-2 py-0.5 text-[9px] font-semibold rounded"
+            className="inline-flex items-center bg-[#004cff] text-white px-3 py-1 text-[10px] sm:text-[9px] font-semibold rounded-none"
             style={{
               color: "#fff",
               WebkitTextFillColor: "#fff",
@@ -127,7 +131,7 @@ export default function ClientBlog({ posts }: { posts: Post[] }) {
   const secondLoop = posts;
 
   const mobileContentKey = posts.map((p) => p.slug).join("|");
-  useMobileScrollerAutoplay(mobileScrollerRef, isMobile && posts.length >= 2, mobileContentKey, {
+  useMobileScrollerAutoplay(mobileScrollerRef, isMobile && posts.length > 0, mobileContentKey, {
     speedPxPerSec: 11,
     idleResumeMs: 900,
     seamlessLoop: true,
@@ -194,14 +198,6 @@ export default function ClientBlog({ posts }: { posts: Post[] }) {
 
   if (!posts.length) return null;
 
-  if (posts.length === 1) {
-    return (
-      <div className="w-full flex justify-center">
-        <BlogCard post={posts[0]} solo />
-      </div>
-    );
-  }
-
   if (isMobile) {
     return (
       <div
@@ -233,6 +229,14 @@ export default function ClientBlog({ posts }: { posts: Post[] }) {
             </div>
           ))}
         </div>
+      </div>
+    );
+  }
+
+  if (posts.length === 1) {
+    return (
+      <div className="w-full flex justify-center">
+        <BlogCard post={posts[0]} solo />
       </div>
     );
   }
