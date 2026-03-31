@@ -28,17 +28,17 @@ function WritingCard({
 
   return (
     <div
-      className="group relative block overflow-visible rounded-2xl transition-transform duration-300 hover:scale-[1.01] hover:shadow-[0_6px_24px_rgba(0,0,0,0.18)] focus-within:ring-2 focus-within:ring-[#004cff]/50"
+      className="group relative block overflow-visible rounded-2xl transition-transform duration-300 hover:scale-[1.01] hover:shadow-[0_6px_24px_rgba(0,0,0,0.18)] focus-within:ring-2 focus-within:ring-[#004cff]/50 h-auto p-4 sm:p-6"
       onPointerEnter={onPointerInsideCard}
       style={{
-        width: solo ? "min(86vw, 360px)" : 420,
+        width: solo ? "100%" : 420,
+        maxWidth: solo ? 420 : undefined,
         minHeight: solo ? undefined : 78,
         marginRight: solo ? 0 : 16,
         backgroundColor: "rgba(255,255,255,0.72)",
         color: "#000",
         border: "1px solid rgba(0,42,255,0.12)",
         boxShadow: "inset 0 0 0 1px rgba(8,28,244,0.06), 0 4px 16px rgba(0,0,0,0.07)",
-        padding: solo ? "16px 16px 14px" : "12px 16px 10px",
         backdropFilter: "blur(8px)",
         borderRadius: "1rem",
         contain: "layout paint",
@@ -49,7 +49,7 @@ function WritingCard({
         <div className="flex min-h-[56px] items-start justify-between gap-3">
           <Link
             href={href}
-            className="min-w-0 flex-1 self-start line-clamp-2 text-[11px] font-semibold leading-snug text-[#004cff] transition-opacity group-hover:opacity-90"
+            className="min-w-0 flex-1 self-start line-clamp-2 text-base sm:text-lg font-semibold leading-snug text-[#004cff] transition-opacity group-hover:opacity-90"
             title={post.title}
           >
             {post.title}
@@ -80,7 +80,7 @@ function WritingCard({
             style={{ color: "#000" }}
           >
             <p
-              className="line-clamp-3 text-[9px] leading-[1.5]"
+              className="line-clamp-3 text-sm sm:text-base leading-[1.5]"
               style={{ color: "#000", WebkitTextFillColor: "#000" }}
             >
               {post.tldr}
@@ -143,7 +143,7 @@ export default function WritingList({ posts }: { posts: Post[] }) {
   const secondLoop = posts;
 
   const mobileContentKey = posts.map((p) => p.slug).join("|");
-  useMobileScrollerAutoplay(mobileScrollerRef, isMobile && posts.length > 0, mobileContentKey, {
+  useMobileScrollerAutoplay(mobileScrollerRef, isMobile && posts.length >= 2, mobileContentKey, {
     speedPxPerSec: 11,
     idleResumeMs: 900,
     seamlessLoop: true,
@@ -208,6 +208,14 @@ export default function WritingList({ posts }: { posts: Post[] }) {
 
   if (!posts.length) return null;
 
+  if (posts.length === 1) {
+    return (
+      <div className="w-full flex justify-center">
+        <WritingCard post={posts[0]} solo />
+      </div>
+    );
+  }
+
   if (isMobile) {
     return (
       <div
@@ -239,14 +247,6 @@ export default function WritingList({ posts }: { posts: Post[] }) {
             </div>
           ))}
         </div>
-      </div>
-    );
-  }
-
-  if (posts.length === 1) {
-    return (
-      <div className="w-full flex justify-center">
-        <WritingCard post={posts[0]} solo />
       </div>
     );
   }
