@@ -39,10 +39,10 @@ a {
 
 @keyframes scroll-loop {
   0% {
-    transform: translateX(0%);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
@@ -52,6 +52,19 @@ a {
   animation-fill-mode: both;
   animation-play-state: running;
   will-change: transform;
+}
+
+/* Mobile blog card rows: seamless loop via CSS (reliable on iOS Safari). Duration set via --marquee-duration. */
+.marquee-css-seamless {
+  animation: scroll-loop var(--marquee-duration, 45s) linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-css-seamless {
+    animation: none;
+  }
 }
 
 .animate-paused {
