@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
-import { useMobileScrollerAutoplay } from "@/hooks/useMobileScrollerAutoplay";
 
 export type PublicationItem = {
   id: string;
@@ -179,12 +178,14 @@ function PublicationCard({
   );
 }
 
+const MARQUEE_SPEED_PX_PER_SEC = 11;
+
 export default function PublicationsList() {
   const items = PUBLICATIONS_DATA;
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const pausedRef = useRef(false);
-  const mobileScrollerRef = useRef<HTMLDivElement | null>(null);
+  const mobileMarqueeTrackRef = useRef<HTMLDivElement | null>(null);
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -206,12 +207,26 @@ export default function PublicationsList() {
   const firstLoop = items;
   const secondLoop = items;
 
-  const mobileContentKey = items.map((i) => i.id).join("|");
-  useMobileScrollerAutoplay(mobileScrollerRef, isMobile && items.length > 0, mobileContentKey, {
-    speedPxPerSec: 11,
-    idleResumeMs: 900,
-    seamlessLoop: true,
-  });
+  const marqueeMeasureKey = items.map((i) => i.id).join("|");
+
+  useLayoutEffect(() => {
+    if (!isMobile || items.length < 2) return;
+    const el = mobileMarqueeTrackRef.current;
+    if (!el) return;
+    const apply = () => {
+      const half = el.scrollWidth / 2;
+      if (half <= 0) return;
+      const sec = Math.max(8, half / MARQUEE_SPEED_PX_PER_SEC);
+      el.style.setProperty("--marquee-duration", `${sec}s`);
+    };
+    apply();
+    const id = requestAnimationFrame(() => requestAnimationFrame(apply));
+    window.addEventListener("resize", apply);
+    return () => {
+      cancelAnimationFrame(id);
+      window.removeEventListener("resize", apply);
+    };
+  }, [isMobile, items.length, marqueeMeasureKey]);
 
   useEffect(() => {
     if (!useMarquee) return;
@@ -272,45 +287,47 @@ export default function PublicationsList() {
 
   if (!items.length) return null;
 
-  if (isMobile) {
-    return (
-      <div
-        ref={mobileScrollerRef}
-        className="relative w-full overflow-x-auto overflow-y-hidden select-none no-scrollbar"
-        style={{
-          WebkitOverflowScrolling: "touch",
-          paddingLeft: 8,
-          paddingRight: 28,
-        }}
-      >
-        <div
-          className="flex w-max"
-          style={{
-            gap: 14,
-            paddingTop: 2,
-            paddingBottom: 2,
-            touchAction: "pan-x",
-          }}
-        >
-          {items.map((item) => (
-            <div key={item.id}>
-              <PublicationCard item={item} solo />
-            </div>
-          ))}
-          {items.map((item) => (
-            <div key={`${item.id}-loop`}>
-              <PublicationCard item={item} solo />
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
   if (items.length === 1) {
     return (
       <div className="w-full flex justify-center">
         <PublicationCard item={items[0]} solo />
+      </div>
+    );
+  }
+
+  if (isMobile) {
+    const mask =
+      "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.06) 14%, rgba(0,0,0,0.35) 22%, black 38%, black 62%, rgba(0,0,0,0.35) 78%, rgba(0,0,0,0.06) 86%, transparent 100%)";
+    return (
+      <div className="w-full" style={{ paddingLeft: 8, paddingRight: 28 }}>
+        <div
+          className="relative w-full overflow-hidden select-none"
+          style={{
+            WebkitMaskImage: mask,
+            maskImage: mask,
+          }}
+        >
+          <div
+            ref={mobileMarqueeTrackRef}
+            className="marquee-css-seamless flex w-max will-change-transform pl-1 pr-1"
+            style={{
+              gap: 14,
+              paddingTop: 2,
+              paddingBottom: 2,
+            }}
+          >
+            {items.map((item) => (
+              <div key={item.id}>
+                <PublicationCard item={item} solo />
+              </div>
+            ))}
+            {items.map((item) => (
+              <div key={`${item.id}-loop`}>
+                <PublicationCard item={item} solo />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     );
   }
