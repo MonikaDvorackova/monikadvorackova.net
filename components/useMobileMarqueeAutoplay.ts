@@ -6,7 +6,9 @@ type Options = {
 };
 
 /**
- * Mobile-only: horizontal marquee via scrollLeft on a duplicated row, with native swipe.
+ * Mobile-only: horizontal marquee via transform on the inner track element.
+ * Borrows the same rendering primitive as the desktop marquee (translate3d on
+ * a will-change:transform layer) so motion runs on the compositor thread.
  * Desktop must not call this (pass enabled=false).
  */
 export function useMobileMarqueeAutoplay(
@@ -23,13 +25,32 @@ export function useMobileMarqueeAutoplay(
     const scroller = scrollerRef.current;
     if (!scroller) return;
 
+    // Verified from JSX: the mobile scroller wrapper has exactly one child —
+    // the flex w-max track div.  No other elements are rendered inside it.
+    const track = scroller.firstElementChild as HTMLElement | null;
+    if (!track) return;
+
+    // Switch to transform-driven motion. Prevent native scroll from
+    // fighting the touch gesture; restore both on cleanup.
+    const prevOverflowX = scroller.style.overflowX;
+    scroller.style.overflowX = "hidden";
+    track.style.willChange = "transform";
+
     let raf = 0;
     let last = performance.now();
     let paused = false;
-    let touching = false;
     let resumeTimer: ReturnType<typeof setTimeout> | null = null;
-    /** Position we last applied in the autoplay loop (ignore scroll noise from our own updates). */
-    let autoplayAnchor = scroller.scrollLeft;
+
+    // JS float accumulator — same pattern as the desktop `x` variable.
+    // Never read back from the DOM; avoids iOS integer-rounding of scrollLeft.
+    let pos = 0;
+    // Half the total track width: the seamless loop boundary.
+    // Mirrors the desktop `half = track.scrollWidth / 2` pattern.
+    let loopW = 0;
+
+    // Touch gesture state for manual swipe.
+    let touchStartX = 0;
+    let posAtTouchStart = 0;
 
     const clearResume = () => {
       if (resumeTimer) {
@@ -43,52 +64,35 @@ export function useMobileMarqueeAutoplay(
       resumeTimer = setTimeout(() => {
         paused = false;
         last = performance.now();
-        autoplayAnchor = scroller.scrollLeft;
+        // pos retains its current value (last touch-driven or autoplay position).
       }, idleResumeMs);
     };
 
-    const onInteractionStart = () => {
-      touching = true;
+    const applyTransform = () => {
+      track.style.transform = `translate3d(${-pos}px, 0, 0)`;
+    };
+
+    const onTouchStart = (e: TouchEvent) => {
       paused = true;
       clearResume();
+      touchStartX = e.touches[0].clientX;
+      posAtTouchStart = pos;
     };
 
-    const onInteractionEnd = () => {
-      touching = false;
-      bumpIdle();
+    const onTouchMove = (e: TouchEvent) => {
+      if (loopW <= 0) return;
+      const delta = touchStartX - e.touches[0].clientX;
+      // Normalise into [0, loopW) — handles both forward and backward swipes.
+      pos = ((posAtTouchStart + delta) % loopW + loopW) % loopW;
+      applyTransform();
     };
 
-    const onScroll = () => {
-      if (touching) return;
+    const onTouchEnd = () => bumpIdle();
 
-      if (paused) {
-        bumpIdle();
-        return;
-      }
-
-      const diff = Math.abs(scroller.scrollLeft - autoplayAnchor);
-      if (diff < 3) {
-        autoplayAnchor = scroller.scrollLeft;
-        return;
-      }
-
-      paused = true;
-      bumpIdle();
-    };
-
-    const onWheel = () => {
-      paused = true;
-      bumpIdle();
-    };
-
-    scroller.addEventListener("pointerdown", onInteractionStart, { passive: true });
-    scroller.addEventListener("pointerup", onInteractionEnd, { passive: true });
-    scroller.addEventListener("pointercancel", onInteractionEnd, { passive: true });
-    scroller.addEventListener("touchstart", onInteractionStart, { passive: true });
-    scroller.addEventListener("touchend", onInteractionEnd, { passive: true });
-    scroller.addEventListener("touchcancel", onInteractionEnd, { passive: true });
-    scroller.addEventListener("scroll", onScroll, { passive: true });
-    scroller.addEventListener("wheel", onWheel, { passive: true });
+    scroller.addEventListener("touchstart", onTouchStart, { passive: true });
+    scroller.addEventListener("touchmove", onTouchMove, { passive: true });
+    scroller.addEventListener("touchend", onTouchEnd, { passive: true });
+    scroller.addEventListener("touchcancel", onTouchEnd, { passive: true });
 
     type DocWithFonts = Document & { fonts?: { ready: Promise<void> } };
     const fontsReady =
@@ -98,47 +102,40 @@ export function useMobileMarqueeAutoplay(
       const dt = (now - last) / 1000;
       last = now;
 
-      if (!paused) {
-        const loopW = scroller.scrollWidth / 2;
-        if (loopW > 0) {
-          while (scroller.scrollLeft >= loopW) {
-            scroller.scrollLeft -= loopW;
-          }
-          let next = scroller.scrollLeft + speedPxPerSec * dt;
-          while (next >= loopW) next -= loopW;
-          autoplayAnchor = next;
-          scroller.scrollTo({ left: next, behavior: "auto" });
-        }
+      if (!paused && loopW > 0) {
+        pos += speedPxPerSec * dt;
+        while (pos >= loopW) pos -= loopW;
+        applyTransform();
       }
 
       raf = requestAnimationFrame(loop);
     };
 
     const ro = new ResizeObserver(() => {
+      loopW = track.scrollWidth / 2;
       last = performance.now();
     });
     ro.observe(scroller);
 
-    const start = () => {
-      autoplayAnchor = scroller.scrollLeft;
+    fontsReady.then(() => {
+      loopW = track.scrollWidth / 2;
+      pos = 0;
+      applyTransform();
       last = performance.now();
       raf = requestAnimationFrame(loop);
-    };
-
-    fontsReady.then(start);
+    });
 
     return () => {
       cancelAnimationFrame(raf);
       clearResume();
       ro.disconnect();
-      scroller.removeEventListener("pointerdown", onInteractionStart);
-      scroller.removeEventListener("pointerup", onInteractionEnd);
-      scroller.removeEventListener("pointercancel", onInteractionEnd);
-      scroller.removeEventListener("touchstart", onInteractionStart);
-      scroller.removeEventListener("touchend", onInteractionEnd);
-      scroller.removeEventListener("touchcancel", onInteractionEnd);
-      scroller.removeEventListener("scroll", onScroll);
-      scroller.removeEventListener("wheel", onWheel);
+      track.style.transform = "";
+      track.style.willChange = "";
+      scroller.style.overflowX = prevOverflowX;
+      scroller.removeEventListener("touchstart", onTouchStart);
+      scroller.removeEventListener("touchmove", onTouchMove);
+      scroller.removeEventListener("touchend", onTouchEnd);
+      scroller.removeEventListener("touchcancel", onTouchEnd);
     };
   }, [enabled, contentKey, scrollerRef, speedPxPerSec, idleResumeMs]);
 }
