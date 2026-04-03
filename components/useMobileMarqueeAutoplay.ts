@@ -1,4 +1,4 @@
-import { useEffect, type RefObject } from "react";
+import { useEffect, useRef, type RefObject } from "react";
 
 type Options = {
   speedPxPerSec?: number;
@@ -17,6 +17,12 @@ export function useMobileMarqueeAutoplay(
 ) {
   const speedPxPerSec = options?.speedPxPerSec ?? 12;
   const idleResumeMs = options?.idleResumeMs ?? 1000;
+  /**
+   * Guards the scroll event fired by our own scrollLeft write.
+   * Without this, onScroll would overwrite autoplayAnchor with the
+   * iOS-rounded integer value and corrupt the JS float accumulator.
+   */
+  const isProgrammaticScrollRef = useRef(false);
 
   useEffect(() => {
     if (!enabled) return;
@@ -28,8 +34,15 @@ export function useMobileMarqueeAutoplay(
     let paused = false;
     let touching = false;
     let resumeTimer: ReturnType<typeof setTimeout> | null = null;
-    /** Position we last applied in the autoplay loop (ignore scroll noise from our own updates). */
-    let autoplayAnchor = scroller.scrollLeft;
+    /**
+     * JS-side float position accumulator.
+     * We do NOT read scroller.scrollLeft as the position source in the RAF
+     * loop because iOS Safari rounds scrollLeft to integers on read.
+     * At 11px/s / 60fps = 0.18px per frame, reading the rounded integer
+     * each frame always returns the same value → position never advances.
+     * Instead we accumulate here and only write to scrollLeft.
+     */
+    let autoplayAnchor = 0;
 
     const clearResume = () => {
       if (resumeTimer) {
@@ -43,6 +56,7 @@ export function useMobileMarqueeAutoplay(
       resumeTimer = setTimeout(() => {
         paused = false;
         last = performance.now();
+        // Re-sync accumulator to wherever the user ended up.
         autoplayAnchor = scroller.scrollLeft;
       }, idleResumeMs);
     };
@@ -59,6 +73,13 @@ export function useMobileMarqueeAutoplay(
     };
 
     const onScroll = () => {
+      if (isProgrammaticScrollRef.current) {
+        // This scroll was fired by our own scrollLeft write — ignore it.
+        // Do NOT overwrite autoplayAnchor here: it is our JS float
+        // accumulator and must not be clobbered with a rounded integer.
+        isProgrammaticScrollRef.current = false;
+        return;
+      }
       if (touching) return;
 
       if (paused) {
@@ -66,12 +87,7 @@ export function useMobileMarqueeAutoplay(
         return;
       }
 
-      const diff = Math.abs(scroller.scrollLeft - autoplayAnchor);
-      if (diff < 3) {
-        autoplayAnchor = scroller.scrollLeft;
-        return;
-      }
-
+      // Genuine user scroll detected.
       paused = true;
       bumpIdle();
     };
@@ -101,13 +117,12 @@ export function useMobileMarqueeAutoplay(
       if (!paused) {
         const loopW = scroller.scrollWidth / 2;
         if (loopW > 0) {
-          while (scroller.scrollLeft >= loopW) {
-            scroller.scrollLeft -= loopW;
-          }
-          let next = scroller.scrollLeft + speedPxPerSec * dt;
-          while (next >= loopW) next -= loopW;
-          autoplayAnchor = next;
-          scroller.scrollTo({ left: next, behavior: "auto" });
+          // Advance the JS float accumulator — never read from scrollLeft.
+          autoplayAnchor += speedPxPerSec * dt;
+          while (autoplayAnchor >= loopW) autoplayAnchor -= loopW;
+
+          isProgrammaticScrollRef.current = true;
+          scroller.scrollLeft = autoplayAnchor;
         }
       }
 
@@ -120,7 +135,7 @@ export function useMobileMarqueeAutoplay(
     ro.observe(scroller);
 
     const start = () => {
-      autoplayAnchor = scroller.scrollLeft;
+      autoplayAnchor = 0;
       last = performance.now();
       raf = requestAnimationFrame(loop);
     };
@@ -128,6 +143,7 @@ export function useMobileMarqueeAutoplay(
     fontsReady.then(start);
 
     return () => {
+      isProgrammaticScrollRef.current = false;
       cancelAnimationFrame(raf);
       clearResume();
       ro.disconnect();
