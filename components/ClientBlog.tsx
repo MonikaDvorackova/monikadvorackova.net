@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import ResourceIcons, { type Resource as ResourceItem } from "@/components/ResourceIcons";
 
@@ -17,10 +17,12 @@ type Post = {
 function BlogCard({
   post,
   solo = false,
+  mobileSolo = false,
   onPointerInsideCard,
 }: {
   post: Post;
   solo?: boolean;
+  mobileSolo?: boolean;
   onPointerInsideCard?: () => void;
 }) {
   return (
@@ -28,7 +30,7 @@ function BlogCard({
       className="relative overflow-visible rounded-2xl transition-transform duration-300 hover:scale-[1.01] hover:shadow-[0_6px_24px_rgba(0,0,0,0.18)] focus-visible:ring-2 focus-visible:ring-[#004cff]/50"
       onPointerEnter={onPointerInsideCard}
       style={{
-        width: solo ? "min(86vw, 360px)" : 260,
+        width: solo ? (mobileSolo ? "min(84vw, 360px)" : "min(86vw, 360px)") : 260,
         minHeight: solo ? undefined : 138,
         marginRight: solo ? 0 : 20,
         backgroundColor: "rgba(255,255,255,0.72)",
@@ -103,13 +105,10 @@ function BlogCard({
   );
 }
 
-const MARQUEE_SPEED_PX_PER_SEC = 11;
-
 export default function ClientBlog({ posts }: { posts: Post[] }) {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const pausedRef = useRef(false);
-  const mobileMarqueeTrackRef = useRef<HTMLDivElement | null>(null);
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -130,27 +129,6 @@ export default function ClientBlog({ posts }: { posts: Post[] }) {
   const useMarquee = posts.length >= 2 && !isMobile;
   const firstLoop = posts;
   const secondLoop = posts;
-
-  const marqueeMeasureKey = posts.map((p) => p.slug).join("|");
-
-  useLayoutEffect(() => {
-    if (!isMobile || posts.length < 2) return;
-    const el = mobileMarqueeTrackRef.current;
-    if (!el) return;
-    const apply = () => {
-      const half = el.scrollWidth / 2;
-      if (half <= 0) return;
-      const sec = Math.max(8, half / MARQUEE_SPEED_PX_PER_SEC);
-      el.style.setProperty("--marquee-duration", `${sec}s`);
-    };
-    apply();
-    const id = requestAnimationFrame(() => requestAnimationFrame(apply));
-    window.addEventListener("resize", apply);
-    return () => {
-      cancelAnimationFrame(id);
-      window.removeEventListener("resize", apply);
-    };
-  }, [isMobile, posts.length, marqueeMeasureKey]);
 
   useEffect(() => {
     if (!useMarquee) return;
@@ -216,43 +194,30 @@ export default function ClientBlog({ posts }: { posts: Post[] }) {
   if (posts.length === 1) {
     return (
       <div className="w-full flex justify-center">
-        <BlogCard post={posts[0]} solo />
+        <BlogCard post={posts[0]} solo mobileSolo={isMobile} />
       </div>
     );
   }
 
   if (isMobile) {
-    const mask =
-      "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.06) 14%, rgba(0,0,0,0.35) 22%, black 38%, black 62%, rgba(0,0,0,0.35) 78%, rgba(0,0,0,0.06) 86%, transparent 100%)";
     return (
-      <div className="w-full" style={{ paddingLeft: 8, paddingRight: 28 }}>
+      <div
+        className="relative w-full overflow-x-auto overflow-y-hidden no-scrollbar select-none snap-x snap-mandatory"
+        style={{
+          WebkitOverflowScrolling: "touch",
+          paddingLeft: 8,
+          paddingRight: 28,
+          touchAction: "pan-x",
+        }}
+      >
         <div
-          className="relative w-full overflow-hidden select-none"
-          style={{
-            WebkitMaskImage: mask,
-            maskImage: mask,
-          }}
+          className="flex w-max gap-[14px] py-0.5 pl-1 pr-1"
         >
-          <div
-            ref={mobileMarqueeTrackRef}
-            className="marquee-css-seamless flex w-max will-change-transform pl-1 pr-1"
-            style={{
-              gap: 14,
-              paddingTop: 2,
-              paddingBottom: 2,
-            }}
-          >
-            {posts.map((post) => (
-              <div key={post.slug}>
-                <BlogCard post={post} solo />
-              </div>
-            ))}
-            {posts.map((post) => (
-              <div key={`${post.slug}-loop`}>
-                <BlogCard post={post} solo />
-              </div>
-            ))}
-          </div>
+          {posts.map((post) => (
+            <div key={post.slug} className="snap-start shrink-0">
+              <BlogCard post={post} solo mobileSolo={isMobile} />
+            </div>
+          ))}
         </div>
       </div>
     );

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
 
 export type PublicationItem = {
@@ -44,10 +44,12 @@ export const PUBLICATIONS_DATA: PublicationItem[] = [
 function PublicationCard({
   item,
   solo = false,
+  mobileSolo = false,
   onPointerInsideCard,
 }: {
   item: PublicationItem;
   solo?: boolean;
+  mobileSolo?: boolean;
   onPointerInsideCard?: () => void;
 }) {
   const hasLink = Boolean(item.href?.trim());
@@ -57,7 +59,7 @@ function PublicationCard({
       : estimateReadingMinutes(item.title, item.subtitle, item.blurb);
 
   const cardStyle: CSSProperties = {
-    width: solo ? "min(86vw, 360px)" : 420,
+    width: solo ? (mobileSolo ? "min(84vw, 360px)" : "min(86vw, 360px)") : 420,
     minHeight: solo ? undefined : 96,
     marginRight: solo ? 0 : 16,
     backgroundColor: "rgba(255,255,255,0.72)",
@@ -178,14 +180,11 @@ function PublicationCard({
   );
 }
 
-const MARQUEE_SPEED_PX_PER_SEC = 11;
-
 export default function PublicationsList() {
   const items = PUBLICATIONS_DATA;
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const pausedRef = useRef(false);
-  const mobileMarqueeTrackRef = useRef<HTMLDivElement | null>(null);
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -206,27 +205,6 @@ export default function PublicationsList() {
   const useMarquee = items.length >= 2 && !isMobile;
   const firstLoop = items;
   const secondLoop = items;
-
-  const marqueeMeasureKey = items.map((i) => i.id).join("|");
-
-  useLayoutEffect(() => {
-    if (!isMobile || items.length < 2) return;
-    const el = mobileMarqueeTrackRef.current;
-    if (!el) return;
-    const apply = () => {
-      const half = el.scrollWidth / 2;
-      if (half <= 0) return;
-      const sec = Math.max(8, half / MARQUEE_SPEED_PX_PER_SEC);
-      el.style.setProperty("--marquee-duration", `${sec}s`);
-    };
-    apply();
-    const id = requestAnimationFrame(() => requestAnimationFrame(apply));
-    window.addEventListener("resize", apply);
-    return () => {
-      cancelAnimationFrame(id);
-      window.removeEventListener("resize", apply);
-    };
-  }, [isMobile, items.length, marqueeMeasureKey]);
 
   useEffect(() => {
     if (!useMarquee) return;
@@ -290,43 +268,28 @@ export default function PublicationsList() {
   if (items.length === 1) {
     return (
       <div className="w-full flex justify-center">
-        <PublicationCard item={items[0]} solo />
+        <PublicationCard item={items[0]} solo mobileSolo={isMobile} />
       </div>
     );
   }
 
   if (isMobile) {
-    const mask =
-      "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.06) 14%, rgba(0,0,0,0.35) 22%, black 38%, black 62%, rgba(0,0,0,0.35) 78%, rgba(0,0,0,0.06) 86%, transparent 100%)";
     return (
-      <div className="w-full" style={{ paddingLeft: 8, paddingRight: 28 }}>
-        <div
-          className="relative w-full overflow-hidden select-none"
-          style={{
-            WebkitMaskImage: mask,
-            maskImage: mask,
-          }}
-        >
-          <div
-            ref={mobileMarqueeTrackRef}
-            className="marquee-css-seamless flex w-max will-change-transform pl-1 pr-1"
-            style={{
-              gap: 14,
-              paddingTop: 2,
-              paddingBottom: 2,
-            }}
-          >
-            {items.map((item) => (
-              <div key={item.id}>
-                <PublicationCard item={item} solo />
-              </div>
-            ))}
-            {items.map((item) => (
-              <div key={`${item.id}-loop`}>
-                <PublicationCard item={item} solo />
-              </div>
-            ))}
-          </div>
+      <div
+        className="relative w-full overflow-x-auto overflow-y-hidden no-scrollbar select-none snap-x snap-mandatory"
+        style={{
+          WebkitOverflowScrolling: "touch",
+          paddingLeft: 8,
+          paddingRight: 28,
+          touchAction: "pan-x",
+        }}
+      >
+        <div className="flex w-max gap-[14px] py-0.5 pl-1 pr-1">
+          {items.map((item) => (
+            <div key={item.id} className="snap-start shrink-0">
+              <PublicationCard item={item} solo mobileSolo={isMobile} />
+            </div>
+          ))}
         </div>
       </div>
     );
