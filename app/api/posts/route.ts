@@ -120,6 +120,7 @@ export async function GET() {
 
         const resources = normalizeResources(data.resources);
         const tags = normalizeTags(data.tags);
+        const slug = filename.replace(/\.mdx?$/, "");
         const title = normalizeString(data.title, "Untitled");
         const date = normalizeDate(data.date);
         const tldr = normalizeString(data.tldr, "");
@@ -129,7 +130,7 @@ export async function GET() {
             : readingMinutesFromContent(fm.content);
 
         return {
-          slug: filename.replace(/\.mdx?$/, ""),
+          slug,
           title,
           date,
           tags,
