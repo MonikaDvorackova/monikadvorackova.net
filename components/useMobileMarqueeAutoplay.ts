@@ -1,4 +1,4 @@
-import { useEffect, type RefObject } from "react";
+import { useEffect, useRef, type RefObject } from "react";
 
 type Options = {
   speedPxPerSec?: number;
@@ -19,11 +19,27 @@ export function useMobileMarqueeAutoplay(
 ) {
   const speedPxPerSec = options?.speedPxPerSec ?? 12;
   const idleResumeMs = options?.idleResumeMs ?? 1000;
+  /**
+   * Guards the scroll event fired by our own scrollLeft write.
+   * Without this, onScroll would overwrite autoplayAnchor with the
+   * iOS-rounded integer value and corrupt the JS float accumulator.
+   */
+  const isProgrammaticScrollRef = useRef(false);
 
   useEffect(() => {
     if (!enabled) return;
     const scroller = scrollerRef.current;
     if (!scroller) return;
+    // The inner flex track is the only child of the scroller wrapper.
+    const track = scroller.firstElementChild as HTMLElement | null;
+    if (!track) return;
+
+    // Override scroll — motion is driven by transform, not scrollLeft.
+    // Prevents iOS native scroll from fighting our touch-gesture transform.
+    const prevOverflowX = scroller.style.overflowX;
+    scroller.style.overflowX = "hidden";
+    // Promote to its own compositor layer so transform runs off the main thread.
+    track.style.willChange = "transform";
 
     // Verified from JSX: the mobile scroller wrapper has exactly one child —
     // the flex w-max track div.  No other elements are rendered inside it.
@@ -126,6 +142,7 @@ export function useMobileMarqueeAutoplay(
     });
 
     return () => {
+      isProgrammaticScrollRef.current = false;
       cancelAnimationFrame(raf);
       clearResume();
       ro.disconnect();
