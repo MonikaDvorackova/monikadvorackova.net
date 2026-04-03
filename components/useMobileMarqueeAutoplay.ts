@@ -52,6 +52,17 @@ export function useMobileMarqueeAutoplay(
     scroller.style.overflowX = "hidden";
     track.style.willChange = "transform";
 
+    // Verified from JSX: the mobile scroller wrapper has exactly one child —
+    // the flex w-max track div.  No other elements are rendered inside it.
+    const track = scroller.firstElementChild as HTMLElement | null;
+    if (!track) return;
+
+    // Switch to transform-driven motion. Prevent native scroll from
+    // fighting the touch gesture; restore both on cleanup.
+    const prevOverflowX = scroller.style.overflowX;
+    scroller.style.overflowX = "hidden";
+    track.style.willChange = "transform";
+
     let raf = 0;
     let last = performance.now();
     let paused = false;
