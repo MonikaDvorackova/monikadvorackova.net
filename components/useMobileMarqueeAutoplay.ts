@@ -6,9 +6,9 @@ type Options = {
 };
 
 /**
- * Mobile-only: horizontal marquee via compositor-friendly transform on the
- * inner track element. Overrides the container's overflowX to hidden so native
- * scroll cannot interfere with touch-driven transform gestures.
+ * Mobile-only: horizontal marquee via transform on the inner track element.
+ * Borrows the same rendering primitive as the desktop marquee (translate3d on
+ * a will-change:transform layer) so motion runs on the compositor thread.
  * Desktop must not call this (pass enabled=false).
  */
 export function useMobileMarqueeAutoplay(
@@ -41,19 +41,32 @@ export function useMobileMarqueeAutoplay(
     // Promote to its own compositor layer so transform runs off the main thread.
     track.style.willChange = "transform";
 
+    // Verified from JSX: the mobile scroller wrapper has exactly one child —
+    // the flex w-max track div.  No other elements are rendered inside it.
+    const track = scroller.firstElementChild as HTMLElement | null;
+    if (!track) return;
+
+    // Switch to transform-driven motion. Prevent native scroll from
+    // fighting the touch gesture; restore both on cleanup.
+    const prevOverflowX = scroller.style.overflowX;
+    scroller.style.overflowX = "hidden";
+    track.style.willChange = "transform";
+
     let raf = 0;
     let last = performance.now();
     let paused = false;
     let resumeTimer: ReturnType<typeof setTimeout> | null = null;
-    /**
-     * JS-side float position accumulator.
-     * We do NOT read scroller.scrollLeft as the position source in the RAF
-     * loop because iOS Safari rounds scrollLeft to integers on read.
-     * At 11px/s / 60fps = 0.18px per frame, reading the rounded integer
-     * each frame always returns the same value → position never advances.
-     * Instead we accumulate here and only write to scrollLeft.
-     */
-    let autoplayAnchor = 0;
+
+    // JS float accumulator — same pattern as the desktop `x` variable.
+    // Never read back from the DOM; avoids iOS integer-rounding of scrollLeft.
+    let pos = 0;
+    // Half the total track width: the seamless loop boundary.
+    // Mirrors the desktop `half = track.scrollWidth / 2` pattern.
+    let loopW = 0;
+
+    // Touch gesture state for manual swipe.
+    let touchStartX = 0;
+    let posAtTouchStart = 0;
 
     const clearResume = () => {
       if (resumeTimer) {
@@ -67,13 +80,13 @@ export function useMobileMarqueeAutoplay(
       resumeTimer = setTimeout(() => {
         paused = false;
         last = performance.now();
-        // Re-sync accumulator to wherever the user ended up.
-        autoplayAnchor = scroller.scrollLeft;
+        // pos retains its current value (last touch-driven or autoplay position).
       }, idleResumeMs);
     };
 
-    // --- Touch gesture handlers ---
-    // touchstart/move/end drive the transform directly, no scroll involvement.
+    const applyTransform = () => {
+      track.style.transform = `translate3d(${-pos}px, 0, 0)`;
+    };
 
     const onTouchStart = (e: TouchEvent) => {
       paused = true;
@@ -85,35 +98,12 @@ export function useMobileMarqueeAutoplay(
     const onTouchMove = (e: TouchEvent) => {
       if (loopW <= 0) return;
       const delta = touchStartX - e.touches[0].clientX;
-      // Normalise into [0, loopW) — handles forward and backward swipes.
+      // Normalise into [0, loopW) — handles both forward and backward swipes.
       pos = ((posAtTouchStart + delta) % loopW + loopW) % loopW;
-      applyTransform(pos);
+      applyTransform();
     };
 
-    const onScroll = () => {
-      if (isProgrammaticScrollRef.current) {
-        // This scroll was fired by our own scrollLeft write — ignore it.
-        // Do NOT overwrite autoplayAnchor here: it is our JS float
-        // accumulator and must not be clobbered with a rounded integer.
-        isProgrammaticScrollRef.current = false;
-        return;
-      }
-      if (touching) return;
-
-      if (paused) {
-        bumpIdle();
-        return;
-      }
-
-      // Genuine user scroll detected.
-      paused = true;
-      bumpIdle();
-    };
-
-    const onWheel = () => {
-      paused = true;
-      bumpIdle();
-    };
+    const onTouchEnd = () => bumpIdle();
 
     scroller.addEventListener("touchstart", onTouchStart, { passive: true });
     scroller.addEventListener("touchmove", onTouchMove, { passive: true });
@@ -128,34 +118,28 @@ export function useMobileMarqueeAutoplay(
       const dt = (now - last) / 1000;
       last = now;
 
-      if (!paused) {
-        const loopW = scroller.scrollWidth / 2;
-        if (loopW > 0) {
-          // Advance the JS float accumulator — never read from scrollLeft.
-          autoplayAnchor += speedPxPerSec * dt;
-          while (autoplayAnchor >= loopW) autoplayAnchor -= loopW;
-
-          isProgrammaticScrollRef.current = true;
-          scroller.scrollLeft = autoplayAnchor;
-        }
+      if (!paused && loopW > 0) {
+        pos += speedPxPerSec * dt;
+        while (pos >= loopW) pos -= loopW;
+        applyTransform();
       }
 
       raf = requestAnimationFrame(loop);
     };
 
     const ro = new ResizeObserver(() => {
-      computeLoopW();
+      loopW = track.scrollWidth / 2;
       last = performance.now();
     });
     ro.observe(scroller);
 
-    const start = () => {
-      autoplayAnchor = 0;
+    fontsReady.then(() => {
+      loopW = track.scrollWidth / 2;
+      pos = 0;
+      applyTransform();
       last = performance.now();
       raf = requestAnimationFrame(loop);
-    };
-
-    fontsReady.then(start);
+    });
 
     return () => {
       isProgrammaticScrollRef.current = false;
