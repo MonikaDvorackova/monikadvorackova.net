@@ -30,6 +30,11 @@ export function useMobileMarqueeAutoplay(
     let resumeTimer: ReturnType<typeof setTimeout> | null = null;
     /** Position we last applied in the autoplay loop (ignore scroll noise from our own updates). */
     let autoplayAnchor = scroller.scrollLeft;
+    /**
+     * iOS Safari emits `scroll` after programmatic `scrollTo`/`scrollLeft`. Without ignoring those,
+     * subpixel drift is misread as user scroll and autoplay keeps pausing (stutter / standstill).
+     */
+    let ignoreScrollEventsUntil = 0;
 
     const clearResume = () => {
       if (resumeTimer) {
@@ -59,6 +64,7 @@ export function useMobileMarqueeAutoplay(
     };
 
     const onScroll = () => {
+      if (performance.now() < ignoreScrollEventsUntil) return;
       if (touching) return;
 
       if (paused) {
@@ -101,6 +107,7 @@ export function useMobileMarqueeAutoplay(
       if (!paused) {
         const loopW = scroller.scrollWidth / 2;
         if (loopW > 0) {
+          ignoreScrollEventsUntil = performance.now() + 100;
           while (scroller.scrollLeft >= loopW) {
             scroller.scrollLeft -= loopW;
           }
