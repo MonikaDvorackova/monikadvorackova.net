@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
+import { useMobileMarqueeAutoplay } from "@/components/useMobileMarqueeAutoplay";
 
 export type PublicationItem = {
   id: string;
@@ -185,6 +186,7 @@ export default function PublicationsList() {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const pausedRef = useRef(false);
+  const mobileScrollerRef = useRef<HTMLDivElement | null>(null);
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -205,6 +207,12 @@ export default function PublicationsList() {
   const useMarquee = items.length >= 2 && !isMobile;
   const firstLoop = items;
   const secondLoop = items;
+  const mobileContentKey = items.map((i) => i.id).join("|");
+
+  useMobileMarqueeAutoplay(mobileScrollerRef, isMobile && items.length >= 2, mobileContentKey, {
+    speedPxPerSec: 11,
+    idleResumeMs: 1000,
+  });
 
   useEffect(() => {
     if (!useMarquee) return;
@@ -276,7 +284,8 @@ export default function PublicationsList() {
   if (isMobile) {
     return (
       <div
-        className="relative w-full overflow-x-auto overflow-y-hidden no-scrollbar select-none snap-x snap-mandatory"
+        ref={mobileScrollerRef}
+        className="relative w-full overflow-x-auto overflow-y-hidden no-scrollbar select-none"
         style={{
           WebkitOverflowScrolling: "touch",
           paddingLeft: 8,
@@ -286,7 +295,12 @@ export default function PublicationsList() {
       >
         <div className="flex w-max gap-[14px] py-0.5 pl-1 pr-1">
           {items.map((item) => (
-            <div key={item.id} className="snap-start shrink-0">
+            <div key={`${item.id}-a`} className="shrink-0">
+              <PublicationCard item={item} solo mobileSolo={isMobile} />
+            </div>
+          ))}
+          {items.map((item) => (
+            <div key={`${item.id}-b`} className="shrink-0">
               <PublicationCard item={item} solo mobileSolo={isMobile} />
             </div>
           ))}

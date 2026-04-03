@@ -18,7 +18,7 @@ async function getPostTitle(slug: string): Promise<string> {
       file = await fs.readFile(mdxPath, "utf-8");
     }
     const { data } = matter(file);
-    return data.title || slug;
+    return String(data.title || slug);
   } catch {
     return slug;
   }

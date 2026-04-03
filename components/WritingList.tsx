@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import ResourceIcons, { type Resource as ResourceItem } from "@/components/ResourceIcons";
+import { useMobileMarqueeAutoplay } from "@/components/useMobileMarqueeAutoplay";
 
 type Post = {
   title: string;
@@ -121,6 +122,7 @@ export default function WritingList({ posts }: { posts: Post[] }) {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const pausedRef = useRef(false);
+  const mobileScrollerRef = useRef<HTMLDivElement | null>(null);
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -141,6 +143,12 @@ export default function WritingList({ posts }: { posts: Post[] }) {
   const useMarquee = posts.length >= 2 && !isMobile;
   const firstLoop = posts;
   const secondLoop = posts;
+  const mobileContentKey = posts.map((p) => p.slug).join("|");
+
+  useMobileMarqueeAutoplay(mobileScrollerRef, isMobile && posts.length >= 2, mobileContentKey, {
+    speedPxPerSec: 11,
+    idleResumeMs: 1000,
+  });
 
   useEffect(() => {
     if (!useMarquee) return;
@@ -212,7 +220,8 @@ export default function WritingList({ posts }: { posts: Post[] }) {
   if (isMobile) {
     return (
       <div
-        className="relative w-full overflow-x-auto overflow-y-hidden no-scrollbar select-none snap-x snap-mandatory"
+        ref={mobileScrollerRef}
+        className="relative w-full overflow-x-auto overflow-y-hidden no-scrollbar select-none"
         style={{
           WebkitOverflowScrolling: "touch",
           paddingLeft: 8,
@@ -222,7 +231,12 @@ export default function WritingList({ posts }: { posts: Post[] }) {
       >
         <div className="flex w-max gap-[14px] py-0.5 pl-1 pr-1">
           {posts.map((post) => (
-            <div key={post.slug} className="snap-start shrink-0">
+            <div key={`${post.slug}-a`} className="shrink-0">
+              <WritingCard post={post} solo mobileSolo={isMobile} />
+            </div>
+          ))}
+          {posts.map((post) => (
+            <div key={`${post.slug}-b`} className="shrink-0">
               <WritingCard post={post} solo mobileSolo={isMobile} />
             </div>
           ))}
