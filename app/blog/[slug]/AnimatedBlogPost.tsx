@@ -19,6 +19,7 @@ interface PostMeta {
   resources?: ResourceItem[];
   citations?: number;
   tldr?: string;
+  description?: string;
 }
 
 interface AnimatedBlogPostProps {
@@ -154,6 +155,7 @@ function MarkdownComponents() {
 
 export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProps) {
   const components = MarkdownComponents();
+  const summaryBlurb = meta.tldr?.trim() || meta.description?.trim();
 
   return (
     <motion.div
@@ -219,9 +221,9 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
               </div>
             ) : null}
 
-            {meta.tldr ? (
+            {summaryBlurb ? (
               <div className="mobile-pad">
-                <TLDR text={meta.tldr} />
+                <TLDR text={summaryBlurb} />
               </div>
             ) : null}
 
