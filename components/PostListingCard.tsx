@@ -7,14 +7,8 @@ import { formatTagLabel } from "@/lib/formatTagLabel";
 /** Matches site norm (~3–5 visible tags); extra tags stay in frontmatter only. */
 const MAX_TAGS_ON_CARD = 5;
 
-/** Reserved height for the summary block (~3 lines at 9px / 1.5). */
-const DESCRIPTION_SLOT_MIN_PX = 48;
-
-/**
- * Minimum card height when not filling a stretched carousel row (solo layout).
- * In carousel rows, the card also uses h-full so it matches the tallest peer.
- */
-const LISTING_CARD_MIN_HEIGHT_PX = 200;
+/** ~3 lines at text-[9px] leading-[1.5] (compact baseline, not inflated). */
+const DESCRIPTION_SLOT_MIN_PX = 42;
 
 const LISTING_CARD_WIDTH_PX = 420;
 
@@ -66,7 +60,7 @@ export default function PostListingCard({
       onPointerEnter={onPointerInsideCard}
       style={{
         width: widthStyle,
-        minHeight: LISTING_CARD_MIN_HEIGHT_PX,
+        minHeight: solo ? undefined : 78,
         height: solo ? undefined : "100%",
         marginRight: solo ? 0 : 16,
         backgroundColor: "rgba(255,255,255,0.72)",
