@@ -2,15 +2,21 @@
 
 import Link from "next/link";
 import ResourceIcons, { type Resource as ResourceItem } from "@/components/ResourceIcons";
+import { formatTagLabel } from "@/lib/formatTagLabel";
 
-/** Matches the historical listing pattern (~3–5 tags); avoids multi-row tag walls. */
+/** Matches site norm (~3–5 visible tags); extra tags stay in frontmatter only. */
 const MAX_TAGS_ON_CARD = 5;
 
-/** ~3 lines at text-[9px] leading-[1.5] (9 × 1.5 × 3 ≈ 40.5px). */
-const DESCRIPTION_SLOT_MIN_PX = 42;
+/** Reserved height for the summary block (~3 lines at 9px / 1.5). */
+const DESCRIPTION_SLOT_MIN_PX = 48;
 
-/** Title row + description slot + single tag strip + padding (non-solo). */
-const CARD_BODY_MIN_PX = 176;
+/**
+ * Minimum card height when not filling a stretched carousel row (solo layout).
+ * In carousel rows, the card also uses h-full so it matches the tallest peer.
+ */
+const LISTING_CARD_MIN_HEIGHT_PX = 200;
+
+const LISTING_CARD_WIDTH_PX = 420;
 
 export type ListingPost = {
   title: string;
@@ -48,13 +54,20 @@ export default function PostListingCard({
   const summary = listingSummary(post);
   const visibleTags = (post.tags ?? []).slice(0, MAX_TAGS_ON_CARD);
 
+  const widthStyle = solo
+    ? mobileSolo
+      ? "min(84vw, 360px)"
+      : "min(86vw, 360px)"
+    : LISTING_CARD_WIDTH_PX;
+
   return (
     <div
-      className="group relative flex min-h-0 flex-col overflow-visible rounded-2xl transition-transform duration-300 hover:scale-[1.01] hover:shadow-[0_6px_24px_rgba(0,0,0,0.18)] focus-within:ring-2 focus-within:ring-[#004cff]/50"
+      className="group relative flex w-full flex-col self-stretch overflow-visible rounded-2xl transition-transform duration-300 hover:scale-[1.01] hover:shadow-[0_6px_24px_rgba(0,0,0,0.18)] focus-within:ring-2 focus-within:ring-[#004cff]/50"
       onPointerEnter={onPointerInsideCard}
       style={{
-        width: solo ? (mobileSolo ? "min(84vw, 360px)" : "min(86vw, 360px)") : 420,
-        minHeight: solo ? undefined : CARD_BODY_MIN_PX,
+        width: widthStyle,
+        minHeight: LISTING_CARD_MIN_HEIGHT_PX,
+        height: solo ? undefined : "100%",
         marginRight: solo ? 0 : 16,
         backgroundColor: "rgba(255,255,255,0.72)",
         color: "#000",
@@ -63,7 +76,6 @@ export default function PostListingCard({
         padding: solo ? "16px 16px 14px" : "12px 16px 10px",
         backdropFilter: "blur(8px)",
         borderRadius: "1rem",
-        contain: "layout paint",
         flexShrink: 0,
       }}
     >
@@ -97,7 +109,7 @@ export default function PostListingCard({
         </div>
 
         <div
-          className="mt-2 min-h-0 shrink-0"
+          className="mt-2 shrink-0"
           style={{ minHeight: DESCRIPTION_SLOT_MIN_PX }}
         >
           {summary ? (
@@ -122,21 +134,24 @@ export default function PostListingCard({
               className="flex min-h-[24px] flex-nowrap items-center gap-x-[10px] overflow-x-auto overflow-y-hidden no-scrollbar"
               aria-label="Post tags"
             >
-              {visibleTags.map((tag, i) => (
-                <Link
-                  key={`${post.slug}-${tag}-${i}`}
-                  href={`/tags/${encodeURIComponent(tag)}`}
-                  aria-label={`Tag: ${tag}`}
-                  className="inline-flex shrink-0 items-center rounded px-2.5 py-1 text-[9px] font-semibold leading-none whitespace-nowrap"
-                  style={{
-                    backgroundColor: "#004cff",
-                    color: "#fff",
-                    WebkitTextFillColor: "#fff",
-                  }}
-                >
-                  {tag}
-                </Link>
-              ))}
+              {visibleTags.map((tag, i) => {
+                const label = formatTagLabel(tag);
+                return (
+                  <Link
+                    key={`${post.slug}-${tag}-${i}`}
+                    href={`/tags/${encodeURIComponent(tag)}`}
+                    aria-label={`Tag: ${label}`}
+                    className="inline-flex shrink-0 items-center rounded px-2.5 py-1 text-[9px] font-semibold leading-none whitespace-nowrap"
+                    style={{
+                      backgroundColor: "#004cff",
+                      color: "#fff",
+                      WebkitTextFillColor: "#fff",
+                    }}
+                  >
+                    {label}
+                  </Link>
+                );
+              })}
             </div>
           ) : (
             <div className="min-h-[24px]" aria-hidden />
