@@ -2,6 +2,21 @@
 
 import Link from "next/link";
 import ResourceIcons, { type Resource as ResourceItem } from "@/components/ResourceIcons";
+import { formatTagLabel } from "@/lib/formatTagLabel";
+
+/** Matches site norm (~3–5 visible tags); extra tags stay in frontmatter only. */
+const MAX_TAGS_ON_CARD = 5;
+
+/** Reserved height for the summary block (~3 lines at 9px / 1.5). */
+const DESCRIPTION_SLOT_MIN_PX = 48;
+
+/**
+ * Minimum card height when not filling a stretched carousel row (solo layout).
+ * In carousel rows, the card also uses h-full so it matches the tallest peer.
+ */
+const LISTING_CARD_MIN_HEIGHT_PX = 200;
+
+const LISTING_CARD_WIDTH_PX = 420;
 
 export type ListingPost = {
   title: string;
@@ -37,14 +52,22 @@ export default function PostListingCard({
   const href = `/blog/${post.slug}`;
   const displayTitle = (post.cardTitle?.trim() || post.title).trim();
   const summary = listingSummary(post);
+  const visibleTags = (post.tags ?? []).slice(0, MAX_TAGS_ON_CARD);
+
+  const widthStyle = solo
+    ? mobileSolo
+      ? "min(84vw, 360px)"
+      : "min(86vw, 360px)"
+    : LISTING_CARD_WIDTH_PX;
 
   return (
     <div
-      className="group relative block overflow-visible rounded-2xl transition-transform duration-300 hover:scale-[1.01] hover:shadow-[0_6px_24px_rgba(0,0,0,0.18)] focus-within:ring-2 focus-within:ring-[#004cff]/50"
+      className="group relative flex w-full flex-col self-stretch overflow-visible rounded-2xl transition-transform duration-300 hover:scale-[1.01] hover:shadow-[0_6px_24px_rgba(0,0,0,0.18)] focus-within:ring-2 focus-within:ring-[#004cff]/50"
       onPointerEnter={onPointerInsideCard}
       style={{
-        width: solo ? (mobileSolo ? "min(84vw, 360px)" : "min(86vw, 360px)") : 420,
-        minHeight: solo ? undefined : 78,
+        width: widthStyle,
+        minHeight: LISTING_CARD_MIN_HEIGHT_PX,
+        height: solo ? undefined : "100%",
         marginRight: solo ? 0 : 16,
         backgroundColor: "rgba(255,255,255,0.72)",
         color: "#000",
@@ -53,12 +76,11 @@ export default function PostListingCard({
         padding: solo ? "16px 16px 14px" : "12px 16px 10px",
         backdropFilter: "blur(8px)",
         borderRadius: "1rem",
-        contain: "layout paint",
         flexShrink: 0,
       }}
     >
-      <div className="flex h-full min-h-0 flex-col">
-        <div className="flex min-h-[56px] items-start justify-between gap-3">
+      <div className="flex min-h-0 flex-1 flex-col">
+        <div className="flex min-h-[56px] shrink-0 items-start justify-between gap-3">
           <Link
             href={href}
             className="min-w-0 flex-1 self-start line-clamp-2 text-[11px] font-semibold leading-snug text-[#004cff] transition-opacity group-hover:opacity-90 sm:text-[11px]"
@@ -86,44 +108,53 @@ export default function PostListingCard({
           </div>
         </div>
 
-        {summary ? (
-          <Link
-            href={href}
-            className="mt-2 block min-h-0 text-black no-underline visited:text-black hover:text-black focus-visible:text-black"
-            style={{ color: "#000" }}
-          >
-            <p
-              className="line-clamp-3 text-[9px] leading-[1.5] sm:text-[9px]"
-              style={{ color: "#000", WebkitTextFillColor: "#000" }}
+        <div
+          className="mt-2 shrink-0"
+          style={{ minHeight: DESCRIPTION_SLOT_MIN_PX }}
+        >
+          {summary ? (
+            <Link
+              href={href}
+              className="block h-full min-h-0 text-black no-underline visited:text-black hover:text-black focus-visible:text-black"
+              style={{ color: "#000" }}
             >
-              {summary}
-            </p>
-          </Link>
-        ) : (
-          <div className="mt-2" />
-        )}
+              <p
+                className="line-clamp-3 text-[9px] leading-[1.5] sm:text-[9px]"
+                style={{ color: "#000", WebkitTextFillColor: "#000" }}
+              >
+                {summary}
+              </p>
+            </Link>
+          ) : null}
+        </div>
 
-        <div className="mt-auto min-h-0 pt-3">
-          {post.tags?.length ? (
-            <div className="flex flex-wrap justify-start gap-x-[10px] gap-y-2">
-              {post.tags.map((tag, i) => (
-                <Link
-                  key={`${post.slug}-${tag}-${i}`}
-                  href={`/tags/${encodeURIComponent(tag)}`}
-                  aria-label={`Tag: ${tag}`}
-                  className="inline-flex max-w-full min-w-0 items-center rounded px-2.5 py-1 text-[9px] font-semibold leading-none whitespace-nowrap"
-                  style={{
-                    backgroundColor: "#004cff",
-                    color: "#fff",
-                    WebkitTextFillColor: "#fff",
-                  }}
-                >
-                  <span className="truncate">{tag}</span>
-                </Link>
-              ))}
+        <div className="mt-auto min-h-0 shrink-0 pt-3">
+          {visibleTags.length ? (
+            <div
+              className="flex min-h-[24px] flex-nowrap items-center gap-x-[10px] overflow-x-auto overflow-y-hidden no-scrollbar"
+              aria-label="Post tags"
+            >
+              {visibleTags.map((tag, i) => {
+                const label = formatTagLabel(tag);
+                return (
+                  <Link
+                    key={`${post.slug}-${tag}-${i}`}
+                    href={`/tags/${encodeURIComponent(tag)}`}
+                    aria-label={`Tag: ${label}`}
+                    className="inline-flex shrink-0 items-center rounded px-2.5 py-1 text-[9px] font-semibold leading-none whitespace-nowrap"
+                    style={{
+                      backgroundColor: "#004cff",
+                      color: "#fff",
+                      WebkitTextFillColor: "#fff",
+                    }}
+                  >
+                    {label}
+                  </Link>
+                );
+              })}
             </div>
           ) : (
-            <div style={{ height: 12 }} />
+            <div className="min-h-[24px]" aria-hidden />
           )}
         </div>
       </div>

@@ -115,14 +115,14 @@ export default function WritingList({ posts }: { posts: ListingPost[] }) {
           touchAction: "pan-x",
         }}
       >
-        <div className="flex w-max gap-[14px] py-0.5 pl-1 pr-1">
+        <div className="flex w-max items-stretch gap-[14px] py-0.5 pl-1 pr-1">
           {posts.map((post) => (
-            <div key={`${post.slug}-a`} className="shrink-0">
+            <div key={`${post.slug}-a`} className="flex shrink-0 self-stretch">
               <PostListingCard post={post} solo mobileSolo={isMobile} />
             </div>
           ))}
           {posts.map((post) => (
-            <div key={`${post.slug}-b`} className="shrink-0">
+            <div key={`${post.slug}-b`} className="flex shrink-0 self-stretch">
               <PostListingCard post={post} solo mobileSolo={isMobile} />
             </div>
           ))}
@@ -151,26 +151,28 @@ export default function WritingList({ posts }: { posts: ListingPost[] }) {
       >
         <div
           ref={trackRef}
-          className="flex w-max will-change-transform pl-1 pr-1"
+          className="flex w-max items-stretch will-change-transform pl-1 pr-1"
           style={{ transform: "translate3d(0,0,0)" }}
         >
           {firstLoop.map((post) => (
-            <PostListingCard
-              key={`${post.slug}-writing-a`}
-              post={post}
-              onPointerInsideCard={() => {
-                pausedRef.current = true;
-              }}
-            />
+            <div key={`${post.slug}-writing-a`} className="flex shrink-0 self-stretch">
+              <PostListingCard
+                post={post}
+                onPointerInsideCard={() => {
+                  pausedRef.current = true;
+                }}
+              />
+            </div>
           ))}
           {secondLoop.map((post) => (
-            <PostListingCard
-              key={`${post.slug}-writing-b`}
-              post={post}
-              onPointerInsideCard={() => {
-                pausedRef.current = true;
-              }}
-            />
+            <div key={`${post.slug}-writing-b`} className="flex shrink-0 self-stretch">
+              <PostListingCard
+                post={post}
+                onPointerInsideCard={() => {
+                  pausedRef.current = true;
+                }}
+              />
+            </div>
           ))}
         </div>
       </div>

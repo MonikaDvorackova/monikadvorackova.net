@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import ResourceIcons, { type Resource as ResourceItem } from "@/components/ResourceIcons";
 import TLDR from "@/components/TLDR";
 import MermaidBlock from "@/components/MermaidBlock";
+import { formatTagLabel } from "@/lib/formatTagLabel";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 
 interface PostMeta {
@@ -182,23 +183,26 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
           />
 
           <div className="flex flex-wrap justify-center mb-2" style={{ gap: "8px" }}>
-            {(meta.tags || []).map((tag, index) => (
-              <motion.div
-                key={tag}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
-              >
-                <Link
-                  href={`/tags/${encodeURIComponent(tag)}`}
-                  aria-label={`View all posts with tag: ${tag}`}
-                  className="inline-block bg-[#004cff] px-3 py-1 text-[11px] font-semibold rounded-none"
-                  style={{ color: "white" }}
+            {(meta.tags || []).map((tag, index) => {
+              const tagLabel = formatTagLabel(tag);
+              return (
+                <motion.div
+                  key={`${tag}-${index}`}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
                 >
-                  {tag}
-                </Link>
-              </motion.div>
-            ))}
+                  <Link
+                    href={`/tags/${encodeURIComponent(tag)}`}
+                    aria-label={`View all posts with tag: ${tagLabel}`}
+                    className="inline-block bg-[#004cff] px-3 py-1 text-[11px] font-semibold rounded-none"
+                    style={{ color: "white" }}
+                  >
+                    {tagLabel}
+                  </Link>
+                </motion.div>
+              );
+            })}
           </div>
 
           <motion.main
