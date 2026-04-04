@@ -123,6 +123,24 @@ a {
   color: #111827;
 }
 
+/* Blog markdown body (Tailwind Typography + react-markdown) */
+.prose {
+  font-size: 0.95rem;
+}
+
+.prose p {
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+.prose h1 {
+  font-size: 1.8rem;
+}
+
+.prose h2 {
+  font-size: 1.4rem;
+}
+
 .prose pre {
   background: transparent !important;
   padding: 0 !important;

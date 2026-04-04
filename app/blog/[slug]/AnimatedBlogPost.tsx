@@ -41,13 +41,13 @@ function extractText(children: React.ReactNode): string {
 function MarkdownComponents() {
   return {
     h1: ({ children }: { children?: React.ReactNode }) => (
-      <h1 className="text-base font-light text-neutral-900 mb-4 text-center">{children}</h1>
+      <h1 className="font-light text-neutral-900 mb-4 text-center">{children}</h1>
     ),
     h2: ({ children }: { children?: React.ReactNode }) => (
-      <h2 className="text-sm font-light text-neutral-800 mb-3 text-center">{children}</h2>
+      <h2 className="font-light text-neutral-800 mb-3 text-center">{children}</h2>
     ),
     p: ({ children }: { children?: React.ReactNode }) => (
-      <p className="text-xs text-neutral-900 leading-relaxed mb-3">{children}</p>
+      <p className="mb-3">{children}</p>
     ),
     table: ({ children }: { children?: React.ReactNode }) => (
       <table
@@ -231,8 +231,8 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
               </div>
             ) : null}
 
-            <article className="text-justify leading-[1.75]">
-              <div className="mobile-pad">
+            <article>
+              <div className="mobile-pad prose prose-sm max-w-none text-justify text-neutral-900">
                 <Markdown remarkPlugins={[remarkGfm]} components={components}>
                   {content}
                 </Markdown>
