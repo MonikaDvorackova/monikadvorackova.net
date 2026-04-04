@@ -15,6 +15,8 @@ type Resource = { type: ResourceType; href: string; label?: string };
 interface Post {
   slug: string;
   title: string;
+  cardTitle?: string;
+  description?: string;
   date: string;
   tags: string[];
   tldr?: string;
@@ -43,6 +45,8 @@ function normalizePosts(data: unknown): Post[] {
     out.push({
       slug: obj.slug,
       title: obj.title,
+      cardTitle: typeof obj.cardTitle === "string" ? obj.cardTitle : undefined,
+      description: typeof obj.description === "string" ? obj.description : undefined,
       date: typeof obj.date === "string" ? obj.date : "",
       tags: Array.isArray(obj.tags) ? obj.tags.map(String) : [],
       tldr: typeof obj.tldr === "string" ? obj.tldr : undefined,

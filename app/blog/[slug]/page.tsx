@@ -19,6 +19,7 @@ type BlogPostMeta = {
   date: string;
   tags: string[];
   tldr?: string;
+  description?: string;
   citations?: number;
   resources?: Resource[];
   readingTimeMin?: number;
@@ -85,6 +86,19 @@ function estimateReadingTimeMinutes(markdownContent: string): number {
   return Math.max(1, Math.round(words / 200));
 }
 
+/** Drop a leading `# title` line when it duplicates frontmatter `title` (page already renders one H1). */
+function stripLeadingDuplicateH1(markdown: string, articleTitle: string): string {
+  const t = articleTitle.trim();
+  if (!t) return markdown;
+  const s = markdown.trimStart();
+  const firstNl = s.indexOf("\n");
+  const firstLine = (firstNl === -1 ? s : s.slice(0, firstNl)).trim();
+  const m = firstLine.match(/^#\s+(.+)$/);
+  if (!m || m[1].trim() !== t) return markdown;
+  if (firstNl === -1) return "";
+  return s.slice(firstNl + 1).replace(/^\n+/, "");
+}
+
 // --- Metadata ---
 export async function generateMetadata(
   { params }: { params: Promise<{ slug: string }> }
@@ -96,7 +110,13 @@ export async function generateMetadata(
   const d = data as Record<string, unknown>;
 
   const title = String(d.title ?? "Untitled");
-  const desc = d.tldr ? String(d.tldr) : undefined;
+  const desc =
+    (d.tldr != null && String(d.tldr).trim() !== ""
+      ? String(d.tldr)
+      : undefined) ??
+    (d.description != null && String(d.description).trim() !== ""
+      ? String(d.description)
+      : undefined);
   const date = d.date ? normalizeDate(d.date) : undefined;
 
   const urlBase = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, "") || "";
@@ -135,15 +155,21 @@ export default async function BlogPostPage(
   const { data, content } = matter(raw);
   const d = data as Record<string, unknown>;
 
+  const title = String(d.title ?? "Untitled");
+  const bodyMarkdown = stripLeadingDuplicateH1(content, title);
+
   const meta: BlogPostMeta = {
-    title: String(d.title ?? "Untitled"),
+    title,
     date: normalizeDate(d.date),
     tags: parseTags(d.tags),
     tldr: d.tldr ? String(d.tldr) : undefined,
+    description: d.description ? String(d.description) : undefined,
     citations: typeof d.citations === "number" ? (d.citations as number) : undefined,
     resources: parseResources(d.resources),
-    readingTimeMin: estimateReadingTimeMinutes(content),
+    readingTimeMin: estimateReadingTimeMinutes(bodyMarkdown),
   };
+
+  const jsonLdDescription = meta.tldr ?? meta.description;
 
   return (
     <>
@@ -156,7 +182,7 @@ export default async function BlogPostPage(
             "@type": "BlogPosting",
             headline: meta.title,
             datePublished: meta.date,
-            description: meta.tldr,
+            description: jsonLdDescription,
             author: {
               "@type": "Person",
               name: "Monika Dvořáčková",
@@ -165,7 +191,7 @@ export default async function BlogPostPage(
           }),
         }}
       />
-      <AnimatedBlogPost meta={meta} content={content} />
+      <AnimatedBlogPost meta={meta} content={bodyMarkdown} />
     </>
   );
 }

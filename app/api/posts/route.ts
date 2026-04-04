@@ -87,6 +87,8 @@ function readingMinutesFromContent(content: string, wpm = 200): number {
 
 interface FrontMatter {
   title?: unknown;
+  cardTitle?: unknown;
+  description?: unknown;
   date?: unknown;
   tags?: unknown;
   tldr?: unknown;
@@ -98,6 +100,8 @@ interface FrontMatter {
 interface PostMeta {
   slug: string;
   title: string;
+  cardTitle?: string;
+  description?: string;
   date: string;      // normalized YYYY-MM-DD
   tags: string[];
   tldr: string;
@@ -122,6 +126,8 @@ export async function GET() {
         const tags = normalizeTags(data.tags);
         const slug = filename.replace(/\.mdx?$/, "");
         const title = normalizeString(data.title, "Untitled");
+        const cardTitleRaw = normalizeString(data.cardTitle, "").trim();
+        const descriptionRaw = normalizeString(data.description, "").trim();
         const date = normalizeDate(data.date);
         const tldr = normalizeString(data.tldr, "");
         const readingMinutes =
@@ -132,6 +138,8 @@ export async function GET() {
         return {
           slug,
           title,
+          ...(cardTitleRaw ? { cardTitle: cardTitleRaw } : {}),
+          ...(descriptionRaw ? { description: descriptionRaw } : {}),
           date,
           tags,
           tldr,
