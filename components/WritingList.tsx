@@ -151,28 +151,26 @@ export default function WritingList({ posts }: { posts: ListingPost[] }) {
       >
         <div
           ref={trackRef}
-          className="flex w-max items-stretch will-change-transform pl-1 pr-1"
+          className="flex w-max will-change-transform pl-1 pr-1"
           style={{ transform: "translate3d(0,0,0)" }}
         >
           {firstLoop.map((post) => (
-            <div key={`${post.slug}-writing-a`} className="flex shrink-0 self-stretch">
-              <PostListingCard
-                post={post}
-                onPointerInsideCard={() => {
-                  pausedRef.current = true;
-                }}
-              />
-            </div>
+            <PostListingCard
+              key={`${post.slug}-writing-a`}
+              post={post}
+              onPointerInsideCard={() => {
+                pausedRef.current = true;
+              }}
+            />
           ))}
           {secondLoop.map((post) => (
-            <div key={`${post.slug}-writing-b`} className="flex shrink-0 self-stretch">
-              <PostListingCard
-                post={post}
-                onPointerInsideCard={() => {
-                  pausedRef.current = true;
-                }}
-              />
-            </div>
+            <PostListingCard
+              key={`${post.slug}-writing-b`}
+              post={post}
+              onPointerInsideCard={() => {
+                pausedRef.current = true;
+              }}
+            />
           ))}
         </div>
       </div>
