@@ -95,46 +95,46 @@ function ServicesOverlay({ show }: { show: boolean }) {
           aria-modal="true"
           aria-label="Services"
         >
-          {/* MOBILE ≤480px — compact 1-column horizontal cards */}
+          {/* MOBILE ≤480px — fits exactly on phone screen, no scroll */}
           <div
-            className="hidden max-[480px]:flex flex-col w-full h-full overflow-y-auto"
+            className="hidden max-[480px]:flex flex-col w-full h-full overflow-hidden"
             style={{
-              padding: "16px 16px calc(env(safe-area-inset-bottom) + 12px)",
+              padding: "12px 14px calc(env(safe-area-inset-bottom) + 8px)",
             }}
           >
-            <div className="w-full pb-3 text-center text-[9px] font-semibold tracking-[0.18em] uppercase text-black/30">
+            <div className="w-full pb-1.5 text-center text-[9px] font-semibold tracking-[0.18em] uppercase text-black/30">
               Services
             </div>
             <motion.div
               variants={gridVariants}
               initial="hidden"
               animate="show"
-              className="flex flex-col gap-2 w-full"
+              className="flex flex-col gap-[5px] w-full flex-1"
             >
               {SERVICES.map(({ icon: Icon, title, mobileDesc }) => (
                 <motion.div
                   key={`m-${title}`}
                   variants={itemVariants}
-                  className="flex flex-col items-center justify-center text-center rounded-xl bg-white"
+                  className="flex flex-col items-center justify-center text-center rounded-lg bg-white flex-1"
                   style={{
                     border: "1px solid rgba(0, 0, 0, 0.05)",
                     boxShadow: "0 1px 4px rgba(0,0,0,0.03)",
-                    padding: "14px 16px",
+                    padding: "6px 12px",
                   }}
                 >
-                  <Icon size={16} color="#004CFF" className="mb-1" />
-                  <h3 className="font-semibold text-black text-[11.5px] leading-tight">{title}</h3>
-                  <p className="text-[9.5px] leading-snug text-neutral-500 mt-0.5">{mobileDesc}</p>
+                  <Icon size={14} color="#004CFF" className="mb-0.5" />
+                  <h3 className="font-semibold text-black text-[10.5px] leading-tight">{title}</h3>
+                  <p className="text-[8.5px] leading-snug text-neutral-500 mt-0.5">{mobileDesc}</p>
                 </motion.div>
               ))}
             </motion.div>
-            <div className="w-full pt-5 pb-1">
-              <div className="text-center text-[8px] font-semibold tracking-[0.18em] uppercase text-black/25 mb-3">Stack</div>
-              <div className="flex flex-col gap-2 px-2 items-center">
+            <div className="w-full pt-2">
+              <div className="text-center text-[7.5px] font-semibold tracking-[0.18em] uppercase text-black/25 mb-1.5">Stack</div>
+              <div className="flex flex-col gap-0.5 px-1 items-center">
                 {STACK_GROUPS.map(({ label, items }) => (
                   <div key={label} className="text-center">
-                    <span className="text-[7.5px] font-semibold tracking-[0.12em] uppercase text-black/25 mr-0.5">{label}:</span>
-                    <span className="text-[8px] text-black/35 leading-relaxed">{items.join(" · ")}</span>
+                    <span className="text-[6.5px] font-semibold tracking-[0.12em] uppercase text-black/25 mr-0.5">{label}:</span>
+                    <span className="text-[7px] text-black/35 leading-tight">{items.join(" · ")}</span>
                   </div>
                 ))}
               </div>
@@ -343,7 +343,7 @@ export default function HomePage() {
                     width={754}
                     height={104}
                     draggable={false}
-                    className="absolute right-0 bottom-0 pointer-events-none select-none z-[5] h-auto w-[140px] sm:w-[100px] md:w-[125px] rotate-[-3deg] translate-x-[28%] translate-y-[55%] sm:translate-x-[-3%] sm:translate-y-[45%]"
+                    className="absolute right-0 bottom-0 pointer-events-none select-none z-[5] h-auto hidden sm:block sm:w-[100px] md:w-[125px] rotate-[-3deg] sm:translate-x-[-3%] sm:translate-y-[45%]"
                   />
 
                   {/* Portrait */}
