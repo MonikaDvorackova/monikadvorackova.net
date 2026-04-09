@@ -11,8 +11,8 @@ const SITE_URL =
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Monika Dvořáčková — AI & ML Engineer & Consultant",
-    template: "%s | Monika Dvořáčková",
+    default: "Dvorackova — ML/AI Engineer",
+    template: "%s | Dvorackova",
   },
   description:
     "AI/ML engineer & consultant specializing in LLM strategy, RAG audits, MLOps, AI governance, and hands-on training. Helping companies ship production AI.",
@@ -28,13 +28,13 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: SITE_URL,
     siteName: "Monika Dvořáčková",
-    title: "Monika Dvořáčková — AI & ML Engineer & Consultant",
+    title: "Dvorackova — ML/AI Engineer",
     description:
       "AI/ML engineer & consultant specializing in LLM strategy, RAG audits, MLOps, AI governance, and hands-on training.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Monika Dvořáčková — AI & ML Engineer & Consultant",
+    title: "Dvorackova — ML/AI Engineer",
     description:
       "AI/ML engineer & consultant specializing in LLM strategy, RAG audits, MLOps, AI governance, and hands-on training.",
   },
