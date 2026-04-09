@@ -108,26 +108,37 @@ function MarkdownComponents() {
       );
     },
     strong: ({ children }: { children?: React.ReactNode }) => {
-      const txt = React.Children.toArray(children).join("").toLowerCase();
-      return txt === "neural" || txt === "natural law" ? (
-        <>{children}</>
-      ) : (
-        <strong className="font-semibold text-neutral-900">{children}</strong>
-      );
+      // Keep semantic emphasis, but avoid bold styling in articles.
+      return <strong className="font-normal text-inherit">{children}</strong>;
     },
-    code: ({ inline, className, children, ...props }: CodeProps) => {
-      const match = /language-(\w+)/.exec(className || "");
-      const language = match?.[1];
-      const value = extractText(children);
+    pre: ({ children }: { children?: React.ReactNode }) => {
+      // react-markdown wraps fenced blocks as <pre><code class="language-...">...</code></pre>
+      // Keep block-level rendering valid by handling Mermaid (and styling) at the <pre> level.
+      if (React.isValidElement(children) && (children.props as { className?: string })?.className) {
+        const className = (children.props as { className?: string }).className || "";
+        const match = /language-(\w+)/.exec(className);
+        const language = match?.[1];
+        const value = extractText((children.props as { children?: React.ReactNode }).children);
 
-      if (!inline && language === "mermaid") {
-        return <MermaidBlock chart={value} />;
+        if (language === "mermaid") {
+          return <MermaidBlock chart={value} />;
+        }
       }
 
+      return (
+        <pre
+          className="my-6 overflow-x-auto"
+          style={{ marginLeft: "auto", marginRight: "auto", width: "fit-content", maxWidth: "100%" }}
+        >
+          {children}
+        </pre>
+      );
+    },
+    code: ({ inline, children, ...props }: CodeProps) => {
       if (inline) {
         return (
           <code
-            className="font-mono font-bold text-[0.88rem] leading-[1.65] text-[#2563eb]"
+            className="font-mono font-bold text-[0.95em] leading-[1.65] text-[#2563eb]"
             style={{ fontWeight: 700 }}
             {...props}
           >
@@ -137,18 +148,13 @@ function MarkdownComponents() {
       }
 
       return (
-        <pre
-          className="my-6 overflow-x-auto"
-          style={{ marginLeft: "auto", marginRight: "auto", width: "fit-content", maxWidth: "100%" }}
+        <code
+          className="block whitespace-pre font-mono font-bold text-[0.95em] leading-[1.65] text-[#2563eb]"
+          style={{ fontWeight: 700 }}
+          {...props}
         >
-          <code
-            className="block whitespace-pre font-mono font-bold text-[0.88rem] leading-[1.65] text-[#2563eb]"
-            style={{ fontWeight: 700 }}
-            {...props}
-          >
-            {children}
-          </code>
-        </pre>
+          {children}
+        </code>
       );
     },
   };
@@ -160,7 +166,7 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
 
   return (
     <motion.div
-      className="overflow-x-hidden min-h-screen bg-gradient-to-br from-[#fef8f3] to-[#f9f5ef] font-sans text-neutral-900"
+      className="min-h-screen bg-gradient-to-br from-[#fef8f3] to-[#f9f5ef] font-sans text-neutral-900 pb-10"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
@@ -182,7 +188,7 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
             transition={{ duration: 0.8, delay: 0.4 }}
           />
 
-          <div className="flex flex-wrap justify-center mb-2" style={{ gap: "8px" }}>
+          <div className="mb-2 flex flex-wrap justify-center gap-1">
             {(meta.tags || []).map((tag, index) => {
               const tagLabel = formatTagLabel(tag);
               return (
@@ -195,8 +201,7 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
                   <Link
                     href={`/tags/${encodeURIComponent(tag)}`}
                     aria-label={`View all posts with tag: ${tagLabel}`}
-                    className="inline-block bg-[#004cff] px-3 py-1 text-[11px] font-semibold rounded-none"
-                    style={{ color: "white" }}
+                    className="inline-block rounded-none bg-[#004cff] px-1.5 py-0.5 text-[9px] font-medium leading-tight text-white"
                   >
                     {tagLabel}
                   </Link>
@@ -206,24 +211,13 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
           </div>
 
           <motion.main
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1.0 }}
           >
             <h1 className="text-2xl font-light text-neutral-900 mb-3 text-center">
               {meta.title}
             </h1>
-
-            {meta.resources?.length ? (
-              <div className="flex justify-center mb-6">
-                <ResourceIcons
-                  resources={meta.resources}
-                  showLabels={false}
-                  className=""
-                  sizeClassName="h-5 w-5"
-                />
-              </div>
-            ) : null}
 
             {summaryBlurb ? (
               <div className="mobile-pad">
@@ -232,11 +226,21 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
             ) : null}
 
             <article>
-              <div className="mobile-pad prose prose-sm max-w-none text-justify text-neutral-900">
+              <div className="mobile-pad prose prose-sm max-w-[720px] mx-auto text-left text-neutral-900 px-4 py-4 sm:px-5 sm:py-6">
                 <Markdown remarkPlugins={[remarkGfm]} components={components}>
                   {content}
                 </Markdown>
               </div>
+
+              {meta.resources?.length ? (
+                <div className="mobile-pad mx-auto max-w-[720px] px-4 pb-12 sm:px-5">
+                  <div className="mt-6 border-t border-black/10 pt-6">
+                    <div className="flex justify-center">
+                      <ResourceIcons resources={meta.resources} showLabels={false} sizeClassName="h-5 w-5" />
+                    </div>
+                  </div>
+                </div>
+              ) : null}
 
               <style jsx global>{`
                 .mobile-pad {
@@ -261,15 +265,6 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
               `}</style>
             </article>
           </motion.main>
-
-          <motion.footer
-            className="text-[9px] font-light text-neutral-900 py-8 text-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1.2 }}
-          >
-            © 2026 Monika Dvorackova
-          </motion.footer>
         </div>
       </div>
     </motion.div>

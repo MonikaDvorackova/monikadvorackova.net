@@ -73,30 +73,52 @@ The purpose is not only to aggregate results, but to preserve enough structure s
 ### Architecture overview
 
 ```mermaid
-flowchart TD
+flowchart LR
+  %% Layered view (matches DI360 styling)
+  subgraph L1[Retrieval layer]
+    direction TB
+    Q[Query]
+    R1[PubMed]
+    R2[Crossref]
+    R3[EPO Patents]
+    R4[Optional News]
+    Q --> R1
+    Q --> R2
+    Q --> R3
+    Q --> R4
+  end
 
-Q[Query]
+  subgraph L2[Normalization layer]
+    direction LR
+    N[Normalization]
+  end
 
-Q --> R1[PubMed]
-Q --> R2[Crossref]
-Q --> R3[EPO Patents]
-Q --> R4[Optional News]
+  subgraph L3[Evidence layer]
+    direction LR
+    CE[Claim extraction] --> CL[Claim clustering] --> CD[Contradiction detection] --> W[Weighting]
+  end
 
-R1 --> N[Normalization Layer]
-R2 --> N
-R3 --> N
-R4 --> N
+  subgraph L4[Representation layer]
+    direction LR
+    CG[Claim graph]
+  end
 
-N --> CE[Claim Extraction]
-CE --> CL[Claim Clustering]
-CL --> CD[Contradiction Detection]
-CD --> W[Weighting Engine]
+  subgraph L5[Application / export layer]
+    direction TB
+    UI[Application]
+    EXP[Export]
+    AI[Optional AI interpretation]
+  end
 
-W --> CG[Claim Graph]
-
-CG --> UI[Application Layer]
-CG --> EXP[Export Layer]
-CG --> AI[Optional AI Interpretation]
+  R1 --> N
+  R2 --> N
+  R3 --> N
+  R4 --> N
+  N --> CE
+  W --> CG
+  CG --> UI
+  CG --> EXP
+  CG --> AI
 ```
 
 ---
@@ -229,13 +251,12 @@ Weighting is computed rather than assumed. It exists to make the structure more 
 All claims, clusters, and their relations form the central representation of the system.
 
 ```mermaid
-graph LR
-
-R[Record] --> C[Claim]
-C --> CL[Cluster]
-
-CL -->|supports| CL2[Cluster]
-CL -->|contradicts| CL3[Cluster]
+%%{init: {"themeVariables": {"fontSize": "14px"}, "flowchart": {"htmlLabels": false, "nodeSpacing": 16, "rankSpacing": 24, "padding": 14}}}%%
+flowchart LR
+  %% Minimal view (avoid clipped subgraph labels at small size)
+  R[Record] --> C[Claim] --> CL[Cluster]
+  CL -->|supports| CL2[Cluster]
+  CL -->|contradicts| CL3[Cluster]
 ```
 
 This graph is the important shift.
@@ -415,10 +436,6 @@ Atlas is relevant if you are already dealing with questions like these in practi
 - Is interpretation still mostly implicit?
 - Do we need outputs that are traceable, not just readable?
 - Would a white-label evidence layer make more sense than building this internally?
-
-You can explore the broader product surface here:
-
-https://atlasio.dev
 
 If you want to test Atlas on a concrete use case, discuss integration, explore a white-label version, or even consider a domain-specific pivot, feel free to reach out.
 
