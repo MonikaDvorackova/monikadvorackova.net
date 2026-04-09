@@ -337,7 +337,7 @@ export default function HomePage() {
               aria-label="Swipe left on the hero to open blog posts"
             >
               <div className="flex flex-col items-center space-y-6 z-10">
-                <div className="relative w-40 h-40 mt-12 mb-1">
+                <div className="relative w-44 h-44 sm:w-40 sm:h-40 mt-6 sm:mt-12 mb-1">
                   {/* Hair strand — thin wisp (754×104), translate-based positioning */}
                   <Image
                     src="/hair-strand.png"
@@ -345,7 +345,7 @@ export default function HomePage() {
                     width={754}
                     height={104}
                     draggable={false}
-                    className="absolute right-0 bottom-0 pointer-events-none select-none z-[5] h-auto w-[80px] sm:w-[100px] md:w-[125px] rotate-[-3deg] translate-x-[-3%] translate-y-[45%]"
+                    className="absolute right-0 bottom-0 pointer-events-none select-none z-[5] h-auto w-[110px] sm:w-[100px] md:w-[125px] rotate-[-3deg] translate-x-[12%] translate-y-[35%] sm:translate-x-[-3%] sm:translate-y-[45%]"
                   />
 
                   {/* Portrait */}
