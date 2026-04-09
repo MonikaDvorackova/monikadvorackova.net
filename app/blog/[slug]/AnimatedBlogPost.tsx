@@ -201,7 +201,7 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
                   <Link
                     href={`/tags/${encodeURIComponent(tag)}`}
                     aria-label={`View all posts with tag: ${tagLabel}`}
-                    className="inline-block rounded-none bg-[#004cff] px-1.5 py-0.5 text-[9px] font-medium leading-tight text-white"
+                    className="inline-block rounded-none bg-[#004cff] px-1.5 py-0.5 text-[10px] font-medium leading-tight text-white"
                   >
                     {tagLabel}
                   </Link>
