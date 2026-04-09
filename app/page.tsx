@@ -345,7 +345,7 @@ export default function HomePage() {
                     width={754}
                     height={104}
                     draggable={false}
-                    className="absolute right-0 bottom-0 pointer-events-none select-none z-[5] h-auto w-[200px] sm:w-[150px] md:w-[125px] rotate-[-3deg] translate-x-[-3%] translate-y-[45%]"
+                    className="absolute right-0 bottom-0 pointer-events-none select-none z-[5] h-auto w-[80px] sm:w-[100px] md:w-[125px] rotate-[-3deg] translate-x-[-3%] translate-y-[45%]"
                   />
 
                   {/* Portrait */}
