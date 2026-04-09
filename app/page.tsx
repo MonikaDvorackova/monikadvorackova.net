@@ -21,7 +21,6 @@ import {
   FiBookOpen,
 } from "react-icons/fi";
 import ArxivIcon from "../components/ArxivIcon";
-import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 
 const aiWords = ["AI", "LLM Engineering", "AI Strategy", "AI Infrastructure"];
@@ -45,23 +44,21 @@ function CrossfadeWord({ word }: { word: string }) {
 }
 
 const SERVICES = [
-  { icon: FiCpu, title: "LLM Consulting", desc: "From strategy to delivery: selection, context design, evaluation and productionization." },
-  { icon: FiSearch, title: "RAG Audits", desc: "RAG quality audits and fixes: retrieval quality, chunking, prompts, memory and telemetry." },
-  { icon: FiServer, title: "MLOps", desc: "Pipelines, model registries, CI/CD, data & feature stores, and secure deployments." },
-  { icon: FiShield, title: "AI Compliance (EU)", desc: "Risk classification, policies, DPIA, model documentation, and readiness for the EU AI Act." },
-  { icon: FiBarChart2, title: "Evaluation & Guardrails", desc: "Offline & online evals, red-teaming, safety filters, and runtime guardrails." },
-  { icon: FiBookOpen, title: "Teaching & Advisory", desc: "Workshops and mentoring on LLMs, RAG, MLOps, and responsible AI." },
+  { icon: FiCpu, title: "LLM Consulting & Strategy", desc: "From AI roadmap to production: model selection, context design, evaluation, and deployment that scales." },
+  { icon: FiSearch, title: "RAG Audits", desc: "Is your RAG actually working? Retrieval quality, chunking, prompts, memory and telemetry — audited and fixed." },
+  { icon: FiServer, title: "ML Engineering & MLOps", desc: "From classical ML to deep learning: model development, training pipelines, registries, CI/CD, and production deployment." },
+  { icon: FiShield, title: "AI Governance & Compliance", desc: "Risk classification, policies, DPIA, model documentation, and readiness for the EU AI Act and beyond." },
+  { icon: FiBarChart2, title: "Evaluation & Guardrails", desc: "Offline & online evals, red-teaming, safety filters, and runtime guardrails to keep AI in check." },
+  { icon: FiBookOpen, title: "Teaching & Advisory", desc: "Workshops, mentoring, and hands-on training in LLMs, RAG, MLOps, and responsible AI." },
 ] as const;
 
-function FixedFooterPortal() {
-  if (typeof window === "undefined") return null;
-  return createPortal(
-    <footer className="text-[10px] text-neutral-500 text-center py-4 fixed bottom-0 left-0 w-full bg-transparent z-[10000] pointer-events-none">
-      <span className="pointer-events-auto">© 2026 Monika Dvorackova</span>
-    </footer>,
-    document.body
-  );
-}
+const STACK_GROUPS = [
+  { label: "AI / ML", items: ["PyTorch", "TensorFlow", "Hugging Face", "OpenAI", "Anthropic", "LangChain", "LlamaIndex", "AI Agents", "Function Calling", "Pydantic", "Structured Output", "RAG", "Fine-tuning", "LoRA", "Prompt Engineering", "Embeddings", "Jupyter", "MLflow", "W&B", "Transformers", "CNNs", "RNNs", "GANs", "SVMs", "GBMs", "Deep Learning", "NLP", "Reinforcement Learning"] },
+  { label: "Languages", items: ["Python", "Rust", "TypeScript", "SQL", "Bash"] },
+  { label: "Data", items: ["PostgreSQL", "MongoDB", "Neo4j", "Redis", "Kafka", "Celery", "Pinecone", "Qdrant", "S3", "GCS"] },
+  { label: "Infra", items: ["Docker", "Kubernetes", "AWS", "GCP", "Azure", "Sentry", "GitHub Actions", "GitLab CI", "pytest", "Linux", "Git"] },
+  { label: "Web", items: ["FastAPI", "Streamlit", "Next.js", "React", "Node.js", "Supabase", "Tailwind CSS", "Vercel"] },
+] as const;
 
 function ServicesOverlay({ show }: { show: boolean }) {
   useEffect(() => {
@@ -100,13 +97,16 @@ function ServicesOverlay({ show }: { show: boolean }) {
         >
           {/* MOBILE ≤480px */}
           <div
-            className="hidden max-[480px]:flex flex-col items-center w-full h-full"
+            className="hidden max-[480px]:flex flex-col items-center w-full h-full overflow-y-auto"
             style={{
               paddingTop: "env(safe-area-inset-top)",
               paddingBottom: "env(safe-area-inset-bottom)",
-              gap: "12px",
+              gap: "10px",
             }}
           >
+            <div className="w-full pt-4 pb-1 text-center text-[10px] font-semibold tracking-[0.18em] uppercase text-black/35">
+              Services
+            </div>
             {SERVICES.map(({ icon: Icon, title, desc }) => (
               <motion.div
                 key={`m-${title}`}
@@ -116,10 +116,8 @@ function ServicesOverlay({ show }: { show: boolean }) {
                   width: "92vw",
                   maxWidth: 560,
                   margin: "0 auto",
-                  height:
-                    "calc((100svh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 60px) / 6)",
-                  minHeight: 92,
-                  maxHeight: 126,
+                  minHeight: 80,
+                  maxHeight: 110,
                   border: "1px solid rgba(0, 42, 255, 0.1)",
                   boxShadow:
                     "inset 0 0 0 1px rgba(8, 28, 244, 0.05), 0 10px 26px rgba(0,0,0,0.06)",
@@ -140,11 +138,24 @@ function ServicesOverlay({ show }: { show: boolean }) {
                 </div>
               </motion.div>
             ))}
-            
+            <div className="w-full px-4 pt-3 pb-1">
+              <div className="text-center text-[9px] font-semibold tracking-[0.18em] uppercase text-black/25 mb-3">Stack</div>
+              <div className="flex flex-col gap-2.5 px-4 items-center">
+                {STACK_GROUPS.map(({ label, items }) => (
+                  <div key={label} className="flex flex-col items-center">
+                    <span className="text-[7px] font-semibold tracking-[0.16em] uppercase text-black/20 mb-1">{label}</span>
+                    <span className="text-[8px] text-black/35 text-center leading-relaxed">{items.join(" · ")}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
 
           {/* TABLET/DESKTOP */}
-          <div className="block max-[480px]:hidden w-full h-full flex items-center justify-center px-4 sm:px-6 md:px-10">
+          <div className="max-[480px]:hidden w-full h-full flex flex-col items-center justify-center px-4 sm:px-6 md:px-10 overflow-y-auto">
+            <div className="pb-6 text-center text-[10px] font-semibold tracking-[0.18em] uppercase text-black/35">
+              Services
+            </div>
             <motion.div
               variants={gridVariants}
               initial="hidden"
@@ -182,6 +193,22 @@ function ServicesOverlay({ show }: { show: boolean }) {
                   </div>
                 </motion.div>
               ))}
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 1.2 }}
+              className="mt-10"
+            >
+              <div className="text-center text-[10px] font-semibold tracking-[0.18em] uppercase text-black/25 mb-5">Stack</div>
+              <div className="flex flex-wrap justify-center gap-x-10 gap-y-4 max-w-[760px] mx-auto">
+                {STACK_GROUPS.map(({ label, items }) => (
+                  <div key={label} className="flex flex-col items-center">
+                    <span className="text-[8px] font-semibold tracking-[0.16em] uppercase text-black/20 mb-1.5">{label}</span>
+                    <span className="text-[10px] text-black/40 text-center leading-relaxed">{items.join("  ·  ")}</span>
+                  </div>
+                ))}
+              </div>
             </motion.div>
           </div>
         </motion.section>
@@ -318,30 +345,30 @@ export default function HomePage() {
               aria-label="Swipe left on the hero to open blog posts"
             >
               <div className="flex flex-col items-center space-y-6 z-10">
-                <div className="relative w-48 h-48 mt-12 -mb-4">
+                <div className="relative w-40 h-40 mt-12 mb-1">
                   {/* Hair strand overlay */}
                   <Image
-  src="/hair-strand.png"
-  alt=""
-  width={160}
-  height={220}
-  draggable={false}
-  className="absolute bottom-[-6px] right-[1px] w-[120px] md:w-[180px] h-auto pointer-events-none select-none z-[3]"
-  style={{ transform: "rotate(-5deg)" }}
-/>
+                    src="/hair-strand.png"
+                    alt=""
+                    width={140}
+                    height={190}
+                    draggable={false}
+                    className="absolute bottom-[-8px] right-[-4px] w-[100px] md:w-[150px] h-auto pointer-events-none select-none z-[5]"
+                    style={{ transform: "rotate(-5deg)" }}
+                  />
 
                   {/* Portrait */}
                   <div
                     className="w-full h-full relative z-[4]"
-                    style={{ clipPath: "circle(50% at 50% 50%)", overflow: "visible" }}
+                    style={{ clipPath: "circle(50% at 50% 50%)" }}
                   >
                     <Image
                       src="/portrait.jpg"
                       alt="Portrait"
-                      width={150}
-                      height={150}
-                      className="rounded-full object-cover scale-[1.18]"
-                      style={{ objectPosition: "top center" }}
+                      width={160}
+                      height={160}
+                      className="w-full h-full object-cover"
+                      style={{ objectPosition: "center 0%", transform: "scale(1.21)" }}
                     />
                   </div>
                 </div>
@@ -349,7 +376,7 @@ export default function HomePage() {
                 <motion.h1
                   whileHover={{ scale: 1.02 }}
                   style={{ fontSize: "1.10rem", lineHeight: "1.1" }}
-                  className="font-medium hover:scale-110 transition-transform duration-300 tracking-tight"
+                  className="font-medium hover:scale-110 transition-transform duration-300 tracking-tight relative z-10 mt-3"
                 >
                   Ing. et Ing. Mgr. Monika Dvorackova
                 </motion.h1>
@@ -381,17 +408,14 @@ export default function HomePage() {
                   </p>
                 </div>
 
-                <div className="flex items-center justify-center gap-4 mt-6">
+                <div className="flex items-center justify-center gap-1 mt-4">
                   <a
                     href="https://www.linkedin.com/in/monika-dvorackova/?locale=en_US"
                     target="_blank"
                     rel="noopener noreferrer"
                     title="LinkedIn"
                   >
-                    <FaLinkedin
-                      size={20}
-                      className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle"
-                    />
+                    <FaLinkedin size={20} className="text-black hover:scale-110 transition-transform duration-300" />
                   </a>
                   <a
                     href="https://github.com/monikadvorackova"
@@ -399,10 +423,7 @@ export default function HomePage() {
                     rel="noopener noreferrer"
                     title="GitHub"
                   >
-                    <FaGithub
-                      size={20}
-                      className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle"
-                    />
+                    <FaGithub size={20} className="text-black hover:scale-110 transition-transform duration-300" />
                   </a>
                   <a
                     href="https://arxiv.org/search/?searchtype=author&query=Dvorackova%2C+M"
@@ -410,24 +431,18 @@ export default function HomePage() {
                     rel="noopener noreferrer"
                     title="arXiv"
                   >
-                    <ArxivIcon
-                      size={20}
-                      className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle"
-                    />
+                    <ArxivIcon size={20} className="text-black hover:scale-110 transition-transform duration-300" />
                   </a>
                   <a href="mailto:monika.dvorack@gmail.com" title="Send Email">
-                    <FaEnvelope
-                      size={20}
-                      className="text-blue-600 hover:scale-110 transition-transform duration-300 align-middle"
-                    />
+                    <FaEnvelope size={20} className="text-black hover:scale-110 transition-transform duration-300" />
                   </a>
                 </div>
 
-                <div className="mt-8 flex flex-col items-center">
-                  <div className="text-base md:text-lg font-normal mb-2 hover:scale-110 transition-transform duration-300 translate-y-[6px]">
+                <div className="mt-2 flex flex-col items-center">
+                  <div className="text-sm md:text-base font-normal mb-2 hover:scale-110 transition-transform duration-300 translate-y-[6px]">
                     Consultation / Articles & SaaS
                   </div>
-                  <div className="pt-[0.3rem] flex gap-4">
+                  <div className="pt-[0.3rem] flex gap-1">
                     <a
                       href="https://calendly.com/monika-dvorack/15min"
                       target="_blank"
@@ -437,7 +452,7 @@ export default function HomePage() {
                     >
                       <FaCalendarAlt
                         size={18}
-                        className="text-blue-600 transition-all duration-300 group-hover:scale-110 group-hover:translate-y-1 translate-y-[8px]"
+                        className="text-black transition-all duration-300 group-hover:scale-110 group-hover:translate-y-1 translate-y-[8px]"
                       />
                     </a>
                     <Link
@@ -447,7 +462,7 @@ export default function HomePage() {
                     >
                       <FaFileAlt
                         size={18}
-                        className="text-blue-600 transition-all duration-300 group-hover:scale-110 group-hover:translate-y-1 translate-y-[8px]"
+                        className="text-black transition-all duration-300 group-hover:scale-110 group-hover:translate-y-1 translate-y-[8px]"
                       />
                     </Link>
                   </div>
@@ -456,14 +471,24 @@ export default function HomePage() {
             </motion.div>
           </motion.main>
 
-          <footer className="text-[10px] text-neutral-500 text-center py-4 mt-auto">
-            © 2026 Monika Dvorackova
-          </footer>
+          <div className="flex flex-col items-center mt-auto">
+            <motion.div
+              animate={{ y: [0, 5, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              className="text-black/20 mb-4"
+            >
+              <svg width="16" height="10" viewBox="0 0 16 10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M1 1l7 7 7-7" />
+              </svg>
+            </motion.div>
+            <footer className="text-[10px] text-neutral-500 text-center py-3">
+              © 2026 Monika Dvořáčková
+            </footer>
+          </div>
         </>
       )}
 
       <ServicesOverlay show={showGrid} />
-      {showGrid && <FixedFooterPortal />}
     </div>
   );
 }
