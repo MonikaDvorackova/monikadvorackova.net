@@ -115,18 +115,16 @@ function ServicesOverlay({ show }: { show: boolean }) {
                 <motion.div
                   key={`m-${title}`}
                   variants={itemVariants}
-                  className="flex items-center gap-3 rounded-xl bg-white"
+                  className="flex flex-col items-center justify-center text-center rounded-xl bg-white"
                   style={{
                     border: "1px solid rgba(0, 0, 0, 0.05)",
                     boxShadow: "0 1px 4px rgba(0,0,0,0.03)",
                     padding: "14px 16px",
                   }}
                 >
-                  <Icon size={16} color="#004CFF" className="shrink-0" />
-                  <div className="min-w-0 flex-1">
-                    <h3 className="font-semibold text-black text-[11.5px] leading-tight">{title}</h3>
-                    <p className="text-[9.5px] leading-snug text-neutral-500 mt-0.5">{mobileDesc}</p>
-                  </div>
+                  <Icon size={16} color="#004CFF" className="mb-1" />
+                  <h3 className="font-semibold text-black text-[11.5px] leading-tight">{title}</h3>
+                  <p className="text-[9.5px] leading-snug text-neutral-500 mt-0.5">{mobileDesc}</p>
                 </motion.div>
               ))}
             </motion.div>
