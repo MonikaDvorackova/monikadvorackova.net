@@ -44,12 +44,12 @@ function CrossfadeWord({ word }: { word: string }) {
 }
 
 const SERVICES = [
-  { icon: FiCpu, title: "LLM Consulting & Strategy", desc: "From AI roadmap to production: model selection, context design, evaluation, and deployment that scales." },
-  { icon: FiSearch, title: "RAG Audits", desc: "Is your RAG actually working? Retrieval quality, chunking, prompts, memory and telemetry — audited and fixed." },
-  { icon: FiServer, title: "ML Engineering & MLOps", desc: "From classical ML to deep learning: model development, training pipelines, registries, CI/CD, and production deployment." },
-  { icon: FiShield, title: "AI Governance & Compliance", desc: "Risk classification, policies, DPIA, model documentation, and readiness for the EU AI Act and beyond." },
-  { icon: FiBarChart2, title: "Evaluation & Guardrails", desc: "Offline & online evals, red-teaming, safety filters, and runtime guardrails to keep AI in check." },
-  { icon: FiBookOpen, title: "Teaching & Advisory", desc: "Workshops, mentoring, and hands-on training in LLMs, RAG, MLOps, and responsible AI." },
+  { icon: FiCpu, title: "LLM Consulting & Strategy", desc: "From AI roadmap to production: model selection, context design, evaluation, and deployment that scales.", mobileDesc: "LLM strategy, context design, evals, and delivery." },
+  { icon: FiSearch, title: "RAG Audits", desc: "Is your RAG actually working? Retrieval quality, chunking, prompts, memory and telemetry — audited and fixed.", mobileDesc: "RAG retrieval, chunking, prompts, and telemetry." },
+  { icon: FiServer, title: "ML Engineering & MLOps", desc: "From classical ML to deep learning: model development, training pipelines, registries, CI/CD, and production deployment.", mobileDesc: "Training pipelines, registries, CI/CD, and deployment." },
+  { icon: FiShield, title: "AI Governance & Compliance", desc: "Risk classification, policies, DPIA, model documentation, and readiness for the EU AI Act and beyond.", mobileDesc: "AI Act readiness, policies, risk, and documentation." },
+  { icon: FiBarChart2, title: "Evaluation & Guardrails", desc: "Offline & online evals, red-teaming, safety filters, and runtime guardrails to keep AI in check.", mobileDesc: "Evals, red teaming, safety filters, and runtime guardrails." },
+  { icon: FiBookOpen, title: "Teaching & Advisory", desc: "Workshops, mentoring, and hands-on training in LLMs, RAG, MLOps, and responsible AI.", mobileDesc: "Workshops, mentoring, and technical AI training." },
 ] as const;
 
 const STACK_GROUPS = [
@@ -95,56 +95,48 @@ function ServicesOverlay({ show }: { show: boolean }) {
           aria-modal="true"
           aria-label="Services"
         >
-          {/* MOBILE ≤480px */}
+          {/* MOBILE ≤480px — compact 1-column horizontal cards */}
           <div
-            className="hidden max-[480px]:flex flex-col items-center w-full h-full overflow-y-auto"
+            className="hidden max-[480px]:flex flex-col w-full h-full overflow-y-auto"
             style={{
-              paddingTop: "env(safe-area-inset-top)",
-              paddingBottom: "env(safe-area-inset-bottom)",
-              gap: "10px",
+              padding: "16px 16px calc(env(safe-area-inset-bottom) + 12px)",
             }}
           >
-            <div className="w-full pt-4 pb-1 text-center text-[10px] font-semibold tracking-[0.18em] uppercase text-black/35">
+            <div className="w-full pb-2 text-center text-[9px] font-semibold tracking-[0.18em] uppercase text-black/30">
               Services
             </div>
-            {SERVICES.map(({ icon: Icon, title, desc }) => (
-              <motion.div
-                key={`m-${title}`}
-                variants={itemVariants}
-                className="group flex flex-col items-center justify-center text-center rounded-[20px] border bg-white shadow-[0_10px_26px_rgba(0,0,0,0.06)]"
-                style={{
-                  width: "92vw",
-                  maxWidth: 560,
-                  margin: "0 auto",
-                  minHeight: 80,
-                  maxHeight: 110,
-                  border: "1px solid rgba(0, 42, 255, 0.1)",
-                  boxShadow:
-                    "inset 0 0 0 1px rgba(8, 28, 244, 0.05), 0 10px 26px rgba(0,0,0,0.06)",
-                  padding: 12,
-                  boxSizing: "border-box",
-                }}
-              >
-                <div className="flex flex-col items-center justify-center gap-1.5 w-full max-w-[92%] mx-auto pt-1">
-                  <div className="h-[22px] w-full flex items-end justify-center">
-                    <Icon size={16} color="#004CFF" />
+            <motion.div
+              variants={gridVariants}
+              initial="hidden"
+              animate="show"
+              className="flex flex-col gap-[5px] w-full"
+            >
+              {SERVICES.map(({ icon: Icon, title, mobileDesc }) => (
+                <motion.div
+                  key={`m-${title}`}
+                  variants={itemVariants}
+                  className="flex items-start gap-3 rounded-lg bg-white"
+                  style={{
+                    border: "1px solid rgba(0, 0, 0, 0.05)",
+                    boxShadow: "0 1px 4px rgba(0,0,0,0.03)",
+                    padding: "10px 12px",
+                  }}
+                >
+                  <Icon size={14} color="#004CFF" className="mt-[2px] shrink-0" />
+                  <div className="min-w-0">
+                    <h3 className="font-semibold text-black text-[11px] leading-tight">{title}</h3>
+                    <p className="text-[9.5px] leading-snug text-neutral-500 mt-0.5">{mobileDesc}</p>
                   </div>
-                  <h3 className="font-semibold text-black text-[12px] leading-tight">
-                    {title}
-                  </h3>
-                  <p className="text-[11px] leading-snug text-[#004CFF]">
-                    {desc}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-            <div className="w-full px-4 pt-3 pb-1">
-              <div className="text-center text-[9px] font-semibold tracking-[0.18em] uppercase text-black/25 mb-3">Stack</div>
-              <div className="flex flex-col gap-2.5 px-4 items-center">
+                </motion.div>
+              ))}
+            </motion.div>
+            <div className="w-full pt-3 pb-1">
+              <div className="text-center text-[8px] font-semibold tracking-[0.18em] uppercase text-black/20 mb-2">Stack</div>
+              <div className="flex flex-col gap-1 px-1 items-center">
                 {STACK_GROUPS.map(({ label, items }) => (
-                  <div key={label} className="flex flex-col items-center">
-                    <span className="text-[7px] font-semibold tracking-[0.16em] uppercase text-black/20 mb-1">{label}</span>
-                    <span className="text-[8px] text-black/35 text-center leading-relaxed">{items.join(" · ")}</span>
+                  <div key={label} className="text-center">
+                    <span className="text-[7px] font-semibold tracking-[0.12em] uppercase text-black/20 mr-0.5">{label}:</span>
+                    <span className="text-[7.5px] text-black/30 leading-tight">{items.join(" · ")}</span>
                   </div>
                 ))}
               </div>
@@ -346,15 +338,14 @@ export default function HomePage() {
             >
               <div className="flex flex-col items-center space-y-6 z-10">
                 <div className="relative w-40 h-40 mt-12 mb-1">
-                  {/* Hair strand overlay */}
+                  {/* Hair strand — thin wisp (754×104), translate-based positioning */}
                   <Image
                     src="/hair-strand.png"
                     alt=""
-                    width={140}
-                    height={190}
+                    width={754}
+                    height={104}
                     draggable={false}
-                    className="absolute bottom-[-8px] right-[-4px] w-[100px] md:w-[150px] h-auto pointer-events-none select-none z-[5]"
-                    style={{ transform: "rotate(-5deg)" }}
+                    className="absolute right-0 bottom-0 pointer-events-none select-none z-[5] h-auto w-[200px] sm:w-[150px] md:w-[125px] rotate-[-3deg] translate-x-[-3%] translate-y-[45%]"
                   />
 
                   {/* Portrait */}
