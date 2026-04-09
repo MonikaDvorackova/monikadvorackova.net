@@ -115,16 +115,16 @@ function ServicesOverlay({ show }: { show: boolean }) {
                 <motion.div
                   key={`m-${title}`}
                   variants={itemVariants}
-                  className="flex items-center gap-3.5 rounded-xl bg-white"
+                  className="flex items-center gap-3 rounded-xl bg-white"
                   style={{
                     border: "1px solid rgba(0, 0, 0, 0.05)",
                     boxShadow: "0 1px 4px rgba(0,0,0,0.03)",
-                    padding: "12px 14px",
+                    padding: "14px 16px",
                   }}
                 >
-                  <Icon size={15} color="#004CFF" className="shrink-0" />
-                  <div className="min-w-0">
-                    <h3 className="font-semibold text-black text-[11px] leading-tight">{title}</h3>
+                  <Icon size={16} color="#004CFF" className="shrink-0" />
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-semibold text-black text-[11.5px] leading-tight">{title}</h3>
                     <p className="text-[9.5px] leading-snug text-neutral-500 mt-0.5">{mobileDesc}</p>
                   </div>
                 </motion.div>
@@ -132,16 +132,13 @@ function ServicesOverlay({ show }: { show: boolean }) {
             </motion.div>
             <div className="w-full pt-5 pb-1">
               <div className="text-center text-[8px] font-semibold tracking-[0.18em] uppercase text-black/25 mb-3">Stack</div>
-              <div className="flex flex-col gap-1.5 items-center text-center">
-                <p className="text-[8.5px] text-black/35 leading-relaxed">
-                  PyTorch · Hugging Face · OpenAI · Anthropic · LangChain · RAG · Fine-tuning
-                </p>
-                <p className="text-[8.5px] text-black/35 leading-relaxed">
-                  Python · Rust · TypeScript · PostgreSQL · Redis · Pinecone · Qdrant
-                </p>
-                <p className="text-[8.5px] text-black/35 leading-relaxed">
-                  Docker · Kubernetes · AWS · GCP · FastAPI · Next.js · Vercel
-                </p>
+              <div className="flex flex-col gap-2 px-2 items-center">
+                {STACK_GROUPS.map(({ label, items }) => (
+                  <div key={label} className="text-center">
+                    <span className="text-[7.5px] font-semibold tracking-[0.12em] uppercase text-black/25 mr-0.5">{label}:</span>
+                    <span className="text-[8px] text-black/35 leading-relaxed">{items.join(" · ")}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -348,7 +345,7 @@ export default function HomePage() {
                     width={754}
                     height={104}
                     draggable={false}
-                    className="absolute right-0 bottom-0 pointer-events-none select-none z-[5] h-auto w-[110px] sm:w-[100px] md:w-[125px] rotate-[-3deg] translate-x-[12%] translate-y-[35%] sm:translate-x-[-3%] sm:translate-y-[45%]"
+                    className="absolute right-0 bottom-0 pointer-events-none select-none z-[5] h-auto w-[140px] sm:w-[100px] md:w-[125px] rotate-[-3deg] translate-x-[28%] translate-y-[55%] sm:translate-x-[-3%] sm:translate-y-[45%]"
                   />
 
                   {/* Portrait */}
