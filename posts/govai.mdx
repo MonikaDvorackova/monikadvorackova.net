@@ -88,30 +88,30 @@ If validation fails, nothing is recorded. If validation succeeds, the event is a
 ```mermaid
 flowchart LR
 
-  subgraph Input["Input Layer"]
+  subgraph Input["Input layer"]
     A1["ML Pipelines"]
     A2["Internal Services"]
     A3["Dashboards"]
   end
 
-  subgraph Python["Python Integration Layer"]
+  subgraph Python["Python integration layer"]
     B1["Adapters"]
     B2["Orchestration"]
   end
 
-  subgraph Rust["Rust Governance Core (open source core)"]
+  subgraph Rust["Rust governance core (open source)"]
     C1["Commands"]
     C2["Validation"]
     C3["Policy Enforcement"]
     C4["Event Emission"]
   end
 
-  subgraph DB["Persistence Layer"]
+  subgraph DB["Persistence layer"]
     D1["Append-Only Event Store"]
     D2["Derived Projections"]
   end
 
-  subgraph Output["Operational Outputs"]
+  subgraph Output["Operational outputs"]
     E1["System State"]
     E2["Audit Views"]
   end
@@ -131,9 +131,6 @@ flowchart LR
   D2 --> E2
 
   OS["Open source core"] --> C1
-
-  style Rust stroke:#2563eb,stroke-width:2px,fill:#ffffff
-  style OS stroke:#2563eb,stroke-width:2px,fill:#ffffff,color:#2563eb
 ```
 
 **`open source core → Rust governance core`**
@@ -210,6 +207,4 @@ If this problem feels familiar, go read the repository and try it on a real slic
 
 ## Resources
 
-[GitHub — aigov-compliance-engine](https://github.com/MonikaDvorackova/aigov-compliance-engine)
-
-[GovBase — dashboard](https://govbase.dev)
+Resources are linked below.

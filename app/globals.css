@@ -1,6 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../tailwind.config.js";
 
 /* globals.css */
 
@@ -125,20 +124,31 @@ a {
 
 /* Blog markdown body (Tailwind Typography + react-markdown) */
 .prose {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
 .prose p {
-  font-size: 0.95rem;
-  line-height: 1.35;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  margin-bottom: 0.7em;
 }
 
 .prose h1 {
-  font-size: 1.8rem;
+  font-size: 1.35rem;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
 }
 
 .prose h2 {
-  font-size: 1.4rem;
+  font-size: 1.12rem;
+  margin-top: 1em;
+  margin-bottom: 0.45em;
+}
+
+.prose h1,
+.prose h2,
+.prose h3 {
+  font-weight: 300 !important;
 }
 
 .prose pre {
@@ -155,8 +165,8 @@ a {
   background: transparent !important;
   padding: 0 !important;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.95rem;
-  line-height: 1.7;
+  font-size: 1em;
+  line-height: 1.65;
   color: #2563eb !important;
   display: block;
   white-space: pre;
@@ -169,6 +179,7 @@ a {
   background: transparent !important;
   color: #2563eb !important;
   padding: 0 !important;
+  font-size: 0.95em;
   border: none !important;
   border-radius: 0 !important;
   box-shadow: none !important;
@@ -210,7 +221,9 @@ a {
   width: min(880px, 92vw);
   margin-left: auto;
   margin-right: auto;
-  transform: none;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
   margin-top: 2rem;
   margin-bottom: 2.75rem;
 }
@@ -220,22 +233,26 @@ a {
   border: none;
   background: transparent;
   box-shadow: none;
-  overflow-x: auto;
+  overflow: visible;
 }
 
 .mermaid-rendered {
   width: 100%;
   display: flex;
   justify-content: center;
+  overflow: visible;
 }
 
 .mermaid-rendered svg {
-  width: 100%;
+  display: block;
+  width: auto;
   height: auto;
   max-width: 100%;
   min-width: 0 !important;
-  transform: scale(0.92);
-  transform-origin: top center;
+  margin-left: auto;
+  margin-right: auto;
+  transform: scale(1);
+  transform-origin: center;
 }
 
 /* Nodes */
@@ -253,8 +270,6 @@ a {
 .mermaid-rendered .nodeLabel,
 .mermaid-rendered .label text {
   fill: #111827 !important;
-  font-size: 15px !important;
-  font-weight: 500 !important;
 }
 
 /* Clusters */
@@ -268,7 +283,6 @@ a {
 
 .mermaid-rendered .cluster-label text {
   fill: #6b7280 !important;
-  font-size: 13px !important;
   font-weight: 650 !important;
 }
 

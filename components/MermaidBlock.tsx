@@ -36,7 +36,7 @@ function initMermaid() {
       clusterBkg: "#f8fafc",
       clusterBorder: "#e5e7eb",
       edgeLabelBackground: "#ffffff",
-      fontSize: "15px",
+      fontSize: "16px",
     },
   });
 
