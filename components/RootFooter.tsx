@@ -33,7 +33,7 @@ export default function RootFooter() {
         pointerEvents: "none",
       }}
     >
-      © 2026 Monika Dvořáčková
+      © 2026 Monika Dvorackova
     </footer>
   );
 }

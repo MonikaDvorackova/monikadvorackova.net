@@ -23,33 +23,106 @@ import {
 import ArxivIcon from "../components/ArxivIcon";
 import { useRouter } from "next/navigation";
 
-const aiWords = ["AI", "LLM Engineering", "AI Strategy", "AI Infrastructure"];
-const mlWords = ["Machine Learning", "Deep Learning", "Model Deployment"];
-const lawWords = ["ML & AI teaching", "Legal AI", "Tech Ethics", "Compliance"];
+type HeroState = { line1: string; line2: string; line3: string };
 
+/**
+ * Full hero lines (V1–V6). v1 / v3 L3 shortened so len(line1) > len(line2) > len(line3).
+ */
+const HERO_L1 = {
+  v1: "I build ML systems that are designed to work in real production environments.",
+  v2: "I design ML systems as the core of AI systems, not as isolated models.",
+  v3: "I design ML systems to operate under real world constraints.",
+  v4: "I build production grade ML systems that extend into AI where it makes sense.",
+  v5: "I design ML systems with a focus on real world behavior, not just model performance.",
+  v6: "I build ML systems and teach them through real production scenarios.",
+} as const;
 
-function CrossfadeWord({ word }: { word: string }) {
-  return (
-    <motion.span
-      key={word}
-      initial={{ opacity: 0, y: 6 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -6 }}
-      transition={{ duration: 0.5 }}
-      className="inline-block"
-    >
-      {word}
-    </motion.span>
-  );
-}
+const HERO_L2 = {
+  v1: "LLMs are used where they are justified.",
+  v2: "Evaluation focuses on behavior, not just metrics.",
+  v3: "LLMs are used where they create measurable value.",
+  v4: "Evaluation is part of the system.",
+  v5: "LLMs are integrated carefully.",
+  v6: "AI is applied where behavior can be evaluated.",
+} as const;
+
+const HERO_L3 = {
+  v1: "Legal and governance constraints.",
+  v2: "Traceable decisions and outputs.",
+  v3: "Governance and law, built in.",
+  v4: "Not an afterthought.",
+  v5: "Only where needed.",
+  v6: "Not just explained.",
+} as const;
+
+/** Deterministic cycle 0→…→17→0. */
+const HERO_STATES: readonly HeroState[] = [
+  { line1: HERO_L1.v1, line2: HERO_L2.v1, line3: HERO_L3.v1 },
+  { line1: HERO_L1.v1, line2: HERO_L2.v1, line3: HERO_L3.v2 },
+  { line1: HERO_L1.v1, line2: HERO_L2.v2, line3: HERO_L3.v2 },
+  { line1: HERO_L1.v2, line2: HERO_L2.v2, line3: HERO_L3.v2 },
+  { line1: HERO_L1.v2, line2: HERO_L2.v2, line3: HERO_L3.v3 },
+  { line1: HERO_L1.v2, line2: HERO_L2.v3, line3: HERO_L3.v3 },
+  { line1: HERO_L1.v3, line2: HERO_L2.v3, line3: HERO_L3.v3 },
+  { line1: HERO_L1.v3, line2: HERO_L2.v3, line3: HERO_L3.v4 },
+  { line1: HERO_L1.v3, line2: HERO_L2.v4, line3: HERO_L3.v4 },
+  { line1: HERO_L1.v4, line2: HERO_L2.v4, line3: HERO_L3.v4 },
+  { line1: HERO_L1.v4, line2: HERO_L2.v4, line3: HERO_L3.v5 },
+  { line1: HERO_L1.v4, line2: HERO_L2.v5, line3: HERO_L3.v5 },
+  { line1: HERO_L1.v5, line2: HERO_L2.v5, line3: HERO_L3.v5 },
+  { line1: HERO_L1.v6, line2: HERO_L2.v6, line3: HERO_L3.v5 },
+  { line1: HERO_L1.v6, line2: HERO_L2.v6, line3: HERO_L3.v6 },
+  { line1: HERO_L1.v6, line2: HERO_L2.v6, line3: HERO_L3.v4 },
+  { line1: HERO_L1.v6, line2: HERO_L2.v6, line3: HERO_L3.v1 },
+  { line1: HERO_L1.v6, line2: HERO_L2.v1, line3: HERO_L3.v1 },
+];
+
+const HERO_STATE_INTERVAL_MS = 5000;
+
+const HERO_LINE_MOTION = {
+  initial: { opacity: 0, y: 6 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -6 },
+  transition: { duration: 0.5 },
+} as const;
 
 const SERVICES = [
-  { icon: FiCpu, title: "LLM Consulting & Strategy", desc: "From AI roadmap to production: model selection, context design, evaluation, and deployment that scales.", mobileDesc: "LLM strategy, context design, evals, and delivery." },
-  { icon: FiSearch, title: "RAG Audits", desc: "Is your RAG actually working? Retrieval quality, chunking, prompts, memory and telemetry — audited and fixed.", mobileDesc: "RAG retrieval, chunking, prompts, and telemetry." },
-  { icon: FiServer, title: "ML Engineering & MLOps", desc: "From classical ML to deep learning: model development, training pipelines, registries, CI/CD, and production deployment.", mobileDesc: "Training pipelines, registries, CI/CD, and deployment." },
-  { icon: FiShield, title: "AI Governance & Compliance", desc: "Risk classification, policies, DPIA, model documentation, and readiness for the EU AI Act and beyond.", mobileDesc: "AI Act readiness, policies, risk, and documentation." },
-  { icon: FiBarChart2, title: "Evaluation & Guardrails", desc: "Offline & online evals, red-teaming, safety filters, and runtime guardrails to keep AI in check.", mobileDesc: "Evals, red teaming, safety filters, and runtime guardrails." },
-  { icon: FiBookOpen, title: "Teaching & Advisory", desc: "Workshops, mentoring, and hands-on training in LLMs, RAG, MLOps, and responsible AI.", mobileDesc: "Workshops, mentoring, and technical AI training." },
+  {
+    icon: FiCpu,
+    title: "LLM Consulting & Strategy",
+    desc: "Roadmap through production: model choice, context, evaluation, and shipping systems that scale.",
+    mobileDesc: "Strategy, context, evals, delivery.",
+  },
+  {
+    icon: FiSearch,
+    title: "RAG Audits",
+    desc: "Retrieval, chunking, prompts, and telemetry — reviewed end-to-end and tightened where it matters.",
+    mobileDesc: "RAG retrieval, chunking, prompts, telemetry.",
+  },
+  {
+    icon: FiServer,
+    title: "ML Engineering & MLOps",
+    desc: "Training pipelines, registries, CI/CD, and running ML reliably from notebook to production.",
+    mobileDesc: "Pipelines, registries, CI/CD, deployment.",
+  },
+  {
+    icon: FiShield,
+    title: "AI Governance & Compliance",
+    desc: "Risk tiers, policies, documentation, and practical readiness for the EU AI Act and similar regimes.",
+    mobileDesc: "AI Act readiness, policies, risk, docs.",
+  },
+  {
+    icon: FiBarChart2,
+    title: "Evaluation & Guardrails",
+    desc: "Offline and online evaluation, red-teaming, filters, and runtime guardrails you can rely on.",
+    mobileDesc: "Evals, red-teaming, filters, guardrails.",
+  },
+  {
+    icon: FiBookOpen,
+    title: "Teaching & Advisory",
+    desc: "Workshops and mentoring on LLMs, RAG, MLOps, and responsible delivery — hands-on, not slide-only.",
+    mobileDesc: "Workshops, mentoring, technical training.",
+  },
 ] as const;
 
 const STACK_GROUPS = [
@@ -59,6 +132,146 @@ const STACK_GROUPS = [
   { label: "Infra", items: ["Docker", "Kubernetes", "AWS", "GCP", "Azure", "Sentry", "GitHub Actions", "GitLab CI", "pytest", "Linux", "Git"] },
   { label: "Web", items: ["FastAPI", "Streamlit", "Next.js", "React", "Node.js", "Supabase", "Tailwind CSS", "Vercel"] },
 ] as const;
+
+/** Shared uppercase rail labels (Services uses slightly stronger tone) */
+const overlayLabelServices =
+  "text-center text-xs font-semibold tracking-[0.2em] uppercase text-black/40";
+const overlayLabelRail =
+  "text-center text-xs font-semibold tracking-[0.2em] uppercase text-black/30";
+
+const ENGAGEMENT_PRICING = [
+  {
+    title: "AI/ML System Audit",
+    description: "System weaknesses, evaluation gaps, and ML/LLM risks.",
+    prices: ["€1,800 – €3,500"],
+  },
+  {
+    title: "AI/ML System Build",
+    description: "Production grade ML and AI system design and implementation.",
+    prices: ["€5,000 – €14,000+"],
+  },
+  {
+    title: "Evaluation & Reliability",
+    description: "Evaluation frameworks, behavior testing, and stability.",
+    prices: ["€4,000 – €10,000"],
+  },
+  {
+    title: "Governance & Traceability",
+    description: "Auditable systems aligned with legal and governance constraints.",
+    prices: ["€6,000 – €18,000+"],
+  },
+] as const;
+
+/** Shown as one compact line under pricing cards (not a fifth column). */
+const ENGAGEMENT_CUSTOM_FOOTER = {
+  label: "Custom AI/ML systems",
+  blurb: "End to end systems, internal platforms, and high stakes use cases.",
+  priceProject: "€8,000 – €30,000+",
+  priceRetainer: "€1,500 – €4,000 / month",
+} as const;
+
+function EngagementPricingSection({ variant }: { variant: "mobile" | "desktop" }) {
+  const isMobile = variant === "mobile";
+  return (
+    <section
+      className={
+        isMobile
+          ? "w-full max-w-2xl mx-auto shrink-0 mt-6 pt-4 pb-4 border-t border-b border-black/[0.06] px-2"
+          : "w-full max-w-[min(100%,88rem)] mx-auto shrink-0 mt-6 md:mt-8 pt-4 md:pt-5 pb-4 md:pb-5 border-t border-b border-black/[0.06] px-3 sm:px-4"
+      }
+      aria-labelledby="engagement-pricing-heading"
+    >
+      <div className="text-center max-w-xl mx-auto">
+        <h2
+          id="engagement-pricing-heading"
+          className="text-center text-[9px] md:text-[10px] font-semibold tracking-[0.18em] uppercase text-black/30"
+        >
+          Engagement &amp; Pricing
+        </h2>
+        <p
+          className={
+            isMobile
+              ? "mt-1.5 text-[10px] leading-snug text-zinc-600 line-clamp-2"
+              : "mt-2 text-[10px] md:text-[11px] leading-snug text-zinc-600 line-clamp-2"
+          }
+        >
+          Each engagement is scoped individually based on system complexity, constraints, and risk
+          level.
+        </p>
+      </div>
+
+      <ul
+        className={
+          isMobile
+            ? "mt-4 flex flex-col gap-y-3.5 text-left w-full"
+            : "mt-4 flex flex-col lg:flex-row lg:flex-nowrap lg:justify-center lg:items-stretch gap-y-2 gap-x-2 min-[1000px]:gap-x-3 min-[1200px]:gap-x-4 w-full"
+        }
+      >
+        {ENGAGEMENT_PRICING.map((row) => (
+          <li
+            key={row.title}
+            className={
+              isMobile
+                ? "w-full"
+                : "w-full lg:flex-1 lg:basis-0 lg:min-w-0 lg:max-w-[10.25rem] xl:max-w-[10.75rem] lg:flex lg:flex-col text-left"
+            }
+          >
+            <h3
+              className={
+                isMobile
+                  ? "text-[11px] font-semibold text-black leading-tight"
+                  : "text-[10px] md:text-[11px] font-semibold text-black leading-tight"
+              }
+            >
+              {row.title}
+            </h3>
+            <p
+              className={
+                isMobile
+                  ? "mt-0.5 text-[9px] leading-snug text-zinc-600 line-clamp-2"
+                  : "mt-0.5 text-[9px] md:text-[10px] leading-snug text-zinc-600 line-clamp-2 lg:line-clamp-3"
+              }
+            >
+              {row.description}
+            </p>
+            <div
+              className={
+                isMobile
+                  ? "mt-1.5 text-[10px] font-semibold text-black tabular-nums leading-tight"
+                  : "mt-1.5 lg:mt-auto text-[10px] md:text-xs font-semibold text-black tabular-nums leading-tight"
+              }
+            >
+              {row.prices.map((line) => (
+                <p key={line} className={row.prices.length > 1 ? "mt-0.5 first:mt-0" : ""}>
+                  {line}
+                </p>
+              ))}
+            </div>
+          </li>
+        ))}
+      </ul>
+      <p
+        className={
+          isMobile
+            ? "mt-4 text-center text-[9px] leading-snug text-zinc-600 text-balance max-w-[min(100%,22rem)] mx-auto px-1"
+            : "mt-4 md:mt-5 text-center text-[9px] md:text-[10px] leading-snug text-zinc-600 text-balance max-w-[min(100%,40rem)] mx-auto px-2"
+        }
+      >
+        <span className="font-semibold text-black">{ENGAGEMENT_CUSTOM_FOOTER.label}</span>
+        {" — "}
+        {ENGAGEMENT_CUSTOM_FOOTER.blurb}{" "}
+        <span className="font-semibold text-black tabular-nums whitespace-nowrap">
+          {ENGAGEMENT_CUSTOM_FOOTER.priceProject}
+        </span>
+        {" or "}
+        <span className="font-semibold text-black tabular-nums whitespace-nowrap">
+          {ENGAGEMENT_CUSTOM_FOOTER.priceRetainer}
+        </span>
+        .
+      </p>
+    </section>
+  );
+}
 
 function ServicesOverlay({ show }: { show: boolean }) {
   useEffect(() => {
@@ -97,43 +310,42 @@ function ServicesOverlay({ show }: { show: boolean }) {
         >
           {/* MOBILE ≤480px — fits exactly on phone screen, no scroll */}
           <div
-            className="hidden max-[480px]:flex flex-col w-full h-full overflow-hidden"
+            className="hidden max-[480px]:flex flex-col w-full h-full min-h-0 overflow-y-auto overflow-x-hidden"
             style={{
-              padding: "12px 14px calc(env(safe-area-inset-bottom) + 8px)",
+              padding: "12px 14px calc(env(safe-area-inset-bottom) + 10px)",
             }}
           >
-            <div className="w-full pb-1.5 text-center text-[9px] font-semibold tracking-[0.18em] uppercase text-black/30">
-              Services
-            </div>
+            <div className={`w-full pb-4 ${overlayLabelServices}`}>Services</div>
             <motion.div
               variants={gridVariants}
               initial="hidden"
               animate="show"
-              className="flex flex-col gap-[5px] w-full flex-1"
+              className="flex flex-col gap-3.5 w-full shrink-0"
             >
               {SERVICES.map(({ icon: Icon, title, mobileDesc }) => (
                 <motion.div
                   key={`m-${title}`}
                   variants={itemVariants}
-                  className="flex flex-col items-center justify-center text-center rounded-lg bg-white flex-1"
-                  style={{
-                    border: "1px solid rgba(0, 0, 0, 0.05)",
-                    boxShadow: "0 1px 4px rgba(0,0,0,0.03)",
-                    padding: "6px 12px",
-                  }}
+                  className="flex flex-col items-center justify-center text-center rounded-2xl bg-white shrink-0 border border-black/[0.06] shadow-[0_4px_20px_rgba(0,0,0,0.06)]"
+                  style={{ padding: "12px 14px" }}
                 >
-                  <Icon size={14} color="#004CFF" className="mb-0.5" />
-                  <h3 className="font-semibold text-black text-[10.5px] leading-tight">{title}</h3>
-                  <p className="text-[8.5px] leading-snug text-neutral-500 mt-0.5">{mobileDesc}</p>
+                  <Icon size={18} color="#004CFF" className="mb-1.5" />
+                  <h3 className="font-semibold text-black text-sm leading-snug">{title}</h3>
+                  <p className="text-xs leading-relaxed text-zinc-600 mt-2 line-clamp-3">{mobileDesc}</p>
                 </motion.div>
               ))}
             </motion.div>
-            <div className="w-full pt-2">
-              <div className="text-center text-[7.5px] font-semibold tracking-[0.18em] uppercase text-black/25 mb-1.5">Stack</div>
-              <div className="flex flex-col gap-0.5 px-1 items-center">
+            <EngagementPricingSection variant="mobile" />
+            <div className="w-full mt-6 pt-4 shrink-0">
+              <div className="text-center text-[7.5px] font-semibold tracking-[0.18em] uppercase text-black/25 mb-2">
+                Stack
+              </div>
+              <div className="flex flex-col gap-1.5 px-1 items-center">
                 {STACK_GROUPS.map(({ label, items }) => (
                   <div key={label} className="text-center">
-                    <span className="text-[6.5px] font-semibold tracking-[0.12em] uppercase text-black/25 mr-0.5">{label}:</span>
+                    <span className="text-[6.5px] font-semibold tracking-[0.12em] uppercase text-black/25 mr-0.5">
+                      {label}:
+                    </span>
                     <span className="text-[7px] text-black/35 leading-tight">{items.join(" · ")}</span>
                   </div>
                 ))}
@@ -141,61 +353,62 @@ function ServicesOverlay({ show }: { show: boolean }) {
             </div>
           </div>
 
-          {/* TABLET/DESKTOP */}
-          <div className="max-[480px]:hidden w-full h-full flex flex-col items-center justify-center px-4 sm:px-6 md:px-10 overflow-y-auto">
-            <div className="pb-6 text-center text-[10px] font-semibold tracking-[0.18em] uppercase text-black/35">
+          {/* TABLET/DESKTOP — cohesive services → pricing → stack; scroll if viewport is short */}
+          <div className="max-[480px]:hidden w-full h-full min-h-0 flex flex-col items-center justify-center px-4 sm:px-6 md:px-8 py-3 md:py-5 overflow-hidden overflow-x-hidden">
+            <div className={`w-full max-w-6xl mx-auto shrink-0 pb-3 md:pb-4 ${overlayLabelServices}`}>
               Services
             </div>
             <motion.div
               variants={gridVariants}
               initial="hidden"
               animate="show"
-              className="grid max-[815px]:grid-cols-2 min-[816px]:grid-cols-3 justify-center items-start w-fit mx-auto"
-              style={{ rowGap: "64px", columnGap: "48px" }}
+              className="grid max-[815px]:grid-cols-2 min-[816px]:grid-cols-3 justify-center items-start w-fit max-w-6xl mx-auto shrink-0"
+              style={{ rowGap: "24px", columnGap: "24px" }}
             >
               {SERVICES.map(({ icon: Icon, title, desc }) => (
                 <motion.div
                   key={title}
                   variants={itemVariants}
-                  className="group flex flex-col items-center justify-center text-center rounded-[20px] border transition-transform transition-shadow duration-300 ease-out hover:scale-105 hover:shadow-lg bg-white shadow-[0_10px_26px_rgba(0,0,0,0.06)] w-full sm:w-[200px] min-[816px]:w-[240px] sm:aspect-square"
-                  style={{
-                    border: "1px solid rgba(0, 42, 255, 0.1)",
-                    boxShadow:
-                      "inset 0 0 0 1px rgba(8, 28, 244, 0.05), 0 10px 26px rgba(0,0,0,0.06)",
-                    backgroundColor: "#ffffff",
-                    padding: "clamp(10px, 2.6vw, 14px)",
-                  }}
+                  className="group flex flex-col items-center justify-center text-center rounded-2xl border border-[rgba(0,42,255,0.12)] bg-white shadow-[0_8px_30px_rgba(0,0,0,0.08),inset_0_0_0_1px_rgba(8,28,244,0.06)] transition-transform duration-300 ease-out hover:scale-[1.02] hover:shadow-[0_12px_36px_rgba(0,0,0,0.1)] w-[152px] min-[640px]:w-[168px] min-[816px]:w-[176px] aspect-square min-h-0"
+                  style={{ padding: "10px 9px" }}
                 >
-                  <div className="flex flex-col items-center justify-center gap-2 w-full max-w-[90%] mx-auto">
-                    <div className="h-[30px] w-full flex items-end justify-center">
+                  <div className="flex flex-col items-center justify-center gap-2 w-full max-w-[94%] mx-auto min-h-0 flex-1">
+                    <div className="h-7 w-full flex items-end justify-center shrink-0">
                       <Icon
-                        size={18}
+                        size={19}
                         color="#004CFF"
                         className="transition-transform duration-300 group-hover:scale-110"
                       />
                     </div>
-                    <h3 className="font-semibold text-black text-[11px] leading-tight">
+                    <h3 className="font-semibold text-black text-xs sm:text-sm leading-snug line-clamp-2">
                       {title}
                     </h3>
-                    <p className="text-[9.5px] text-[#004CFF] leading-snug text-neutral-700">
+                    <p className="text-[11px] sm:text-xs leading-relaxed text-zinc-600 line-clamp-4">
                       {desc}
                     </p>
                   </div>
                 </motion.div>
               ))}
             </motion.div>
+            <EngagementPricingSection variant="desktop" />
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 1.2 }}
-              className="mt-10"
+              className="mt-6 md:mt-8 pt-4 md:pt-5 w-full max-w-4xl mx-auto shrink-0"
             >
-              <div className="text-center text-[10px] font-semibold tracking-[0.18em] uppercase text-black/25 mb-5">Stack</div>
-              <div className="flex flex-wrap justify-center gap-x-10 gap-y-4 max-w-[760px] mx-auto">
+              <div className="text-center text-[10px] font-semibold tracking-[0.18em] uppercase text-black/25 mb-2 md:mb-2.5">
+                Stack
+              </div>
+              <div className="flex flex-wrap justify-center gap-x-8 md:gap-x-10 gap-y-3 max-w-4xl mx-auto px-1">
                 {STACK_GROUPS.map(({ label, items }) => (
-                  <div key={label} className="flex flex-col items-center">
-                    <span className="text-[8px] font-semibold tracking-[0.16em] uppercase text-black/20 mb-1.5">{label}</span>
-                    <span className="text-[10px] text-black/40 text-center leading-relaxed">{items.join("  ·  ")}</span>
+                  <div key={label} className="flex flex-col items-center max-w-[150px] sm:max-w-none">
+                    <span className="text-[7.5px] font-semibold tracking-[0.14em] uppercase text-black/20 mb-1">
+                      {label}
+                    </span>
+                    <span className="text-[8.5px] text-black/40 text-center leading-snug">
+                      {items.join("  ·  ")}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -208,19 +421,15 @@ function ServicesOverlay({ show }: { show: boolean }) {
 }
 
 export default function HomePage() {
-  const [aiIndex, setAiIndex] = useState(0);
-  const [mlIndex, setMlIndex] = useState(0);
-  const [lawIndex, setLawIndex] = useState(0);
+  const [heroStateIndex, setHeroStateIndex] = useState(0);
   const [showGrid, setShowGrid] = useState(false);
   const cooldownRef = useRef(false);
   const router = useRouter();
 
   useEffect(() => {
     const id = window.setInterval(() => {
-      setAiIndex((i) => (i + 1) % aiWords.length);
-      setMlIndex((i) => (i + 1) % mlWords.length);
-      setLawIndex((i) => (i + 1) % lawWords.length);
-    }, 4000);
+      setHeroStateIndex((prev) => (prev + 1) % HERO_STATES.length);
+    }, HERO_STATE_INTERVAL_MS);
     return () => window.clearInterval(id);
   }, []);
 
@@ -310,6 +519,8 @@ export default function HomePage() {
     }
   };
 
+  const heroState = HERO_STATES[heroStateIndex]!;
+
   return (
     <div
       className="flex flex-col min-h-screen text-text-light dark:text-text-dark transition-colors duration-500"
@@ -334,7 +545,7 @@ export default function HomePage() {
               className="w-full"
               aria-label="Swipe left on the hero to open blog posts"
             >
-              <div className="flex flex-col items-center space-y-6 z-10">
+              <div className="flex flex-col items-center space-y-[1.375rem] z-10">
                 <div className="relative w-44 h-44 sm:w-40 sm:h-40 mt-6 sm:mt-12 mb-1">
                   {/* Hair strand — thin wisp (754×104), translate-based positioning */}
                   <Image
@@ -365,39 +576,51 @@ export default function HomePage() {
                 <motion.h1
                   whileHover={{ scale: 1.02 }}
                   style={{ fontSize: "1.10rem", lineHeight: "1.1" }}
-                  className="font-medium hover:scale-110 transition-transform duration-300 tracking-tight relative z-10 mt-3"
+                  className="font-bold hover:scale-110 transition-transform duration-300 tracking-tight relative z-10 mt-3"
                 >
                   Ing. et Ing. Mgr. Monika Dvorackova
                 </motion.h1>
 
-                <div className="text-sm md:text-base font-medium max-w-xl leading-snug px-2">
-                  <p className="mb-0">
-                    I’m an engineer & consultant in{" "}
-                    <span className="inline-block align-baseline">
-                      <AnimatePresence mode="wait">
-                        <CrossfadeWord word={aiWords[aiIndex]} />
-                      </AnimatePresence>
-                    </span>
-                    , helping companies implement{" "}
-                    <span className="inline-block align-baseline">
-                      <AnimatePresence mode="wait">
-                        <CrossfadeWord word={mlWords[mlIndex]} />
-                      </AnimatePresence>
-                    </span>{" "}
-                    solutions.
+                <div
+                  className="text-sm md:text-base font-medium max-w-2xl leading-snug px-2 min-h-[4.5rem] md:min-h-[5rem]"
+                  aria-live="polite"
+                >
+                  <p className="mb-1.5">
+                    <AnimatePresence mode="wait" initial={false}>
+                      <motion.span
+                        key={heroState.line1}
+                        {...HERO_LINE_MOTION}
+                        className="block"
+                      >
+                        {heroState.line1}
+                      </motion.span>
+                    </AnimatePresence>
                   </p>
-                  <p className="italic mt-0">
-                    And occasionally, a bit of{" "}
-                    <span className="inline-block align-baseline">
-                      <AnimatePresence mode="wait">
-                        <CrossfadeWord word={lawWords[lawIndex]} />
-                      </AnimatePresence>
-                    </span>
-                    .
+                  <p className="mb-0 italic text-black/85">
+                    <AnimatePresence mode="wait" initial={false}>
+                      <motion.span
+                        key={heroState.line2}
+                        {...HERO_LINE_MOTION}
+                        className="block"
+                      >
+                        {heroState.line2}
+                      </motion.span>
+                    </AnimatePresence>
+                  </p>
+                  <p className="mt-0 italic text-black/85">
+                    <AnimatePresence mode="wait" initial={false}>
+                      <motion.span
+                        key={heroState.line3}
+                        {...HERO_LINE_MOTION}
+                        className="block"
+                      >
+                        {heroState.line3}
+                      </motion.span>
+                    </AnimatePresence>
                   </p>
                 </div>
 
-                <div className="flex items-center justify-center gap-1 mt-4">
+                <div className="flex items-center justify-center gap-1 mt-1.5">
                   <a
                     href="https://www.linkedin.com/in/monika-dvorackova/?locale=en_US"
                     target="_blank"
@@ -429,7 +652,7 @@ export default function HomePage() {
 
                 <div className="mt-2 flex flex-col items-center">
                   <div className="text-sm md:text-base font-normal mb-2 hover:scale-110 transition-transform duration-300 translate-y-[6px]">
-                    Consultation / Articles & SaaS
+                    Consultation / Articles & Software
                   </div>
                   <div className="pt-[0.3rem] flex gap-1">
                     <a
@@ -447,7 +670,7 @@ export default function HomePage() {
                     <Link
                       href="/blog"
                       className="group transition-all duration-300"
-                      title="View Articles & SaaS"
+                      title="View Articles & Software"
                     >
                       <FaFileAlt
                         size={18}
@@ -471,7 +694,7 @@ export default function HomePage() {
               </svg>
             </motion.div>
             <footer className="text-[10px] text-neutral-500 text-center py-3">
-              © 2026 Monika Dvořáčková
+              © 2026 Monika Dvorackova
             </footer>
           </div>
         </>
