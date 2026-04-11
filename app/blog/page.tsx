@@ -115,6 +115,15 @@ export default function BlogPage() {
       });
   }, []);
 
+  useEffect(() => {
+    if (!isLoaded) return;
+    const raw = window.location.hash.replace(/^#/, "");
+    if (!raw || !["govai", "software"].includes(raw)) return;
+    requestAnimationFrame(() => {
+      document.getElementById(raw)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }, [isLoaded]);
+
   const softwarePosts = posts.filter((p) => p.type === "software");
   const articlePosts = posts.filter(
     (p) => p.type !== "software" && p.type !== "publication"
@@ -138,7 +147,8 @@ export default function BlogPage() {
           <div className="page-gutter-x w-full max-w-5xl mx-auto flex flex-col pb-36">
             {hasSoftware && (
               <motion.section
-                className="w-full"
+                id="software"
+                className="w-full scroll-mt-20"
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 24 }}
                 transition={{ duration: 0.8, delay: 0.3 }}

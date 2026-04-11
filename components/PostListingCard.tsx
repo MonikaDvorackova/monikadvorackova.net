@@ -37,11 +37,14 @@ export default function PostListingCard({
   solo = false,
   mobileSolo = false,
   onPointerInsideCard,
+  anchorId,
 }: {
   post: ListingPost;
   solo?: boolean;
   mobileSolo?: boolean;
   onPointerInsideCard?: () => void;
+  /** Set on at most one card instance (e.g. deep link target). */
+  anchorId?: string;
 }) {
   const href = `/blog/${post.slug}`;
   const displayTitle = (post.cardTitle?.trim() || post.title).trim();
@@ -56,7 +59,8 @@ export default function PostListingCard({
 
   return (
     <div
-      className="group relative flex w-full flex-col self-stretch overflow-visible rounded-2xl transition-transform duration-300 hover:scale-[1.01] hover:shadow-[0_6px_24px_rgba(0,0,0,0.18)] focus-within:ring-2 focus-within:ring-[#004cff]/50"
+      id={anchorId}
+      className={`group relative flex w-full flex-col self-stretch overflow-visible rounded-2xl transition-transform duration-300 hover:scale-[1.01] hover:shadow-[0_6px_24px_rgba(0,0,0,0.18)] focus-within:ring-2 focus-within:ring-[#004cff]/50${anchorId ? " scroll-mt-20" : ""}`}
       onPointerEnter={onPointerInsideCard}
       style={{
         width: widthStyle,

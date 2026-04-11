@@ -204,7 +204,7 @@ function EngagementPricingSection({ variant }: { variant: "mobile" | "desktop" }
         className={
           isMobile
             ? "mt-4 flex w-full max-w-[min(100%,19.5rem)] mx-auto flex-col items-center gap-y-6 text-center"
-            : "mt-4 flex flex-col lg:flex-row lg:flex-nowrap lg:justify-center lg:items-stretch gap-y-2 gap-x-2 min-[1000px]:gap-x-3 min-[1200px]:gap-x-4 w-full"
+            : "mt-4 flex flex-col md:flex-row md:flex-nowrap md:justify-center md:items-stretch gap-y-2 gap-x-2 min-[900px]:gap-x-3 min-[1100px]:gap-x-4 w-full"
         }
       >
         {ENGAGEMENT_PRICING.map((row) => (
@@ -213,7 +213,7 @@ function EngagementPricingSection({ variant }: { variant: "mobile" | "desktop" }
             className={
               isMobile
                 ? "flex w-full flex-col items-center text-center"
-                : "w-full lg:flex-1 lg:basis-0 lg:min-w-0 lg:max-w-[10.25rem] xl:max-w-[10.75rem] lg:flex lg:flex-col text-left"
+                : "w-full md:flex-1 md:basis-0 md:min-w-0 md:max-w-[10.25rem] xl:max-w-[10.75rem] md:flex md:flex-col text-left"
             }
           >
             <h3
@@ -229,7 +229,7 @@ function EngagementPricingSection({ variant }: { variant: "mobile" | "desktop" }
               className={
                 isMobile
                   ? "mt-1 max-w-[17rem] text-[9px] leading-snug text-zinc-600 line-clamp-2 text-balance"
-                  : "mt-0.5 text-[9px] md:text-[10px] leading-snug text-zinc-600 line-clamp-2 lg:line-clamp-3"
+                  : "mt-0.5 text-[9px] md:text-[10px] leading-snug text-zinc-600 line-clamp-2 md:line-clamp-3"
               }
             >
               {row.description}
@@ -238,7 +238,7 @@ function EngagementPricingSection({ variant }: { variant: "mobile" | "desktop" }
               className={
                 isMobile
                   ? "mt-3 w-full text-[11px] font-bold text-black tabular-nums leading-tight tracking-tight"
-                  : "mt-1.5 lg:mt-auto text-[10px] md:text-xs font-semibold text-black tabular-nums leading-tight"
+                  : "mt-1.5 md:mt-auto text-[10px] md:text-xs font-semibold text-black tabular-nums leading-tight"
               }
             >
               {row.prices.map((line) => (
@@ -320,18 +320,18 @@ function ServicesOverlay({ show }: { show: boolean }) {
               variants={gridVariants}
               initial="hidden"
               animate="show"
-              className="flex flex-col gap-3.5 w-full shrink-0"
+              className="flex flex-col gap-2.5 w-full shrink-0"
             >
               {SERVICES.map(({ icon: Icon, title, mobileDesc }) => (
                 <motion.div
                   key={`m-${title}`}
                   variants={itemVariants}
-                  className="flex flex-col items-center justify-center text-center rounded-2xl bg-white shrink-0 border border-black/[0.06] shadow-[0_4px_20px_rgba(0,0,0,0.06)]"
-                  style={{ padding: "12px 14px" }}
+                  className="flex flex-col items-center justify-center text-center rounded-xl bg-white shrink-0 border border-black/[0.06] shadow-[0_3px_14px_rgba(0,0,0,0.05)]"
+                  style={{ padding: "9px 11px" }}
                 >
-                  <Icon size={18} color="#004CFF" className="mb-1.5" />
-                  <h3 className="font-semibold text-black text-sm leading-snug">{title}</h3>
-                  <p className="text-xs leading-relaxed text-zinc-600 mt-2 line-clamp-3">{mobileDesc}</p>
+                  <Icon size={15} color="#004CFF" className="mb-1" />
+                  <h3 className="font-semibold text-black text-xs leading-snug">{title}</h3>
+                  <p className="text-[11px] leading-relaxed text-zinc-600 mt-1.5 line-clamp-3">{mobileDesc}</p>
                 </motion.div>
               ))}
             </motion.div>
@@ -363,27 +363,27 @@ function ServicesOverlay({ show }: { show: boolean }) {
               initial="hidden"
               animate="show"
               className="grid max-[815px]:grid-cols-2 min-[816px]:grid-cols-3 justify-center items-start w-fit max-w-6xl mx-auto shrink-0"
-              style={{ rowGap: "24px", columnGap: "24px" }}
+              style={{ rowGap: "16px", columnGap: "16px" }}
             >
               {SERVICES.map(({ icon: Icon, title, desc }) => (
                 <motion.div
                   key={title}
                   variants={itemVariants}
-                  className="group flex flex-col items-center justify-center text-center rounded-2xl border border-[rgba(0,42,255,0.12)] bg-white shadow-[0_8px_30px_rgba(0,0,0,0.08),inset_0_0_0_1px_rgba(8,28,244,0.06)] transition-transform duration-300 ease-out hover:scale-[1.02] hover:shadow-[0_12px_36px_rgba(0,0,0,0.1)] w-[152px] min-[640px]:w-[168px] min-[816px]:w-[176px] aspect-square min-h-0"
-                  style={{ padding: "10px 9px" }}
+                  className="group flex flex-col items-center justify-center text-center rounded-xl border border-[rgba(0,42,255,0.12)] bg-white shadow-[0_6px_22px_rgba(0,0,0,0.07),inset_0_0_0_1px_rgba(8,28,244,0.06)] transition-transform duration-300 ease-out hover:scale-[1.02] hover:shadow-[0_9px_28px_rgba(0,0,0,0.09)] w-[128px] min-[640px]:w-[140px] min-[816px]:w-[148px] aspect-square min-h-0"
+                  style={{ padding: "7px 6px" }}
                 >
-                  <div className="flex flex-col items-center justify-center gap-2 w-full max-w-[94%] mx-auto min-h-0 flex-1">
-                    <div className="h-7 w-full flex items-end justify-center shrink-0">
+                  <div className="flex flex-col items-center justify-center gap-1 w-full max-w-[96%] mx-auto min-h-0 flex-1">
+                    <div className="h-5 w-full flex items-end justify-center shrink-0">
                       <Icon
-                        size={19}
+                        size={16}
                         color="#004CFF"
                         className="transition-transform duration-300 group-hover:scale-110"
                       />
                     </div>
-                    <h3 className="font-semibold text-black text-xs sm:text-sm leading-snug line-clamp-2">
+                    <h3 className="font-semibold text-black text-[10px] sm:text-[11px] leading-tight line-clamp-2">
                       {title}
                     </h3>
-                    <p className="text-[11px] sm:text-xs leading-relaxed text-zinc-600 line-clamp-4">
+                    <p className="text-[9px] sm:text-[10px] leading-snug text-zinc-600 line-clamp-4">
                       {desc}
                     </p>
                   </div>
@@ -581,80 +581,82 @@ export default function HomePage() {
                   Ing. et Ing. Mgr. Monika Dvorackova
                 </motion.h1>
 
-                <div
-                  className="text-sm md:text-base font-medium max-w-2xl leading-snug px-2 min-h-[4.5rem] md:min-h-[5rem]"
-                  aria-live="polite"
-                >
-                  <p className="mb-1.5">
-                    <AnimatePresence mode="wait" initial={false}>
-                      <motion.span
-                        key={heroState.line1}
-                        {...HERO_LINE_MOTION}
-                        className="block"
-                      >
-                        {heroState.line1}
-                      </motion.span>
-                    </AnimatePresence>
-                  </p>
-                  <p className="mb-0 italic text-black/85">
-                    <AnimatePresence mode="wait" initial={false}>
-                      <motion.span
-                        key={heroState.line2}
-                        {...HERO_LINE_MOTION}
-                        className="block"
-                      >
-                        {heroState.line2}
-                      </motion.span>
-                    </AnimatePresence>
-                  </p>
-                  <p className="mt-0 italic text-black/85">
-                    <AnimatePresence mode="wait" initial={false}>
-                      <motion.span
-                        key={heroState.line3}
-                        {...HERO_LINE_MOTION}
-                        className="block"
-                      >
-                        {heroState.line3}
-                      </motion.span>
-                    </AnimatePresence>
-                  </p>
+                <div className="flex flex-col items-center gap-1.5">
+                  <div
+                    className="text-sm md:text-base font-medium max-w-2xl leading-snug px-2 min-h-[4.5rem] md:min-h-[5rem]"
+                    aria-live="polite"
+                  >
+                    <p className="mb-1.5">
+                      <AnimatePresence mode="wait" initial={false}>
+                        <motion.span
+                          key={heroState.line1}
+                          {...HERO_LINE_MOTION}
+                          className="block"
+                        >
+                          {heroState.line1}
+                        </motion.span>
+                      </AnimatePresence>
+                    </p>
+                    <p className="mb-0 italic text-black/85">
+                      <AnimatePresence mode="wait" initial={false}>
+                        <motion.span
+                          key={heroState.line2}
+                          {...HERO_LINE_MOTION}
+                          className="block"
+                        >
+                          {heroState.line2}
+                        </motion.span>
+                      </AnimatePresence>
+                    </p>
+                    <p className="mt-0 italic text-black/85">
+                      <AnimatePresence mode="wait" initial={false}>
+                        <motion.span
+                          key={heroState.line3}
+                          {...HERO_LINE_MOTION}
+                          className="block"
+                        >
+                          {heroState.line3}
+                        </motion.span>
+                      </AnimatePresence>
+                    </p>
+                  </div>
+
+                  <div className="flex items-center justify-center gap-1">
+                    <a
+                      href="https://www.linkedin.com/in/monika-dvorackova/?locale=en_US"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title="LinkedIn"
+                    >
+                      <FaLinkedin size={20} className="text-[#004cff] hover:scale-110 transition-transform duration-300" />
+                    </a>
+                    <a
+                      href="https://github.com/monikadvorackova"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title="GitHub"
+                    >
+                      <FaGithub size={20} className="text-[#004cff] hover:scale-110 transition-transform duration-300" />
+                    </a>
+                    <a
+                      href="https://arxiv.org/search/?searchtype=author&query=Dvorackova%2C+M"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title="arXiv"
+                    >
+                      <ArxivIcon size={20} className="text-[#004cff] hover:scale-110 transition-transform duration-300" />
+                    </a>
+                    <a href="mailto:monika.dvorack@gmail.com" title="Send Email">
+                      <FaEnvelope size={20} className="text-[#004cff] hover:scale-110 transition-transform duration-300" />
+                    </a>
+                  </div>
                 </div>
 
-                <div className="flex items-center justify-center gap-1 mt-1.5">
-                  <a
-                    href="https://www.linkedin.com/in/monika-dvorackova/?locale=en_US"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="LinkedIn"
-                  >
-                    <FaLinkedin size={20} className="text-black hover:scale-110 transition-transform duration-300" />
-                  </a>
-                  <a
-                    href="https://github.com/monikadvorackova"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="GitHub"
-                  >
-                    <FaGithub size={20} className="text-black hover:scale-110 transition-transform duration-300" />
-                  </a>
-                  <a
-                    href="https://arxiv.org/search/?searchtype=author&query=Dvorackova%2C+M"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="arXiv"
-                  >
-                    <ArxivIcon size={20} className="text-black hover:scale-110 transition-transform duration-300" />
-                  </a>
-                  <a href="mailto:monika.dvorack@gmail.com" title="Send Email">
-                    <FaEnvelope size={20} className="text-black hover:scale-110 transition-transform duration-300" />
-                  </a>
-                </div>
-
-                <div className="mt-2 flex flex-col items-center">
-                  <div className="text-sm md:text-base font-normal mb-2 hover:scale-110 transition-transform duration-300 translate-y-[6px]">
+                <div className="-mt-2 flex flex-col items-center gap-0.5">
+                  <div className="text-sm md:text-base font-normal hover:scale-110 transition-transform duration-300">
                     Consultation / Articles & Software
                   </div>
-                  <div className="pt-[0.3rem] flex gap-1">
+                  <div className="flex gap-1">
                     <a
                       href="https://calendly.com/monika-dvorack/15min"
                       target="_blank"
@@ -664,7 +666,7 @@ export default function HomePage() {
                     >
                       <FaCalendarAlt
                         size={18}
-                        className="text-black transition-all duration-300 group-hover:scale-110 group-hover:translate-y-1 translate-y-[8px]"
+                        className="text-[#004cff] transition-all duration-300 group-hover:scale-110 group-hover:translate-y-1"
                       />
                     </a>
                     <Link
@@ -674,7 +676,7 @@ export default function HomePage() {
                     >
                       <FaFileAlt
                         size={18}
-                        className="text-black transition-all duration-300 group-hover:scale-110 group-hover:translate-y-1 translate-y-[8px]"
+                        className="text-[#004cff] transition-all duration-300 group-hover:scale-110 group-hover:translate-y-1"
                       />
                     </Link>
                   </div>
@@ -683,11 +685,41 @@ export default function HomePage() {
             </motion.div>
           </motion.main>
 
-          <div className="flex flex-col items-center mt-auto">
+          <section
+            aria-labelledby="govai-highlight-heading"
+            className="w-full max-w-xl mx-auto px-4 shrink-0 pt-2 pb-0 mb-8 border-t border-black/[0.06]"
+          >
+            <h2
+              id="govai-highlight-heading"
+              className="text-center text-[8px] font-semibold tracking-[0.16em] uppercase text-black/30"
+            >
+              GovAI
+            </h2>
+            <p className="mt-1 text-[11px] font-medium text-black text-center leading-tight text-balance px-0.5">
+              Audit-ready infrastructure for ML and LLM systems.
+            </p>
+            <p className="mt-0.5 text-[10px] text-zinc-600 text-center leading-tight text-balance max-w-md mx-auto px-0.5">
+              A system for evidence, policy enforcement, and compliance-ready AI workflows.
+            </p>
+            <div className="mt-1 flex justify-center">
+              <Link
+                href="/blog#govai"
+                className="text-[10px] font-semibold text-[#004cff] hover:opacity-90 transition-opacity"
+              >
+                View GovAI
+              </Link>
+            </div>
+          </section>
+
+          <div className="flex flex-col items-center mt-auto pt-6">
+            <p className="mb-2 max-w-[16rem] px-2 text-center text-[8px] font-semibold tracking-[0.16em] uppercase text-black/30 text-balance">
+              Services · pricing · stack
+            </p>
             <motion.div
               animate={{ y: [0, 5, 0] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="text-black/20 mb-4"
+              className="text-black/30 mb-3"
+              aria-hidden
             >
               <svg width="16" height="10" viewBox="0 0 16 10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M1 1l7 7 7-7" />

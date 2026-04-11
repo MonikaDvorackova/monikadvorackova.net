@@ -100,7 +100,12 @@ export default function ClientBlog({ posts }: { posts: ListingPost[] }) {
   if (posts.length === 1) {
     return (
       <div className="w-full flex justify-center">
-        <PostListingCard post={posts[0]} solo mobileSolo={isMobile} />
+        <PostListingCard
+          post={posts[0]}
+          solo
+          mobileSolo={isMobile}
+          anchorId={posts[0].slug === "govai" ? "govai" : undefined}
+        />
       </div>
     );
   }
@@ -120,7 +125,12 @@ export default function ClientBlog({ posts }: { posts: ListingPost[] }) {
         <div className="flex w-max items-stretch gap-[14px] py-0.5 pl-1 pr-1">
           {posts.map((post) => (
             <div key={`${post.slug}-a`} className="flex shrink-0 self-stretch">
-              <PostListingCard post={post} solo mobileSolo={isMobile} />
+              <PostListingCard
+                post={post}
+                solo
+                mobileSolo={isMobile}
+                anchorId={post.slug === "govai" ? "govai" : undefined}
+              />
             </div>
           ))}
           {posts.map((post) => (
@@ -160,6 +170,7 @@ export default function ClientBlog({ posts }: { posts: ListingPost[] }) {
             <PostListingCard
               key={`${post.slug}-card-a`}
               post={post}
+              anchorId={post.slug === "govai" ? "govai" : undefined}
               onPointerInsideCard={() => {
                 pausedRef.current = true;
               }}
