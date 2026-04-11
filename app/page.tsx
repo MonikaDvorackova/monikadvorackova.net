@@ -203,7 +203,7 @@ function EngagementPricingSection({ variant }: { variant: "mobile" | "desktop" }
       <ul
         className={
           isMobile
-            ? "mt-4 flex flex-col gap-y-3.5 text-left w-full"
+            ? "mt-4 flex w-full max-w-[min(100%,19.5rem)] mx-auto flex-col items-center gap-y-6 text-center"
             : "mt-4 flex flex-col lg:flex-row lg:flex-nowrap lg:justify-center lg:items-stretch gap-y-2 gap-x-2 min-[1000px]:gap-x-3 min-[1200px]:gap-x-4 w-full"
         }
       >
@@ -212,14 +212,14 @@ function EngagementPricingSection({ variant }: { variant: "mobile" | "desktop" }
             key={row.title}
             className={
               isMobile
-                ? "w-full"
+                ? "flex w-full flex-col items-center text-center"
                 : "w-full lg:flex-1 lg:basis-0 lg:min-w-0 lg:max-w-[10.25rem] xl:max-w-[10.75rem] lg:flex lg:flex-col text-left"
             }
           >
             <h3
               className={
                 isMobile
-                  ? "text-[11px] font-semibold text-black leading-tight"
+                  ? "text-[11px] font-semibold text-black leading-tight text-balance"
                   : "text-[10px] md:text-[11px] font-semibold text-black leading-tight"
               }
             >
@@ -228,7 +228,7 @@ function EngagementPricingSection({ variant }: { variant: "mobile" | "desktop" }
             <p
               className={
                 isMobile
-                  ? "mt-0.5 text-[9px] leading-snug text-zinc-600 line-clamp-2"
+                  ? "mt-1 max-w-[17rem] text-[9px] leading-snug text-zinc-600 line-clamp-2 text-balance"
                   : "mt-0.5 text-[9px] md:text-[10px] leading-snug text-zinc-600 line-clamp-2 lg:line-clamp-3"
               }
             >
@@ -237,7 +237,7 @@ function EngagementPricingSection({ variant }: { variant: "mobile" | "desktop" }
             <div
               className={
                 isMobile
-                  ? "mt-1.5 text-[10px] font-semibold text-black tabular-nums leading-tight"
+                  ? "mt-3 w-full text-[11px] font-bold text-black tabular-nums leading-tight tracking-tight"
                   : "mt-1.5 lg:mt-auto text-[10px] md:text-xs font-semibold text-black tabular-nums leading-tight"
               }
             >
