@@ -314,7 +314,10 @@ export default function PublicationsList() {
         }}
       >
         <CarouselEdgeFog />
-        <div className="relative z-0 flex w-max gap-2 py-0.5 px-0.5">
+        <div
+          data-marquee-track
+          className="relative z-0 flex w-max gap-2 py-0.5 px-0.5"
+        >
           {items.map((item) => (
             <div key={`${item.id}-a`} className="shrink-0">
               <PublicationCard item={item} solo mobileSolo={isMobile} />

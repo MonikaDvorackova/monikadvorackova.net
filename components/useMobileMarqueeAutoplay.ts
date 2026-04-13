@@ -25,9 +25,10 @@ export function useMobileMarqueeAutoplay(
     const scroller = scrollerRef.current;
     if (!scroller) return;
 
-    // Verified from JSX: the mobile scroller wrapper has exactly one child —
-    // the flex w-max track div. No other elements are rendered inside it.
-    const track = scroller.firstElementChild as HTMLElement | null;
+    // CarouselEdgeFog renders first (gradient overlays); the scrollable track is marked.
+    const track = scroller.querySelector(
+      "[data-marquee-track]"
+    ) as HTMLElement | null;
     if (!track) return;
 
     // Switch to transform-driven motion. Prevent native scroll from

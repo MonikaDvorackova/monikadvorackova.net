@@ -117,7 +117,10 @@ export default function WritingList({ posts }: { posts: ListingPost[] }) {
         }}
       >
         <CarouselEdgeFog />
-        <div className="relative z-0 flex w-max items-stretch gap-2 py-0.5 px-0.5">
+        <div
+          data-marquee-track
+          className="relative z-0 flex w-max items-stretch gap-2 py-0.5 px-0.5"
+        >
           {posts.map((post) => (
             <div key={`${post.slug}-a`} className="flex shrink-0 self-stretch">
               <PostListingCard post={post} solo mobileSolo={isMobile} />
