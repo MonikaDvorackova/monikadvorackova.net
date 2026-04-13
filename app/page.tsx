@@ -204,7 +204,7 @@ function EngagementPricingSection({ variant }: { variant: "mobile" | "desktop" }
         className={
           isMobile
             ? "mt-4 flex w-full max-w-[min(100%,19.5rem)] mx-auto flex-col items-center gap-y-6 text-center"
-            : "mt-4 flex flex-col lg:flex-row lg:flex-nowrap lg:justify-center lg:items-stretch gap-y-2 gap-x-2 min-[1000px]:gap-x-3 min-[1200px]:gap-x-4 w-full"
+            : "mt-4 flex flex-col md:flex-row md:flex-nowrap md:justify-center md:items-stretch gap-y-2 gap-x-2 min-[900px]:gap-x-3 min-[1100px]:gap-x-4 w-full"
         }
       >
         {ENGAGEMENT_PRICING.map((row) => (
@@ -213,7 +213,7 @@ function EngagementPricingSection({ variant }: { variant: "mobile" | "desktop" }
             className={
               isMobile
                 ? "flex w-full flex-col items-center text-center"
-                : "w-full lg:flex-1 lg:basis-0 lg:min-w-0 lg:max-w-[10.25rem] xl:max-w-[10.75rem] lg:flex lg:flex-col text-left"
+                : "w-full md:flex-1 md:basis-0 md:min-w-0 md:max-w-[10.25rem] xl:max-w-[10.75rem] md:flex md:flex-col text-left"
             }
           >
             <h3
@@ -229,7 +229,7 @@ function EngagementPricingSection({ variant }: { variant: "mobile" | "desktop" }
               className={
                 isMobile
                   ? "mt-1 max-w-[17rem] text-[9px] leading-snug text-zinc-600 line-clamp-2 text-balance"
-                  : "mt-0.5 text-[9px] md:text-[10px] leading-snug text-zinc-600 line-clamp-2 lg:line-clamp-3"
+                  : "mt-0.5 text-[9px] md:text-[10px] leading-snug text-zinc-600 line-clamp-2 md:line-clamp-3"
               }
             >
               {row.description}
@@ -238,7 +238,7 @@ function EngagementPricingSection({ variant }: { variant: "mobile" | "desktop" }
               className={
                 isMobile
                   ? "mt-3 w-full text-[11px] font-bold text-black tabular-nums leading-tight tracking-tight"
-                  : "mt-1.5 lg:mt-auto text-[10px] md:text-xs font-semibold text-black tabular-nums leading-tight"
+                  : "mt-1.5 md:mt-auto text-[10px] md:text-xs font-semibold text-black tabular-nums leading-tight"
               }
             >
               {row.prices.map((line) => (
