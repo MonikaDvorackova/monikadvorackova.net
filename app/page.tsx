@@ -545,7 +545,7 @@ export default function HomePage() {
               className="w-full"
               aria-label="Swipe left on the hero to open blog posts"
             >
-              <div className="flex flex-col items-center space-y-[1.375rem] z-10">
+              <div className="flex flex-col items-center z-10">
                 <div className="relative w-44 h-44 sm:w-40 sm:h-40 mt-6 sm:mt-12 mb-1">
                   {/* Hair strand — thin wisp (754×104), translate-based positioning */}
                   <Image
@@ -582,7 +582,7 @@ export default function HomePage() {
                 </motion.h1>
 
                 <div
-                  className="text-sm md:text-base font-medium max-w-2xl leading-snug px-2 min-h-[4.5rem] md:min-h-[5rem]"
+                  className="text-sm md:text-base font-medium max-w-2xl leading-snug px-2 min-h-[4.5rem] md:min-h-[5rem] mt-2 mb-1.5"
                   aria-live="polite"
                 >
                   <p className="mb-1.5">
@@ -620,7 +620,7 @@ export default function HomePage() {
                   </p>
                 </div>
 
-                <div className="flex items-center justify-center gap-1 mt-1.5">
+                <div className="flex items-center justify-center gap-1">
                   <a
                     href="https://www.linkedin.com/in/monika-dvorackova/?locale=en_US"
                     target="_blank"
@@ -650,8 +650,8 @@ export default function HomePage() {
                   </a>
                 </div>
 
-                <div className="mt-2 flex flex-col items-center">
-                  <div className="text-sm md:text-base font-normal mb-2 hover:scale-110 transition-transform duration-300 translate-y-[6px]">
+                <div className="mt-3 flex flex-col items-center">
+                  <div className="text-sm md:text-base font-normal mb-1.5 hover:scale-110 transition-transform duration-300 translate-y-[6px]">
                     Consultation / Articles & Software
                   </div>
                   <div className="pt-[0.3rem] flex gap-1">
