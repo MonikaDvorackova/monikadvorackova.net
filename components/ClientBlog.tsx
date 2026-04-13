@@ -163,28 +163,30 @@ export default function ClientBlog({ posts }: { posts: ListingPost[] }) {
       >
         <div
           ref={trackRef}
-          className="flex w-max will-change-transform pl-1 pr-1"
+          className="flex w-max items-stretch will-change-transform pl-1 pr-1"
           style={{ transform: "translate3d(0,0,0)" }}
         >
           {firstLoop.map((post) => (
-            <PostListingCard
-              key={`${post.slug}-card-a`}
-              post={post}
-              anchorId={post.slug === "govai" ? "govai" : undefined}
-              onPointerInsideCard={() => {
-                pausedRef.current = true;
-              }}
-            />
+            <div key={`${post.slug}-card-a`} className="flex shrink-0 self-stretch">
+              <PostListingCard
+                post={post}
+                anchorId={post.slug === "govai" ? "govai" : undefined}
+                onPointerInsideCard={() => {
+                  pausedRef.current = true;
+                }}
+              />
+            </div>
           ))}
 
           {secondLoop.map((post) => (
-            <PostListingCard
-              key={`${post.slug}-card-b`}
-              post={post}
-              onPointerInsideCard={() => {
-                pausedRef.current = true;
-              }}
-            />
+            <div key={`${post.slug}-card-b`} className="flex shrink-0 self-stretch">
+              <PostListingCard
+                post={post}
+                onPointerInsideCard={() => {
+                  pausedRef.current = true;
+                }}
+              />
+            </div>
           ))}
         </div>
       </div>

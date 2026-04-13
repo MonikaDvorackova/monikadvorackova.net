@@ -7,8 +7,8 @@ import { formatTagLabel } from "@/lib/formatTagLabel";
 /** Matches site norm (~3–5 visible tags); extra tags stay in frontmatter only. */
 const MAX_TAGS_ON_CARD = 5;
 
-/** ~3 lines at text-[9px] leading-[1.5] (compact baseline, not inflated). */
-const DESCRIPTION_SLOT_MIN_PX = 42;
+/** Matches `PublicationCard` carousel row (`minHeight` when not solo). */
+const LISTING_CARD_MIN_HEIGHT_CAROUSEL_PX = 96;
 
 const LISTING_CARD_WIDTH_PX = 420;
 
@@ -64,7 +64,7 @@ export default function PostListingCard({
       onPointerEnter={onPointerInsideCard}
       style={{
         width: widthStyle,
-        minHeight: solo ? undefined : 78,
+        minHeight: solo ? undefined : LISTING_CARD_MIN_HEIGHT_CAROUSEL_PX,
         height: solo ? undefined : "100%",
         marginRight: solo ? 0 : 16,
         backgroundColor: "rgba(255,255,255,0.72)",
@@ -81,7 +81,7 @@ export default function PostListingCard({
         <div className="flex min-h-[56px] shrink-0 items-start justify-between gap-3">
           <Link
             href={href}
-            className="min-w-0 flex-1 self-start line-clamp-2 text-[11px] font-semibold leading-snug text-[#004cff] transition-opacity group-hover:opacity-90 sm:text-[11px]"
+            className="min-w-0 flex-1 self-start line-clamp-2 text-[11px] font-bold leading-snug text-black transition-colors group-hover:text-neutral-800 sm:text-[11px]"
             title={post.title}
             aria-label={`Open: ${post.title}`}
           >
@@ -106,25 +106,22 @@ export default function PostListingCard({
           </div>
         </div>
 
-        <div
-          className="mt-2 shrink-0"
-          style={{ minHeight: DESCRIPTION_SLOT_MIN_PX }}
-        >
-          {summary ? (
+        {summary ? (
+          <div className="mt-2 shrink-0">
             <Link
               href={href}
-              className="block h-full min-h-0 text-black no-underline visited:text-black hover:text-black focus-visible:text-black"
+              className="block text-black no-underline visited:text-black hover:text-black focus-visible:text-black"
               style={{ color: "#000" }}
             >
               <p
-                className="line-clamp-3 text-[9px] leading-[1.5] sm:text-[9px]"
-                style={{ color: "#000", WebkitTextFillColor: "#000" }}
+                className="line-clamp-3 text-[9px] leading-[1.35] text-black sm:text-[9px]"
+                style={{ WebkitTextFillColor: "#000" }}
               >
                 {summary}
               </p>
             </Link>
-          ) : null}
-        </div>
+          </div>
+        ) : null}
 
         <div className="mt-auto min-h-0 shrink-0 pt-3">
           {visibleTags.length ? (

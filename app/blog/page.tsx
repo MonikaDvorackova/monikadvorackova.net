@@ -136,15 +136,15 @@ export default function BlogPage() {
   const writingsTopPad = hasSoftware || hasPublications;
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-[#fdf2e9] to-[#f8e9dc] text-neutral-900">
+    <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden w-full text-neutral-900">
       <motion.div
-        className="min-h-screen w-full flex flex-col"
+        className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
       >
-        <main className="w-full flex flex-1 min-h-0 items-center justify-center overflow-x-hidden py-12 sm:py-16">
-          <div className="page-gutter-x w-full max-w-5xl mx-auto flex flex-col pb-36">
+        <main className="flex min-h-0 min-w-0 flex-1 flex-col overflow-x-hidden overflow-y-hidden py-10 sm:py-12">
+          <div className="page-gutter-x w-full max-w-5xl mx-auto flex flex-col pb-10">
             {hasSoftware && (
               <motion.section
                 id="software"

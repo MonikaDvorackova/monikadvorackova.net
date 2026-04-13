@@ -1,5 +1,6 @@
 // app/blog/layout.tsx
 import type { Metadata } from "next";
+import BlogScrollLock from "@/components/BlogScrollLock";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -26,11 +27,14 @@ export default function BlogLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
-      {children}
-      <footer className="border-t border-black/10 bg-[rgba(253,242,233,0.92)] py-3 text-center text-[10px] font-light leading-snug text-neutral-600">
+    <div className="flex h-dvh min-h-0 flex-col overflow-hidden bg-gradient-to-br from-[#fdf2e9] to-[#f8e9dc]">
+      <BlogScrollLock />
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
+        {children}
+      </div>
+      <footer className="shrink-0 border-t border-black/10 bg-[rgba(253,242,233,0.92)] py-3 text-center text-[10px] font-light leading-snug text-neutral-600">
         © 2026 Monika Dvorackova
       </footer>
-    </>
+    </div>
   );
 }

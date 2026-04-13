@@ -81,7 +81,7 @@ function PublicationCard({
           <div className="min-w-0 flex-1 self-start">
             <div className="flex items-start gap-2">
               <div
-                className="line-clamp-3 text-[11px] font-semibold leading-snug text-[#004cff] transition-opacity group-hover:opacity-90"
+                className="line-clamp-3 text-[11px] font-bold leading-snug text-black transition-colors group-hover:text-neutral-800"
                 title={item.title}
               >
                 {item.title}
