@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import CarouselEdgeFog from "@/components/CarouselEdgeFog";
 import PostListingCard, { type ListingPost } from "@/components/PostListingCard";
 import { useMobileMarqueeAutoplay } from "@/components/useMobileMarqueeAutoplay";
 
@@ -107,7 +108,7 @@ export default function WritingList({ posts }: { posts: ListingPost[] }) {
     return (
       <div
         ref={mobileScrollerRef}
-        className="relative mask-fade-x-carousel w-full overflow-hidden no-scrollbar select-none"
+        className="relative w-full overflow-hidden no-scrollbar select-none"
         style={{
           WebkitOverflowScrolling: "touch",
           paddingLeft: 6,
@@ -115,7 +116,8 @@ export default function WritingList({ posts }: { posts: ListingPost[] }) {
           touchAction: "pan-x",
         }}
       >
-        <div className="flex w-max items-stretch gap-2 py-0.5 px-0.5">
+        <CarouselEdgeFog />
+        <div className="relative z-0 flex w-max items-stretch gap-2 py-0.5 px-0.5">
           {posts.map((post) => (
             <div key={`${post.slug}-a`} className="flex shrink-0 self-stretch">
               <PostListingCard post={post} solo mobileSolo={isMobile} />
@@ -142,16 +144,11 @@ export default function WritingList({ posts }: { posts: ListingPost[] }) {
         onPointerLeave={() => {
           pausedRef.current = false;
         }}
-        style={{
-          WebkitMaskImage:
-            "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.06) 14%, rgba(0,0,0,0.35) 22%, black 38%, black 62%, rgba(0,0,0,0.35) 78%, rgba(0,0,0,0.06) 86%, transparent 100%)",
-          maskImage:
-            "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.06) 14%, rgba(0,0,0,0.35) 22%, black 38%, black 62%, rgba(0,0,0,0.35) 78%, rgba(0,0,0,0.06) 86%, transparent 100%)",
-        }}
       >
+        <CarouselEdgeFog />
         <div
           ref={trackRef}
-          className="flex w-max items-stretch will-change-transform pl-1 pr-1"
+          className="relative z-0 flex w-max items-stretch will-change-transform pl-1 pr-1"
           style={{ transform: "translate3d(0,0,0)" }}
         >
           {firstLoop.map((post) => (
