@@ -31,101 +31,115 @@ type HeroFrame = {
   readonly line3: readonly HeroChunk[];
 };
 
-const hl1 = (open: string, close: string): readonly HeroChunk[] => [
-  { slot: "l1-open", text: open },
-  { slot: "l1-close", text: close },
+const heroL = (slot: string, text: string): readonly HeroChunk[] => [{ slot, text }];
+
+/** Tight line1 so it usually stays one wrapped row; len(line1) > len(line2) > len(line3). */
+const HERO_SCENES: readonly HeroFrame[] = [
+  {
+    line1: heroL(
+      "s0-1",
+      "ML and LLM engineer — prod deploys, drift checks, on-call ownership."
+    ),
+    line2: heroL(
+      "s0-2",
+      "I consult on architecture, integration, and operator handover."
+    ),
+    line3: heroL("s0-3", "Hands-on delivery."),
+  },
+  {
+    line1: heroL(
+      "s1-1",
+      "I build pipelines and registries; batch and online inference under agreed SLAs."
+    ),
+    line2: heroL(
+      "s1-2",
+      "Skew and outages: mitigations in code, config, runbooks—not slides."
+    ),
+    line3: heroL("s1-3", "Production ML."),
+  },
+  {
+    line1: heroL(
+      "s2-1",
+      "I engineer LLM features: prompts, eval harnesses, guardrails, CI gates before traffic."
+    ),
+    line2: heroL(
+      "s2-2",
+      "I stop regressions on cost, latency, or behavior before users see them."
+    ),
+    line3: heroL("s2-3", "LLMs I certify."),
+  },
+  {
+    line1: heroL(
+      "s3-1",
+      "Metrics, logs, MLOps dashboards, named owners — wired per live model."
+    ),
+    line2: heroL(
+      "s3-2",
+      "Drift checks, deploy validation, alerts with runbook steps."
+    ),
+    line3: heroL("s3-3", "Observable ML."),
+  },
+  {
+    line1: heroL(
+      "s4-1",
+      "Governance packs: risk, policy, docs, owners, records, audit-ready evidence."
+    ),
+    line2: heroL(
+      "s4-2",
+      "Audit lines mapped to system, release, engineer on record."
+    ),
+    line3: heroL("s4-3", "GRC-ready delivery."),
+  },
+  {
+    line1: heroL(
+      "s5-1",
+      "EU AI Act: classification, technical files, conformity for ML and LLM in scope."
+    ),
+    line2: heroL(
+      "s5-2",
+      "Law and guidance tied to repos, APIs, live deployments."
+    ),
+    line3: heroL("s5-3", "Law-aware compliance."),
+  },
+  {
+    line1: heroL(
+      "s6-1",
+      "I teach LLMs, RAG, eval, MLOps on your data and toolchain under your rules."
+    ),
+    line2: heroL(
+      "s6-2",
+      "Mentoring until teams own the workflows in-house."
+    ),
+    line3: heroL("s6-3", "Technical training."),
+  },
+  {
+    line1: heroL(
+      "s7-1",
+      "Advisory: architecture, vendor DD, launch gates, controls, blast-radius."
+    ),
+    line2: heroL(
+      "s7-2",
+      "Eval specs, guardrails, ranked mitigation backlog."
+    ),
+    line3: heroL("s7-3", "Technical due diligence."),
+  },
+  {
+    line1: heroL(
+      "s8-1",
+      "ML and AI end-to-end: versioned artifacts, owners from commit to production."
+    ),
+    line2: heroL(
+      "s8-2",
+      "Consulting and knowledge transfer so capability stays in-house."
+    ),
+    line3: heroL("s8-3", "ML · AI · MLOps · governance · teaching."),
+  },
 ];
 
-const hl2llm = (tail: string): readonly HeroChunk[] => [
-  { slot: "l2-pre", text: "LLMs are used where they" },
-  { slot: "l2-tail", text: tail },
-];
+const HERO_INTERVAL_NORMAL_MS = 15000;
+const HERO_INTERVAL_FIRST_MS = 19000;
 
-const hl2full = (full: string): readonly HeroChunk[] => [
-  { slot: "l2-pre", text: "" },
-  { slot: "l2-tail", text: full },
-];
-
-const hl3 = (a: string, b: string): readonly HeroChunk[] => [
-  { slot: "l3-a", text: a },
-  { slot: "l3-b", text: b },
-];
-
-/** Line 3 single phrase (one animated chunk; second slot empty). */
-const hl3one = (text: string): readonly HeroChunk[] => [
-  { slot: "l3-a", text },
-  { slot: "l3-b", text: "" },
-];
-
-const HL1_V1 = hl1(
-  "I build ML systems",
-  "that are designed to work in real production environments."
-);
-const HL1_V2 = hl1(
-  "I design ML systems",
-  "as the core of AI systems, not as isolated models."
-);
-const HL1_V3 = hl1(
-  "I design ML systems",
-  "to operate under real world constraints."
-);
-const HL1_V4 = hl1(
-  "I build production grade ML systems",
-  "that extend into AI where it makes sense."
-);
-const HL1_V5 = hl1(
-  "I design ML systems",
-  "with a focus on real world behavior, not just model performance."
-);
-const HL1_V6 = hl1(
-  "I build ML systems",
-  "and teach them through real production scenarios."
-);
-
-const HL2_V1 = hl2llm("are justified.");
-const HL2_V2 = hl2full("Evaluation focuses on behavior, not just metrics.");
-const HL2_V3 = hl2llm("create measurable value.");
-const HL2_V4 = hl2full("Evaluation is part of the system.");
-const HL2_V5 = hl2full("LLMs are integrated carefully.");
-const HL2_V6 = hl2full("AI is applied where behavior can be evaluated.");
-
-/** Third line split so short clauses can swap without redoing the whole line when useful. */
-const HL3_V1 = hl3one("Legal and governance constraints.");
-const HL3_V2 = hl3one("Traceable decisions and outputs.");
-const HL3_V3A = hl3("Governance and law,", "");
-const HL3_V3B = hl3("Governance and law,", "built in.");
-const HL3_V4 = hl3one("Not an afterthought.");
-const HL3_V5 = hl3one("Only where needed.");
-const HL3_V6 = hl3one("Not just explained.");
-
-/**
- * Cycle with partial-line beats: e.g. LLM tail only, l1-close only, l3 second half only.
- */
-const HERO_STATES: readonly HeroFrame[] = [
-  { line1: HL1_V1, line2: HL2_V1, line3: HL3_V1 },
-  { line1: HL1_V1, line2: HL2_V3, line3: HL3_V1 },
-  { line1: HL1_V1, line2: HL2_V3, line3: HL3_V2 },
-  { line1: HL1_V1, line2: HL2_V2, line3: HL3_V2 },
-  { line1: HL1_V2, line2: HL2_V2, line3: HL3_V2 },
-  { line1: HL1_V2, line2: HL2_V2, line3: HL3_V3A },
-  { line1: HL1_V2, line2: HL2_V2, line3: HL3_V3B },
-  { line1: HL1_V2, line2: HL2_V3, line3: HL3_V3B },
-  { line1: HL1_V3, line2: HL2_V3, line3: HL3_V3B },
-  { line1: HL1_V3, line2: HL2_V3, line3: HL3_V4 },
-  { line1: HL1_V3, line2: HL2_V4, line3: HL3_V4 },
-  { line1: HL1_V4, line2: HL2_V4, line3: HL3_V4 },
-  { line1: HL1_V4, line2: HL2_V4, line3: HL3_V5 },
-  { line1: HL1_V4, line2: HL2_V5, line3: HL3_V5 },
-  { line1: HL1_V5, line2: HL2_V5, line3: HL3_V5 },
-  { line1: HL1_V6, line2: HL2_V6, line3: HL3_V5 },
-  { line1: HL1_V6, line2: HL2_V6, line3: HL3_V6 },
-  { line1: HL1_V6, line2: HL2_V6, line3: HL3_V4 },
-  { line1: HL1_V6, line2: HL2_V6, line3: HL3_V1 },
-  { line1: HL1_V6, line2: HL2_V1, line3: HL3_V1 },
-];
-
-const HERO_STATE_INTERVAL_MS = 5000;
-
+/** Hero line crossfade + vertical nudge — shipped behavior (#41); do not replace with word stagger. */
 const HERO_LINE_MOTION = {
   initial: { opacity: 0, y: 6 },
   animate: { opacity: 1, y: 0 },
@@ -133,22 +147,29 @@ const HERO_LINE_MOTION = {
   transition: { duration: 0.5 },
 } as const;
 
-/** One motion.span per chunk. Gaps use inline-block + margin (iOS Safari often ignores horizontal margin on `inline`). */
 function HeroLineChunks({
   chunks,
   italic,
+  reducedMotion,
 }: {
   chunks: readonly HeroChunk[];
   italic?: boolean;
+  reducedMotion?: boolean;
 }) {
+  const text = chunks.map((c) => c.text).join("");
+  if (reducedMotion) {
+    return (
+      <span className={italic ? "italic text-black/85" : undefined}>{text}</span>
+    );
+  }
   return (
     <span
       className={`whitespace-normal break-words${italic ? " italic text-black/85" : ""}`}
     >
-      {chunks.map(({ slot, text }, index) => {
+      {chunks.map(({ slot, text: chunkText }, index) => {
         const prevText = chunks[index - 1]?.text ?? "";
         const gapBefore =
-          index > 0 && prevText.length > 0 && text.length > 0;
+          index > 0 && prevText.length > 0 && chunkText.length > 0;
         return (
           <React.Fragment key={slot}>
             <span
@@ -159,13 +180,13 @@ function HeroLineChunks({
               }
             >
               <AnimatePresence mode="wait" initial={false}>
-                {text ? (
+                {chunkText ? (
                   <motion.span
-                    key={text}
+                    key={chunkText}
                     {...HERO_LINE_MOTION}
                     className="inline-block max-w-full align-baseline"
                   >
-                    {text}
+                    {chunkText}
                   </motion.span>
                 ) : null}
               </AnimatePresence>
@@ -227,8 +248,6 @@ const STACK_GROUPS = [
 /** Shared uppercase rail labels (Services uses slightly stronger tone) */
 const overlayLabelServices =
   "text-center text-xs font-semibold tracking-[0.2em] uppercase text-black/40";
-const overlayLabelRail =
-  "text-center text-xs font-semibold tracking-[0.2em] uppercase text-black/30";
 
 const ENGAGEMENT_PRICING = [
   {
@@ -513,16 +532,71 @@ function ServicesOverlay({ show }: { show: boolean }) {
 
 export default function HomePage() {
   const [heroStateIndex, setHeroStateIndex] = useState(0);
+  const [heroReducedMotion, setHeroReducedMotion] = useState(false);
+  const [heroPointerPaused, setHeroPointerPaused] = useState(false);
   const [showGrid, setShowGrid] = useState(false);
   const cooldownRef = useRef(false);
+  const heroPausedRef = useRef(false);
+  const heroAdvanceTimerRef = useRef<number | null>(null);
+  const heroFirstAdvanceScheduledRef = useRef(false);
   const router = useRouter();
 
+  const heroSceneCount = HERO_SCENES.length;
+  const heroState = HERO_SCENES[heroStateIndex % heroSceneCount]!;
+
   useEffect(() => {
-    const id = window.setInterval(() => {
-      setHeroStateIndex((prev) => (prev + 1) % HERO_STATES.length);
-    }, HERO_STATE_INTERVAL_MS);
-    return () => window.clearInterval(id);
+    heroPausedRef.current = heroPointerPaused;
+  }, [heroPointerPaused]);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setHeroReducedMotion(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
   }, []);
+
+  useEffect(() => {
+    if (heroReducedMotion) {
+      setHeroStateIndex(0);
+    }
+  }, [heroReducedMotion]);
+
+  useEffect(() => {
+    if (heroReducedMotion) return;
+
+    const clearT = () => {
+      if (heroAdvanceTimerRef.current != null) {
+        window.clearTimeout(heroAdvanceTimerRef.current);
+        heroAdvanceTimerRef.current = null;
+      }
+    };
+
+    let cancelled = false;
+    const schedule = (delay: number) => {
+      clearT();
+      heroAdvanceTimerRef.current = window.setTimeout(() => {
+        heroAdvanceTimerRef.current = null;
+        if (cancelled) return;
+        heroFirstAdvanceScheduledRef.current = true;
+        if (!heroPausedRef.current) {
+          setHeroStateIndex((p) => (p + 1) % heroSceneCount);
+        }
+        schedule(HERO_INTERVAL_NORMAL_MS);
+      }, delay);
+    };
+
+    schedule(
+      heroFirstAdvanceScheduledRef.current
+        ? HERO_INTERVAL_NORMAL_MS
+        : HERO_INTERVAL_FIRST_MS
+    );
+
+    return () => {
+      cancelled = true;
+      clearT();
+    };
+  }, [heroReducedMotion, heroSceneCount]);
 
   // --- Overlay control (vertical scroll/keys/touch) ---
   useEffect(() => {
@@ -610,8 +684,6 @@ export default function HomePage() {
     }
   };
 
-  const heroState = HERO_STATES[heroStateIndex]!;
-
   return (
     <div
       className="flex flex-col min-h-screen text-text-light dark:text-text-dark transition-colors duration-500"
@@ -673,21 +745,34 @@ export default function HomePage() {
                 </motion.h1>
 
                 <div
-                  className="text-sm md:text-base font-medium max-w-2xl leading-snug px-2 min-h-[4.5rem] md:min-h-[5rem] mt-2 mb-1.5"
+                  className="max-md:text-[11px] text-sm md:text-base font-medium w-full max-w-2xl px-1 sm:px-2 mt-2 mb-1.5 cursor-default flex flex-col gap-0 leading-snug md:leading-snug"
                   aria-live="polite"
+                  title="Hover or touch here to pause rotation"
+                  onPointerEnter={() => setHeroPointerPaused(true)}
+                  onPointerLeave={() => setHeroPointerPaused(false)}
                 >
-                  <p className="mb-1.5">
-                    <HeroLineChunks chunks={heroState.line1} />
+                  <p className="m-0 p-0 text-center text-pretty">
+                    <HeroLineChunks
+                      chunks={heroState.line1}
+                      reducedMotion={heroReducedMotion}
+                    />
                   </p>
-                  <p className="mb-0">
-                    <HeroLineChunks chunks={heroState.line2} />
+                  <p className="m-0 p-0 text-center text-pretty">
+                    <HeroLineChunks
+                      chunks={heroState.line2}
+                      reducedMotion={heroReducedMotion}
+                    />
                   </p>
-                  <p className="mt-0 italic text-black/85">
-                    <HeroLineChunks chunks={heroState.line3} />
+                  <p className="m-0 p-0 text-center text-pretty text-black/85">
+                    <HeroLineChunks
+                      chunks={heroState.line3}
+                      italic
+                      reducedMotion={heroReducedMotion}
+                    />
                   </p>
                 </div>
 
-                <div className="flex items-center justify-center gap-1">
+                <div className="flex items-center justify-center gap-1 pt-[0.3rem]">
                   <a
                     href="https://www.linkedin.com/in/monika-dvorackova/?locale=en_US"
                     target="_blank"
