@@ -40,6 +40,39 @@ a {
   animation-play-state: paused !important;
 }
 
+/* Blog /blog: mobile carousels — duplicated row; -50% = one loop (no JS RAF). */
+@media (prefers-reduced-motion: no-preference) {
+  .blog-carousel-mobile-marquee {
+    animation-name: blog-carousel-marquee;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-duration: var(--blog-marquee-sec, 38s);
+    will-change: transform;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blog-carousel-mobile-marquee {
+    animation: none;
+  }
+}
+
+@keyframes blog-carousel-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Pause while finger is down on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .blog-carousel-mobile-marquee:active {
+    animation-play-state: paused;
+  }
+}
+
 /* Calendar icon */
 .calendar-icon,
 .calendar-icon * {

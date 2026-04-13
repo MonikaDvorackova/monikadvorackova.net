@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import CarouselEdgeFog from "@/components/CarouselEdgeFog";
 import PostListingCard, { type ListingPost } from "@/components/PostListingCard";
-import { useMobileMarqueeAutoplay } from "@/components/useMobileMarqueeAutoplay";
 import {
   BLOG_CAROUSEL_MOBILE_QUERIES,
   getBlogCarouselMobileMatches,
@@ -13,7 +12,6 @@ export default function WritingList({ posts }: { posts: ListingPost[] }) {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const pausedRef = useRef(false);
-  const mobileScrollerRef = useRef<HTMLDivElement | null>(null);
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -36,12 +34,6 @@ export default function WritingList({ posts }: { posts: ListingPost[] }) {
   const useMarquee = posts.length >= 2 && !isMobile;
   const firstLoop = posts;
   const secondLoop = posts;
-  const mobileContentKey = posts.map((p) => p.slug).join("|");
-
-  useMobileMarqueeAutoplay(mobileScrollerRef, isMobile && posts.length >= 2, mobileContentKey, {
-    speedPxPerSec: 11,
-    idleResumeMs: 1000,
-  });
 
   useEffect(() => {
     if (!useMarquee) return;
@@ -113,7 +105,6 @@ export default function WritingList({ posts }: { posts: ListingPost[] }) {
   if (isMobile) {
     return (
       <div
-        ref={mobileScrollerRef}
         className="relative w-full overflow-hidden no-scrollbar select-none"
         style={{
           WebkitOverflowScrolling: "touch",
@@ -124,8 +115,8 @@ export default function WritingList({ posts }: { posts: ListingPost[] }) {
       >
         <CarouselEdgeFog />
         <div
-          data-marquee-track
-          className="relative z-0 flex w-max items-stretch gap-2 py-0.5 px-0.5"
+          className="blog-carousel-mobile-marquee relative z-0 flex w-max items-stretch gap-2 py-0.5 px-0.5"
+          style={{ "--blog-marquee-sec": "40s" } as CSSProperties}
         >
           {posts.map((post) => (
             <div key={`${post.slug}-a`} className="flex shrink-0 self-stretch">
