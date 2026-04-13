@@ -72,7 +72,14 @@ export function useMobileMarqueeAutoplay(
       track.style.transform = `translate3d(${-pos}px, 0, 0)`;
     };
 
+    /** Let tag/post links receive real clicks — otherwise touchmove steals the gesture. */
+    const touchTargetIsLink = (e: TouchEvent) => {
+      const t = e.target;
+      return t instanceof Element && Boolean(t.closest("a[href]"));
+    };
+
     const onTouchStart = (e: TouchEvent) => {
+      if (touchTargetIsLink(e)) return;
       paused = true;
       clearResume();
       touchStartX = e.touches[0].clientX;
@@ -80,6 +87,7 @@ export function useMobileMarqueeAutoplay(
     };
 
     const onTouchMove = (e: TouchEvent) => {
+      if (touchTargetIsLink(e)) return;
       if (loopW <= 0) return;
       const delta = touchStartX - e.touches[0].clientX;
       // Normalise into [0, loopW) — handles both forward and backward swipes.
@@ -87,7 +95,10 @@ export function useMobileMarqueeAutoplay(
       applyTransform();
     };
 
-    const onTouchEnd = () => bumpIdle();
+    const onTouchEnd = (e: TouchEvent) => {
+      if (touchTargetIsLink(e)) return;
+      bumpIdle();
+    };
 
     scroller.addEventListener("touchstart", onTouchStart, { passive: true });
     scroller.addEventListener("touchmove", onTouchMove, { passive: true });

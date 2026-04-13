@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
+import CarouselEdgeFog from "@/components/CarouselEdgeFog";
 import { useMobileMarqueeAutoplay } from "@/components/useMobileMarqueeAutoplay";
 
 export type PublicationItem = {
@@ -304,7 +305,7 @@ export default function PublicationsList() {
     return (
       <div
         ref={mobileScrollerRef}
-        className="relative mask-fade-x-carousel w-full overflow-hidden no-scrollbar select-none"
+        className="relative w-full overflow-hidden no-scrollbar select-none"
         style={{
           WebkitOverflowScrolling: "touch",
           paddingLeft: 6,
@@ -312,7 +313,8 @@ export default function PublicationsList() {
           touchAction: "pan-x",
         }}
       >
-        <div className="flex w-max gap-2 py-0.5 px-0.5">
+        <CarouselEdgeFog />
+        <div className="relative z-0 flex w-max gap-2 py-0.5 px-0.5">
           {items.map((item) => (
             <div key={`${item.id}-a`} className="shrink-0">
               <PublicationCard item={item} solo mobileSolo={isMobile} />
@@ -339,16 +341,11 @@ export default function PublicationsList() {
         onPointerLeave={() => {
           pausedRef.current = false;
         }}
-        style={{
-          WebkitMaskImage:
-            "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.06) 14%, rgba(0,0,0,0.35) 22%, black 38%, black 62%, rgba(0,0,0,0.35) 78%, rgba(0,0,0,0.06) 86%, transparent 100%)",
-          maskImage:
-            "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.06) 14%, rgba(0,0,0,0.35) 22%, black 38%, black 62%, rgba(0,0,0,0.35) 78%, rgba(0,0,0,0.06) 86%, transparent 100%)",
-        }}
       >
+        <CarouselEdgeFog />
         <div
           ref={trackRef}
-          className="flex w-max will-change-transform pl-1 pr-1"
+          className="relative z-0 flex w-max will-change-transform pl-1 pr-1"
           style={{ transform: "translate3d(0,0,0)" }}
         >
           {firstLoop.map((item) => (
