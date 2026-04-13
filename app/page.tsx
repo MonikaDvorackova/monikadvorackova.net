@@ -79,12 +79,34 @@ const HERO_STATES: readonly HeroState[] = [
 
 const HERO_STATE_INTERVAL_MS = 5000;
 
-const HERO_LINE_MOTION = {
-  initial: { opacity: 0, y: 6 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -6 },
-  transition: { duration: 0.5 },
-} as const;
+const HERO_WORD_STAGGER_S = 0.028;
+const HERO_WORD_DURATION = 0.38;
+
+/** Staggered word entrance; unchanged lines keep stable keys so only diffs animate. */
+function HeroWordsLine({ text, italic }: { text: string; italic?: boolean }) {
+  const parts = text.split(/(\s+)/);
+  return (
+    <>
+      {parts.map((part, i) => (
+        <motion.span
+          key={`${text}#${i}#${part}`}
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: HERO_WORD_DURATION,
+            delay: Math.min(i, 28) * HERO_WORD_STAGGER_S,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          className={
+            italic ? "inline-block italic text-black/85" : "inline-block"
+          }
+        >
+          {part}
+        </motion.span>
+      ))}
+    </>
+  );
+}
 
 const SERVICES = [
   {
@@ -586,37 +608,13 @@ export default function HomePage() {
                   aria-live="polite"
                 >
                   <p className="mb-1.5">
-                    <AnimatePresence mode="wait" initial={false}>
-                      <motion.span
-                        key={heroState.line1}
-                        {...HERO_LINE_MOTION}
-                        className="block"
-                      >
-                        {heroState.line1}
-                      </motion.span>
-                    </AnimatePresence>
+                    <HeroWordsLine text={heroState.line1} />
                   </p>
-                  <p className="mb-0 italic text-black/85">
-                    <AnimatePresence mode="wait" initial={false}>
-                      <motion.span
-                        key={heroState.line2}
-                        {...HERO_LINE_MOTION}
-                        className="block"
-                      >
-                        {heroState.line2}
-                      </motion.span>
-                    </AnimatePresence>
+                  <p className="mb-0">
+                    <HeroWordsLine text={heroState.line2} italic />
                   </p>
-                  <p className="mt-0 italic text-black/85">
-                    <AnimatePresence mode="wait" initial={false}>
-                      <motion.span
-                        key={heroState.line3}
-                        {...HERO_LINE_MOTION}
-                        className="block"
-                      >
-                        {heroState.line3}
-                      </motion.span>
-                    </AnimatePresence>
+                  <p className="mt-0">
+                    <HeroWordsLine text={heroState.line3} italic />
                   </p>
                 </div>
 
