@@ -53,7 +53,7 @@ export default function PostListingCard({
 
   const widthStyle = solo
     ? mobileSolo
-      ? "min(84vw, 360px)"
+      ? "min(76vw, 288px)"
       : "min(86vw, 360px)"
     : LISTING_CARD_WIDTH_PX;
 
@@ -71,26 +71,41 @@ export default function PostListingCard({
         color: "#000",
         border: "1px solid rgba(0,42,255,0.12)",
         boxShadow: "inset 0 0 0 1px rgba(8,28,244,0.06), 0 4px 16px rgba(0,0,0,0.07)",
-        padding: solo ? "16px 16px 14px" : "12px 16px 10px",
+        padding:
+          solo && mobileSolo
+            ? "10px 12px 9px"
+            : solo
+              ? "16px 16px 14px"
+              : "12px 16px 10px",
         backdropFilter: "blur(8px)",
         borderRadius: "1rem",
         flexShrink: 0,
       }}
     >
       <div className="flex min-h-0 flex-1 flex-col">
-        <div className="flex min-h-[56px] shrink-0 items-start justify-between gap-3">
+        <div
+          className={`flex shrink-0 items-start justify-between gap-2 sm:gap-3${mobileSolo && solo ? " min-h-[48px]" : " min-h-[56px]"}`}
+        >
           <Link
             href={href}
-            className="min-w-0 flex-1 self-start line-clamp-2 text-[11px] font-bold leading-snug text-black transition-colors group-hover:text-neutral-800 sm:text-[11px]"
+            className={`min-w-0 flex-1 self-start line-clamp-2 font-bold leading-snug text-black transition-colors group-hover:text-neutral-800${mobileSolo && solo ? " text-[10px]" : " text-[11px]"}`}
             title={post.title}
             aria-label={`Open: ${post.title}`}
           >
             {displayTitle}
           </Link>
 
-          <div className="flex min-h-[56px] shrink-0 max-w-[40%] flex-col items-end justify-start gap-1 text-right">
-            <div className="text-[9px] font-medium tabular-nums text-black">{post.date}</div>
-            <div className="mb-0.5 text-[9px] tabular-nums text-black leading-tight">
+          <div
+            className={`flex shrink-0 max-w-[40%] flex-col items-end justify-start gap-0.5 text-right${mobileSolo && solo ? " min-h-[48px]" : " min-h-[56px]"}`}
+          >
+            <div
+              className={`font-medium tabular-nums text-black${mobileSolo && solo ? " text-[8px]" : " text-[9px]"}`}
+            >
+              {post.date}
+            </div>
+            <div
+              className={`mb-0.5 tabular-nums text-black leading-tight${mobileSolo && solo ? " text-[8px]" : " text-[9px]"}`}
+            >
               {Math.max(1, typeof post.readingMinutes === "number" ? post.readingMinutes : 1)} min
             </div>
             <div className="mt-1 flex min-h-[15px] w-full items-end justify-end">
@@ -114,7 +129,7 @@ export default function PostListingCard({
               style={{ color: "#000" }}
             >
               <p
-                className="line-clamp-3 text-[9px] leading-[1.35] text-black sm:text-[9px]"
+                className={`line-clamp-3 leading-[1.35] text-black sm:text-[9px]${mobileSolo && solo ? " text-[8px]" : " text-[9px]"}`}
                 style={{ WebkitTextFillColor: "#000" }}
               >
                 {summary}
@@ -123,7 +138,7 @@ export default function PostListingCard({
           </div>
         ) : null}
 
-        <div className="mt-auto min-h-0 shrink-0 pt-3">
+        <div className={`mt-auto min-h-0 shrink-0${mobileSolo && solo ? " pt-2" : " pt-3"}`}>
           {visibleTags.length ? (
             <div
               className="flex min-h-[24px] flex-nowrap items-center gap-x-[10px] overflow-x-auto overflow-y-hidden no-scrollbar"
@@ -136,7 +151,7 @@ export default function PostListingCard({
                     key={`${post.slug}-${tag}-${i}`}
                     href={`/tags/${encodeURIComponent(tag)}`}
                     aria-label={`Tag: ${label}`}
-                    className="inline-flex shrink-0 items-center rounded px-2.5 py-1 text-[9px] font-semibold leading-none whitespace-nowrap"
+                    className={`inline-flex shrink-0 items-center rounded font-semibold leading-none whitespace-nowrap${mobileSolo && solo ? " px-2 py-0.5 text-[8px]" : " px-2.5 py-1 text-[9px]"}`}
                     style={{
                       backgroundColor: "#004cff",
                       color: "#fff",

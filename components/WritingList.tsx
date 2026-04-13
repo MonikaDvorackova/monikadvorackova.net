@@ -107,15 +107,15 @@ export default function WritingList({ posts }: { posts: ListingPost[] }) {
     return (
       <div
         ref={mobileScrollerRef}
-        className="relative w-full overflow-x-auto overflow-y-hidden no-scrollbar select-none"
+        className="relative mask-fade-x-carousel w-full overflow-hidden no-scrollbar select-none"
         style={{
           WebkitOverflowScrolling: "touch",
-          paddingLeft: 8,
-          paddingRight: 28,
+          paddingLeft: 6,
+          paddingRight: 6,
           touchAction: "pan-x",
         }}
       >
-        <div className="flex w-max items-stretch gap-[14px] py-0.5 pl-1 pr-1">
+        <div className="flex w-max items-stretch gap-2 py-0.5 px-0.5">
           {posts.map((post) => (
             <div key={`${post.slug}-a`} className="flex shrink-0 self-stretch">
               <PostListingCard post={post} solo mobileSolo={isMobile} />

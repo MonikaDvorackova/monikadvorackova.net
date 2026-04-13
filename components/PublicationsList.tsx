@@ -60,14 +60,15 @@ function PublicationCard({
       : estimateReadingMinutes(item.title, item.subtitle, item.blurb);
 
   const cardStyle: CSSProperties = {
-    width: solo ? (mobileSolo ? "min(84vw, 360px)" : "min(86vw, 360px)") : 420,
+    width: solo ? (mobileSolo ? "min(76vw, 288px)" : "min(86vw, 360px)") : 420,
     minHeight: solo ? undefined : 96,
     marginRight: solo ? 0 : 16,
     backgroundColor: "rgba(255,255,255,0.72)",
     color: "#000",
     border: "1px solid rgba(0,42,255,0.12)",
     boxShadow: "inset 0 0 0 1px rgba(8,28,244,0.06), 0 4px 16px rgba(0,0,0,0.07)",
-    padding: solo ? "16px 16px 14px" : "12px 16px 10px",
+    padding:
+      solo && mobileSolo ? "10px 12px 9px" : solo ? "16px 16px 14px" : "12px 16px 10px",
     backdropFilter: "blur(8px)",
     borderRadius: "1rem",
     contain: "layout paint",
@@ -77,11 +78,13 @@ function PublicationCard({
   const inner = (
     <>
       <div className="flex h-full flex-col">
-        <div className="flex min-h-[56px] items-start justify-between gap-3">
+        <div
+          className={`flex items-start justify-between gap-2 sm:gap-3${mobileSolo && solo ? " min-h-[48px]" : " min-h-[56px]"}`}
+        >
           <div className="min-w-0 flex-1 self-start">
             <div className="flex items-start gap-2">
               <div
-                className="line-clamp-3 text-[11px] font-bold leading-snug text-black transition-colors group-hover:text-neutral-800"
+                className={`line-clamp-3 font-bold leading-snug text-black transition-colors group-hover:text-neutral-800${mobileSolo && solo ? " text-[10px]" : " text-[11px]"}`}
                 title={item.title}
               >
                 {item.title}
@@ -94,16 +97,26 @@ function PublicationCard({
               ) : null}
             </div>
             {item.subtitle ? (
-              <p className="mt-1 text-[9px] leading-snug text-black">{item.subtitle}</p>
+              <p
+                className={`mt-1 leading-snug text-black${mobileSolo && solo ? " text-[8px]" : " text-[9px]"}`}
+              >
+                {item.subtitle}
+              </p>
             ) : null}
           </div>
 
-          <div className="flex min-h-[56px] shrink-0 flex-col items-end justify-start gap-1 text-right">
+          <div
+            className={`flex shrink-0 flex-col items-end justify-start gap-0.5 text-right${mobileSolo && solo ? " min-h-[48px]" : " min-h-[56px]"}`}
+          >
             {item.date ? (
-              <div className="text-[9px] font-medium tabular-nums text-black">{item.date}</div>
+              <div
+                className={`font-medium tabular-nums text-black${mobileSolo && solo ? " text-[8px]" : " text-[9px]"}`}
+              >
+                {item.date}
+              </div>
             ) : null}
             <div
-              className="text-[9px] font-medium"
+              className={`font-medium${mobileSolo && solo ? " text-[8px]" : " text-[9px]"}`}
               style={
                 (item.caption ?? "").toLowerCase() === "forthcoming"
                   ? {
@@ -115,21 +128,27 @@ function PublicationCard({
             >
               {item.caption ?? "External"}
             </div>
-            <div className="mb-0.5 text-[9px] tabular-nums text-black leading-tight">
+            <div
+              className={`mb-0.5 tabular-nums text-black leading-tight${mobileSolo && solo ? " text-[8px]" : " text-[9px]"}`}
+            >
               {readingMinutes} min
             </div>
             <div className="mt-1 min-h-[15px] w-full shrink-0" aria-hidden />
           </div>
         </div>
 
-        <p className="mt-2 line-clamp-3 text-[9px] leading-[1.35] text-black">{item.blurb}</p>
+        <p
+          className={`mt-2 line-clamp-3 leading-[1.35] text-black${mobileSolo && solo ? " text-[8px]" : " text-[9px]"}`}
+        >
+          {item.blurb}
+        </p>
 
-        <div className="mt-auto pt-3">
+        <div className={`mt-auto${mobileSolo && solo ? " pt-2" : " pt-3"}`}>
           <div className="flex flex-wrap gap-x-[10px] gap-y-2">
             {item.tags?.map((tag) => (
               <span
                 key={tag}
-                className="inline-flex items-center whitespace-nowrap rounded px-2.5 py-1 text-[9px] font-semibold leading-none"
+                className={`inline-flex items-center whitespace-nowrap rounded font-semibold leading-none${mobileSolo && solo ? " px-2 py-0.5 text-[8px]" : " px-2.5 py-1 text-[9px]"}`}
                 style={{
                   backgroundColor: "#004cff",
                   color: "#fff",
@@ -140,7 +159,7 @@ function PublicationCard({
               </span>
             ))}
             <span
-              className="inline-flex items-center whitespace-nowrap rounded px-2.5 py-1 text-[9px] font-semibold leading-none"
+              className={`inline-flex items-center whitespace-nowrap rounded font-semibold leading-none${mobileSolo && solo ? " px-2 py-0.5 text-[8px]" : " px-2.5 py-1 text-[9px]"}`}
               style={{
                 backgroundColor: "#004cff",
                 color: "#fff",
@@ -285,15 +304,15 @@ export default function PublicationsList() {
     return (
       <div
         ref={mobileScrollerRef}
-        className="relative w-full overflow-x-auto overflow-y-hidden no-scrollbar select-none"
+        className="relative mask-fade-x-carousel w-full overflow-hidden no-scrollbar select-none"
         style={{
           WebkitOverflowScrolling: "touch",
-          paddingLeft: 8,
-          paddingRight: 28,
+          paddingLeft: 6,
+          paddingRight: 6,
           touchAction: "pan-x",
         }}
       >
-        <div className="flex w-max gap-[14px] py-0.5 pl-1 pr-1">
+        <div className="flex w-max gap-2 py-0.5 px-0.5">
           {items.map((item) => (
             <div key={`${item.id}-a`} className="shrink-0">
               <PublicationCard item={item} solo mobileSolo={isMobile} />

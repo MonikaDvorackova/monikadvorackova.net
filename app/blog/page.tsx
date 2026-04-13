@@ -61,8 +61,8 @@ function normalizePosts(data: unknown): Post[] {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="w-full pb-3">
-      <div className="text-center text-[10px] font-semibold tracking-[0.18em] uppercase text-black/35">
+    <div className="w-full pb-2 sm:pb-3">
+      <div className="text-center text-[9px] sm:text-[10px] font-semibold tracking-[0.18em] uppercase text-black/35">
         {children}
       </div>
     </div>
@@ -72,11 +72,11 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 function SectionPanel({ children }: { children: React.ReactNode }) {
   return (
     <div
-      className="overflow-visible rounded-2xl bg-white/35 py-4 backdrop-blur-sm sm:py-5"
+      className="overflow-visible rounded-2xl bg-white/35 py-3 backdrop-blur-sm sm:py-5"
       style={{
         marginTop: 10,
-        paddingLeft: "clamp(0.75rem, 2.5vw, 1.25rem)",
-        paddingRight: "clamp(0.75rem, 2.5vw, 1.25rem)",
+        paddingLeft: "clamp(0.65rem, 2vw, 1.25rem)",
+        paddingRight: "clamp(0.65rem, 2vw, 1.25rem)",
         boxShadow:
           "inset 0 1px 0 rgba(255,255,255,0.5), 0 6px 28px rgba(0,0,0,0.05)",
       }}
@@ -143,8 +143,8 @@ export default function BlogPage() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
       >
-        <main className="flex min-h-0 min-w-0 flex-1 flex-col overflow-x-hidden overflow-y-hidden py-10 sm:py-12">
-          <div className="page-gutter-x w-full max-w-5xl mx-auto flex flex-col pb-10">
+        <main className="flex min-h-0 min-w-0 flex-1 flex-col overflow-x-hidden overflow-y-auto overscroll-y-contain py-6 sm:py-10 md:py-12">
+          <div className="page-gutter-x w-full max-w-5xl mx-auto flex flex-col pb-6 sm:pb-10">
             {hasSoftware && (
               <motion.section
                 id="software"
@@ -164,8 +164,7 @@ export default function BlogPage() {
 
             {hasPublications && (
               <div
-                className="w-full"
-                style={{ marginTop: publicationsTopPad ? 40 : undefined }}
+                className={`w-full${publicationsTopPad ? " mt-7 sm:mt-10" : ""}`}
               >
                 <motion.section
                   className="w-full"
@@ -184,10 +183,7 @@ export default function BlogPage() {
             )}
 
             {hasWritings && (
-              <div
-                className="w-full"
-                style={{ marginTop: writingsTopPad ? 40 : undefined }}
-              >
+              <div className={`w-full${writingsTopPad ? " mt-7 sm:mt-10" : ""}`}>
                 <motion.section
                   className="w-full"
                   initial={{ opacity: 0, y: 24 }}
