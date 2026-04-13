@@ -7,8 +7,11 @@ type Options = {
 
 /**
  * Mobile-only: autoplay advances `scroller.scrollLeft` over a duplicated row.
- * Uses native horizontal overflow so iOS can pan the row; desktop carousels use
- * a separate transform-based path and never call this hook with enabled=true.
+ * Desktop carousels use a separate transform path; this hook runs only when enabled.
+ *
+ * iOS often fires `scroll` asynchronously after `scrollLeft` assignment, so a
+ * microtask "programmatic" flag clears before `scroll` runs and was pausing
+ * autoplay every frame. We ignore pause during a short window after each write.
  */
 export function useMobileMarqueeAutoplay(
   scrollerRef: RefObject<HTMLDivElement | null>,
@@ -36,7 +39,10 @@ export function useMobileMarqueeAutoplay(
 
     let loopW = 0;
 
-    let programmaticScroll = false;
+    /** True only while sync scroll handlers run during our scrollLeft assignment. */
+    let applyingScroll = false;
+    /** Ignore user-scroll pause until this time (async scroll on WebKit). */
+    let ignoreUserScrollPauseUntil = 0;
 
     const clearResume = () => {
       if (resumeTimer) {
@@ -58,25 +64,31 @@ export function useMobileMarqueeAutoplay(
     };
 
     const setScrollLeft = (next: number) => {
-      programmaticScroll = true;
+      applyingScroll = true;
+      ignoreUserScrollPauseUntil = performance.now() + 80;
       scroller.scrollLeft = next;
-      queueMicrotask(() => {
-        programmaticScroll = false;
-      });
+      applyingScroll = false;
     };
 
     const wrapScroll = () => {
       if (loopW <= 0) return;
       let sl = scroller.scrollLeft;
       while (sl >= loopW) sl -= loopW;
-      if (sl !== scroller.scrollLeft) setScrollLeft(sl);
+      if (sl !== scroller.scrollLeft) {
+        applyingScroll = true;
+        ignoreUserScrollPauseUntil = performance.now() + 80;
+        scroller.scrollLeft = sl;
+        applyingScroll = false;
+      }
     };
 
     const onScroll = () => {
-      if (programmaticScroll) return;
+      if (applyingScroll) return;
+      if (performance.now() < ignoreUserScrollPauseUntil) return;
+
+      wrapScroll();
       paused = true;
       clearResume();
-      wrapScroll();
       bumpIdle();
     };
 

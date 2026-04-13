@@ -4,6 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import CarouselEdgeFog from "@/components/CarouselEdgeFog";
 import PostListingCard, { type ListingPost } from "@/components/PostListingCard";
 import { useMobileMarqueeAutoplay } from "@/components/useMobileMarqueeAutoplay";
+import {
+  BLOG_CAROUSEL_MOBILE_QUERIES,
+  getBlogCarouselMobileMatches,
+} from "@/lib/blogCarouselMobileMedia";
 
 export default function ClientBlog({ posts }: { posts: ListingPost[] }) {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
@@ -14,16 +18,18 @@ export default function ClientBlog({ posts }: { posts: ListingPost[] }) {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const mq = window.matchMedia("(max-width: 639px)");
-    const update = () => setIsMobile(mq.matches);
+    const mqs = BLOG_CAROUSEL_MOBILE_QUERIES.map((q) => window.matchMedia(q));
+    const update = () => setIsMobile(getBlogCarouselMobileMatches());
     update();
-
-    if (mq.addEventListener) mq.addEventListener("change", update);
-    else mq.addListener(update);
-
+    mqs.forEach((mq) => {
+      if (mq.addEventListener) mq.addEventListener("change", update);
+      else mq.addListener(update);
+    });
     return () => {
-      if (mq.removeEventListener) mq.removeEventListener("change", update);
-      else mq.removeListener(update);
+      mqs.forEach((mq) => {
+        if (mq.removeEventListener) mq.removeEventListener("change", update);
+        else mq.removeListener(update);
+      });
     };
   }, []);
 
