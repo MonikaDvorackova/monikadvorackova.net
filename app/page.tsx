@@ -320,18 +320,18 @@ function ServicesOverlay({ show }: { show: boolean }) {
               variants={gridVariants}
               initial="hidden"
               animate="show"
-              className="flex flex-col gap-3.5 w-full shrink-0"
+              className="flex flex-col gap-2.5 w-full shrink-0"
             >
               {SERVICES.map(({ icon: Icon, title, mobileDesc }) => (
                 <motion.div
                   key={`m-${title}`}
                   variants={itemVariants}
-                  className="flex flex-col items-center justify-center text-center rounded-2xl bg-white shrink-0 border border-black/[0.06] shadow-[0_4px_20px_rgba(0,0,0,0.06)]"
-                  style={{ padding: "12px 14px" }}
+                  className="flex flex-col items-center justify-center text-center rounded-xl bg-white shrink-0 border border-black/[0.06] shadow-[0_3px_14px_rgba(0,0,0,0.05)]"
+                  style={{ padding: "9px 11px" }}
                 >
-                  <Icon size={18} color="#004CFF" className="mb-1.5" />
-                  <h3 className="font-semibold text-black text-sm leading-snug">{title}</h3>
-                  <p className="text-xs leading-relaxed text-zinc-600 mt-2 line-clamp-3">{mobileDesc}</p>
+                  <Icon size={15} color="#004CFF" className="mb-1" />
+                  <h3 className="font-semibold text-black text-xs leading-snug">{title}</h3>
+                  <p className="text-[11px] leading-relaxed text-zinc-600 mt-1.5 line-clamp-3">{mobileDesc}</p>
                 </motion.div>
               ))}
             </motion.div>
@@ -363,27 +363,27 @@ function ServicesOverlay({ show }: { show: boolean }) {
               initial="hidden"
               animate="show"
               className="grid max-[815px]:grid-cols-2 min-[816px]:grid-cols-3 justify-center items-start w-fit max-w-6xl mx-auto shrink-0"
-              style={{ rowGap: "24px", columnGap: "24px" }}
+              style={{ rowGap: "16px", columnGap: "16px" }}
             >
               {SERVICES.map(({ icon: Icon, title, desc }) => (
                 <motion.div
                   key={title}
                   variants={itemVariants}
-                  className="group flex flex-col items-center justify-center text-center rounded-2xl border border-[rgba(0,42,255,0.12)] bg-white shadow-[0_8px_30px_rgba(0,0,0,0.08),inset_0_0_0_1px_rgba(8,28,244,0.06)] transition-transform duration-300 ease-out hover:scale-[1.02] hover:shadow-[0_12px_36px_rgba(0,0,0,0.1)] w-[152px] min-[640px]:w-[168px] min-[816px]:w-[176px] aspect-square min-h-0"
-                  style={{ padding: "10px 9px" }}
+                  className="group flex flex-col items-center justify-center text-center rounded-xl border border-[rgba(0,42,255,0.12)] bg-white shadow-[0_6px_22px_rgba(0,0,0,0.07),inset_0_0_0_1px_rgba(8,28,244,0.06)] transition-transform duration-300 ease-out hover:scale-[1.02] hover:shadow-[0_9px_28px_rgba(0,0,0,0.09)] w-[128px] min-[640px]:w-[140px] min-[816px]:w-[148px] aspect-square min-h-0"
+                  style={{ padding: "7px 6px" }}
                 >
-                  <div className="flex flex-col items-center justify-center gap-2 w-full max-w-[94%] mx-auto min-h-0 flex-1">
-                    <div className="h-7 w-full flex items-end justify-center shrink-0">
+                  <div className="flex flex-col items-center justify-center gap-1 w-full max-w-[96%] mx-auto min-h-0 flex-1">
+                    <div className="h-5 w-full flex items-end justify-center shrink-0">
                       <Icon
-                        size={19}
+                        size={16}
                         color="#004CFF"
                         className="transition-transform duration-300 group-hover:scale-110"
                       />
                     </div>
-                    <h3 className="font-semibold text-black text-xs sm:text-sm leading-snug line-clamp-2">
+                    <h3 className="font-semibold text-black text-[10px] sm:text-[11px] leading-tight line-clamp-2">
                       {title}
                     </h3>
-                    <p className="text-[11px] sm:text-xs leading-relaxed text-zinc-600 line-clamp-4">
+                    <p className="text-[9px] sm:text-[10px] leading-snug text-zinc-600 line-clamp-4">
                       {desc}
                     </p>
                   </div>
