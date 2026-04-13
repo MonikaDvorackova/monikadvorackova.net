@@ -133,7 +133,7 @@ const HERO_LINE_MOTION = {
   transition: { duration: 0.5 },
 } as const;
 
-/** One motion.span per chunk; gaps use margin so words never glue (plain spaces can collapse between inline-blocks). */
+/** One motion.span per chunk. Gaps use inline-block + margin (iOS Safari often ignores horizontal margin on `inline`). */
 function HeroLineChunks({
   chunks,
   italic,
@@ -142,7 +142,9 @@ function HeroLineChunks({
   italic?: boolean;
 }) {
   return (
-    <span className={italic ? "italic text-black/85" : undefined}>
+    <span
+      className={`whitespace-normal break-words${italic ? " italic text-black/85" : ""}`}
+    >
       {chunks.map(({ slot, text }, index) => {
         const prevText = chunks[index - 1]?.text ?? "";
         const gapBefore =
@@ -151,7 +153,9 @@ function HeroLineChunks({
           <React.Fragment key={slot}>
             <span
               className={
-                gapBefore ? "inline ml-[0.25em]" : "inline"
+                gapBefore
+                  ? "inline-block max-w-full align-baseline ml-[0.35em]"
+                  : "inline-block max-w-full align-baseline"
               }
             >
               <AnimatePresence mode="wait" initial={false}>
@@ -159,7 +163,7 @@ function HeroLineChunks({
                   <motion.span
                     key={text}
                     {...HERO_LINE_MOTION}
-                    className="inline-block"
+                    className="inline-block max-w-full align-baseline"
                   >
                     {text}
                   </motion.span>
@@ -714,7 +718,7 @@ export default function HomePage() {
                 </div>
 
                 <div className="mt-3 flex flex-col items-center">
-                  <div className="text-sm md:text-base font-normal mb-1.5 hover:scale-110 transition-transform duration-300 translate-y-[6px]">
+                  <div className="text-xs md:text-sm font-normal lowercase mb-1.5 hover:scale-110 transition-transform duration-300 translate-y-[6px]">
                     Consultation / Articles & Software
                   </div>
                   <div className="pt-[0.3rem] flex gap-1">
