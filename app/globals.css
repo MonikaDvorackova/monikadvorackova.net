@@ -40,6 +40,37 @@ a {
   animation-play-state: paused !important;
 }
 
+/* Blog /blog: mobile carousels — duplicated row; -50% = one loop.
+   Do NOT gate on prefers-reduced-motion: no-preference only: many devices
+   would get no animation at all. Slow down instead of disabling when reduced. */
+.blog-carousel-mobile-marquee {
+  animation: blog-carousel-marquee var(--blog-marquee-sec, 38s) linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blog-carousel-mobile-marquee {
+    animation-duration: calc(var(--blog-marquee-sec, 38s) * 3);
+  }
+}
+
+@keyframes blog-carousel-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Pause while finger is down on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .blog-carousel-mobile-marquee:active {
+    animation-play-state: paused;
+  }
+}
+
 /* Calendar icon */
 .calendar-icon,
 .calendar-icon * {

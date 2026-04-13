@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import CarouselEdgeFog from "@/components/CarouselEdgeFog";
-import { useMobileMarqueeAutoplay } from "@/components/useMobileMarqueeAutoplay";
+import { useBlogCarouselMobileLayout } from "@/lib/blogCarouselMobileMedia";
 
 export type PublicationItem = {
   id: string;
@@ -206,33 +206,12 @@ export default function PublicationsList() {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const pausedRef = useRef(false);
-  const mobileScrollerRef = useRef<HTMLDivElement | null>(null);
 
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 639px)");
-    const update = () => setIsMobile(mq.matches);
-    update();
-
-    if (mq.addEventListener) mq.addEventListener("change", update);
-    else mq.addListener(update);
-
-    return () => {
-      if (mq.removeEventListener) mq.removeEventListener("change", update);
-      else mq.removeListener(update);
-    };
-  }, []);
+  const isMobile = useBlogCarouselMobileLayout();
 
   const useMarquee = items.length >= 2 && !isMobile;
   const firstLoop = items;
   const secondLoop = items;
-  const mobileContentKey = items.map((i) => i.id).join("|");
-
-  useMobileMarqueeAutoplay(mobileScrollerRef, isMobile && items.length >= 2, mobileContentKey, {
-    speedPxPerSec: 11,
-    idleResumeMs: 1000,
-  });
 
   useEffect(() => {
     if (!useMarquee) return;
@@ -304,17 +283,27 @@ export default function PublicationsList() {
   if (isMobile) {
     return (
       <div
-        ref={mobileScrollerRef}
         className="relative w-full overflow-hidden no-scrollbar select-none"
         style={{
           WebkitOverflowScrolling: "touch",
           paddingLeft: 6,
           paddingRight: 6,
-          touchAction: "pan-x",
+          touchAction: "manipulation",
         }}
       >
         <CarouselEdgeFog />
-        <div className="relative z-0 flex w-max gap-2 py-0.5 px-0.5">
+        <div
+          className="blog-carousel-mobile-marquee relative z-0 flex w-max gap-2 py-0.5 px-0.5"
+          style={
+            {
+              "--blog-marquee-sec": "45s",
+              animation:
+                "blog-carousel-marquee var(--blog-marquee-sec, 45s) linear infinite",
+              WebkitAnimation:
+                "blog-carousel-marquee var(--blog-marquee-sec, 45s) linear infinite",
+            } as CSSProperties
+          }
+        >
           {items.map((item) => (
             <div key={`${item.id}-a`} className="shrink-0">
               <PublicationCard item={item} solo mobileSolo={isMobile} />

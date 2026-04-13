@@ -108,10 +108,12 @@ export default function BlogPage() {
       })
       .then((data) => {
         setPosts(normalizePosts(data));
-        setTimeout(() => setIsLoaded(true), 300);
       })
       .catch((err) => {
         console.error(err);
+      })
+      .finally(() => {
+        setTimeout(() => setIsLoaded(true), 300);
       });
   }, []);
 
