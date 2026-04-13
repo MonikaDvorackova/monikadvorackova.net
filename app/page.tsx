@@ -151,20 +151,30 @@ function HeroLineChunks({
   chunks,
   italic,
   reducedMotion,
+  /** Keep one visual row on narrow viewports (hero line 1); horizontal scroll on parent. */
+  nowrapMobile,
 }: {
   chunks: readonly HeroChunk[];
   italic?: boolean;
   reducedMotion?: boolean;
+  nowrapMobile?: boolean;
 }) {
   const text = chunks.map((c) => c.text).join("");
+  const wrapClass = nowrapMobile
+    ? "whitespace-normal break-words max-md:whitespace-nowrap max-md:break-normal"
+    : "whitespace-normal break-words";
   if (reducedMotion) {
     return (
-      <span className={italic ? "italic text-black/85" : undefined}>{text}</span>
+      <span
+        className={`${wrapClass}${italic ? " italic text-black/85" : ""}`}
+      >
+        {text}
+      </span>
     );
   }
   return (
     <span
-      className={`whitespace-normal break-words${italic ? " italic text-black/85" : ""}`}
+      className={`${wrapClass}${italic ? " italic text-black/85" : ""}`}
     >
       {chunks.map(({ slot, text: chunkText }, index) => {
         const prevText = chunks[index - 1]?.text ?? "";
@@ -751,10 +761,11 @@ export default function HomePage() {
                   onPointerEnter={() => setHeroPointerPaused(true)}
                   onPointerLeave={() => setHeroPointerPaused(false)}
                 >
-                  <p className="m-0 p-0 text-center text-pretty">
+                  <p className="m-0 p-0 text-center text-pretty max-md:overflow-x-auto max-md:[scrollbar-width:none] max-md:[&::-webkit-scrollbar]:hidden">
                     <HeroLineChunks
                       chunks={heroState.line1}
                       reducedMotion={heroReducedMotion}
+                      nowrapMobile
                     />
                   </p>
                   <p className="m-0 p-0 text-center text-pretty">
