@@ -683,6 +683,32 @@ export default function HomePage() {
             </motion.div>
           </motion.main>
 
+          <section
+            aria-labelledby="govai-highlight-heading"
+            className="w-full max-w-xl mx-auto px-4 shrink-0 pt-2 pb-0 mb-8 border-t border-black/[0.06]"
+          >
+            <h2
+              id="govai-highlight-heading"
+              className="text-center text-[8px] font-semibold tracking-[0.16em] uppercase text-black/30"
+            >
+              GovAI
+            </h2>
+            <p className="mt-1 text-[11px] font-medium text-black text-center leading-tight text-balance px-0.5">
+              Audit-ready infrastructure for ML and LLM systems.
+            </p>
+            <p className="mt-0.5 text-[10px] text-zinc-600 text-center leading-tight text-balance max-w-md mx-auto px-0.5">
+              A system for evidence, policy enforcement, and compliance-ready AI workflows.
+            </p>
+            <div className="mt-1 flex justify-center">
+              <Link
+                href="/blog#govai"
+                className="text-[10px] font-semibold text-[#004cff] hover:opacity-90 transition-opacity"
+              >
+                View GovAI
+              </Link>
+            </div>
+          </section>
+
           <div className="flex flex-col items-center mt-auto">
             <motion.div
               animate={{ y: [0, 5, 0] }}
