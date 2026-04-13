@@ -6,12 +6,9 @@ type Options = {
 };
 
 /**
- * Mobile-only: autoplay advances `scroller.scrollLeft` over a duplicated row.
- * Desktop carousels use a separate transform path; this hook runs only when enabled.
- *
- * iOS often fires `scroll` asynchronously after `scrollLeft` assignment, so a
- * microtask "programmatic" flag clears before `scroll` runs and was pausing
- * autoplay every frame. We ignore pause during a short window after each write.
+ * Mobile-only: marquee via `transform` on `[data-marquee-track]` (no `scrollLeft`).
+ * Avoids iOS/WebKit issues where `scroll` events and programmatic `scrollLeft`
+ * interact badly; desktop carousels use a separate path and never enable this hook.
  */
 export function useMobileMarqueeAutoplay(
   scrollerRef: RefObject<HTMLDivElement | null>,
@@ -37,12 +34,13 @@ export function useMobileMarqueeAutoplay(
     let paused = false;
     let resumeTimer: ReturnType<typeof setTimeout> | null = null;
 
+    let pos = 0;
     let loopW = 0;
 
-    /** True only while sync scroll handlers run during our scrollLeft assignment. */
-    let applyingScroll = false;
-    /** Ignore user-scroll pause until this time (async scroll on WebKit). */
-    let ignoreUserScrollPauseUntil = 0;
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let posAtTouchStart = 0;
+    let touchIsHorizontalDrag = false;
 
     const clearResume = () => {
       if (resumeTimer) {
@@ -60,53 +58,72 @@ export function useMobileMarqueeAutoplay(
     };
 
     const measureLoopW = () => {
-      loopW = track.scrollWidth / 2;
-    };
-
-    const setScrollLeft = (next: number) => {
-      applyingScroll = true;
-      ignoreUserScrollPauseUntil = performance.now() + 80;
-      scroller.scrollLeft = next;
-      applyingScroll = false;
-    };
-
-    const wrapScroll = () => {
-      if (loopW <= 0) return;
-      let sl = scroller.scrollLeft;
-      while (sl >= loopW) sl -= loopW;
-      if (sl !== scroller.scrollLeft) {
-        applyingScroll = true;
-        ignoreUserScrollPauseUntil = performance.now() + 80;
-        scroller.scrollLeft = sl;
-        applyingScroll = false;
+      void track.offsetHeight;
+      let half = track.scrollWidth / 2;
+      if (half <= 0 && track.children.length >= 2) {
+        const n = Math.floor(track.children.length / 2);
+        let w = 0;
+        for (let i = 0; i < n; i++) {
+          const el = track.children[i] as HTMLElement;
+          w += el.getBoundingClientRect().width;
+        }
+        const styles = window.getComputedStyle(track);
+        const gap =
+          parseFloat(styles.columnGap || "0") ||
+          parseFloat(styles.gap || "0") ||
+          8;
+        w += gap * Math.max(0, n - 1);
+        half = w;
       }
+      loopW = half;
     };
 
-    const onScroll = () => {
-      if (applyingScroll) return;
-      if (performance.now() < ignoreUserScrollPauseUntil) return;
+    const applyTransform = () => {
+      track.style.transform = `translate3d(${-pos}px,0,0)`;
+    };
 
-      wrapScroll();
+    const onTouchStart = (e: TouchEvent) => {
+      if (loopW <= 0) measureLoopW();
+      touchIsHorizontalDrag = false;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      posAtTouchStart = pos;
       paused = true;
       clearResume();
-      bumpIdle();
     };
 
-    let touchDepth = 0;
-    const onTouchStart = () => {
-      touchDepth += 1;
-      if (touchDepth === 1) {
-        paused = true;
-        clearResume();
+    const onTouchMove = (e: TouchEvent) => {
+      if (loopW <= 0) measureLoopW();
+      if (loopW <= 0) return;
+
+      const t = e.touches[0];
+      const dx = t.clientX - touchStartX;
+      const dy = t.clientY - touchStartY;
+
+      if (!touchIsHorizontalDrag) {
+        if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
+        touchIsHorizontalDrag =
+          Math.abs(dx) >= Math.abs(dy) && Math.abs(dx) >= 10;
+        if (!touchIsHorizontalDrag) return;
+      }
+
+      const delta = touchStartX - t.clientX;
+      pos = ((posAtTouchStart + delta) % loopW + loopW) % loopW;
+      applyTransform();
+    };
+
+    const onTouchEnd = () => {
+      if (touchIsHorizontalDrag) bumpIdle();
+      else {
+        paused = false;
+        last = performance.now();
       }
     };
-    const onTouchEnd = () => {
-      touchDepth = Math.max(0, touchDepth - 1);
-      if (touchDepth === 0) bumpIdle();
-    };
 
-    scroller.addEventListener("scroll", onScroll, { passive: true });
+    track.style.willChange = "transform";
+
     scroller.addEventListener("touchstart", onTouchStart, { passive: true });
+    scroller.addEventListener("touchmove", onTouchMove, { passive: true });
     scroller.addEventListener("touchend", onTouchEnd, { passive: true });
     scroller.addEventListener("touchcancel", onTouchEnd, { passive: true });
 
@@ -128,10 +145,10 @@ export function useMobileMarqueeAutoplay(
       const dt = (now - last) / 1000;
       last = now;
 
-      if (!paused && loopW > 0 && touchDepth === 0) {
-        let sl = scroller.scrollLeft + speedPxPerSec * dt;
-        while (sl >= loopW) sl -= loopW;
-        setScrollLeft(sl);
+      if (!paused && loopW > 0) {
+        pos += speedPxPerSec * dt;
+        while (pos >= loopW) pos -= loopW;
+        applyTransform();
       }
 
       raf = requestAnimationFrame(loop);
@@ -145,7 +162,9 @@ export function useMobileMarqueeAutoplay(
 
     fontsReady.then(() => {
       measureLoopW();
-      setScrollLeft(0);
+      pos = 0;
+      applyTransform();
+      paused = false;
       last = performance.now();
       raf = requestAnimationFrame(loop);
     });
@@ -154,8 +173,10 @@ export function useMobileMarqueeAutoplay(
       cancelAnimationFrame(raf);
       clearResume();
       ro.disconnect();
-      scroller.removeEventListener("scroll", onScroll);
+      track.style.transform = "";
+      track.style.willChange = "";
       scroller.removeEventListener("touchstart", onTouchStart);
+      scroller.removeEventListener("touchmove", onTouchMove);
       scroller.removeEventListener("touchend", onTouchEnd);
       scroller.removeEventListener("touchcancel", onTouchEnd);
     };
