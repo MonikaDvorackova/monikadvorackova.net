@@ -709,11 +709,15 @@ export default function HomePage() {
             </div>
           </section>
 
-          <div className="flex flex-col items-center mt-auto">
+          <div className="flex flex-col items-center mt-auto pt-6">
+            <p className="mb-2 max-w-[16rem] px-2 text-center text-[8px] font-semibold tracking-[0.16em] uppercase text-black/30 text-balance">
+              Services · pricing · stack
+            </p>
             <motion.div
               animate={{ y: [0, 5, 0] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="text-black/20 mb-4"
+              className="text-black/30 mb-3"
+              aria-hidden
             >
               <svg width="16" height="10" viewBox="0 0 16 10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M1 1l7 7 7-7" />
