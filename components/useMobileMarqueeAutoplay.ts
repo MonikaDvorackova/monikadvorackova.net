@@ -51,7 +51,10 @@ export function useMobileMarqueeAutoplay(
 
     // Touch gesture state for manual swipe.
     let touchStartX = 0;
+    let touchStartY = 0;
     let posAtTouchStart = 0;
+    /** True once the finger clearly moves horizontally (carousel drag vs vertical scroll / tap). */
+    let touchIsHorizontalDrag = false;
 
     const clearResume = () => {
       if (resumeTimer) {
@@ -73,32 +76,43 @@ export function useMobileMarqueeAutoplay(
       track.style.transform = `translate3d(${-pos}px, 0, 0)`;
     };
 
-    /** Let tag/post links receive real clicks — otherwise touchmove steals the gesture. */
-    const touchTargetIsLink = (e: TouchEvent) => {
-      const t = e.target;
-      return t instanceof Element && Boolean(t.closest("a[href]"));
+    const measureLoopW = () => {
+      loopW = track.scrollWidth / 2;
     };
 
     const onTouchStart = (e: TouchEvent) => {
-      if (touchTargetIsLink(e)) return;
-      paused = true;
-      clearResume();
+      if (loopW <= 0) measureLoopW();
+      touchIsHorizontalDrag = false;
       touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
       posAtTouchStart = pos;
     };
 
     const onTouchMove = (e: TouchEvent) => {
-      if (touchTargetIsLink(e)) return;
+      if (loopW <= 0) measureLoopW();
       if (loopW <= 0) return;
-      const delta = touchStartX - e.touches[0].clientX;
-      // Normalise into [0, loopW) — handles both forward and backward swipes.
+
+      const t = e.touches[0];
+      const dx = t.clientX - touchStartX;
+      const dy = t.clientY - touchStartY;
+
+      if (!touchIsHorizontalDrag) {
+        if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
+        // Prefer vertical page scroll unless movement is clearly horizontal.
+        touchIsHorizontalDrag =
+          Math.abs(dx) >= Math.abs(dy) && Math.abs(dx) >= 10;
+        if (!touchIsHorizontalDrag) return;
+        paused = true;
+        clearResume();
+      }
+
+      const delta = touchStartX - t.clientX;
       pos = ((posAtTouchStart + delta) % loopW + loopW) % loopW;
       applyTransform();
     };
 
-    const onTouchEnd = (e: TouchEvent) => {
-      if (touchTargetIsLink(e)) return;
-      bumpIdle();
+    const onTouchEnd = () => {
+      if (touchIsHorizontalDrag) bumpIdle();
     };
 
     scroller.addEventListener("touchstart", onTouchStart, { passive: true });
@@ -111,6 +125,18 @@ export function useMobileMarqueeAutoplay(
       ((document as DocWithFonts).fonts?.ready) ?? Promise.resolve();
 
     const loop = (now: number) => {
+      // Scroller width can stay fixed while the inner track still gains width (fonts,
+      // images, late layout). Do not integrate motion until we have a real loop width.
+      if (loopW <= 0) {
+        measureLoopW();
+        if (loopW <= 0) {
+          last = now;
+          raf = requestAnimationFrame(loop);
+          return;
+        }
+        last = now;
+      }
+
       const dt = (now - last) / 1000;
       last = now;
 
@@ -123,14 +149,16 @@ export function useMobileMarqueeAutoplay(
       raf = requestAnimationFrame(loop);
     };
 
+    // Observe the track so loopW updates when duplicated cards get a real width,
+    // not only when the viewport-sized wrapper resizes.
     const ro = new ResizeObserver(() => {
-      loopW = track.scrollWidth / 2;
+      measureLoopW();
       last = performance.now();
     });
-    ro.observe(scroller);
+    ro.observe(track);
 
     fontsReady.then(() => {
-      loopW = track.scrollWidth / 2;
+      measureLoopW();
       pos = 0;
       applyTransform();
       last = performance.now();
