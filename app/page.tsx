@@ -23,88 +23,153 @@ import {
 import ArxivIcon from "../components/ArxivIcon";
 import { useRouter } from "next/navigation";
 
-type HeroState = { line1: string; line2: string; line3: string };
+type HeroChunk = { readonly slot: string; readonly text: string };
+
+type HeroFrame = {
+  readonly line1: readonly HeroChunk[];
+  readonly line2: readonly HeroChunk[];
+  readonly line3: readonly HeroChunk[];
+};
+
+const hl1 = (open: string, close: string): readonly HeroChunk[] => [
+  { slot: "l1-open", text: open },
+  { slot: "l1-close", text: close },
+];
+
+const hl2llm = (tail: string): readonly HeroChunk[] => [
+  { slot: "l2-pre", text: "LLMs are used where they" },
+  { slot: "l2-tail", text: tail },
+];
+
+const hl2full = (full: string): readonly HeroChunk[] => [
+  { slot: "l2-pre", text: "" },
+  { slot: "l2-tail", text: full },
+];
+
+const hl3 = (a: string, b: string): readonly HeroChunk[] => [
+  { slot: "l3-a", text: a },
+  { slot: "l3-b", text: b },
+];
+
+/** Line 3 single phrase (one animated chunk; second slot empty). */
+const hl3one = (text: string): readonly HeroChunk[] => [
+  { slot: "l3-a", text },
+  { slot: "l3-b", text: "" },
+];
+
+const HL1_V1 = hl1(
+  "I build ML systems",
+  "that are designed to work in real production environments."
+);
+const HL1_V2 = hl1(
+  "I design ML systems",
+  "as the core of AI systems, not as isolated models."
+);
+const HL1_V3 = hl1(
+  "I design ML systems",
+  "to operate under real world constraints."
+);
+const HL1_V4 = hl1(
+  "I build production grade ML systems",
+  "that extend into AI where it makes sense."
+);
+const HL1_V5 = hl1(
+  "I design ML systems",
+  "with a focus on real world behavior, not just model performance."
+);
+const HL1_V6 = hl1(
+  "I build ML systems",
+  "and teach them through real production scenarios."
+);
+
+const HL2_V1 = hl2llm("are justified.");
+const HL2_V2 = hl2full("Evaluation focuses on behavior, not just metrics.");
+const HL2_V3 = hl2llm("create measurable value.");
+const HL2_V4 = hl2full("Evaluation is part of the system.");
+const HL2_V5 = hl2full("LLMs are integrated carefully.");
+const HL2_V6 = hl2full("AI is applied where behavior can be evaluated.");
+
+/** Third line split so short clauses can swap without redoing the whole line when useful. */
+const HL3_V1 = hl3one("Legal and governance constraints.");
+const HL3_V2 = hl3one("Traceable decisions and outputs.");
+const HL3_V3A = hl3("Governance and law,", "");
+const HL3_V3B = hl3("Governance and law,", "built in.");
+const HL3_V4 = hl3one("Not an afterthought.");
+const HL3_V5 = hl3one("Only where needed.");
+const HL3_V6 = hl3one("Not just explained.");
 
 /**
- * Full hero lines (V1–V6). v1 / v3 L3 shortened so len(line1) > len(line2) > len(line3).
+ * Cycle with partial-line beats: e.g. LLM tail only, l1-close only, l3 second half only.
  */
-const HERO_L1 = {
-  v1: "I build ML systems that are designed to work in real production environments.",
-  v2: "I design ML systems as the core of AI systems, not as isolated models.",
-  v3: "I design ML systems to operate under real world constraints.",
-  v4: "I build production grade ML systems that extend into AI where it makes sense.",
-  v5: "I design ML systems with a focus on real world behavior, not just model performance.",
-  v6: "I build ML systems and teach them through real production scenarios.",
-} as const;
-
-const HERO_L2 = {
-  v1: "LLMs are used where they are justified.",
-  v2: "Evaluation focuses on behavior, not just metrics.",
-  v3: "LLMs are used where they create measurable value.",
-  v4: "Evaluation is part of the system.",
-  v5: "LLMs are integrated carefully.",
-  v6: "AI is applied where behavior can be evaluated.",
-} as const;
-
-const HERO_L3 = {
-  v1: "Legal and governance constraints.",
-  v2: "Traceable decisions and outputs.",
-  v3: "Governance and law, built in.",
-  v4: "Not an afterthought.",
-  v5: "Only where needed.",
-  v6: "Not just explained.",
-} as const;
-
-/** Deterministic cycle 0→…→17→0. */
-const HERO_STATES: readonly HeroState[] = [
-  { line1: HERO_L1.v1, line2: HERO_L2.v1, line3: HERO_L3.v1 },
-  { line1: HERO_L1.v1, line2: HERO_L2.v1, line3: HERO_L3.v2 },
-  { line1: HERO_L1.v1, line2: HERO_L2.v2, line3: HERO_L3.v2 },
-  { line1: HERO_L1.v2, line2: HERO_L2.v2, line3: HERO_L3.v2 },
-  { line1: HERO_L1.v2, line2: HERO_L2.v2, line3: HERO_L3.v3 },
-  { line1: HERO_L1.v2, line2: HERO_L2.v3, line3: HERO_L3.v3 },
-  { line1: HERO_L1.v3, line2: HERO_L2.v3, line3: HERO_L3.v3 },
-  { line1: HERO_L1.v3, line2: HERO_L2.v3, line3: HERO_L3.v4 },
-  { line1: HERO_L1.v3, line2: HERO_L2.v4, line3: HERO_L3.v4 },
-  { line1: HERO_L1.v4, line2: HERO_L2.v4, line3: HERO_L3.v4 },
-  { line1: HERO_L1.v4, line2: HERO_L2.v4, line3: HERO_L3.v5 },
-  { line1: HERO_L1.v4, line2: HERO_L2.v5, line3: HERO_L3.v5 },
-  { line1: HERO_L1.v5, line2: HERO_L2.v5, line3: HERO_L3.v5 },
-  { line1: HERO_L1.v6, line2: HERO_L2.v6, line3: HERO_L3.v5 },
-  { line1: HERO_L1.v6, line2: HERO_L2.v6, line3: HERO_L3.v6 },
-  { line1: HERO_L1.v6, line2: HERO_L2.v6, line3: HERO_L3.v4 },
-  { line1: HERO_L1.v6, line2: HERO_L2.v6, line3: HERO_L3.v1 },
-  { line1: HERO_L1.v6, line2: HERO_L2.v1, line3: HERO_L3.v1 },
+const HERO_STATES: readonly HeroFrame[] = [
+  { line1: HL1_V1, line2: HL2_V1, line3: HL3_V1 },
+  { line1: HL1_V1, line2: HL2_V3, line3: HL3_V1 },
+  { line1: HL1_V1, line2: HL2_V3, line3: HL3_V2 },
+  { line1: HL1_V1, line2: HL2_V2, line3: HL3_V2 },
+  { line1: HL1_V2, line2: HL2_V2, line3: HL3_V2 },
+  { line1: HL1_V2, line2: HL2_V2, line3: HL3_V3A },
+  { line1: HL1_V2, line2: HL2_V2, line3: HL3_V3B },
+  { line1: HL1_V2, line2: HL2_V3, line3: HL3_V3B },
+  { line1: HL1_V3, line2: HL2_V3, line3: HL3_V3B },
+  { line1: HL1_V3, line2: HL2_V3, line3: HL3_V4 },
+  { line1: HL1_V3, line2: HL2_V4, line3: HL3_V4 },
+  { line1: HL1_V4, line2: HL2_V4, line3: HL3_V4 },
+  { line1: HL1_V4, line2: HL2_V4, line3: HL3_V5 },
+  { line1: HL1_V4, line2: HL2_V5, line3: HL3_V5 },
+  { line1: HL1_V5, line2: HL2_V5, line3: HL3_V5 },
+  { line1: HL1_V6, line2: HL2_V6, line3: HL3_V5 },
+  { line1: HL1_V6, line2: HL2_V6, line3: HL3_V6 },
+  { line1: HL1_V6, line2: HL2_V6, line3: HL3_V4 },
+  { line1: HL1_V6, line2: HL2_V6, line3: HL3_V1 },
+  { line1: HL1_V6, line2: HL2_V1, line3: HL3_V1 },
 ];
 
 const HERO_STATE_INTERVAL_MS = 5000;
 
-const HERO_WORD_STAGGER_S = 0.028;
-const HERO_WORD_DURATION = 0.38;
+const HERO_LINE_MOTION = {
+  initial: { opacity: 0, y: 6 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -6 },
+  transition: { duration: 0.5 },
+} as const;
 
-/** Staggered word entrance; unchanged lines keep stable keys so only diffs animate. */
-function HeroWordsLine({ text, italic }: { text: string; italic?: boolean }) {
-  const parts = text.split(/(\s+)/);
+/** One motion.span per chunk; gaps use margin so words never glue (plain spaces can collapse between inline-blocks). */
+function HeroLineChunks({
+  chunks,
+  italic,
+}: {
+  chunks: readonly HeroChunk[];
+  italic?: boolean;
+}) {
   return (
-    <>
-      {parts.map((part, i) => (
-        <motion.span
-          key={`${text}#${i}#${part}`}
-          initial={{ opacity: 0, y: 5 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: HERO_WORD_DURATION,
-            delay: Math.min(i, 28) * HERO_WORD_STAGGER_S,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-          className={
-            italic ? "inline-block italic text-black/85" : "inline-block"
-          }
-        >
-          {part}
-        </motion.span>
-      ))}
-    </>
+    <span className={italic ? "italic text-black/85" : undefined}>
+      {chunks.map(({ slot, text }, index) => {
+        const prevText = chunks[index - 1]?.text ?? "";
+        const gapBefore =
+          index > 0 && prevText.length > 0 && text.length > 0;
+        return (
+          <React.Fragment key={slot}>
+            <span
+              className={
+                gapBefore ? "inline ml-[0.25em]" : "inline"
+              }
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                {text ? (
+                  <motion.span
+                    key={text}
+                    {...HERO_LINE_MOTION}
+                    className="inline-block"
+                  >
+                    {text}
+                  </motion.span>
+                ) : null}
+              </AnimatePresence>
+            </span>
+          </React.Fragment>
+        );
+      })}
+    </span>
   );
 }
 
@@ -608,13 +673,13 @@ export default function HomePage() {
                   aria-live="polite"
                 >
                   <p className="mb-1.5">
-                    <HeroWordsLine text={heroState.line1} />
+                    <HeroLineChunks chunks={heroState.line1} />
                   </p>
                   <p className="mb-0">
-                    <HeroWordsLine text={heroState.line2} italic />
+                    <HeroLineChunks chunks={heroState.line2} />
                   </p>
-                  <p className="mt-0">
-                    <HeroWordsLine text={heroState.line3} italic />
+                  <p className="mt-0 italic text-black/85">
+                    <HeroLineChunks chunks={heroState.line3} />
                   </p>
                 </div>
 
@@ -625,7 +690,7 @@ export default function HomePage() {
                     rel="noopener noreferrer"
                     title="LinkedIn"
                   >
-                    <FaLinkedin size={20} className="text-black hover:scale-110 transition-transform duration-300" />
+                    <FaLinkedin size={18} className="text-black hover:scale-110 transition-transform duration-300" />
                   </a>
                   <a
                     href="https://github.com/monikadvorackova"
@@ -633,7 +698,7 @@ export default function HomePage() {
                     rel="noopener noreferrer"
                     title="GitHub"
                   >
-                    <FaGithub size={20} className="text-black hover:scale-110 transition-transform duration-300" />
+                    <FaGithub size={18} className="text-black hover:scale-110 transition-transform duration-300" />
                   </a>
                   <a
                     href="https://arxiv.org/search/?searchtype=author&query=Dvorackova%2C+M"
@@ -641,10 +706,10 @@ export default function HomePage() {
                     rel="noopener noreferrer"
                     title="arXiv"
                   >
-                    <ArxivIcon size={20} className="text-black hover:scale-110 transition-transform duration-300" />
+                    <ArxivIcon size={18} className="text-black hover:scale-110 transition-transform duration-300" />
                   </a>
                   <a href="mailto:monika.dvorack@gmail.com" title="Send Email">
-                    <FaEnvelope size={20} className="text-black hover:scale-110 transition-transform duration-300" />
+                    <FaEnvelope size={18} className="text-black hover:scale-110 transition-transform duration-300" />
                   </a>
                 </div>
 
@@ -661,7 +726,7 @@ export default function HomePage() {
                       title="Book via Calendly"
                     >
                       <FaCalendarAlt
-                        size={18}
+                        size={16}
                         className="text-black transition-all duration-300 group-hover:scale-110 group-hover:translate-y-1 translate-y-[8px]"
                       />
                     </a>
@@ -671,7 +736,7 @@ export default function HomePage() {
                       title="View Articles & Software"
                     >
                       <FaFileAlt
-                        size={18}
+                        size={16}
                         className="text-black transition-all duration-300 group-hover:scale-110 group-hover:translate-y-1 translate-y-[8px]"
                       />
                     </Link>
