@@ -305,12 +305,11 @@ export default function PublicationsList() {
     return (
       <div
         ref={mobileScrollerRef}
-        className="relative w-full overflow-hidden no-scrollbar select-none"
+        className="relative w-full overflow-x-auto overflow-y-hidden overscroll-x-contain no-scrollbar select-none"
         style={{
           WebkitOverflowScrolling: "touch",
           paddingLeft: 6,
           paddingRight: 6,
-          touchAction: "pan-x",
         }}
       >
         <CarouselEdgeFog />
