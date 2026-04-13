@@ -1,35 +1,16 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 import CarouselEdgeFog from "@/components/CarouselEdgeFog";
 import PostListingCard, { type ListingPost } from "@/components/PostListingCard";
-import {
-  BLOG_CAROUSEL_MOBILE_QUERIES,
-  getBlogCarouselMobileMatches,
-} from "@/lib/blogCarouselMobileMedia";
+import { useBlogCarouselMobileLayout } from "@/lib/blogCarouselMobileMedia";
 
 export default function WritingList({ posts }: { posts: ListingPost[] }) {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const pausedRef = useRef(false);
 
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const mqs = BLOG_CAROUSEL_MOBILE_QUERIES.map((q) => window.matchMedia(q));
-    const update = () => setIsMobile(getBlogCarouselMobileMatches());
-    update();
-    mqs.forEach((mq) => {
-      if (mq.addEventListener) mq.addEventListener("change", update);
-      else mq.addListener(update);
-    });
-    return () => {
-      mqs.forEach((mq) => {
-        if (mq.removeEventListener) mq.removeEventListener("change", update);
-        else mq.removeListener(update);
-      });
-    };
-  }, []);
+  const isMobile = useBlogCarouselMobileLayout();
 
   const useMarquee = posts.length >= 2 && !isMobile;
   const firstLoop = posts;
@@ -116,7 +97,15 @@ export default function WritingList({ posts }: { posts: ListingPost[] }) {
         <CarouselEdgeFog />
         <div
           className="blog-carousel-mobile-marquee relative z-0 flex w-max items-stretch gap-2 py-0.5 px-0.5"
-          style={{ "--blog-marquee-sec": "40s" } as CSSProperties}
+          style={
+            {
+              "--blog-marquee-sec": "40s",
+              animation:
+                "blog-carousel-marquee var(--blog-marquee-sec, 40s) linear infinite",
+              WebkitAnimation:
+                "blog-carousel-marquee var(--blog-marquee-sec, 40s) linear infinite",
+            } as CSSProperties
+          }
         >
           {posts.map((post) => (
             <div key={`${post.slug}-a`} className="flex shrink-0 self-stretch">

@@ -40,20 +40,18 @@ a {
   animation-play-state: paused !important;
 }
 
-/* Blog /blog: mobile carousels — duplicated row; -50% = one loop (no JS RAF). */
-@media (prefers-reduced-motion: no-preference) {
-  .blog-carousel-mobile-marquee {
-    animation-name: blog-carousel-marquee;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-duration: var(--blog-marquee-sec, 38s);
-    will-change: transform;
-  }
+/* Blog /blog: mobile carousels — duplicated row; -50% = one loop.
+   Do NOT gate on prefers-reduced-motion: no-preference only: many devices
+   would get no animation at all. Slow down instead of disabling when reduced. */
+.blog-carousel-mobile-marquee {
+  animation: blog-carousel-marquee var(--blog-marquee-sec, 38s) linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .blog-carousel-mobile-marquee {
-    animation: none;
+    animation-duration: calc(var(--blog-marquee-sec, 38s) * 3);
   }
 }
 

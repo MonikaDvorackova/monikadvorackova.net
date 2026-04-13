@@ -1,12 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import CarouselEdgeFog from "@/components/CarouselEdgeFog";
-import {
-  BLOG_CAROUSEL_MOBILE_QUERIES,
-  getBlogCarouselMobileMatches,
-} from "@/lib/blogCarouselMobileMedia";
+import { useBlogCarouselMobileLayout } from "@/lib/blogCarouselMobileMedia";
 
 export type PublicationItem = {
   id: string;
@@ -210,23 +207,7 @@ export default function PublicationsList() {
   const trackRef = useRef<HTMLDivElement | null>(null);
   const pausedRef = useRef(false);
 
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const mqs = BLOG_CAROUSEL_MOBILE_QUERIES.map((q) => window.matchMedia(q));
-    const update = () => setIsMobile(getBlogCarouselMobileMatches());
-    update();
-    mqs.forEach((mq) => {
-      if (mq.addEventListener) mq.addEventListener("change", update);
-      else mq.addListener(update);
-    });
-    return () => {
-      mqs.forEach((mq) => {
-        if (mq.removeEventListener) mq.removeEventListener("change", update);
-        else mq.removeListener(update);
-      });
-    };
-  }, []);
+  const isMobile = useBlogCarouselMobileLayout();
 
   const useMarquee = items.length >= 2 && !isMobile;
   const firstLoop = items;
@@ -313,7 +294,15 @@ export default function PublicationsList() {
         <CarouselEdgeFog />
         <div
           className="blog-carousel-mobile-marquee relative z-0 flex w-max gap-2 py-0.5 px-0.5"
-          style={{ "--blog-marquee-sec": "45s" } as CSSProperties}
+          style={
+            {
+              "--blog-marquee-sec": "45s",
+              animation:
+                "blog-carousel-marquee var(--blog-marquee-sec, 45s) linear infinite",
+              WebkitAnimation:
+                "blog-carousel-marquee var(--blog-marquee-sec, 45s) linear infinite",
+            } as CSSProperties
+          }
         >
           {items.map((item) => (
             <div key={`${item.id}-a`} className="shrink-0">
