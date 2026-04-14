@@ -864,7 +864,7 @@ export default function HomePage() {
             </p>
             <div className="mt-1 flex justify-center">
               <Link
-                href="/blog#govai"
+                href="/blog/govai"
                 className="text-[10px] font-semibold text-[#004cff] hover:opacity-90 transition-opacity"
               >
                 View GovAI
