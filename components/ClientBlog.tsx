@@ -84,7 +84,7 @@ export default function ClientBlog({ posts }: { posts: ListingPost[] }) {
           post={posts[0]}
           solo
           mobileSolo={isMobile}
-          anchorId={posts[0].slug === "govai" ? "govai" : undefined}
+          anchorId={posts[0].slug === "aigov" ? "aigov" : undefined}
         />
       </div>
     );
@@ -120,7 +120,7 @@ export default function ClientBlog({ posts }: { posts: ListingPost[] }) {
                 post={post}
                 solo
                 mobileSolo={isMobile}
-                anchorId={post.slug === "govai" ? "govai" : undefined}
+                anchorId={post.slug === "aigov" ? "aigov" : undefined}
               />
             </div>
           ))}
@@ -156,7 +156,7 @@ export default function ClientBlog({ posts }: { posts: ListingPost[] }) {
             <div key={`${post.slug}-card-a`} className="flex shrink-0 self-stretch">
               <PostListingCard
                 post={post}
-                anchorId={post.slug === "govai" ? "govai" : undefined}
+                anchorId={post.slug === "aigov" ? "aigov" : undefined}
                 onPointerInsideCard={() => {
                   pausedRef.current = true;
                 }}
