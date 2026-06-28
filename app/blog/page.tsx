@@ -120,7 +120,7 @@ export default function BlogPage() {
   useEffect(() => {
     if (!isLoaded) return;
     const raw = window.location.hash.replace(/^#/, "");
-    if (!raw || !["govai", "software"].includes(raw)) return;
+    if (!raw || !["aigov", "software"].includes(raw)) return;
     requestAnimationFrame(() => {
       document.getElementById(raw)?.scrollIntoView({ behavior: "smooth", block: "start" });
     });

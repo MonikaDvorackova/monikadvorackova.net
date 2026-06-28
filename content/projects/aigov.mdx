@@ -1,5 +1,5 @@
 ---
-title: "GovAI"
+title: "AIGov"
 date: "2026-03-25"
 type: "project"
 category: "AI Governance"
@@ -9,9 +9,9 @@ tldr: "Event-sourced governance infrastructure for AI systems with explicit, val
 
 ## Overview
 
-GovAI is governance infrastructure for AI systems that are already too complex to be governed by policy documents and good intentions. The goal is not to “track” models, datasets, and approvals; tracking is easy and largely useless under pressure. The goal is to make lifecycle transitions admissible only when the system can prove, from durable history, that the prerequisites were satisfied at the time the transition was attempted. Anything less collapses into hand-waving the moment an LLM deployment is stressed by incidents, fast iteration, or organizational entropy.
+AIGov is governance infrastructure for AI systems that are already too complex to be governed by policy documents and good intentions. The goal is not to “track” models, datasets, and approvals; tracking is easy and largely useless under pressure. The goal is to make lifecycle transitions admissible only when the system can prove, from durable history, that the prerequisites were satisfied at the time the transition was attempted. Anything less collapses into hand-waving the moment an LLM deployment is stressed by incidents, fast iteration, or organizational entropy.
 
-The design is intentionally opinionated. Mutable systems are great for product features and terrible for governance. Retroactive narratives assembled from logs, dashboards, and ticket workflows are not evidence; they are stories. GovAI treats history as the product, state as a projection, and validation as an admission control problem with explicit semantics that can be inspected, replayed, and challenged.
+The design is intentionally opinionated. Mutable systems are great for product features and terrible for governance. Retroactive narratives assembled from logs, dashboards, and ticket workflows are not evidence; they are stories. AIGov treats history as the product, state as a projection, and validation as an admission control problem with explicit semantics that can be inspected, replayed, and challenged.
 
 ## Why this exists
 
@@ -21,7 +21,7 @@ Logs do not fix this. Logs are partial, lossy, and written from the perspective 
 
 Workflow tools do not fix this either. Approvals in a ticketing system are not enforcement. A checklist step that says “run evaluation” is not a guarantee that the evaluation ran, that it ran on the correct artifact, or that its results were interpreted under the policy regime that was supposed to apply. Those tools are useful for humans coordinating work; they are structurally incapable of being a deterministic authority for system transitions.
 
-GovAI exists because governance cannot live outside the runtime boundary and still claim to govern runtime behavior. Once the gap between “what we intended” and “what we deployed” becomes measurable, the only responsible response is to make the gap unrepresentable.
+AIGov exists because governance cannot live outside the runtime boundary and still claim to govern runtime behavior. Once the gap between “what we intended” and “what we deployed” becomes measurable, the only responsible response is to make the gap unrepresentable.
 
 ## Why this topic matters
 
@@ -31,7 +31,7 @@ Under that volatility, mutable state is an accelerant. A relational row that say
 
 ## Architectural model
 
-GovAI treats governance as a state machine whose transitions must be explicit, typed, and validated. Event sourcing is not chosen because it is fashionable or because it makes debugging easier. It is chosen because governance requires a durable, replayable account of what the system was permitted to become, and that account must be complete by construction rather than assembled after the fact.
+AIGov treats governance as a state machine whose transitions must be explicit, typed, and validated. Event sourcing is not chosen because it is fashionable or because it makes debugging easier. It is chosen because governance requires a durable, replayable account of what the system was permitted to become, and that account must be complete by construction rather than assembled after the fact.
 
 Commands express intent. Events express admitted reality. A command can be rejected without leaving residue. An event can exist only if admission logic can prove the prerequisites from prior events and from policy constraints that are themselves versioned and explicit. Validation must happen before persistence because persistence is the moment the system commits to a historical claim. If the system records “model promoted” and later discovers the evaluation was missing or the approval was invalid, the system has already created audit debt that cannot be erased without lying about history.
 
@@ -59,7 +59,7 @@ PostgreSQL is chosen because the workload demands transactional durability, not 
 
 ## Example event
 
-Model promotion is where weak governance patterns go to die, because promotion is the moment the platform claims it has earned the right to expose an artifact to higher stakes. A governance system that records promotions without being able to prove admissibility is a system that will eventually promote something it cannot defend. GovAI treats a promotion event as a historical claim that validation succeeded under a specific policy regime, using evidence that is already present in immutable history.
+Model promotion is where weak governance patterns go to die, because promotion is the moment the platform claims it has earned the right to expose an artifact to higher stakes. A governance system that records promotions without being able to prove admissibility is a system that will eventually promote something it cannot defend. AIGov treats a promotion event as a historical claim that validation succeeded under a specific policy regime, using evidence that is already present in immutable history.
 
 ```json
 {
@@ -81,12 +81,12 @@ Open source creates two constraints that matter. First, it makes validity falsif
 
 ## Why this is commercially viable
 
-GovAI is infrastructure, not a feature, which is why it is commercially viable. Once a platform relies on an event log as the authoritative record of admissible transitions, ripping it out means giving up deterministic reconstruction, giving up a consistent admission authority, and returning to a world where governance is assembled from partial artifacts. Integration creates dependency because the value comes from being the place where history is made durable and admissibility is enforced, not from being a dashboard widget.
+AIGov is infrastructure, not a feature, which is why it is commercially viable. Once a platform relies on an event log as the authoritative record of admissible transitions, ripping it out means giving up deterministic reconstruction, giving up a consistent admission authority, and returning to a world where governance is assembled from partial artifacts. Integration creates dependency because the value comes from being the place where history is made durable and admissibility is enforced, not from being a dashboard widget.
 
 Value comes from eliminating classes of failure that otherwise become recurring operational tax. Incident response becomes faster because the system can replay and prove what happened instead of inventing a timeline from log shards. Compliance work becomes cheaper because evidence is produced by construction rather than curated after the fact. Platform teams stop re-implementing inconsistent gating logic across pipelines because admission control is centralized and explicit. The commercial surface area surrounds the open core: managed operation with availability guarantees, hardened multi-tenant isolation, compliance-grade retention and access control, high-throughput boundary ingestion, projection packages tuned for audit and reporting workflows, and support for policy versioning and controlled rollout under production load. Paying for those capabilities is rational because the alternative is paying the same cost repeatedly in outages, audit fire drills, and brittle, duplicated governance logic.
 
 ## Scope
 
-GovAI provides technical governance primitives for AI lifecycle transitions: command admission, validation, immutable event history, and deterministic derivation of operational state from that history. It enforces the difference between an intention to change state and a permitted state transition by refusing to persist events that cannot be justified from prior validated history and active policy constraints. The core is designed to be strict because strictness is the only reliable defense against the pressure to “just ship” and clean up governance later.
+AIGov provides technical governance primitives for AI lifecycle transitions: command admission, validation, immutable event history, and deterministic derivation of operational state from that history. It enforces the difference between an intention to change state and a permitted state transition by refusing to persist events that cannot be justified from prior validated history and active policy constraints. The core is designed to be strict because strictness is the only reliable defense against the pressure to “just ship” and clean up governance later.
 
-Policy authorship is not provided. Legal interpretation is not provided. Organizational decision-making is not replaced. GovAI does not decide which rules should exist; it provides a mechanism by which rules, once defined, become enforceable at the exact moment transitions are attempted. The system is also not a generic observability layer; it is deliberately narrower and harsher. Anything that cannot be proven from durable history is treated as inadmissible, even when that is inconvenient, because the alternative is a platform that can tell you what it is doing while failing to justify why it was allowed to do it.
+Policy authorship is not provided. Legal interpretation is not provided. Organizational decision-making is not replaced. AIGov does not decide which rules should exist; it provides a mechanism by which rules, once defined, become enforceable at the exact moment transitions are attempted. The system is also not a generic observability layer; it is deliberately narrower and harsher. Anything that cannot be proven from durable history is treated as inadmissible, even when that is inconvenient, because the alternative is a platform that can tell you what it is doing while failing to justify why it was allowed to do it.

@@ -73,13 +73,13 @@ function MarkdownComponents() {
       ...props
     }: React.AnchorHTMLAttributes<HTMLAnchorElement> & { href?: string }) => {
       const url = href || "";
-      const isGovAiRepo =
+      const isAigovRepo =
         url === "https://github.com/MonikaDvorackova/aigov-compliance-engine" ||
         url === "https://github.com/MonikaDvorackova/aigov-compliance-engine/";
       const isGovBase = url === "https://govbase.dev" || url === "https://govbase.dev/";
 
-      if (isGovAiRepo || isGovBase) {
-        const icon = isGovAiRepo ? (
+      if (isAigovRepo || isGovBase) {
+        const icon = isAigovRepo ? (
           <FaGithub size={14} color="#171515" />
         ) : (
           <FaExternalLinkAlt size={12} color="#444444" />
