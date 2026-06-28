@@ -12,6 +12,11 @@ module.exports = withMDX({
         destination: '/blog/aigov',
         permanent: true,
       },
+      {
+        source: '/favicon.ico',
+        destination: '/favicon.svg',
+        permanent: true,
+      },
     ];
   },
 });
