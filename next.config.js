@@ -12,27 +12,34 @@ module.exports = withMDX({
         destination: '/blog/aigov',
         permanent: true,
       },
-      // Legacy v3 / alternate icon paths -> current assets
-      { source: '/favicon-v3.ico', destination: '/favicon.ico', permanent: true },
-      { source: '/icon-v3.svg', destination: '/favicon.svg', permanent: true },
-      { source: '/apple-icon-v3.png', destination: '/apple-touch-icon.png', permanent: true },
-      { source: '/icon.svg', destination: '/favicon.svg', permanent: true },
-      { source: '/favicon-48.png', destination: '/favicon.svg', permanent: true },
-      { source: '/favicon-192.png', destination: '/icon-192.png', permanent: true },
-      { source: '/apple-icon.png', destination: '/apple-touch-icon.png', permanent: true },
+      // Retire every legacy icon URL without serving an old cached asset.
+      {
+        source: '/:legacy(favicon\\.ico|favicon\\.svg|favicon-v3\\.ico|icon\\.svg|icon-v3\\.svg|favicon-48\\.png|favicon-192\\.png|icon-192\\.png|icon-512\\.png|apple-icon\\.png|apple-icon-v3\\.png|apple-touch-icon\\.png)',
+        destination: '/favicon-monika-v2.png',
+        permanent: true,
+      },
     ];
   },
   async headers() {
-    const cache = {
-      key: 'Cache-Control',
-      value: 'public, max-age=86400, stale-while-revalidate=604800',
-    };
     return [
-      { source: '/favicon.ico', headers: [cache] },
-      { source: '/favicon.svg', headers: [cache] },
-      { source: '/apple-touch-icon.png', headers: [cache] },
-      { source: '/icon-192.png', headers: [cache] },
-      { source: '/icon-512.png', headers: [cache] },
+      {
+        source: '/favicon-monika-v2.png',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/site.webmanifest',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=3600, must-revalidate',
+          },
+        ],
+      },
     ];
   },
 });

@@ -1,0 +1,16 @@
+{
+  "name": "Monika Dvořáčková",
+  "short_name": "Dvorackova",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fdf2e9",
+  "theme_color": "#fdf2e9",
+  "icons": [
+    {
+      "src": "/favicon-monika-v2.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
