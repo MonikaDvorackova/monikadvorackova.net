@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "clean": "rm -rf .next",
+    "postinstall": "node scripts/check-native-deps.js",
     "dev": "next dev",
     "dev:reset": "rm -rf .next && next dev",
     "dev:turbo": "next dev --turbopack",

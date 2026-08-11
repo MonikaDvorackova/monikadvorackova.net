@@ -1,12 +1,6 @@
 // next.config.js
 const withMDX = require('@next/mdx')({ extension: /\.mdx?$/ });
 
-const ICON_V3 = {
-  ico: '/favicon-v3.ico',
-  svg: '/icon-v3.svg',
-  apple: '/apple-icon-v3.png',
-};
-
 /** @type {import('next').NextConfig} */
 module.exports = withMDX({
   experimental: { serverActions: {} },
@@ -18,25 +12,44 @@ module.exports = withMDX({
         destination: '/blog/aigov',
         permanent: true,
       },
-      // Legacy favicon paths → v3 assets (Google/browsers may still request these)
-      { source: '/favicon.svg', destination: ICON_V3.svg, permanent: true },
-      { source: '/icon.svg', destination: ICON_V3.svg, permanent: true },
-      { source: '/favicon-48.png', destination: ICON_V3.svg, permanent: true },
-      { source: '/favicon-192.png', destination: ICON_V3.svg, permanent: true },
-      { source: '/apple-touch-icon.png', destination: ICON_V3.apple, permanent: true },
-      { source: '/apple-icon.png', destination: ICON_V3.apple, permanent: true },
+      // Retire every legacy icon URL without serving an old cached asset.
+      // Keep /favicon.ico as a real file (browsers + Googlebot request it by default).
+      {
+        source: '/:legacy(favicon\\.svg|favicon-v3\\.ico|icon\\.svg|icon-v3\\.svg|favicon-48\\.png|favicon-192\\.png|icon-192\\.png|icon-512\\.png|apple-icon\\.png|apple-icon-v3\\.png|apple-touch-icon\\.png)',
+        destination: '/favicon-monika-v2.png',
+        permanent: true,
+      },
     ];
   },
   async headers() {
-    const cache = {
-      key: 'Cache-Control',
-      value: 'public, max-age=86400, stale-while-revalidate=604800',
-    };
     return [
-      { source: '/favicon-v3.ico', headers: [cache] },
-      { source: '/favicon.ico', headers: [cache] },
-      { source: '/icon-v3.svg', headers: [cache] },
-      { source: '/apple-icon-v3.png', headers: [cache] },
+      {
+        source: '/favicon-monika-v2.png',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/favicon.ico',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400, must-revalidate',
+          },
+        ],
+      },
+      {
+        source: '/site.webmanifest',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=3600, must-revalidate',
+          },
+        ],
+      },
     ];
   },
 });

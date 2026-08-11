@@ -10,15 +10,15 @@ if [[ ! -f "$SRC" ]]; then
   exit 1
 fi
 
-tmpdir="$(mktemp -d)"
-trap 'rm -rf "$tmpdir"' EXIT
+rsvg-convert -w 192 -h 192 "$SRC" -o "$PUBLIC/favicon-monika-v2.png"
 
-rsvg-convert -w 16 -h 16 "$SRC" -o "$tmpdir/favicon-16.png"
-rsvg-convert -w 32 -h 32 "$SRC" -o "$tmpdir/favicon-32.png"
-rsvg-convert -w 48 -h 48 "$SRC" -o "$tmpdir/favicon-48.png"
-magick "$tmpdir/favicon-16.png" "$tmpdir/favicon-32.png" "$tmpdir/favicon-48.png" "$PUBLIC/favicon-v3.ico"
-cp "$PUBLIC/favicon-v3.ico" "$PUBLIC/favicon.ico"
-cp "$SRC" "$PUBLIC/icon-v3.svg"
-rsvg-convert -w 180 -h 180 "$SRC" -o "$PUBLIC/apple-icon-v3.png"
+# Well-known /favicon.ico path (browsers + Googlebot default). Same beige artwork.
+if command -v magick >/dev/null 2>&1; then
+  magick "$PUBLIC/favicon-monika-v2.png" -define icon:auto-resize=16,32,48 "$PUBLIC/favicon.ico"
+elif command -v convert >/dev/null 2>&1; then
+  convert "$PUBLIC/favicon-monika-v2.png" -define icon:auto-resize=16,32,48 "$PUBLIC/favicon.ico"
+else
+  echo "Warning: ImageMagick not found; skipped favicon.ico generation" >&2
+fi
 
-echo "Generated public/favicon-v3.ico, public/favicon.ico, public/icon-v3.svg, public/apple-icon-v3.png"
+echo "Generated public/favicon-monika-v2.png and public/favicon.ico from assets/icon.svg"
