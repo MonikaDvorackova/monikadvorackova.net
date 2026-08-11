@@ -23,6 +23,148 @@ body {
   color: #111827;
 }
 
+/* =========================
+   LANDING — time-of-day ambient lighting
+   Subtle architectural wash over the existing beige gradient.
+   ========================= */
+
+.landing-ambient {
+  --ambient-base-a: #e9d7cb;
+  --ambient-base-b: #d6c2b7;
+  --ambient-glow-1: rgba(255, 252, 247, 0.22);
+  --ambient-glow-2: rgba(232, 220, 208, 0.12);
+  --ambient-veil: rgba(255, 255, 255, 0);
+  --ambient-glow-1-x: 18%;
+  --ambient-glow-1-y: 8%;
+  --ambient-glow-1-size: 70%;
+  --ambient-glow-2-x: 88%;
+  --ambient-glow-2-y: 92%;
+  --ambient-glow-2-size: 55%;
+
+  position: relative;
+  isolation: isolate;
+  background: linear-gradient(
+    135deg,
+    var(--ambient-base-a),
+    var(--ambient-base-b)
+  );
+  /* No transition until data-ambient-ready — avoids animating SSR day → local period. */
+}
+
+.landing-ambient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse var(--ambient-glow-1-size) var(--ambient-glow-1-size) at
+        var(--ambient-glow-1-x) var(--ambient-glow-1-y),
+      var(--ambient-glow-1),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse var(--ambient-glow-2-size) var(--ambient-glow-2-size) at
+        var(--ambient-glow-2-x) var(--ambient-glow-2-y),
+      var(--ambient-glow-2),
+      transparent 72%
+    ),
+    linear-gradient(
+      180deg,
+      var(--ambient-veil),
+      transparent 42%,
+      transparent 100%
+    );
+}
+
+/* Enable long transitions only after the initial client period is resolved. */
+.landing-ambient[data-ambient-ready="true"] {
+  transition:
+    background-color 2.8s ease,
+    background 2.8s ease;
+}
+
+.landing-ambient[data-ambient-ready="true"]::before {
+  transition:
+    background 2.8s ease,
+    opacity 2.8s ease;
+}
+
+.landing-ambient > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* 05:00–09:00 — soft warm sunrise */
+.landing-ambient[data-time-period="morning"] {
+  --ambient-base-a: #edd9ce;
+  --ambient-base-b: #dbc4b5;
+  --ambient-glow-1: rgba(255, 220, 190, 0.34);
+  --ambient-glow-2: rgba(255, 236, 214, 0.16);
+  --ambient-veil: rgba(255, 236, 220, 0.07);
+  --ambient-glow-1-x: 12%;
+  --ambient-glow-1-y: 0%;
+  --ambient-glow-1-size: 78%;
+  --ambient-glow-2-x: 78%;
+  --ambient-glow-2-y: 100%;
+  --ambient-glow-2-size: 48%;
+}
+
+/* 09:00–17:00 — clean neutral daylight (closest to original) */
+.landing-ambient[data-time-period="day"] {
+  --ambient-base-a: #e9d7cb;
+  --ambient-base-b: #d6c2b7;
+  --ambient-glow-1: rgba(255, 252, 247, 0.2);
+  --ambient-glow-2: rgba(236, 226, 216, 0.1);
+  --ambient-veil: rgba(255, 255, 255, 0.03);
+  --ambient-glow-1-x: 22%;
+  --ambient-glow-1-y: 12%;
+  --ambient-glow-1-size: 65%;
+  --ambient-glow-2-x: 86%;
+  --ambient-glow-2-y: 88%;
+  --ambient-glow-2-size: 50%;
+}
+
+/* 17:00–21:00 — warmer golden / beige evening */
+.landing-ambient[data-time-period="evening"] {
+  --ambient-base-a: #e6d0c0;
+  --ambient-base-b: #d0b8a8;
+  --ambient-glow-1: rgba(242, 198, 150, 0.28);
+  --ambient-glow-2: rgba(220, 180, 150, 0.14);
+  --ambient-veil: rgba(255, 228, 196, 0.06);
+  --ambient-glow-1-x: 82%;
+  --ambient-glow-1-y: 6%;
+  --ambient-glow-1-size: 72%;
+  --ambient-glow-2-x: 18%;
+  --ambient-glow-2-y: 96%;
+  --ambient-glow-2-size: 52%;
+}
+
+/* 21:00–05:00 — cooler ambient, not full dark mode */
+.landing-ambient[data-time-period="night"] {
+  --ambient-base-a: #d9cfc8;
+  --ambient-base-b: #c4b8b0;
+  --ambient-glow-1: rgba(186, 198, 214, 0.18);
+  --ambient-glow-2: rgba(160, 168, 180, 0.1);
+  --ambient-veil: rgba(170, 180, 196, 0.05);
+  --ambient-glow-1-x: 30%;
+  --ambient-glow-1-y: 0%;
+  --ambient-glow-1-size: 68%;
+  --ambient-glow-2-x: 92%;
+  --ambient-glow-2-y: 80%;
+  --ambient-glow-2-size: 46%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-ambient,
+  .landing-ambient::before,
+  .landing-ambient[data-ambient-ready="true"],
+  .landing-ambient[data-ambient-ready="true"]::before {
+    transition: none;
+  }
+}
+
 /* Scrollbar hidden */
 .no-scrollbar::-webkit-scrollbar {
   display: none;

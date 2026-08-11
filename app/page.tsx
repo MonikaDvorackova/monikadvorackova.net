@@ -22,6 +22,7 @@ import {
 } from "react-icons/fi";
 import ArxivIcon from "../components/ArxivIcon";
 import { useRouter } from "next/navigation";
+import { useTimeOfDayLighting } from "@/hooks/useTimeOfDayLighting";
 
 type HeroChunk = { readonly slot: string; readonly text: string };
 
@@ -694,10 +695,13 @@ export default function HomePage() {
     }
   };
 
+  const { period: timePeriod, transitionsReady } = useTimeOfDayLighting();
+
   return (
     <div
-      className="flex flex-col min-h-screen text-text-light dark:text-text-dark transition-colors duration-500"
-      style={{ background: "linear-gradient(135deg, #e9d7cb, #d6c2b7)" }}
+      className="landing-ambient flex flex-col min-h-screen text-text-light dark:text-text-dark"
+      data-time-period={timePeriod}
+      data-ambient-ready={transitionsReady ? "true" : "false"}
     >
       {!showGrid && (
         <>
