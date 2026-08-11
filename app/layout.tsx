@@ -42,10 +42,18 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  manifest: "/site.webmanifest",
   icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon: {
+      url: "/favicon-monika-v2.png",
+      type: "image/png",
+      sizes: "192x192",
+    },
+    apple: {
+      url: "/favicon-monika-v2.png",
+      type: "image/png",
+      sizes: "192x192",
+    },
   },
 };
 

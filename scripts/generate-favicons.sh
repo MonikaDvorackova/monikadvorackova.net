@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-SRC="$ROOT/public/favicon.svg"
+SRC="$ROOT/assets/icon.svg"
 PUBLIC="$ROOT/public"
 
 if [[ ! -f "$SRC" ]]; then
@@ -10,22 +10,15 @@ if [[ ! -f "$SRC" ]]; then
   exit 1
 fi
 
-tmpdir="$(mktemp -d)"
-trap 'rm -rf "$tmpdir"' EXIT
+rsvg-convert -w 192 -h 192 "$SRC" -o "$PUBLIC/favicon-monika-v2.png"
 
-rsvg-convert -w 16 -h 16 "$SRC" -o "$tmpdir/favicon-16.png"
-rsvg-convert -w 32 -h 32 "$SRC" -o "$tmpdir/favicon-32.png"
-rsvg-convert -w 48 -h 48 "$SRC" -o "$tmpdir/favicon-48.png"
-magick "$tmpdir/favicon-16.png" -background none -alpha on PNG32:"$tmpdir/favicon-16.png"
-magick "$tmpdir/favicon-32.png" -background none -alpha on PNG32:"$tmpdir/favicon-32.png"
-magick "$tmpdir/favicon-48.png" -background none -alpha on PNG32:"$tmpdir/favicon-48.png"
-magick "$tmpdir/favicon-16.png" "$tmpdir/favicon-32.png" "$tmpdir/favicon-48.png" "$PUBLIC/favicon.ico"
-rsvg-convert -w 180 -h 180 "$SRC" -o "$PUBLIC/apple-touch-icon.png"
-rsvg-convert -w 192 -h 192 "$SRC" -o "$PUBLIC/icon-192.png"
-rsvg-convert -w 512 -h 512 "$SRC" -o "$PUBLIC/icon-512.png"
+# Well-known /favicon.ico path (browsers + Googlebot default). Same beige artwork.
+if command -v magick >/dev/null 2>&1; then
+  magick "$PUBLIC/favicon-monika-v2.png" -define icon:auto-resize=16,32,48 "$PUBLIC/favicon.ico"
+elif command -v convert >/dev/null 2>&1; then
+  convert "$PUBLIC/favicon-monika-v2.png" -define icon:auto-resize=16,32,48 "$PUBLIC/favicon.ico"
+else
+  echo "Warning: ImageMagick not found; skipped favicon.ico generation" >&2
+fi
 
-# Keep assets/icon.svg in sync as non-served source copy
-mkdir -p "$ROOT/assets"
-cp "$SRC" "$ROOT/assets/icon.svg"
-
-echo "Generated favicon.ico, apple-touch-icon.png, icon-192.png, icon-512.png from public/favicon.svg"
+echo "Generated public/favicon-monika-v2.png and public/favicon.ico from assets/icon.svg"
