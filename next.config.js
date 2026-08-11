@@ -13,8 +13,9 @@ module.exports = withMDX({
         permanent: true,
       },
       // Retire every legacy icon URL without serving an old cached asset.
+      // Keep /favicon.ico as a real file (browsers + Googlebot request it by default).
       {
-        source: '/:legacy(favicon\\.ico|favicon\\.svg|favicon-v3\\.ico|icon\\.svg|icon-v3\\.svg|favicon-48\\.png|favicon-192\\.png|icon-192\\.png|icon-512\\.png|apple-icon\\.png|apple-icon-v3\\.png|apple-touch-icon\\.png)',
+        source: '/:legacy(favicon\\.svg|favicon-v3\\.ico|icon\\.svg|icon-v3\\.svg|favicon-48\\.png|favicon-192\\.png|icon-192\\.png|icon-512\\.png|apple-icon\\.png|apple-icon-v3\\.png|apple-touch-icon\\.png)',
         destination: '/favicon-monika-v2.png',
         permanent: true,
       },
@@ -28,6 +29,15 @@ module.exports = withMDX({
           {
             key: 'Cache-Control',
             value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/favicon.ico',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400, must-revalidate',
           },
         ],
       },

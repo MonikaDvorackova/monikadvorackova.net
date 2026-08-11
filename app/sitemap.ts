@@ -5,7 +5,8 @@ import path from "path";
 import matter from "gray-matter";
 
 const BASE =
-  (process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, "") || "https://example.com");
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, "") ||
+  "https://monikadvorackova.net";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const urls: MetadataRoute.Sitemap = [];
