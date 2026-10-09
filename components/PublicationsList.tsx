@@ -31,6 +31,18 @@ function estimateReadingMinutes(...parts: (string | undefined)[]): number {
 /** Curated external publications (not MDX posts). */
 export const PUBLICATIONS_DATA: PublicationItem[] = [
   {
+    id: "oreilly-preservation-gap-2026",
+    title: "The Preservation Gap in the AI Stack: Why Capability Is Advancing Faster Than Reconstructability",
+    subtitle: "O’Reilly Radar · Research article",
+    blurb:
+      "Why AI systems need historical reconstructability, not just observability: preserving runtime bindings and dependency states as systems evolve. Introduces Orrery as a reference architecture.",
+    outlet: "O’Reilly Radar",
+    href: "https://www.oreilly.com/radar/the-preservation-gap-in-the-ai-stack-why-capability-is-advancing-faster-than-reconstructability/",
+    date: "2026",
+    caption: "Published",
+    tags: ["AI Governance", "Auditability"],
+  },
+  {
     id: "wk-ai-act-commentary",
     title: "EU AI Act Commentary - Expert Insight",
     subtitle: "Wolters Kluwer · Legal Blog · Expert insight",
