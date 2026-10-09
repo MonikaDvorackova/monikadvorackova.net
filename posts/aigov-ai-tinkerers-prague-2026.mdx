@@ -1,0 +1,76 @@
+---
+title: "AIGov at AI Tinkerers Prague: Building Runtime Governance for Production AI"
+cardTitle: "AIGov at AI Tinkerers Prague"
+date: "2026-10-07"
+type: "article"
+tags:
+  - AI Governance
+  - AI Agents
+  - Auditability
+  - Runtime Governance
+  - AIGov
+description: "A technical recap of AIGov's AI Tinkerers Prague talk on reconstructing AI agent actions, preserving runtime evidence, and enforcing governance in production."
+tldr: "At AI Tinkerers Prague, Zbyněk Nguyen presented AIGov's approach to reconstructing why an AI agent acted: runtime evidence, verifiable event histories, and governance checks that belong in execution infrastructure."
+resources:
+  - type: "website"
+    href: "https://aigov.dev"
+    label: "AIGov"
+  - type: "website"
+    href: "https://prague.aitinkerers.org/"
+    label: "AI Tinkerers Prague"
+  - type: "website"
+    href: "https://www.oreilly.com/radar/the-preservation-gap-in-the-ai-stack-why-capability-is-advancing-faster-than-reconstructability/"
+    label: "Related O'Reilly Radar article"
+---
+
+On October 7, 2026, **AIGov** was featured at AI Tinkerers Prague. The talk, presented by **Zbyněk Nguyen**, was titled *“Can You Reconstruct Why an AI Agent Acted? Building Runtime Governance for Production AI.”* The question goes to the heart of a practical problem for teams deploying autonomous and tool-using systems: after an agent has acted, can an engineer or auditor establish the evidence and governing conditions behind that action?
+
+The event's speaker lineup described the project as building verifiable, reconstructable AI governance for production systems. That framing matters because an agent's final answer is only one part of its execution. An agent may retrieve documents, call tools, invoke external services, select between alternatives, and change state along the way. Those dependencies can change after the run, making a later investigation fundamentally different from simply rerunning the same prompt.
+
+## Why logs alone do not answer the question
+
+Operational observability is indispensable. Logs, traces, metrics, and error reports help engineers understand latency, failures, and the sequence of calls. But they do not automatically preserve a durable account of which policy version, configuration, data snapshot, or authorization applied at the moment of an action.
+
+A trace may show that a tool was invoked. It may not establish whether that invocation was admissible under the policy then in force. A dashboard may show the current deployment configuration while obscuring what was active during an earlier execution. Even a complete transcript cannot by itself prove that the recorded events have remained unchanged.
+
+This is the distinction between **observing execution** and **reconstructing its historical governance context**. The latter requires preserving the relevant evidence when the execution occurs, rather than hoping all dependencies can be recovered months later.
+
+## Runtime governance as an engineering boundary
+
+AIGov approaches governance as part of the operational system rather than a reporting layer added afterward. Its architecture separates probabilistic model behavior from the deterministic evaluation of governance rules. A model can propose an action; an authoritative policy boundary can assess whether the relevant transition is permitted.
+
+That separation is important. Making a language model produce the same answer twice is not the goal. The goal is to make it possible to examine the evidence used for a governance decision and reproduce the evaluation of that decision under the applicable policy semantics.
+
+In AIGov's broader technical architecture, versioned evidence, policy evaluation, audit events, and verification interfaces support this approach. These are architectural capabilities of the project; the available event photographs do not independently establish which specific implementation paths were demonstrated live.
+
+## Preserving evidence that can be checked
+
+Evidence preservation is more demanding than writing records to a database. A useful historical record must bind events to their identities, relevant dependencies, and applicable policy state. Where integrity protection is required, cryptographic hashes and hash chaining can help make modifications to recorded sequences detectable.
+
+Hash chaining is not a substitute for every other assurance. Verification must still account for how event hashes are computed, how sequence boundaries are anchored, and who controls the storage and signing infrastructure. Nevertheless, an independently checkable event history provides a stronger basis for investigation than an unverified collection of application logs.
+
+AIGov's emphasis on evidence verification and deterministic governance evaluation is intended to make historical review possible without requiring an investigator to reproduce the underlying model's stochastic behavior.
+
+## What changes for production agents
+
+The challenge becomes sharper in agentic and multi-agent architectures. One agent may delegate to another, a tool may return data from a mutable source, and different services may enforce different constraints. A later review needs to distinguish the action proposed by a model from the action actually admitted or executed by the surrounding system.
+
+This leads to several concrete engineering questions: Which actor requested the transition? Which policy and evidence were evaluated? Which dependency versions were in scope? Was the action allowed or rejected? Can that conclusion be verified later?
+
+These questions are not solved by adding a compliance dashboard. They require deliberate choices about event schemas, immutable identifiers, policy boundaries, retention, and verification.
+
+## A conversation for builders
+
+AI Tinkerers is a fitting setting for this discussion because it brings governance questions into the same room as the engineers building and operating AI systems. The technical challenge is not only to define what accountable AI should mean, but to design systems that can produce the evidence needed to support those claims.
+
+The talk's central question remains a useful test for any production agent: **if an action is challenged six months later, can we establish what happened, what governed it, and why it was allowed?**
+
+For related architectural context, see my [O'Reilly Radar article on the preservation gap in the AI stack](https://www.oreilly.com/radar/the-preservation-gap-in-the-ai-stack-why-capability-is-advancing-faster-than-reconstructability/). Further information about the project is available at [AIGov](https://aigov.dev), and the event community can be found at [AI Tinkerers Prague](https://prague.aitinkerers.org/).
+
+## Related presentation artifacts
+
+The following Claude artifacts were shared alongside the event materials. Their contents have not been independently verified here, so they are provided as references rather than as evidence of specific live demonstrations.
+
+- [Presentation artifact 1](https://claude.ai/artifact/Y5U5zpSAWPR2aF6jkPEBXh)
+- [Presentation artifact 2](https://claude.ai/artifact/7Mct4d97K1KX2mfDfMsdcd)
+- [Presentation artifact 3](https://claude.ai/artifact/PEmHgA1Fw1b8oMXCmGVRhv)
