@@ -131,7 +131,7 @@ export default function BlogPage() {
     (p) => p.type !== "software" && p.type !== "publication"
   );
 
-  const hasSoftware = softwarePosts.length > 0;
+  const hasSoftware = true;
   const hasPublications = PUBLICATIONS_DATA.length > 0;
   const hasWritings = articlePosts.length > 0;
   const publicationsTopPad = hasSoftware;
@@ -173,6 +173,21 @@ export default function BlogPage() {
                       </a>
                     </div>
                     <ClientBlog posts={softwarePosts} />
+                    <div className="mt-5 border-t border-black/10 pt-4">
+                      <h3 className="mb-3 text-center text-[10px] font-semibold uppercase tracking-[0.16em] text-black/55">Open Source Contributions</h3>
+                      <a href="https://github.com/huggingface/datasets/pull/8866" target="_blank" rel="noopener noreferrer" className="group flex flex-col gap-2 rounded-2xl border border-[#004cff]/15 bg-white/75 p-4 shadow-[0_4px_16px_rgba(0,0,0,0.06)] transition-all hover:border-[#004cff]/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#004cff]">
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                          <span className="text-xs font-bold">Hugging Face · Datasets</span>
+                          <span className="rounded-full bg-[#004cff]/10 px-2 py-1 text-[9px] font-semibold text-[#004cff]">External PR #8866</span>
+                        </div>
+                        <p className="text-xs font-semibold">Fix forwarding custom User-Agent to fsspec HTTP requests</p>
+                        <p className="text-[11px] leading-relaxed text-zinc-600">Propagates configured User-Agent headers for HTTP/HTTPS dataset requests, preserves explicitly set headers and adds regression tests.</p>
+                        <div className="flex flex-wrap items-center gap-2 text-[10px] text-zinc-500"><span>Python</span><span>·</span><span>HTTP</span><span>·</span><span>fsspec</span><span>·</span><span>Tests</span></div>
+                        <span className="text-[10px] font-semibold text-[#004cff]">View pull request ↗</span>
+                      </a>
+                      <a href="https://github.com/monikadvorackova" target="_blank" rel="noopener noreferrer" className="mt-3 block text-center text-[11px] font-semibold text-[#004cff] hover:underline">More contributions on GitHub ↗</a>
+                    </div>
+
                   </SectionPanel>
                 </div>
               </motion.section>
