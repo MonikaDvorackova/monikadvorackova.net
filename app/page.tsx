@@ -855,6 +855,15 @@ export default function HomePage() {
             </motion.div>
           </motion.main>
 
+          <section aria-labelledby="recognition-heading" className="w-full max-w-2xl mx-auto px-4 pt-3 pb-3 shrink-0">
+            <h2 id="recognition-heading" className="text-center text-[9px] font-semibold tracking-[0.18em] uppercase text-black/40">Selected Recognition</h2>
+            <div className="mt-2 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[10px] sm:text-xs text-zinc-700">
+              <a href="https://www.oreilly.com/radar/the-preservation-gap-in-the-ai-stack-why-capability-is-advancing-faster-than-reconstructability/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 hover:text-[#004cff]"><img src="https://www.oreilly.com/favicon.ico" width="18" height="18" alt="" loading="lazy" />O’Reilly Radar <span className="text-zinc-400">· Author</span></a>
+              <a href="https://doi.org/10.37819/Jaike.26.0013" target="_blank" rel="noopener noreferrer" className="hover:text-[#004cff]">JAIKE <span className="text-zinc-400">· Published research</span></a>
+              <Link href="/blog" className="hover:text-[#004cff]">AI Tinkerers <span className="text-zinc-400">· Speaker &amp; Spotlight</span></Link>
+            </div>
+          </section>
+
           <section
             aria-labelledby="aigov-highlight-heading"
             className="w-full max-w-xl mx-auto px-4 shrink-0 pt-2 pb-0 mb-8 border-t border-black/[0.06]"
