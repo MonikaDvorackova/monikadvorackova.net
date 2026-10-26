@@ -5,16 +5,17 @@ import CarouselEdgeFog from "@/components/CarouselEdgeFog";
 import PostListingCard, { type ListingPost } from "@/components/PostListingCard";
 import { useBlogCarouselMobileLayout } from "@/lib/blogCarouselMobileMedia";
 
-export default function ClientBlog({ posts }: { posts: ListingPost[] }) {
+export default function ClientBlog({ posts, extras = [] }: { posts: ListingPost[]; extras?: ListingPost[] }) {
+  const allPosts = [...posts, ...extras];
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const pausedRef = useRef(false);
 
   const isMobile = useBlogCarouselMobileLayout();
 
-  const useMarquee = posts.length >= 2 && !isMobile;
-  const firstLoop = posts;
-  const secondLoop = posts;
+  const useMarquee = allPosts.length >= 2 && !isMobile;
+  const firstLoop = allPosts;
+  const secondLoop = allPosts;
 
   useEffect(() => {
     if (!useMarquee) return;
@@ -73,18 +74,18 @@ export default function ClientBlog({ posts }: { posts: ListingPost[] }) {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", onResize);
     };
-  }, [useMarquee, posts.length]);
+  }, [useMarquee, allPosts.length]);
 
-  if (!posts.length) return null;
+  if (!allPosts.length) return null;
 
-  if (posts.length === 1) {
+  if (allPosts.length === 1) {
     return (
       <div className="w-full flex justify-center">
         <PostListingCard
-          post={posts[0]}
+          post={allPosts[0]}
           solo
           mobileSolo={isMobile}
-          anchorId={posts[0].slug === "aigov" ? "aigov" : undefined}
+          anchorId={allPosts[0].slug === "aigov" ? "aigov" : undefined}
         />
       </div>
     );
@@ -117,7 +118,7 @@ export default function ClientBlog({ posts }: { posts: ListingPost[] }) {
             } as CSSProperties
           }
         >
-          {posts.map((post) => (
+          {allPosts.map((post) => (
             <div key={`${post.slug}-a`} className="flex shrink-0 self-stretch">
               <PostListingCard
                 post={post}
@@ -127,7 +128,7 @@ export default function ClientBlog({ posts }: { posts: ListingPost[] }) {
               />
             </div>
           ))}
-          {posts.map((post) => (
+          {allPosts.map((post) => (
             <div key={`${post.slug}-b`} className="flex shrink-0 self-stretch">
               <PostListingCard post={post} solo mobileSolo={isMobile} />
             </div>
