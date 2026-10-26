@@ -14,6 +14,7 @@ const LISTING_CARD_WIDTH_PX = 420;
 
 export type ListingPost = {
   title: string;
+  externalHref?: string;
   cardTitle?: string;
   date: string;
   slug: string;
@@ -46,7 +47,8 @@ export default function PostListingCard({
   /** Set on at most one card instance (e.g. deep link target). */
   anchorId?: string;
 }) {
-  const href = `/blog/${post.slug}`;
+  const href = post.externalHref || `/blog/${post.slug}`;
+  const external = Boolean(post.externalHref);
   const displayTitle = (post.cardTitle?.trim() || post.title).trim();
   const summary = listingSummary(post);
   const visibleTags = (post.tags ?? []).slice(0, MAX_TAGS_ON_CARD);
@@ -93,6 +95,8 @@ export default function PostListingCard({
         >
           <Link
             href={href}
+            target={external ? "_blank" : undefined}
+            rel={external ? "noopener noreferrer" : undefined}
             className={`min-w-0 flex-1 self-start line-clamp-2 font-bold leading-snug text-black transition-colors group-hover:text-neutral-800${mobileSolo && solo ? " text-[10px]" : " text-[11px]"}`}
             title={post.title}
             aria-label={`Open: ${post.title}`}
@@ -130,6 +134,8 @@ export default function PostListingCard({
           <div className="mt-2 shrink-0">
             <Link
               href={href}
+              target={external ? "_blank" : undefined}
+              rel={external ? "noopener noreferrer" : undefined}
               className="block text-black no-underline visited:text-black hover:text-black focus-visible:text-black"
               style={{ color: "#000" }}
             >
