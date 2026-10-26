@@ -11,7 +11,7 @@ function SpeakingCard({ mobile = false }: { mobile?: boolean }) {
     <Link
       href="/blog/feminno-ai-academy-rag-agents-2026"
       aria-label="Open FEMINNO AI Academy workshop details"
-      className="flex h-auto min-h-0 shrink-0 flex-col rounded-2xl border border-[#002aff]/[0.12] bg-white/75 text-black shadow-[0_4px_16px_rgba(0,0,0,0.07)]"
+      className="flex h-full min-h-0 shrink-0 flex-col rounded-2xl border border-[#002aff]/[0.12] bg-white/75 text-black shadow-[0_4px_16px_rgba(0,0,0,0.07)]"
       style={{
         width: mobile ? "min(76vw, 288px)" : 420,
         minHeight: mobile ? undefined : 96,
@@ -133,7 +133,7 @@ export default function WritingList({ posts }: { posts: ListingPost[] }) {
       >
         <CarouselEdgeFog />
         <div
-          className="blog-carousel-mobile-marquee relative z-0 flex w-max items-start gap-2 py-0.5 px-0.5"
+          className="blog-carousel-mobile-marquee relative z-0 flex w-max items-stretch gap-2 py-0.5 px-0.5"
           onTouchStart={(e) => { e.currentTarget.style.animationPlayState = "paused"; }}
           onTouchEnd={(e) => { e.currentTarget.style.animationPlayState = "running"; }}
           onTouchCancel={(e) => { e.currentTarget.style.animationPlayState = "running"; }}
@@ -148,17 +148,17 @@ export default function WritingList({ posts }: { posts: ListingPost[] }) {
           }
         >
           {writingPosts.map((post) => (
-            <div key={`${post.slug}-a`} className="flex shrink-0 self-start">
+            <div key={`${post.slug}-a`} className="flex shrink-0 self-stretch">
               <PostListingCard post={post} solo mobileSolo={isMobile} />
             </div>
           ))}
-          <div className="flex shrink-0 self-start"><SpeakingCard mobile /></div>
+          <div className="flex shrink-0 self-stretch"><SpeakingCard mobile /></div>
           {writingPosts.map((post) => (
-            <div key={`${post.slug}-b`} className="flex shrink-0 self-start">
+            <div key={`${post.slug}-b`} className="flex shrink-0 self-stretch">
               <PostListingCard post={post} solo mobileSolo={isMobile} />
             </div>
           ))}
-          <div className="flex shrink-0 self-start"><SpeakingCard mobile /></div>
+          <div className="flex shrink-0 self-stretch"><SpeakingCard mobile /></div>
         </div>
       </div>
     );
@@ -179,11 +179,11 @@ export default function WritingList({ posts }: { posts: ListingPost[] }) {
         <CarouselEdgeFog />
         <div
           ref={trackRef}
-          className="relative z-0 flex w-max items-start will-change-transform pl-1 pr-1"
+          className="relative z-0 flex w-max items-stretch will-change-transform pl-1 pr-1"
           style={{ transform: "translate3d(0,0,0)" }}
         >
           {firstLoop.map((post) => (
-            <div key={`${post.slug}-writing-a`} className="flex shrink-0 self-start">
+            <div key={`${post.slug}-writing-a`} className="flex shrink-0 self-stretch">
               <PostListingCard
                 post={post}
                 onPointerInsideCard={() => {
@@ -192,9 +192,9 @@ export default function WritingList({ posts }: { posts: ListingPost[] }) {
               />
             </div>
           ))}
-          <div className="flex shrink-0 self-start"><SpeakingCard /></div>
+          <div className="flex shrink-0 self-stretch"><SpeakingCard /></div>
           {secondLoop.map((post) => (
-            <div key={`${post.slug}-writing-b`} className="flex shrink-0 self-start">
+            <div key={`${post.slug}-writing-b`} className="flex shrink-0 self-stretch">
               <PostListingCard
                 post={post}
                 onPointerInsideCard={() => {
@@ -204,7 +204,7 @@ export default function WritingList({ posts }: { posts: ListingPost[] }) {
             </div>
           ))}
  
-          <div className="flex shrink-0 self-start"><SpeakingCard /></div>       </div>
+          <div className="flex shrink-0 self-stretch"><SpeakingCard /></div>       </div>
       </div>
     </div>
   );
