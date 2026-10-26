@@ -329,7 +329,8 @@ export default function PublicationsList() {
       >
         <CarouselEdgeFog />
         <div
-          className="blog-carousel-mobile-marquee relative z-0 flex w-max items-stretch gap-2 py-0.5 px-0.5"\n          onTouchStart={(e) => { e.currentTarget.style.animationPlayState = "paused"; }}
+          className="blog-carousel-mobile-marquee relative z-0 flex w-max items-stretch gap-2 py-0.5 px-0.5"
+          onTouchStart={(e) => { e.currentTarget.style.animationPlayState = "paused"; }}
           onTouchEnd={(e) => { e.currentTarget.style.animationPlayState = "running"; }}
           onTouchCancel={(e) => { e.currentTarget.style.animationPlayState = "running"; }}
           style={
