@@ -9,6 +9,9 @@
     "dev:reset": "rm -rf .next && next dev",
     "dev:turbo": "next dev --turbopack",
     "build": "next build",
+    "typecheck": "tsc --noEmit",
+    "check:links": "node scripts/check-links.mjs",
+    "test:smoke": "node scripts/mobile-smoke.mjs",
     "start": "next start",
     "lint": "next lint"
   },
