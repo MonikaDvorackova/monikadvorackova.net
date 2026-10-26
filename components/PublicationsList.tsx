@@ -139,9 +139,9 @@ function PublicationCard({
             className={`flex shrink-0 flex-col items-end justify-start gap-0.5 text-right${mobileSolo && solo ? " min-h-[48px]" : " min-h-[56px]"}`}
           >
             {item.outlet === "O’Reilly Radar" ? (
-              <span aria-label="O’Reilly" className="mb-1 text-[13px] font-black tracking-tight text-[#c90016]">O’Reilly</span>
+              <img src="https://commons.wikimedia.org/wiki/Special:FilePath/O%27Reilly_Logo_(2019).svg" alt="O’Reilly logo" width={100} height={22} className="mb-1 h-[22px] w-[100px] object-contain object-right" loading="eager" />
             ) : item.outlet === "Wolters Kluwer" ? (
-              <span aria-label="Wolters Kluwer" className="mb-1 max-w-[95px] text-right text-[10px] font-extrabold leading-tight text-[#0072bc]">Wolters Kluwer</span>
+              <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Wolters_Kluwer_Logo.svg" alt="Wolters Kluwer logo" width={110} height={24} className="mb-1 h-6 w-[110px] object-contain object-right" loading="eager" />
             ) : item.outletLogo ? (
               <img src={item.outletLogo} alt={`${item.outlet} logo`} width={80} height={20} className="mb-1 h-5 w-20 object-contain object-right" loading="lazy" />
             ) : null}
