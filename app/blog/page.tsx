@@ -156,8 +156,22 @@ export default function BlogPage() {
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
                 <div className="w-full max-w-3xl mx-auto">
-                  <SectionLabel>Software</SectionLabel>
+                  <SectionLabel>Research &amp; Software</SectionLabel>
                   <SectionPanel>
+                    <div className="mb-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                      <a href="https://github.com/AIGovDev/aigov-core" target="_blank" rel="noopener noreferrer" className="rounded-xl border border-[#004cff]/15 bg-white/75 p-3 hover:border-[#004cff]/40 transition-colors">
+                        <div className="text-[9px] font-semibold uppercase tracking-wider text-[#004cff]">Open Source · Rust</div>
+                        <h3 className="mt-1 text-sm font-semibold">AIGov Core</h3>
+                        <p className="mt-1 text-[11px] leading-relaxed text-zinc-600">Versioned decision evidence, policy evaluation, deterministic governance replay and audit verification.</p>
+                        <span className="mt-2 inline-block text-[10px] font-semibold text-[#004cff]">View GitHub ↗</span>
+                      </a>
+                      <a href="https://doi.org/10.37819/Jaike.26.0013" target="_blank" rel="noopener noreferrer" className="rounded-xl border border-[#004cff]/15 bg-white/75 p-3 hover:border-[#004cff]/40 transition-colors">
+                        <div className="text-[9px] font-semibold uppercase tracking-wider text-[#004cff]">Research · Published</div>
+                        <h3 className="mt-1 text-sm font-semibold">Reconstructing AI Decisions</h3>
+                        <p className="mt-1 text-[11px] leading-relaxed text-zinc-600">Research on the evidence needed to reconstruct and review generative AI decisions after systems change.</p>
+                        <span className="mt-2 inline-block text-[10px] font-semibold text-[#004cff]">Read paper ↗</span>
+                      </a>
+                    </div>
                     <ClientBlog posts={softwarePosts} />
                   </SectionPanel>
                 </div>
