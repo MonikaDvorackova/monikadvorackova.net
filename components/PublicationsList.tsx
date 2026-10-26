@@ -10,6 +10,8 @@ export type PublicationItem = {
   title: string;
   blurb: string;
   outlet: string;
+  /** Optional publisher brand mark displayed on the publication card. */
+  outletLogo?: string;
   /** Optional; omit until a public URL exists. */
   href?: string;
   date?: string;
@@ -49,6 +51,7 @@ export const PUBLICATIONS_DATA: PublicationItem[] = [
     blurb:
       "Why AI systems need historical reconstructability, not just observability: preserving runtime bindings and dependency states as systems evolve. Introduces Orrery as a reference architecture.",
     outlet: "O’Reilly Radar",
+    outletLogo: "https://www.oreilly.com/favicon.ico",
     href: "https://www.oreilly.com/radar/the-preservation-gap-in-the-ai-stack-why-capability-is-advancing-faster-than-reconstructability/",
     date: "2026",
     caption: "Published",
@@ -134,6 +137,9 @@ function PublicationCard({
           <div
             className={`flex shrink-0 flex-col items-end justify-start gap-0.5 text-right${mobileSolo && solo ? " min-h-[48px]" : " min-h-[56px]"}`}
           >
+            {item.outletLogo ? (
+              <img src={item.outletLogo} alt={`${item.outlet} logo`} width={24} height={24} className="mb-1 h-6 w-6 object-contain" loading="lazy" />
+            ) : null}
             {item.date ? (
               <div
                 className={`font-medium tabular-nums text-black${mobileSolo && solo ? " text-[8px]" : " text-[9px]"}`}
