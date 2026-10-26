@@ -125,6 +125,11 @@ const HERO_SCENES: readonly HeroFrame[] = [
     line3: heroL("s7-3", "Technical due diligence."),
   },
   {
+    line1: heroL("s-speaking-1", "I write and speak about AI systems, RAG, and agent reliability."),
+    line2: heroL("s-speaking-2", "Research publications and international hands-on workshops."),
+    line3: heroL("s-speaking-3", "Writing & speaking."),
+  },
+  {
     line1: heroL(
       "s8-1",
       "ML and AI end-to-end: versioned artifacts, owners from commit to production."
@@ -817,17 +822,9 @@ export default function HomePage() {
                   </a>
                 </div>
 
-                <nav aria-label="Main navigation" className="mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs md:text-sm">
-                  <Link href="/writing-and-speaking" className="font-medium text-black underline-offset-4 hover:underline focus-visible:underline">
-                    Articles &amp; Software
-                  </Link>
-                  <Link href="/public-speaking" className="font-medium text-black underline-offset-4 hover:underline focus-visible:underline">
-                    Public Speaking
-                  </Link>
-                </nav>
                 <div className="mt-3 flex flex-col items-center">
                   <div className="text-xs md:text-sm font-normal lowercase mb-1.5 hover:scale-110 transition-transform duration-300 translate-y-[6px]">
-                    Consultation / Articles & Software
+                    Consultation / Writing & Speaking
                   </div>
                   <div className="pt-[0.3rem] flex gap-1">
                     <a
@@ -843,9 +840,9 @@ export default function HomePage() {
                       />
                     </a>
                     <Link
-                      href="/blog"
+                      href="/writing-and-speaking"
                       className="group transition-all duration-300"
-                      title="View Articles & Software"
+                      title="View Writing & Speaking"
                     >
                       <FaFileAlt
                         size={16}
