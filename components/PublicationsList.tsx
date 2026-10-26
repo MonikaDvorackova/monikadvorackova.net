@@ -64,6 +64,7 @@ export const PUBLICATIONS_DATA: PublicationItem[] = [
     blurb:
       "EU AI Act commentary for Wolters Kluwer. A related book is in preparation (2026).",
     outlet: "Wolters Kluwer",
+    outletLogo: "https://www.wolterskluwer.com/favicon.ico",
     date: "2026",
     caption: "Forthcoming",
     tags: ["AI Act"],
