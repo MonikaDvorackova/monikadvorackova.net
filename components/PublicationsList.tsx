@@ -86,7 +86,7 @@ function PublicationCard({
 
   const cardStyle: CSSProperties = {
     width: solo ? (mobileSolo ? "min(76vw, 288px)" : "min(86vw, 360px)") : 420,
-    height: solo && mobileSolo ? 228 : 244,
+    minHeight: solo ? undefined : 96,
     marginRight: solo ? 0 : 16,
     backgroundColor: "rgba(255,255,255,0.72)",
     color: "#000",
