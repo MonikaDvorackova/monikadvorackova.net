@@ -184,7 +184,7 @@ export default function BlogPage() {
               </div>
             )}
 
-            {(hasWritings || true) && (
+            {true && (
               <div className={`w-full${writingsTopPad ? " mt-7 sm:mt-10" : ""}`}>
                 <motion.section
                   className="w-full"
@@ -196,18 +196,6 @@ export default function BlogPage() {
                     <SectionLabel>Writing &amp; Speaking</SectionLabel>
                     <SectionPanel>
                       {hasWritings && <WritingList posts={articlePosts} />}
-                      <div className="mx-auto mt-5 max-w-[420px] rounded-2xl border border-[#002aff]/[0.12] bg-white/75 px-4 py-4 text-black shadow-[0_4px_16px_rgba(0,0,0,0.07)]">
-                        <p className="text-[9px] font-semibold uppercase tracking-[0.15em] text-black/45">Speaking · FEMINNO AI Academy · Armenia</p>
-                        <h3 className="mt-2 text-sm font-bold leading-snug">AI Assistants, RAG &amp; AI Agents</h3>
-                        <p className="mt-1 text-[10px] text-black/65">27 October 2026 · International online technical workshop</p>
-                        <p className="mt-3 text-[11px] leading-relaxed">
-                          Hands-on workshop on building AI assistants with retrieval-augmented generation and agent workflows,
-                          including evidence-grounded answers, hallucination mitigation, and responsible AI development.
-                        </p>
-                        <div className="mt-3 flex flex-wrap gap-2 text-[9px] font-semibold text-[#004cff]">
-                          <span>RAG</span><span>AI Agents</span><span>LLMs</span><span>Responsible AI</span>
-                        </div>
-                      </div>
                     </SectionPanel>
                   </div>
                 </motion.section>
