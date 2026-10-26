@@ -145,7 +145,7 @@ export default function BlogPage() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
       >
-        <main className="flex min-h-0 min-w-0 flex-1 flex-col overflow-x-hidden overflow-y-auto overscroll-y-contain py-6 sm:py-10 md:py-12">
+        <main className="flex min-h-0 min-w-0 flex-1 flex-col overflow-x-hidden overflow-y-hidden py-6 sm:py-10 md:py-12">
           <div className="page-gutter-x w-full max-w-5xl mx-auto flex flex-col pb-6 sm:pb-10">
             {hasSoftware && (
               <motion.section
@@ -195,7 +195,7 @@ export default function BlogPage() {
                   <div className="w-full max-w-3xl mx-auto">
                     <SectionLabel>Writing &amp; Speaking</SectionLabel>
                     <SectionPanel>
-                      {hasWritings && <WritingList posts={articlePosts} />}
+                      <WritingList posts={articlePosts} />
                     </SectionPanel>
                   </div>
                 </motion.section>
