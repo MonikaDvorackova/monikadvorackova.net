@@ -158,17 +158,17 @@ export default function BlogPage() {
                 <div className="w-full max-w-3xl mx-auto">
                   <SectionLabel>Research &amp; Software</SectionLabel>
                   <SectionPanel>
-                    <div className="mb-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
-                      <a href="https://github.com/AIGovDev/aigov-core" target="_blank" rel="noopener noreferrer" className="rounded-xl border border-[#004cff]/15 bg-white/75 p-3 hover:border-[#004cff]/40 transition-colors">
+                    <div className="mb-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                      <a href="https://github.com/AIGovDev/aigov-core" target="_blank" rel="noopener noreferrer" className="group flex h-full flex-col rounded-2xl border border-[#004cff]/15 bg-white/75 p-4 shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:border-[#004cff]/40 hover:shadow-[0_6px_20px_rgba(0,0,0,0.09)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#004cff] transition-all">
                         <div className="text-[9px] font-semibold uppercase tracking-wider text-[#004cff]">Open Source · Rust</div>
                         <h3 className="mt-1 text-sm font-semibold">AIGov Core</h3>
                         <p className="mt-1 text-[11px] leading-relaxed text-zinc-600">Versioned decision evidence, policy evaluation, deterministic governance replay and audit verification.</p>
-                        <span className="mt-2 inline-block text-[10px] font-semibold text-[#004cff]">View GitHub ↗</span>
+                        <span className="mt-auto pt-3 inline-block text-[10px] font-semibold text-[#004cff]">View GitHub ↗</span>
                       </a>
-                      <a href="https://doi.org/10.37819/Jaike.26.0013" target="_blank" rel="noopener noreferrer" className="rounded-xl border border-[#004cff]/15 bg-white/75 p-3 hover:border-[#004cff]/40 transition-colors">
+                      <a href="https://doi.org/10.37819/Jaike.26.0013" target="_blank" rel="noopener noreferrer" className="group flex h-full flex-col rounded-2xl border border-[#004cff]/15 bg-white/75 p-4 shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:border-[#004cff]/40 hover:shadow-[0_6px_20px_rgba(0,0,0,0.09)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#004cff] transition-all">
                         <div className="text-[9px] font-semibold uppercase tracking-wider text-[#004cff]">Research · Published</div>
-                        <h3 className="mt-1 text-sm font-semibold">Reconstructing AI Decisions</h3>
-                        <p className="mt-1 text-[11px] leading-relaxed text-zinc-600">Research on the evidence needed to reconstruct and review generative AI decisions after systems change.</p>
+                        <h3 className="mt-1 text-sm font-semibold">Decision Reconstructability Research</h3>
+                        <p className="mt-1 text-[11px] leading-relaxed text-zinc-600">Research into decision-time evidence preservation, dependency changes and the limits of replay. The linked publication explains the methodology and governance implications.</p>
                         <span className="mt-2 inline-block text-[10px] font-semibold text-[#004cff]">Read paper ↗</span>
                       </a>
                     </div>
