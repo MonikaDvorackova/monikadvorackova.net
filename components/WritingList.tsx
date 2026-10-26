@@ -7,16 +7,28 @@ import { useBlogCarouselMobileLayout } from "@/lib/blogCarouselMobileMedia";
 
 function SpeakingCard({ mobile = false }: { mobile?: boolean }) {
   return (
-    <article className="flex h-full shrink-0 flex-col rounded-2xl border border-[#002aff]/[0.12] bg-white/75 text-black shadow-[0_4px_16px_rgba(0,0,0,0.07)]"
-      style={{ width: mobile ? "min(76vw, 288px)" : 420, minHeight: mobile ? undefined : 96, padding: mobile ? "10px 12px 9px" : "12px 16px 10px", marginRight: mobile ? 0 : 16 }}>
-      <div className="flex min-h-[56px] items-start justify-between gap-3">
-        <h3 className="text-[11px] font-bold leading-snug">AI Assistants, RAG &amp; AI Agents</h3>
+    <article
+      className="flex h-full min-h-0 shrink-0 flex-col rounded-2xl border border-[#002aff]/[0.12] bg-white/75 text-black shadow-[0_4px_16px_rgba(0,0,0,0.07)]"
+      style={{
+        width: mobile ? "min(76vw, 288px)" : 420,
+        minHeight: mobile ? undefined : 96,
+        padding: mobile ? "10px 12px 9px" : "12px 16px 10px",
+        marginRight: mobile ? 0 : 16,
+      }}
+    >
+      <div className={`flex shrink-0 items-start justify-between gap-2 ${mobile ? "min-h-[48px]" : "min-h-[56px]"}`}>
+        <h3 className={`min-w-0 flex-1 line-clamp-2 font-bold leading-snug ${mobile ? "text-[10px]" : "text-[11px]"}`}>
+          AI Assistants, RAG &amp; AI Agents
+        </h3>
         <span className="shrink-0 text-right text-[9px]">27 Oct 2026</span>
       </div>
-      <p className="mt-1 text-[9px] font-medium">FEMINNO AI Academy · Armenia · Online</p>
-      <p className="mt-2 line-clamp-3 text-[9px] leading-[1.35]">Hands-on technical workshop on AI assistants, retrieval-augmented generation, agent workflows, evidence-grounded answers, and responsible AI.</p>
-      <div className="mt-auto flex flex-wrap gap-2 pt-3">
-        {["Speaking", "RAG", "AI Agents"].map(tag => <span key={tag} className="rounded bg-[#004cff] px-2.5 py-1 text-[9px] font-semibold leading-none text-white">{tag}</span>)}
+      <p className="mt-2 line-clamp-3 text-[9px] leading-[1.35]">
+        FEMINNO AI Academy · Armenia. Hands-on online workshop on RAG, AI assistants, and agents.
+      </p>
+      <div className="mt-auto flex min-h-[24px] items-center gap-2 pt-3">
+        {["Speaking", "RAG", "AI Agents"].map(tag => (
+          <span key={tag} className="shrink-0 rounded bg-[#004cff] px-2 py-1 text-[9px] font-semibold leading-none text-white">{tag}</span>
+        ))}
       </div>
     </article>
   );
