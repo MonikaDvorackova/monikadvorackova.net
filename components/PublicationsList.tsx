@@ -51,7 +51,7 @@ export const PUBLICATIONS_DATA: PublicationItem[] = [
     blurb:
       "Why AI systems need historical reconstructability, not just observability: preserving runtime bindings and dependency states as systems evolve. Introduces Orrery as a reference architecture.",
     outlet: "O’Reilly Radar",
-    outletLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/O%27Reilly_Media_Logo.svg/320px-O%27Reilly_Media_Logo.svg.png",
+    
     href: "https://www.oreilly.com/radar/the-preservation-gap-in-the-ai-stack-why-capability-is-advancing-faster-than-reconstructability/",
     date: "2026",
     caption: "Published",
@@ -64,7 +64,7 @@ export const PUBLICATIONS_DATA: PublicationItem[] = [
     blurb:
       "EU AI Act commentary for Wolters Kluwer. A related book is in preparation (2026).",
     outlet: "Wolters Kluwer",
-    outletLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Wolters_Kluwer.svg/320px-Wolters_Kluwer.svg.png",
+    
     date: "2026",
     caption: "Forthcoming",
     tags: ["AI Act"],
@@ -138,8 +138,12 @@ function PublicationCard({
           <div
             className={`flex shrink-0 flex-col items-end justify-start gap-0.5 text-right${mobileSolo && solo ? " min-h-[48px]" : " min-h-[56px]"}`}
           >
-            {item.outletLogo ? (
-              <img src={item.outletLogo} alt={`${item.outlet} logo`} width={80} height={20} className="mb-1 h-5 w-20 max-w-[80px] object-contain object-right" loading="lazy" />
+            {item.outlet === "O’Reilly Radar" ? (
+              <span aria-label="O’Reilly" className="mb-1 text-[13px] font-black tracking-tight text-[#c90016]">O’Reilly</span>
+            ) : item.outlet === "Wolters Kluwer" ? (
+              <span aria-label="Wolters Kluwer" className="mb-1 max-w-[95px] text-right text-[10px] font-extrabold leading-tight text-[#0072bc]">Wolters Kluwer</span>
+            ) : item.outletLogo ? (
+              <img src={item.outletLogo} alt={`${item.outlet} logo`} width={80} height={20} className="mb-1 h-5 w-20 object-contain object-right" loading="lazy" />
             ) : null}
             {item.date ? (
               <div
@@ -267,7 +271,7 @@ export default function PublicationsList() {
     const recomputeStart = () => {
       const half = track.scrollWidth / 2;
       if (half <= 0) return;
-      centerPad = Math.max(0, (wrapper.clientWidth - half) / 2);
+      centerPad = 0;
       x = 0;
       track.style.transform = `translate3d(${centerPad - x}px,0,0)`;
     };
@@ -325,7 +329,9 @@ export default function PublicationsList() {
       >
         <CarouselEdgeFog />
         <div
-          className="blog-carousel-mobile-marquee relative z-0 flex w-max items-stretch gap-2 py-0.5 px-0.5"
+          className="blog-carousel-mobile-marquee relative z-0 flex w-max items-stretch gap-2 py-0.5 px-0.5"\n          onTouchStart={(e) => { e.currentTarget.style.animationPlayState = "paused"; }}
+          onTouchEnd={(e) => { e.currentTarget.style.animationPlayState = "running"; }}
+          onTouchCancel={(e) => { e.currentTarget.style.animationPlayState = "running"; }}
           style={
             {
               "--blog-marquee-sec": "45s",
