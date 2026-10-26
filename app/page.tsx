@@ -840,7 +840,7 @@ export default function HomePage() {
                       />
                     </a>
                     <Link
-                      href="/writing-and-speaking"
+                      href="/blog"
                       className="group transition-all duration-300"
                       title="View Writing & Speaking"
                     >
