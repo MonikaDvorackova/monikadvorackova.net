@@ -87,6 +87,7 @@ function PublicationCard({
   const cardStyle: CSSProperties = {
     width: solo ? (mobileSolo ? "min(76vw, 288px)" : "min(86vw, 360px)") : 420,
     minHeight: solo ? undefined : 96,
+    height: solo ? undefined : "100%",
     marginRight: solo ? 0 : 16,
     backgroundColor: "rgba(255,255,255,0.72)",
     color: "#000",
@@ -317,7 +318,7 @@ export default function PublicationsList() {
       >
         <CarouselEdgeFog />
         <div
-          className="blog-carousel-mobile-marquee relative z-0 flex w-max gap-2 py-0.5 px-0.5"
+          className="blog-carousel-mobile-marquee relative z-0 flex w-max items-stretch gap-2 py-0.5 px-0.5"
           style={
             {
               "--blog-marquee-sec": "45s",
@@ -329,12 +330,12 @@ export default function PublicationsList() {
           }
         >
           {items.map((item) => (
-            <div key={`${item.id}-a`} className="shrink-0">
+            <div key={`${item.id}-a`} className="flex shrink-0 self-stretch">
               <PublicationCard item={item} solo mobileSolo={isMobile} />
             </div>
           ))}
           {items.map((item) => (
-            <div key={`${item.id}-b`} className="shrink-0">
+            <div key={`${item.id}-b`} className="flex shrink-0 self-stretch">
               <PublicationCard item={item} solo mobileSolo={isMobile} />
             </div>
           ))}
@@ -358,7 +359,7 @@ export default function PublicationsList() {
         <CarouselEdgeFog />
         <div
           ref={trackRef}
-          className="relative z-0 flex w-max will-change-transform pl-1 pr-1"
+          className="relative z-0 flex w-max items-stretch will-change-transform pl-1 pr-1"
           style={{ transform: "translate3d(0,0,0)" }}
         >
           {firstLoop.map((item) => (
