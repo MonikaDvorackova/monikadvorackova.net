@@ -51,7 +51,7 @@ export const PUBLICATIONS_DATA: PublicationItem[] = [
     blurb:
       "Why AI systems need historical reconstructability, not just observability: preserving runtime bindings and dependency states as systems evolve. Introduces Orrery as a reference architecture.",
     outlet: "O’Reilly Radar",
-    outletLogo: "https://www.oreilly.com/favicon.ico",
+    outletLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/O%27Reilly_Media_Logo.svg/320px-O%27Reilly_Media_Logo.svg.png",
     href: "https://www.oreilly.com/radar/the-preservation-gap-in-the-ai-stack-why-capability-is-advancing-faster-than-reconstructability/",
     date: "2026",
     caption: "Published",
@@ -64,7 +64,7 @@ export const PUBLICATIONS_DATA: PublicationItem[] = [
     blurb:
       "EU AI Act commentary for Wolters Kluwer. A related book is in preparation (2026).",
     outlet: "Wolters Kluwer",
-    outletLogo: "https://www.wolterskluwer.com/favicon.ico",
+    outletLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Wolters_Kluwer.svg/320px-Wolters_Kluwer.svg.png",
     date: "2026",
     caption: "Forthcoming",
     tags: ["AI Act"],
@@ -139,7 +139,7 @@ function PublicationCard({
             className={`flex shrink-0 flex-col items-end justify-start gap-0.5 text-right${mobileSolo && solo ? " min-h-[48px]" : " min-h-[56px]"}`}
           >
             {item.outletLogo ? (
-              <img src={item.outletLogo} alt={`${item.outlet} logo`} width={24} height={24} className="mb-1 h-6 w-6 object-contain" loading="lazy" />
+              <img src={item.outletLogo} alt={`${item.outlet} logo`} width={80} height={20} className="mb-1 h-5 w-20 max-w-[80px] object-contain object-right" loading="lazy" />
             ) : null}
             {item.date ? (
               <div
