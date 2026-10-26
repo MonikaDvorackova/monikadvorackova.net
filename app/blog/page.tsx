@@ -184,7 +184,7 @@ export default function BlogPage() {
               </div>
             )}
 
-            {(hasWritings || !isLoaded) && (
+            {true && (
               <div className={`w-full${writingsTopPad ? " mt-7 sm:mt-10" : ""}`}>
                 <motion.section
                   className="w-full"
