@@ -88,17 +88,20 @@ export default function WritingList({ posts }: { posts: ListingPost[] }) {
   if (isMobile) {
     return (
       <div
-        className="relative w-full overflow-hidden no-scrollbar select-none"
+        className="relative w-full overflow-x-auto overflow-y-hidden no-scrollbar select-none"
         style={{
           WebkitOverflowScrolling: "touch",
           paddingLeft: 6,
           paddingRight: 6,
-          touchAction: "manipulation",
+          touchAction: "pan-x pan-y",
         }}
       >
         <CarouselEdgeFog />
         <div
           className="blog-carousel-mobile-marquee relative z-0 flex w-max items-stretch gap-2 py-0.5 px-0.5"
+          onTouchStart={(e) => { e.currentTarget.style.animationPlayState = "paused"; }}
+          onTouchEnd={(e) => { e.currentTarget.style.animationPlayState = "running"; }}
+          onTouchCancel={(e) => { e.currentTarget.style.animationPlayState = "running"; }}
           style={
             {
               "--blog-marquee-sec": "40s",
