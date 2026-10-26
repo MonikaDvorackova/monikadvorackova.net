@@ -62,6 +62,11 @@ export default function PostListingCard({
       id={anchorId}
       className={`group relative flex w-full flex-col self-stretch overflow-visible rounded-2xl transition-transform duration-300 hover:scale-[1.01] hover:shadow-[0_6px_24px_rgba(0,0,0,0.18)] focus-within:ring-2 focus-within:ring-[#004cff]/50${anchorId ? " scroll-mt-20" : ""}`}
       onPointerEnter={onPointerInsideCard}
+      onClick={(event) => {
+        if (post.slug !== "feminno-ai-academy-rag-agents-2026") return;
+        if ((event.target as HTMLElement).closest("a")) return;
+        window.location.assign(href);
+      }}
       style={{
         width: widthStyle,
         minHeight: solo ? undefined : LISTING_CARD_MIN_HEIGHT_CAROUSEL_PX,
