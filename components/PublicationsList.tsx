@@ -307,12 +307,12 @@ export default function PublicationsList() {
   if (isMobile) {
     return (
       <div
-        className="relative w-full overflow-hidden no-scrollbar select-none"
+        className="relative w-full overflow-x-auto overflow-y-hidden no-scrollbar select-none"
         style={{
           WebkitOverflowScrolling: "touch",
           paddingLeft: 6,
           paddingRight: 6,
-          touchAction: "manipulation",
+          touchAction: "pan-x pan-y",
         }}
       >
         <CarouselEdgeFog />
