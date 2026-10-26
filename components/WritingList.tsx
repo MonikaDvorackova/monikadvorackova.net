@@ -92,7 +92,11 @@ export default function WritingList({ posts }: { posts: ListingPost[] }) {
 
 
 
-  if (posts.length === 0) {\n    return <div className="flex w-full justify-center"><SpeakingCard mobile={isMobile} /></div>;\n  }\n\n  if (false && posts.length === 1) {
+  if (posts.length === 0) {
+    return <div className="flex w-full justify-center"><SpeakingCard mobile={isMobile} /></div>;
+  }
+
+  if (posts.length === -1) {
     return (
       <div className="w-full flex justify-center">
         <PostListingCard post={posts[0]} solo mobileSolo={isMobile} />
@@ -129,11 +133,13 @@ export default function WritingList({ posts }: { posts: ListingPost[] }) {
               <PostListingCard post={post} solo mobileSolo={isMobile} />
             </div>
           ))}
+          <div className="flex shrink-0 self-stretch"><SpeakingCard mobile /></div>
           {posts.map((post) => (
             <div key={`${post.slug}-b`} className="flex shrink-0 self-stretch">
               <PostListingCard post={post} solo mobileSolo={isMobile} />
             </div>
           ))}
+          <div className="flex shrink-0 self-stretch"><SpeakingCard mobile /></div>
         </div>
       </div>
     );
@@ -167,7 +173,8 @@ export default function WritingList({ posts }: { posts: ListingPost[] }) {
               />
             </div>
           ))}
-          <div className="flex shrink-0 self-stretch"><SpeakingCard /></div>\n          {secondLoop.map((post) => (
+          <div className="flex shrink-0 self-stretch"><SpeakingCard /></div>
+          {secondLoop.map((post) => (
             <div key={`${post.slug}-writing-b`} className="flex shrink-0 self-stretch">
               <PostListingCard
                 post={post}
@@ -177,7 +184,8 @@ export default function WritingList({ posts }: { posts: ListingPost[] }) {
               />
             </div>
           ))}
- \n          <div className="flex shrink-0 self-stretch"><SpeakingCard /></div>       </div>
+ 
+          <div className="flex shrink-0 self-stretch"><SpeakingCard /></div>       </div>
       </div>
     </div>
   );
