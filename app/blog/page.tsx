@@ -184,7 +184,7 @@ export default function BlogPage() {
               </div>
             )}
 
-            {hasWritings && (
+            {(hasWritings || true) && (
               <div className={`w-full${writingsTopPad ? " mt-7 sm:mt-10" : ""}`}>
                 <motion.section
                   className="w-full"
@@ -195,7 +195,7 @@ export default function BlogPage() {
                   <div className="w-full max-w-3xl mx-auto">
                     <SectionLabel>Writing &amp; Speaking</SectionLabel>
                     <SectionPanel>
-                      <WritingList posts={articlePosts} />
+                      {hasWritings && <WritingList posts={articlePosts} />}
                       <div className="mx-auto mt-5 max-w-[420px] rounded-2xl border border-[#002aff]/[0.12] bg-white/75 px-4 py-4 text-black shadow-[0_4px_16px_rgba(0,0,0,0.07)]">
                         <p className="text-[9px] font-semibold uppercase tracking-[0.15em] text-black/45">Speaking · FEMINNO AI Academy · Armenia</p>
                         <h3 className="mt-2 text-sm font-bold leading-snug">AI Assistants, RAG &amp; AI Agents</h3>
