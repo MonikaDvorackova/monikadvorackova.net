@@ -158,36 +158,11 @@ export default function BlogPage() {
                 <div className="w-full max-w-3xl mx-auto">
                   <SectionLabel>Research &amp; Software</SectionLabel>
                   <SectionPanel>
-                    <div className="mb-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                      <a href="https://github.com/AIGovDev/aigov-core" target="_blank" rel="noopener noreferrer" className="group flex h-full flex-col rounded-2xl border border-[#004cff]/15 bg-white/75 p-4 shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:border-[#004cff]/40 hover:shadow-[0_6px_20px_rgba(0,0,0,0.09)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#004cff] transition-all">
-                        <div className="text-[9px] font-semibold uppercase tracking-wider text-[#004cff]">Open Source · Rust</div>
-                        <h3 className="mt-1 text-sm font-semibold">AIGov Core</h3>
-                        <p className="mt-1 text-[11px] leading-relaxed text-zinc-600">Versioned decision evidence, policy evaluation, deterministic governance replay and audit verification.</p>
-                        <span className="mt-auto pt-3 inline-block text-[10px] font-semibold text-[#004cff]">View GitHub ↗</span>
-                      </a>
-                      <a href="https://doi.org/10.37819/Jaike.26.0013" target="_blank" rel="noopener noreferrer" className="group flex h-full flex-col rounded-2xl border border-[#004cff]/15 bg-white/75 p-4 shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:border-[#004cff]/40 hover:shadow-[0_6px_20px_rgba(0,0,0,0.09)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#004cff] transition-all">
-                        <div className="text-[9px] font-semibold uppercase tracking-wider text-[#004cff]">Research · Published</div>
-                        <h3 className="mt-1 text-sm font-semibold">Decision Reconstructability Research</h3>
-                        <p className="mt-1 text-[11px] leading-relaxed text-zinc-600">Research into decision-time evidence preservation, dependency changes and the limits of replay. The linked publication explains the methodology and governance implications.</p>
-                        <span className="mt-2 inline-block text-[10px] font-semibold text-[#004cff]">Read paper ↗</span>
-                      </a>
-                    </div>
-                    <ClientBlog posts={softwarePosts} />
-                    <div className="mt-5 border-t border-black/10 pt-4">
-                      <h3 className="mb-3 text-center text-[10px] font-semibold uppercase tracking-[0.16em] text-black/55">Open Source Contributions</h3>
-                      <a href="https://github.com/huggingface/datasets/pull/8866" target="_blank" rel="noopener noreferrer" className="group flex flex-col gap-2 rounded-2xl border border-[#004cff]/15 bg-white/75 p-4 shadow-[0_4px_16px_rgba(0,0,0,0.06)] transition-all hover:border-[#004cff]/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#004cff]">
-                        <div className="flex flex-wrap items-center justify-between gap-2">
-                          <span className="text-xs font-bold">Hugging Face · Datasets</span>
-                          <span className="rounded-full bg-[#004cff]/10 px-2 py-1 text-[9px] font-semibold text-[#004cff]">External PR #8866</span>
-                        </div>
-                        <p className="text-xs font-semibold">Fix forwarding custom User-Agent to fsspec HTTP requests</p>
-                        <p className="text-[11px] leading-relaxed text-zinc-600">Propagates configured User-Agent headers for HTTP/HTTPS dataset requests, preserves explicitly set headers and adds regression tests.</p>
-                        <div className="flex flex-wrap items-center gap-2 text-[10px] text-zinc-500"><span>Python</span><span>·</span><span>HTTP</span><span>·</span><span>fsspec</span><span>·</span><span>Tests</span></div>
-                        <span className="text-[10px] font-semibold text-[#004cff]">View pull request ↗</span>
-                      </a>
-                      <a href="https://github.com/monikadvorackova" target="_blank" rel="noopener noreferrer" className="mt-3 block text-center text-[11px] font-semibold text-[#004cff] hover:underline">More contributions on GitHub ↗</a>
-                    </div>
-
+                    <ClientBlog posts={softwarePosts} extras={[
+                      { slug: "aigov-core-external", title: "AIGov Core", date: "2026", tags: ["Open Source", "Rust", "AI Governance"], description: "Versioned decision evidence, policy evaluation, deterministic governance replay and audit verification.", externalHref: "https://github.com/AIGovDev/aigov-core" },
+                      { slug: "decision-reconstructability-research", title: "Decision Reconstructability Research", date: "2026", tags: ["Research", "Auditability"], description: "Research into decision-time evidence preservation, dependency changes and limits of replay.", externalHref: "https://doi.org/10.37819/Jaike.26.0013" },
+                      { slug: "huggingface-datasets-fsspec-contribution", title: "Hugging Face Datasets — User-Agent fix (PR #8866)", date: "2026", tags: ["Open Source", "Python", "fsspec"], description: "External contribution: forward configured User-Agent to HTTP/HTTPS dataset requests, preserve explicit headers and add regression tests.", externalHref: "https://github.com/huggingface/datasets/pull/8866" }
+                    ]} />
                   </SectionPanel>
                 </div>
               </motion.section>
