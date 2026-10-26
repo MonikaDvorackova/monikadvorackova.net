@@ -5,35 +5,6 @@ import CarouselEdgeFog from "@/components/CarouselEdgeFog";
 import PostListingCard, { type ListingPost } from "@/components/PostListingCard";
 import { useBlogCarouselMobileLayout } from "@/lib/blogCarouselMobileMedia";
 
-function SpeakingCard({ mobile = false }: { mobile?: boolean }) {
-  return (
-    <article
-      className="flex h-full min-h-0 shrink-0 flex-col rounded-2xl border border-[#002aff]/[0.12] bg-white/75 text-black shadow-[0_4px_16px_rgba(0,0,0,0.07)]"
-      style={{
-        width: mobile ? "min(76vw, 288px)" : 420,
-        minHeight: mobile ? undefined : 96,
-        padding: mobile ? "10px 12px 9px" : "12px 16px 10px",
-        marginRight: mobile ? 0 : 16,
-      }}
-    >
-      <div className={`flex shrink-0 items-start justify-between gap-2 ${mobile ? "min-h-[48px]" : "min-h-[56px]"}`}>
-        <h3 className={`min-w-0 flex-1 line-clamp-2 font-bold leading-snug ${mobile ? "text-[10px]" : "text-[11px]"}`}>
-          AI Assistants, RAG &amp; AI Agents
-        </h3>
-        <span className="shrink-0 text-right text-[9px]">27 Oct 2026</span>
-      </div>
-      <p className="mt-2 line-clamp-3 text-[9px] leading-[1.35]">
-        FEMINNO AI Academy · Armenia. Hands-on online workshop on RAG, AI assistants, and agents.
-      </p>
-      <div className="mt-auto flex min-h-[24px] items-center gap-2 pt-3">
-        {["Speaking", "RAG", "AI Agents"].map(tag => (
-          <span key={tag} className="shrink-0 rounded bg-[#004cff] px-2 py-1 text-[9px] font-semibold leading-none text-white">{tag}</span>
-        ))}
-      </div>
-    </article>
-  );
-}
-
 export default function WritingList({ posts }: { posts: ListingPost[] }) {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
@@ -41,7 +12,7 @@ export default function WritingList({ posts }: { posts: ListingPost[] }) {
 
   const isMobile = useBlogCarouselMobileLayout();
 
-  const useMarquee = posts.length >= 1 && !isMobile;
+  const useMarquee = posts.length >= 2 && !isMobile;
   const firstLoop = posts;
   const secondLoop = posts;
 
@@ -104,11 +75,9 @@ export default function WritingList({ posts }: { posts: ListingPost[] }) {
 
 
 
-  if (posts.length === 0) {
-    return <div className="flex w-full justify-center"><SpeakingCard mobile={isMobile} /></div>;
-  }
+  if (!posts.length) return null;
 
-  if (posts.length === -1) {
+  if (posts.length === 1) {
     return (
       <div className="w-full flex justify-center">
         <PostListingCard post={posts[0]} solo mobileSolo={isMobile} />
@@ -145,13 +114,11 @@ export default function WritingList({ posts }: { posts: ListingPost[] }) {
               <PostListingCard post={post} solo mobileSolo={isMobile} />
             </div>
           ))}
-          <div className="flex shrink-0 self-stretch"><SpeakingCard mobile /></div>
           {posts.map((post) => (
             <div key={`${post.slug}-b`} className="flex shrink-0 self-stretch">
               <PostListingCard post={post} solo mobileSolo={isMobile} />
             </div>
           ))}
-          <div className="flex shrink-0 self-stretch"><SpeakingCard mobile /></div>
         </div>
       </div>
     );
@@ -185,7 +152,6 @@ export default function WritingList({ posts }: { posts: ListingPost[] }) {
               />
             </div>
           ))}
-          <div className="flex shrink-0 self-stretch"><SpeakingCard /></div>
           {secondLoop.map((post) => (
             <div key={`${post.slug}-writing-b`} className="flex shrink-0 self-stretch">
               <PostListingCard
@@ -197,7 +163,7 @@ export default function WritingList({ posts }: { posts: ListingPost[] }) {
             </div>
           ))}
  
-          <div className="flex shrink-0 self-stretch"><SpeakingCard /></div>       </div>
+        </div>
       </div>
     </div>
   );
