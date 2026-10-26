@@ -8,7 +8,7 @@ import { useBlogCarouselMobileLayout } from "@/lib/blogCarouselMobileMedia";
 function SpeakingCard({ mobile = false }: { mobile?: boolean }) {
   return (
     <article className="flex h-full shrink-0 flex-col rounded-2xl border border-[#002aff]/[0.12] bg-white/75 text-black shadow-[0_4px_16px_rgba(0,0,0,0.07)]"
-      style={{ width: mobile ? "min(76vw, 288px)" : 420, minHeight: 200, padding: mobile ? "10px 12px 9px" : "12px 16px 10px", marginRight: mobile ? 0 : 16 }}>
+      style={{ width: mobile ? "min(76vw, 288px)" : 420, minHeight: mobile ? undefined : 96, padding: mobile ? "10px 12px 9px" : "12px 16px 10px", marginRight: mobile ? 0 : 16 }}>
       <div className="flex min-h-[56px] items-start justify-between gap-3">
         <h3 className="text-[11px] font-bold leading-snug">AI Assistants, RAG &amp; AI Agents</h3>
         <span className="shrink-0 text-right text-[9px]">27 Oct 2026</span>
