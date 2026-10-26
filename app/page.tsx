@@ -792,6 +792,8 @@ export default function HomePage() {
                   </p>
                 </div>
 
+                <p className="mt-2 max-w-xl px-3 text-center text-[11px] leading-snug text-zinc-700 sm:text-xs">ML &amp; LLM engineering · RAG &amp; agent evaluation · AI governance research · EU AI Act</p>
+                <a href="mailto:monika.dvorack@gmail.com?subject=AI%20engineering%20inquiry" className="mt-2 inline-flex items-center rounded-full bg-[#004cff] px-4 py-2 text-[11px] font-semibold text-white shadow-sm transition-colors hover:bg-[#0035b8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#004cff]">Discuss a project</a>
                 <div className="flex items-center justify-center gap-1 pt-[0.3rem]">
                   <a
                     href="https://www.linkedin.com/in/monika-dvorackova/?locale=en_US"

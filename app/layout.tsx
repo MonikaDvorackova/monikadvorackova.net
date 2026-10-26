@@ -57,10 +57,44 @@ export const metadata: Metadata = {
   },
 };
 
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": SITE_URL + "/#person",
+    name: "Monika Dvořáčková",
+    url: SITE_URL,
+    jobTitle: "ML/AI Engineer and Researcher",
+    knowsAbout: ["Machine learning", "LLM engineering", "AI governance", "EU AI Act"],
+    sameAs: ["https://github.com/monikadvorackova", "https://www.linkedin.com/in/monika-dvorackova/"],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "@id": "https://doi.org/10.37819/Jaike.26.0013",
+    headline: "Why Auditability Fails in Current Generative AI Systems: A Governance Perspective",
+    datePublished: "2026",
+    author: { "@id": SITE_URL + "/#person" },
+    identifier: "https://doi.org/10.37819/Jaike.26.0013",
+    isPartOf: { "@type": "Periodical", name: "JAIKE" },
+    url: "https://doi.org/10.37819/Jaike.26.0013",
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    name: "AIGov Core",
+    codeRepository: "https://github.com/AIGovDev/aigov-core",
+    programmingLanguage: "Rust",
+    description: "Decision-bound evidence ledger, policy evaluation and deterministic governance replay.",
+    author: { "@id": SITE_URL + "/#person" },
+  },
+];
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className="min-h-screen w-full">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
         {children}
         <RootFooter />
         <VercelMetrics />
