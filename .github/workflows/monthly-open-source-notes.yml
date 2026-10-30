@@ -1,0 +1,46 @@
+name: Monthly open-source engineering notes
+on:
+  schedule:
+    - cron: "15 7 1 * *"
+  workflow_dispatch:
+    inputs:
+      year:
+        description: "Optional year"
+        required: false
+      month:
+        description: "Optional month (1-12)"
+        required: false
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Generate draft from merged upstream PRs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          YEAR: ${{ inputs.year }}
+          MONTH: ${{ inputs.month }}
+        run: |
+          args=()
+          if [ -n "$YEAR" ]; then args+=(--year "$YEAR"); fi
+          if [ -n "$MONTH" ]; then args+=(--month "$MONTH"); fi
+          python scripts/generate_open_source_notes.py "${args[@]}"
+      - name: Create editorial review PR
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ github.token }}
+          add-paths: posts/open-source-engineering-notes-*.mdx
+          branch: automation/monthly-open-source-notes
+          delete-branch: true
+          commit-message: "docs: draft monthly open-source engineering notes"
+          title: "docs: review monthly open-source engineering notes"
+          body: |
+            Generated from GitHub merged PR records. **Do not merge without editorial review.**
+            Verify each PR's diff, tests and technical impact. Replace placeholder descriptions.
+          labels: documentation
