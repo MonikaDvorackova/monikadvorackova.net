@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/open-source-notes",
+      "schedule": "15 7 1 * *"
+    }
+  ]
+}
