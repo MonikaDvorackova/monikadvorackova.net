@@ -1,0 +1,23 @@
+---
+title: "Open Source Engineering Notes — October 2026"
+date: "2026-10-30"
+type: "article"
+tags: ["Open Source", "Engineering", "Python"]
+description: "An October 2026 record of upstream engineering contributions, with links to verifiable changes."
+---
+
+This month's open-source work included a maintenance fix to the Python packaging metadata of an upstream project. The focus here is on the actual change and its verification, rather than the number of pull requests submitted.
+
+## pylavi: remove a deprecated license classifier
+
+In [marcpage/pylavi PR #88](https://github.com/marcpage/pylavi/pull/88), I removed the deprecated `License :: OSI Approved :: The Unlicense (Unlicense)` classifier from `setup.py`. The package retains its existing `license="Unlicense"` metadata; the change does not attempt to relicense the project.
+
+The upstream pull request was merged on October 30, 2026. The PR records a strict package-metadata check and a test run reporting 46 passing tests. This is a small compatibility and maintenance change, not a functional change to the library's behavior.
+
+## Further upstream work
+
+Other October contributions are not included here until their merge status and technical scope are independently verified. The monthly generator will collect externally merged pull requests for editorial review.
+
+## Sources
+
+- [pylavi PR #88 — merged upstream](https://github.com/marcpage/pylavi/pull/88)
