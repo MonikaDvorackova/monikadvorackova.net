@@ -65,6 +65,11 @@ export async function GET(req: NextRequest) {
     const { year, month, start, end } = previousMonth(new Date());
     const slug = `open-source-engineering-notes-${year}-${String(month).padStart(2, "0")}`;
     const filePath = `posts/${slug}.mdx`;
+    const published = await fetch(`${API}/repos/${OWNER}/${REPO}/contents/${filePath}?ref=main`, {
+      headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github+json" }, cache: "no-store",
+    });
+    if (published.ok) return NextResponse.json({ status: "already-published", filePath });
+    if (published.status !== 404) throw new Error(`Checking published article failed: ${published.status}`);
     const q = `type:pr author:${OWNER} is:merged merged:>=${start} merged:<${end}`;
     const prs: PR[] = [];
     for (let page = 1; page <= 10; page++) {
