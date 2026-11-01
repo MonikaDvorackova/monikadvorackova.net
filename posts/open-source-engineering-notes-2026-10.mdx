@@ -1,23 +1,34 @@
 ---
 title: "Open Source Engineering Notes — October 2026"
-date: "2026-10-30"
+date: "2026-10-31"
 type: "article"
 tags: ["Open Source", "Engineering", "Python"]
-description: "An October 2026 record of upstream engineering contributions, with links to verifiable changes."
+description: "Verified upstream pull requests merged in October 2026."
 ---
 
-This month's open-source work included a maintenance fix to the Python packaging metadata of an upstream project. The focus here is on the actual change and its verification, rather than the number of pull requests submitted.
+This is a source-linked record of upstream contributions merged in October 2026.
+It is generated from GitHub merge records and requires editorial review before publication.
 
-## pylavi: remove a deprecated license classifier
+## Merged upstream contributions (3)
 
-In [marcpage/pylavi PR #88](https://github.com/marcpage/pylavi/pull/88), I removed the deprecated `License :: OSI Approved :: The Unlicense (Unlicense)` classifier from `setup.py`. The package retains its existing `license="Unlicense"` metadata; the change does not attempt to relicense the project.
+### alesziegler/clab-project-covid-data — PR #1
 
-The upstream pull request was merged on October 30, 2026. The PR records a strict package-metadata check and a test run reporting 46 passing tests. This is a small compatibility and maintenance change, not a functional change to the library's behavior.
+[Fix P0 review issues for reproducibility and dashboard correctness](https://github.com/alesziegler/clab-project-covid-data/pull/1)
 
-## Further upstream work
+Technical context and impact: pending manual verification of the diff, tests and maintainer feedback.
 
-Other October contributions are not included here until their merge status and technical scope are independently verified. The monthly generator will collect externally merged pull requests for editorial review.
+### alesziegler/CLab_workshop — PR #1
 
-## Sources
+[Improve workshop readability and naming consistency](https://github.com/alesziegler/CLab_workshop/pull/1)
 
-- [pylavi PR #88 — merged upstream](https://github.com/marcpage/pylavi/pull/88)
+Technical context and impact: pending manual verification of the diff, tests and maintainer feedback.
+
+### marcpage/pylavi — PR #88
+
+[fix: remove deprecated license classifier](https://github.com/marcpage/pylavi/pull/88)
+
+Technical context and impact: pending manual verification of the diff, tests and maintainer feedback.
+
+## Editorial verification
+
+Before merging this article, check each PR diff, CI results and merge status. Replace placeholders with precise, evidence-backed explanations. Do not claim adoption, performance gains or impact without evidence.
