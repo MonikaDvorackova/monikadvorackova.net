@@ -31,30 +31,34 @@ const stop = new Set([
   "kdo",
 ]);
 export function lexical(docs: RecordData[], query: string) {
-  const terms = tokens(query).filter((t) => !stop.has(t));
-  return docs
-    .map((doc) => {
-      const text = tokens(doc.title + " " + doc.description + " " + doc.body);
-      const title = tokens(doc.title);
+  const terms = [...new Set(tokens(query).filter((t) => !stop.has(t)))];
+  const indexed = docs.map((doc) => {
+    const words = tokens(doc.title + " " + doc.description + " " + doc.body);
+    const frequencies = new Map<string, number>();
+    for (const word of words)
+      frequencies.set(word, (frequencies.get(word) || 0) + 1);
+    return { doc, frequencies, title: new Set(tokens(doc.title)) };
+  });
+  const df = new Map(
+    terms.map((term) => [
+      term,
+      indexed.filter((row) => row.frequencies.has(term)).length,
+    ]),
+  );
+  return indexed
+    .map(({ doc, frequencies, title }) => {
       let score = 0;
-      for (const t of terms) {
-        const count = text.filter((x) => x === t).length;
+      for (const term of terms) {
+        const count = frequencies.get(term) || 0;
         if (count)
           score +=
-            Math.log(
-              1 +
-                docs.length /
-                  (1 +
-                    docs.filter((d) =>
-                      tokens(d.title + " " + d.body).includes(t),
-                    ).length),
-            ) *
-              (count / (count + 1.2)) +
-            (title.includes(t) ? 2 : 0);
+            (Math.log(1 + docs.length / (1 + (df.get(term) || 0))) * count) /
+              (count + 1.2) +
+            (title.has(term) ? 2 : 0);
       }
       return { ...doc, score };
     })
-    .filter((x) => x.score > 0)
+    .filter((d) => d.score > 0)
     .sort((a, b) => b.score - a.score || a.id.localeCompare(b.id));
 }
 export type EmbeddingIndex = {
@@ -163,7 +167,13 @@ export async function ask(docs: RecordData[], question: string) {
     };
   const found = await search(docs, question, 5);
   const citations = found.results
-    .filter((r) => r.kind !== "technology")
+    .filter(
+      (r) =>
+        r.kind !== "technology" &&
+        !/(ignore|disregard).{0,50}(instruction|prompt)|system\s*prompt|reveal.{0,30}(secret|key|password)/i.test(
+          r.title + " " + r.description,
+        ),
+    )
     .map((r) => ({
       id: r.id,
       url: r.source,

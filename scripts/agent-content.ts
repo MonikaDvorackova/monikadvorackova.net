@@ -21,6 +21,14 @@ async function main() {
           data.description || data.tldr || data.title || file,
         ),
         body: content,
+        topics: (Array.isArray(data.tags)
+          ? data.tags
+          : typeof data.tags === "string"
+            ? data.tags.split(",")
+            : []
+        )
+          .map((tag: unknown) => String(tag).trim())
+          .filter(Boolean),
         language: data.language === "cs" ? "cs" : "en",
         updatedAt: data.date
           ? new Date(data.date).toISOString()

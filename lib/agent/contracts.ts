@@ -17,6 +17,7 @@ export const publicRecord = z.object({
     "repository",
     "release",
     "issue",
+    "research_topic",
   ]),
   title: z.string(),
   description: z.string(),

@@ -123,6 +123,7 @@ export async function rateLimit(subject: string, limit: number) {
   if (localLimits.size > 10000)
     for (const [key, value] of localLimits)
       if (value.bucket !== bucket) localLimits.delete(key);
+  if (localLimits.size >= 10000 && !localLimits.has(subject)) return false;
   const old = localLimits.get(subject);
   const entry = { bucket, hits: old?.bucket === bucket ? old.hits + 1 : 1 };
   localLimits.set(subject, entry);

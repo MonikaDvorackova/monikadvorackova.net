@@ -57,7 +57,8 @@
                             "contribution",
                             "repository",
                             "release",
-                            "issue"
+                            "issue",
+                            "research_topic"
                           ]
                         },
                         "title": {
@@ -574,7 +575,8 @@
                                   "contribution",
                                   "repository",
                                   "release",
-                                  "issue"
+                                  "issue",
+                                  "research_topic"
                                 ]
                               },
                               "title": {
@@ -1129,7 +1131,8 @@
                                   "contribution",
                                   "repository",
                                   "release",
-                                  "issue"
+                                  "issue",
+                                  "research_topic"
                                 ]
                               },
                               "title": {
@@ -1684,7 +1687,8 @@
                                   "contribution",
                                   "repository",
                                   "release",
-                                  "issue"
+                                  "issue",
+                                  "research_topic"
                                 ]
                               },
                               "title": {
@@ -2239,7 +2243,8 @@
                                   "contribution",
                                   "repository",
                                   "release",
-                                  "issue"
+                                  "issue",
+                                  "research_topic"
                                 ]
                               },
                               "title": {
@@ -2794,7 +2799,8 @@
                                   "contribution",
                                   "repository",
                                   "release",
-                                  "issue"
+                                  "issue",
+                                  "research_topic"
                                 ]
                               },
                               "title": {
@@ -5763,7 +5769,8 @@
                                   "contribution",
                                   "repository",
                                   "release",
-                                  "issue"
+                                  "issue",
+                                  "research_topic"
                                 ]
                               },
                               "title": {
@@ -6276,7 +6283,8 @@
                                   "contribution",
                                   "repository",
                                   "release",
-                                  "issue"
+                                  "issue",
+                                  "research_topic"
                                 ]
                               },
                               "title": {
@@ -7805,7 +7813,8 @@
                                   "contribution",
                                   "repository",
                                   "release",
-                                  "issue"
+                                  "issue",
+                                  "research_topic"
                                 ]
                               },
                               "title": {
@@ -10519,7 +10528,8 @@
                                         "contribution",
                                         "repository",
                                         "release",
-                                        "issue"
+                                        "issue",
+                                        "research_topic"
                                       ]
                                     },
                                     "title": {

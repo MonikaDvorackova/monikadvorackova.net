@@ -106,7 +106,13 @@ export async function invoke(name: ToolName, input: unknown) {
   const lang = (args.lang || "en") as Language;
   const docs = await corpus(lang);
   const list = (kind: string) =>
-    docs.filter((d) => d.kind === kind).map((doc) => { const result = {...doc} as Partial<typeof doc>; delete result.body; return result as Omit<typeof doc,"body">; });
+    docs
+      .filter((d) => d.kind === kind)
+      .map((doc) => {
+        const result = { ...doc } as Partial<typeof doc>;
+        delete result.body;
+        return result as Omit<typeof doc, "body">;
+      });
   switch (name) {
     case "get_profile":
       return list("person")[0];
@@ -202,6 +208,10 @@ export async function invoke(name: ToolName, input: unknown) {
     case "get_recent_changes":
       return docs
         .filter((d) => !args.since || d.updatedAt >= String(args.since))
+        .sort(
+          (a, b) =>
+            b.updatedAt.localeCompare(a.updatedAt) || a.id.localeCompare(b.id),
+        )
         .map((d) => ({
           id: d.id,
           updatedAt: d.updatedAt,

@@ -21,7 +21,8 @@ export type Kind =
   | "contribution"
   | "repository"
   | "release"
-  | "issue";
+  | "issue"
+  | "research_topic";
 export type RecordData = {
   id: string;
   kind: Kind;
@@ -93,6 +94,7 @@ export async function corpus(lang: Language = "en"): Promise<RecordData[]> {
           ...common,
           id: BASE + "/#technology-" + encodeURIComponent(title.toLowerCase()),
           kind: "technology",
+          language: "en",
           title,
           description: group.label,
           body: title,
@@ -129,10 +131,29 @@ export async function corpus(lang: Language = "en"): Promise<RecordData[]> {
         ...common,
         id: BASE + "/#publisher-" + encodeURIComponent(outlet),
         kind: "organization",
+        language: "en",
         title: outlet,
         description: "Publication outlet named in the public bibliography.",
         body: outlet,
         url: BASE + "/#publications",
+      }),
+    );
+  const topicId = (title: string) =>
+    BASE + "/#topic-" + encodeURIComponent(title.toLowerCase());
+  for (const title of new Set([
+    ...PUBLICATIONS_DATA.flatMap((p) => p.tags || []),
+    ...CONTENT.flatMap((p) => p.topics),
+  ]))
+    docs.push(
+      record({
+        ...common,
+        id: topicId(title),
+        kind: "research_topic",
+        language: "en",
+        title,
+        description: "Topic referenced in public writing.",
+        body: title,
+        url: BASE + "/blog",
       }),
     );
   for (const p of PUBLICATIONS_DATA)
@@ -148,6 +169,10 @@ export async function corpus(lang: Language = "en"): Promise<RecordData[]> {
         language: "en",
         source: p.href || BASE,
         relations: [
+          ...(p.tags || []).map((title) => ({
+            type: "about",
+            target: topicId(title),
+          })),
           { type: "author", target: personId },
           {
             type: "publisher",
@@ -170,7 +195,13 @@ export async function corpus(lang: Language = "en"): Promise<RecordData[]> {
         language: entry.language === "cs" ? "cs" : "en",
         source: url,
         updatedAt: entry.updatedAt,
-        relations: [{ type: "author", target: personId }],
+        relations: [
+          { type: "author", target: personId },
+          ...entry.topics.map((title) => ({
+            type: "about",
+            target: topicId(title),
+          })),
+        ],
       }),
     );
   }
@@ -270,6 +301,13 @@ export function structuredData(docs: RecordData[]) {
       .map((d) => ({
         "@id": d.id,
         "@type": types[d.kind],
+        ...(d.relations.some((r) => r.type === "publisher")
+          ? {
+              publisher: {
+                "@id": d.relations.find((r) => r.type === "publisher")!.target,
+              },
+            }
+          : {}),
         name: d.title,
         description: d.description,
         url: d.url,
