@@ -4,7 +4,7 @@
 
 Next.js owns HTML, REST v1, MCP Streamable HTTP and A2A 0.3 JSON-RPC. No FastAPI service is deployed. The supplied Python package duplicated website facts, had a discovery-only A2A card and incomplete MCP registrations; integrating two independently maintained models would preserve those inconsistencies.
 
-`lib/agent/model.ts` reads a deterministic catalog generated from MDX articles/projects before dev/build, the shared `lib/publications.ts` bibliography, shared `lib/stack.ts` technologies and a generated public GitHub snapshot. Changes to these sources automatically flow into discovery, graph, feeds, search, QA and exports. Website visual components consume the same extracted publication/technology arrays. No visual CSS or navigation redesign is included.
+`lib/agent/model.ts` reads a deterministic catalog generated from MDX articles/projects before dev/build, the shared `lib/publications.ts` bibliography, shared `lib/stack.ts` technologies and a generated public GitHub snapshot. Changes to these sources automatically flow into discovery, graph, feeds, search, QA and exports. The generated catalog records the raw MDX SHA-256 and a Git modification timestamp (or explicit frontmatter lastModified/updatedAt); committed catalog timestamps are preserved when Git metadata is absent and the source hash is unchanged. Website visual components consume the same extracted publication/technology arrays. No visual CSS or navigation redesign is included.
 
 A content SHA-256 covers every record field except the digest. These are integrity checks, not signatures or proof of qualifications. Website statements are self-reported. GitHub source verification supports only the repository/PR/release facts returned by the public source, not employment, adoption or impact. Source reachability checks never upgrade verification status. Original-language content falls back to English and declares its language; Czech profile text and API metadata are available. Experience and education are loaded from schema-validated `data/agent/career.json`. Its collections are currently empty because the website does not publish source-reviewed structured career records. Populate only approved public claims with source URLs; manual entries remain self-reported. Empty collections do not infer qualifications.
 
@@ -17,7 +17,7 @@ A content SHA-256 covers every record field except the digest. These are integri
 | AGENT_A2A_KEY | At least 32 random characters, issued to trusted A2A clients. Tasks are isolated by the SHA-256 of the credential. Rotation changes task ownership. |
 | AGENT_INQUIRY_KEY | At least 32 random characters, required to store consented inquiry drafts. |
 | AGENT_RATE_SALT | Independent random secret for HMAC network pseudonyms. |
-| AGENT_ALLOWED_ORIGINS | Explicit comma-separated HTTPS preview origins permitted for browser calls. |
+| AGENT_ALLOWED_ORIGINS | Explicit comma-separated HTTPS origins permitted for browser calls; the deployment's own trusted VERCEL_URL is allowed automatically. |
 | AGENT_REQUIRE_DURABLE_LIMITS | Set true in production to fail closed if durable limiting is unavailable. Without DB, development/preview limits are process-local. |
 | AGENT_EMBEDDING_KEY | Optional OpenAI embedding access; public corpus only. No model key is sent to clients. |
 | AGENT_EMBEDDING_MODEL | Defaults to text-embedding-3-small. Rebuild the index when changed. |

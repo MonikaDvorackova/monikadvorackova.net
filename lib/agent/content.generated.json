@@ -11,7 +11,8 @@
       "Recognition"
     ],
     "language": "en",
-    "updatedAt": "2026-10-19T00:00:00.000Z"
+    "sourceRevision": "c442a5fa9f6cfd346de972450f260f2f9006cb4dd449e480f23dc0028ae3a41a",
+    "updatedAt": "2026-10-26T22:16:25.000Z"
   },
   {
     "kind": "article",
@@ -27,7 +28,8 @@
       "AIGov"
     ],
     "language": "en",
-    "updatedAt": "2026-10-07T00:00:00.000Z"
+    "sourceRevision": "677cca7cb06eb981812ab0c21fddaeb1e171f189fc19f2090ba3825723156242",
+    "updatedAt": "2026-10-26T22:30:04.000Z"
   },
   {
     "kind": "article",
@@ -50,7 +52,8 @@
       "GovBase"
     ],
     "language": "en",
-    "updatedAt": "2026-03-25T00:00:00.000Z"
+    "sourceRevision": "ccc65659696f439ea80cf37106af1ab8aa2a46166c0e07c84df6ad8d9c3a6185",
+    "updatedAt": "2026-06-28T12:42:53.000Z"
   },
   {
     "kind": "article",
@@ -69,7 +72,8 @@
       "architecture"
     ],
     "language": "en",
-    "updatedAt": "2026-04-03T00:00:00.000Z"
+    "sourceRevision": "244a36e7af3a1aa80e54f95412bcc0f72b380d6379cde896610e0c3cc894d2f9",
+    "updatedAt": "2026-04-09T09:44:32.000Z"
   },
   {
     "kind": "article",
@@ -93,7 +97,8 @@
       "SaaS"
     ],
     "language": "en",
-    "updatedAt": "2026-03-27T00:00:00.000Z"
+    "sourceRevision": "e10e8624ca28dfb6cea425e94cd13120ec76b4296d87e81411fc4590c46634a5",
+    "updatedAt": "2026-04-09T09:44:32.000Z"
   },
   {
     "kind": "article",
@@ -107,7 +112,8 @@
       "AI Agents"
     ],
     "language": "en",
-    "updatedAt": "2026-10-27T00:00:00.000Z"
+    "sourceRevision": "d3db246b121c0e6d2709f12b809932bb7515dbf23384a355e8de5ad26d5376b9",
+    "updatedAt": "2026-10-26T21:55:52.000Z"
   },
   {
     "kind": "article",
@@ -121,7 +127,8 @@
       "Python"
     ],
     "language": "en",
-    "updatedAt": "2026-10-30T00:00:00.000Z"
+    "sourceRevision": "d0a44804a4c010cfca0a2df6887cdabce6ed31cad88066be1d142614572e4a04",
+    "updatedAt": "2026-10-30T18:45:49.000Z"
   },
   {
     "kind": "article",
@@ -139,7 +146,8 @@
       "Governance"
     ],
     "language": "en",
-    "updatedAt": "2025-08-05T00:00:00.000Z"
+    "sourceRevision": "eb4015346adb532a8bf4168e4fcb1c10e9a5e17b88846e3391e8e354ff9748d7",
+    "updatedAt": "2026-03-28T01:25:33.000Z"
   },
   {
     "kind": "article",
@@ -159,7 +167,8 @@
       "AI Governance"
     ],
     "language": "en",
-    "updatedAt": "2025-08-05T00:00:00.000Z"
+    "sourceRevision": "47916c54bdd11fd12ab2fb70b18a1d433aa0dce141df2294b276ae18cd542229",
+    "updatedAt": "2026-03-28T01:25:33.000Z"
   },
   {
     "kind": "article",
@@ -179,7 +188,8 @@
       "NLP"
     ],
     "language": "en",
-    "updatedAt": "2025-08-27T00:00:00.000Z"
+    "sourceRevision": "4e41f55d7920cc2f83333a1f7d16465df0a1461a49ad957db4ab5e15b48a1036",
+    "updatedAt": "2025-08-27T04:53:56.000Z"
   },
   {
     "kind": "project",
@@ -195,6 +205,7 @@
       "AI Governance"
     ],
     "language": "en",
-    "updatedAt": "2026-03-25T00:00:00.000Z"
+    "sourceRevision": "df11c5841df393138b419e58e534ad324bcc974888cf6e8aa57ba9ddcdc3114b",
+    "updatedAt": "2026-06-28T12:42:53.000Z"
   }
 ]

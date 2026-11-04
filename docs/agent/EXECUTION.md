@@ -7,7 +7,7 @@ The full release is **NO-GO** until the preview has isolated PostgreSQL, protect
 
 ## Executed checkpoint
 
-Commit `d380372045ba660aa7018780090722134386df76` passed GitHub CI: 25 Node tests, including real PostgreSQL concurrency/audit/inquiry/A2A interactions, 3 Python SDK tests, TypeScript, lint, runtime dependency audit, a Next.js production build, and 12 desktop/mobile Playwright tests. The successful run is https://github.com/MonikaDvorackova/monikadvorackova.net/actions/runs/41807959357 . Later commits extend this checkpoint; their final checks and downloadable `agent-verification` artifacts are authoritative.
+Commit `3058da0e9f5db1cbf3fece8e4c4df0d0b1915425` passed GitHub CI: 26 Node tests, including real PostgreSQL concurrency/audit/inquiry/A2A interactions, 3 Python SDK tests, TypeScript, lint, runtime dependency audit, a Next.js production build, and 12 desktop/mobile Playwright tests. The successful run is https://github.com/MonikaDvorackova/monikadvorackova.net/actions/runs/41809091529 . Later commits extend this checkpoint; their final checks and downloadable `agent-verification` artifacts are authoritative.
 
 The official MCP client negotiated tools/resources/prompts, exercised Streamable HTTP and discovered all fifteen required tools. The expanded test also calls every tool. Embedding HTTP behavior is mocked; no live embedding-provider result is claimed. Notification delivery tests use an injected mock provider and never send email.
 
@@ -15,8 +15,8 @@ Live public GitHub synchronization succeeded in CI using its scoped token. The c
 
 ## Preview smoke checkpoint
 
-Deployment for `652878f6d09a7c7bc8ad4a3045a8d095e35daeb2`:
-https://monikadvorackova-hikwt2y8b-monika-dvorackovas-projects.vercel.app
+Deployment for `3058da0e9f5db1cbf3fece8e4c4df0d0b1915425`:
+https://monikadvorackova-63sa811uk-monika-dvorackovas-projects.vercel.app
 
 Successful HTTP 200 checks: original homepage, blog index, open-source archive, AIGov article, integration documentation, llms.txt/full, both agent discovery cards, OpenAPI, profile, search, JSON Resume, contributions, JSON Feed, Atom, robots and sitemap. Content types were checked. Readiness returned **503**, correctly reporting unavailable persistent preview infrastructure. This is not a production readiness pass.
 

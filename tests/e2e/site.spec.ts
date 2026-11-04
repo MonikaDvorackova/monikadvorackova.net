@@ -38,3 +38,98 @@ test("discovery API and evidence operate through real HTTP", async ({
   ).json();
   expect(verified.data.valid).toBe(true);
 });
+
+test("REST mutations and abuse controls operate over real HTTP", async ({
+  request,
+}) => {
+  const answer = await request.post("/api/v1/ask", {
+    data: { question: "What is AIGov?" },
+  });
+  expect(answer.status()).toBe(200);
+  expect((await answer.json()).data.citations.length).toBeGreaterThan(0);
+  expect(
+    (
+      await request.post("/api/v1/ask", {
+        data: { question: "x".repeat(17000) },
+      })
+    ).status(),
+  ).toBe(413);
+  expect(
+    (
+      await request.post("/api/v1/ask", {
+        data: { question: "AIGov" },
+        headers: { Origin: "https://attacker.example" },
+      })
+    ).status(),
+  ).toBe(403);
+});
+test("A2A and idempotent inquiries operate over real HTTP with isolated PostgreSQL", async ({
+  request,
+}) => {
+  test.skip(
+    !!process.env.BASE_URL || !process.env.AGENT_DATABASE_URL,
+    "Requires isolated CI/local PostgreSQL and test-only credentials.",
+  );
+  const headers = { Authorization: "Bearer " + "e2e-a2a-" + "x".repeat(32) };
+  const response = await request.post("/a2a", {
+    headers,
+    data: {
+      jsonrpc: "2.0",
+      id: 1,
+      method: "message/send",
+      params: {
+        message: {
+          kind: "message",
+          role: "user",
+          messageId: crypto.randomUUID(),
+          parts: [{ kind: "text", text: "What is AIGov?" }],
+        },
+      },
+    },
+  });
+  expect(response.status()).toBe(200);
+  const task = (await response.json()).result;
+  expect(task.status.state).toBe("completed");
+  expect(task.artifacts.length).toBeGreaterThan(0);
+  const get = await request.post("/a2a", {
+    headers,
+    data: {
+      jsonrpc: "2.0",
+      id: 2,
+      method: "tasks/get",
+      params: { id: task.id },
+    },
+  });
+  expect((await get.json()).result.id).toBe(task.id);
+  const canceled = await request.post("/a2a", {
+    headers,
+    data: {
+      jsonrpc: "2.0",
+      id: 3,
+      method: "tasks/cancel",
+      params: { id: task.id },
+    },
+  });
+  expect((await canceled.json()).error.code).toBe(-32002);
+  const inquiryHeaders = {
+    Authorization: "Bearer " + "e2e-inquiry-" + "x".repeat(32),
+    "Idempotency-Key": crypto.randomUUID(),
+  };
+  const data = {
+    type: "research",
+    name: "Test Researcher",
+    email: "researcher@example.com",
+    message: "Research collaboration for automated integration testing.",
+    consent: true,
+  };
+  const first = await request.post("/api/v1/inquiries", {
+    headers: inquiryHeaders,
+    data,
+  });
+  const second = await request.post("/api/v1/inquiries", {
+    headers: inquiryHeaders,
+    data,
+  });
+  expect(first.status()).toBe(201);
+  expect((await first.json()).data.id).toBe((await second.json()).data.id);
+});

@@ -198,6 +198,8 @@ export async function markdown(lang: Language) {
             : "") +
           "Source: " +
           d.source +
+          "\nSource language: " +
+          d.language +
           "\nEvidence status: " +
           d.status +
           "\nStable ID: " +

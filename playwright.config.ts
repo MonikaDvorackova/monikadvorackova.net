@@ -14,6 +14,10 @@ export default defineConfig({
     ? undefined
     : {
         command: "npm start -- --hostname 127.0.0.1",
+        env: {
+          AGENT_A2A_KEY: "e2e-a2a-" + "x".repeat(32),
+          AGENT_INQUIRY_KEY: "e2e-inquiry-" + "x".repeat(32),
+        },
         url: "http://127.0.0.1:3000",
         reuseExistingServer: !process.env.CI,
       },

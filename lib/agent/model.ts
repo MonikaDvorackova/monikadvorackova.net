@@ -253,6 +253,7 @@ export async function corpus(lang: Language = "en"): Promise<RecordData[]> {
         language: entry.language === "cs" ? "cs" : "en",
         source: url,
         updatedAt: entry.updatedAt,
+        sourceRevision: entry.sourceRevision,
         relations: [
           { type: "author", target: personId },
           ...entry.topics.map((title) => ({

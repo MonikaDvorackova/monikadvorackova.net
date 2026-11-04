@@ -66,6 +66,7 @@ export async function guard(req: Request, scope = "public") {
   const origin = req.headers.get("origin");
   const allowed = [
     BASE,
+    ...(process.env.VERCEL_URL ? ["https://" + process.env.VERCEL_URL] : []),
     ...(process.env.AGENT_ALLOWED_ORIGINS || "").split(",").filter(Boolean),
   ];
   if (origin && !allowed.includes(origin))
