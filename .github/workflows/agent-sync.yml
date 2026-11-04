@@ -1,0 +1,37 @@
+name: Refresh public agent knowledge
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '40 5 * * *'
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run agent:sync
+        env:
+          AGENT_GITHUB_TOKEN: ${{ github.token }}
+      - name: Rebuild changed embeddings when configured
+        run: if [ -n "$AGENT_EMBEDDING_KEY" ]; then npm run agent:index; fi
+        env:
+          AGENT_EMBEDDING_KEY: ${{ secrets.AGENT_EMBEDDING_KEY }}
+      - name: Prepare review branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git checkout -B automation/agent-knowledge
+          git add data/agent
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'chore: refresh public agent knowledge'
+          git push --force-with-lease origin automation/agent-knowledge
+          gh pr view automation/agent-knowledge >/dev/null 2>&1 || gh pr create --head automation/agent-knowledge --base main --title 'Refresh public agent knowledge' --body 'Generated public GitHub snapshot. Verify statuses and checks before merging.'
+        env:
+          GH_TOKEN: ${{ github.token }}
