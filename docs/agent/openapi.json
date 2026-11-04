@@ -9231,10 +9231,18 @@
                           "type": "boolean"
                         },
                         "outboundEnabled": {
-                          "type": "boolean",
-                          "const": false
+                          "type": "boolean"
                         },
                         "semanticConfigured": {
+                          "type": "boolean"
+                        },
+                        "authenticationConfigured": {
+                          "type": "boolean"
+                        },
+                        "durableRateLimits": {
+                          "type": "boolean"
+                        },
+                        "semanticIndexReady": {
                           "type": "boolean"
                         }
                       },
@@ -9244,7 +9252,10 @@
                         "persistentTasks",
                         "inquiries",
                         "outboundEnabled",
-                        "semanticConfigured"
+                        "semanticConfigured",
+                        "authenticationConfigured",
+                        "durableRateLimits",
+                        "semanticIndexReady"
                       ],
                       "additionalProperties": false
                     },

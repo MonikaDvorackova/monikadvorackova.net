@@ -26,6 +26,12 @@ async function main() {
       const filename = directory + "/" + file;
       const raw = await readFile(filename, "utf8");
       const { data, content } = matter(raw);
+      if (
+        data.draft === true ||
+        data.visibility === "private" ||
+        data.published === false
+      )
+        continue;
       const sourceRevision = createHash("sha256").update(raw).digest("hex");
       let changedAt: string | undefined;
       try {

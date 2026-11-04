@@ -106,9 +106,13 @@ export async function ledger() {
   return rows.map((r) => ({ ...r, seq: Number(r.seq) })) as LedgerEvent[];
 }
 const localLimits = new Map<string, { bucket: number; hits: number }>();
-export async function rateLimit(subject: string, limit: number) {
+export async function rateLimit(
+  subject: string,
+  limit: number,
+  durable = true,
+) {
   const bucket = Math.floor(Date.now() / 60000);
-  if (process.env.AGENT_DATABASE_URL) {
+  if (durable && process.env.AGENT_DATABASE_URL) {
     const { rows } = await database().query(
       `INSERT INTO agent_limits VALUES($1,$2,1) ON CONFLICT(subject) DO UPDATE SET bucket=$2,hits=CASE WHEN agent_limits.bucket=$2 THEN agent_limits.hits+1 ELSE 1 END RETURNING hits`,
       [subject, bucket],
@@ -116,6 +120,7 @@ export async function rateLimit(subject: string, limit: number) {
     return rows[0].hits <= limit;
   }
   if (
+    durable &&
     process.env.NODE_ENV === "production" &&
     process.env.AGENT_REQUIRE_DURABLE_LIMITS === "true"
   )

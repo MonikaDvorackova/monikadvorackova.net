@@ -130,8 +130,11 @@ const schemas: Record<string, z.ZodType> = {
     publicReads: z.boolean(),
     persistentTasks: z.boolean(),
     inquiries: z.boolean(),
-    outboundEnabled: z.literal(false),
+    outboundEnabled: z.boolean(),
     semanticConfigured: z.boolean(),
+    authenticationConfigured: z.boolean(),
+    durableRateLimits: z.boolean(),
+    semanticIndexReady: z.boolean(),
   }),
   "ledger/verify": z.object({
     valid: z.boolean(),

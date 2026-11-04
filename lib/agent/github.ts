@@ -75,9 +75,9 @@ export function contribution(pr: Pull): RecordData | null {
     id: pr.html_url,
     kind: "contribution",
     contributionState: status,
-    contributionScope: pr.base.repo.full_name
-      .toLowerCase()
-      .startsWith("monikadvorackova/")
+    contributionScope: ["monikadvorackova", "aigovdev", "aimlgov"].includes(
+      pr.base.repo.full_name.split("/")[0].toLowerCase(),
+    )
       ? "own_repository"
       : "upstream",
     title: pr.title,

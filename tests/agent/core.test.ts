@@ -424,3 +424,23 @@ test("outbound notifications are disabled before any network or database action"
   );
   assert.equal(called, false);
 });
+
+test("REST honors posted language and readiness reports incomplete protected configuration", async () => {
+  const response = await api(
+    new Request(BASE + "/api/v1/ask", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ question: "AIGov", lang: "cs" }),
+    }),
+    ["ask"],
+  );
+  assert.equal(response.status, 200);
+  assert.equal((await response.json()).meta.language, "cs");
+  const ready = await api(new Request(BASE + "/api/v1/readiness"), [
+    "readiness",
+  ]);
+  assert.equal(ready.status, 503);
+  const checks = (await ready.json()).data;
+  assert.equal(checks.authenticationConfigured, false);
+  assert.equal(checks.semanticIndexReady, false);
+});

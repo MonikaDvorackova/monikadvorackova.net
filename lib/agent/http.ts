@@ -62,7 +62,7 @@ export function authorize(req: Request, scope: "admin" | "a2a" | "inquiry") {
     throw new ApiError(401, "unauthorized", "Valid bearer token required");
   return sha256(configured);
 }
-export async function guard(req: Request, scope = "public") {
+export async function guard(req: Request, scope = "public", durable = true) {
   const origin = req.headers.get("origin");
   const allowed = [
     BASE,
@@ -78,7 +78,7 @@ export async function guard(req: Request, scope = "public") {
   const subject = createHmac("sha256", secret)
     .update(scope + ":" + ip)
     .digest("hex");
-  if (!(await rateLimit(subject, scope === "public" ? 120 : 30)))
+  if (!(await rateLimit(subject, scope === "public" ? 120 : 30, durable)))
     throw new ApiError(429, "rate_limited", "Request limit exceeded");
 }
 export function json(data: unknown, lang = "en", status = 200) {

@@ -9,6 +9,7 @@ import {
   json,
   observed,
   language,
+  languageSchema,
   ApiError,
 } from "./http";
 import {
@@ -64,10 +65,10 @@ export async function api(req: Request, segments: string[]) {
   });
 }
 async function execute(req: Request, segments: string[]) {
-  await guard(req);
-  const lang = language(req);
-  const params = new URL(req.url).searchParams;
   const route = segments.join("/");
+  await guard(req, "public", route !== "health" && route !== "readiness");
+  let lang = language(req);
+  const params = new URL(req.url).searchParams;
   if (req.method === "GET") {
     if (route === "health")
       return json({ status: "ok", version: VERSION }, lang);
@@ -77,17 +78,54 @@ async function execute(req: Request, segments: string[]) {
         await database().query("SELECT 1 FROM agent_state LIMIT 1");
         db = true;
       } catch {}
+      const keyReady = (scope: string) =>
+        (process.env["AGENT_" + scope + "_KEY"]?.length || 0) >= 32;
+      const authenticationConfigured =
+        keyReady("ADMIN") && keyReady("A2A") && keyReady("INQUIRY");
+      const durableRateLimits =
+        db && (process.env.AGENT_RATE_SALT?.length || 0) >= 32;
+      let semanticIndexReady = false;
+      if (process.env.AGENT_EMBEDDING_KEY)
+        try {
+          const { readFile } = await import("node:fs/promises");
+          semanticIndexReady = true;
+          for (const language of ["en", "cs"] as const) {
+            const index = JSON.parse(
+              await readFile(
+                "data/agent/embeddings." + language + ".json",
+                "utf8",
+              ),
+            );
+            const docs = await corpus(language);
+            if (
+              index.corpusDigest !== sha256(docs.map((d) => [d.id, d.digest]))
+            )
+              semanticIndexReady = false;
+          }
+        } catch {
+          semanticIndexReady = false;
+        }
+      const ready =
+        db &&
+        authenticationConfigured &&
+        durableRateLimits &&
+        semanticIndexReady;
       return json(
         {
-          status: db ? "ready" : "degraded",
+          status: ready ? "ready" : "degraded",
           publicReads: true,
-          persistentTasks: db,
-          inquiries: db && !!process.env.AGENT_INQUIRY_KEY,
-          outboundEnabled: false,
+          persistentTasks: db && keyReady("A2A"),
+          inquiries: db && keyReady("INQUIRY"),
+          authenticationConfigured,
+          durableRateLimits,
+          semanticIndexReady,
+          outboundEnabled:
+            process.env.AGENT_NOTIFICATIONS_ENABLED === "true" &&
+            !!process.env.AGENT_NOTIFICATION_APPROVAL_ID,
           semanticConfigured: !!process.env.AGENT_EMBEDDING_KEY,
         },
         lang,
-        db ? 200 : 503,
+        ready ? 200 : 503,
       );
     }
     if (route === "sync/status") {
@@ -126,6 +164,10 @@ async function execute(req: Request, segments: string[]) {
     }
     if (route === "ledger/verify") {
       authorize(req, "admin");
+      if (params.has("head"))
+        z.string()
+          .regex(/^[a-f0-9]{64}$/)
+          .parse(params.get("head"));
       return json(
         verifyLedger(await ledger(), params.get("head") || undefined),
         lang,
@@ -157,7 +199,10 @@ async function execute(req: Request, segments: string[]) {
       const kind = params.get("kind");
       const status = params.get("status");
       if (kind) docs = docs.filter((d) => d.kind === kind);
-      if (status) docs = docs.filter((d) => d.status === status);
+      if (status) {
+        z.enum(["self_reported", "source_verified"]).parse(status);
+        docs = docs.filter((d) => d.status === status);
+      }
       const { search } = await import("./search");
       return json(await search(docs, query, limit), lang);
     }
@@ -221,6 +266,13 @@ async function execute(req: Request, segments: string[]) {
   }
   if (req.method === "POST") {
     const payload = await body(req);
+    if (
+      !params.has("lang") &&
+      payload &&
+      typeof payload === "object" &&
+      "lang" in payload
+    )
+      lang = languageSchema.parse((payload as { lang: unknown }).lang);
     if (route === "notifications/approve") {
       authorize(req, "admin");
       const input = z
@@ -251,7 +303,7 @@ async function execute(req: Request, segments: string[]) {
       );
     if (route === "inquiries") {
       const owner = authorize(req, "inquiry");
-      const input = inquirySchema.parse(payload);
+      const input = inquirySchema.parse({ ...(payload as object), lang });
       const key = z
         .string()
         .min(16)

@@ -38,8 +38,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/1",
     "sourceRevision": "2bfb1f5d801408c226b5772ae995e437ce59e9bb",
     "contributionState": "closed",
-    "contributionScope": "upstream",
-    "digest": "a51dbc8259aa30496b77c109260612da163c92e57f2b39bb738b8d98d05bc3a9"
+    "contributionScope": "own_repository",
+    "digest": "5354358fe301ebf83b51cb4cc6b4e4d728013be51416e021d610b87c463e6333"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/10",
@@ -65,8 +65,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/10",
     "sourceRevision": "4a274ab65c4a795e10699e981e45b2323443ad71",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "9c97ee911a4b9525062c5570783bd0f521c7be07c56ce469fec8f1d298093436"
+    "contributionScope": "own_repository",
+    "digest": "7c3e3f816c4a6509702f706e487f7961697c7c3318ac54466347f6472c84ecc0"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/109",
@@ -92,8 +92,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/109",
     "sourceRevision": "096eb57b955a2ef5552864cc6f6305d4b0f29aac",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "470df781516f3fea0dd383b4e3d2825f0054fd86f0a1ccb8ab50a32a7524d75d"
+    "contributionScope": "own_repository",
+    "digest": "73f967553937b5a2ce49f0d483c98754eb372fa175a6dbce6886f060a2ef6176"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/111",
@@ -119,8 +119,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/111",
     "sourceRevision": "fc46f6710804482031ffc69d3c9f00c409606679",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "47642a8130099e6bedf6d985de8fdf32d387745a5fe39cd7dd65cf4e2025e9ce"
+    "contributionScope": "own_repository",
+    "digest": "8afed02c45ba2874acec8a805501720001a7832276a803cf3b7afce0d6a70491"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/112",
@@ -146,8 +146,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/112",
     "sourceRevision": "04fd29bb8436a8f5140de0962dd084d2c557dcb1",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "ec93be45c65513da6648237090982279be0a373f944198d08787cb953437e4b3"
+    "contributionScope": "own_repository",
+    "digest": "c2a2f0db176caf88b4597807e97f23656aa517ca57ef97ccf428a6eeceb1862e"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/113",
@@ -173,8 +173,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/113",
     "sourceRevision": "06825350c3e3396cd009b984cf7b2b357b1f41af",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "3d4487a395661027fb52f373d3844e0e6b70f9186cb28ff23b4b8070c07aade1"
+    "contributionScope": "own_repository",
+    "digest": "9089c34dffdd35ee335c855663f7ca201911f73e52be42fe583b8002427636b9"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/114",
@@ -200,8 +200,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/114",
     "sourceRevision": "b73abb38038174d651495fd8c42d3cc0fcf746ac",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "75ff99c781cc75cf76923f0a2bd9c0a3ee84c3f12557ae072b207e73828e56e8"
+    "contributionScope": "own_repository",
+    "digest": "6b2c2c6bb1b7ddef67e8bde5d9c7f54b513e7640872eaf5caa2f93c4679db605"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/115",
@@ -227,8 +227,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/115",
     "sourceRevision": "69143cb60ee0a92c7b58c79b39a3bbbe691f2561",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "d278bd0f1e6b504aa2fbaef0040ff5bafe13f2810c7f85df2122895ed07427ba"
+    "contributionScope": "own_repository",
+    "digest": "f64f4ff9e1419769d3c0523735e66e52b477e7200d46b2f014b9182e19494bd9"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/118",
@@ -254,8 +254,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/118",
     "sourceRevision": "d6b77555c506898a7d0b8b2d1f6df6c86589ea65",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "01c49a05b6a004db1db74f45c82b5f028ee236cbffaba2f3ef4a115e1c56d2fe"
+    "contributionScope": "own_repository",
+    "digest": "bd9cd504ac70b30ad8c0ed24a5479f31f0e9b6921eecba5736cb6416b49826f2"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/119",
@@ -281,8 +281,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/119",
     "sourceRevision": "cd77708b21f0cf92fbfd927ae5bf6ff392a9e6bc",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "8c362b25ac6c125751d579e9130c71750659c3a8eeee86785ec2dba679a1951d"
+    "contributionScope": "own_repository",
+    "digest": "941c7545f28d157d08af12a8b6571a4522f1f7b93122355ac01727c1d3730ef5"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/120",
@@ -308,8 +308,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/120",
     "sourceRevision": "04019884abfebe10781d58540a8f3801d60ead9b",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "18ba7e7967954ac155096cc54e6dd695329a891c15a00c26dc703512db7bf53d"
+    "contributionScope": "own_repository",
+    "digest": "04b89ee995a530ffdb4fbe9983021095d45bd2d5375d818610505a76324e889d"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/121",
@@ -335,8 +335,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/121",
     "sourceRevision": "1989371fca929f433fab038f8d1131b61ffbf7df",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "727231a765fb21104439f1bf3a526724ebfa9cac1c254568d858c83460a2be09"
+    "contributionScope": "own_repository",
+    "digest": "297691dc7ae857f15982e39fd9ce5e55fc884da85d2548dd7d3d8dda46c28664"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/123",
@@ -362,8 +362,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/123",
     "sourceRevision": "f769eed39dbf60ea37dcaf3a15571bc80e1aa0c4",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "7b5958aaf829bcd7db96cf1520bfc7fc0dd64b42a4dde9a94f40b3af97f4a7c6"
+    "contributionScope": "own_repository",
+    "digest": "c6b8332402427d762541cbd1252ad136fe2a1c12590b4512eb6ebef7badd8505"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/124",
@@ -389,8 +389,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/124",
     "sourceRevision": "6b7ce5b285166e9ea8a990c786efd74e019bfc8f",
     "contributionState": "closed",
-    "contributionScope": "upstream",
-    "digest": "97ca69dc9c414cc93d664e0439769f9819c5f0d27ca7c4a42fb501079e2254ad"
+    "contributionScope": "own_repository",
+    "digest": "0b9a9b286afd41320d3427dfb4e119c3d0cae0da12e0a3e21ff89d46712e5a5c"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/125",
@@ -416,8 +416,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/125",
     "sourceRevision": "e4ac88cad01ad9e8ee6f8376736513b4af5f65a7",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "d484b751ead4cf38532d6af496621495452ac96af57fe3d8ad4e7c5fcbcc3701"
+    "contributionScope": "own_repository",
+    "digest": "d148b0879df3765401bc17efded1648e7635237f2d029bb17253d10d4e9c833a"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/126",
@@ -443,8 +443,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/126",
     "sourceRevision": "bd4162d78d2d83be79046af5818f4d85a271cf45",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "f78884780d63d4ab34aaec0d5f367e20bd94642a1d479af0a59397cbb70f9c5a"
+    "contributionScope": "own_repository",
+    "digest": "0049bab5d2eae332eb3cc9a54def8db99b0d4f8facb5618e9c6263622ef98ff1"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/128",
@@ -470,8 +470,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/128",
     "sourceRevision": "6b7ce5b285166e9ea8a990c786efd74e019bfc8f",
     "contributionState": "closed",
-    "contributionScope": "upstream",
-    "digest": "437cd9415e776fd64a8102f78251fca6323b0d9ac4173476ff1dfa27b319d5df"
+    "contributionScope": "own_repository",
+    "digest": "5564a9003a72d1eb6af704ad18c528c359a4348cfcc636e2f691c89db0b6b96e"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/129",
@@ -497,8 +497,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/129",
     "sourceRevision": "2bac7666212c01ec9ab675bd2ac4fae08b7d08e8",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "7f767467d68371d7cfcb6e6c509e1d0062f97a6ebd7cb9ee8cd7e75f8f8e25ff"
+    "contributionScope": "own_repository",
+    "digest": "8293ff8796b6befc32485d02ca3fc27a6cfae8cbe7b064f937626ea0644b09c1"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/130",
@@ -524,8 +524,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/130",
     "sourceRevision": "f2e6bc2ece7acb3699c19ac19ffdfdbc6ab82633",
     "contributionState": "closed",
-    "contributionScope": "upstream",
-    "digest": "24b543fe6740cb49e191dbf689d6632df18240d8b0d1027f21a6bc523235e775"
+    "contributionScope": "own_repository",
+    "digest": "197478f7e06f7b4730394922d2241ee4556cbfb7446af4e3b0fb03b6ce2d27b8"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/131",
@@ -551,8 +551,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/131",
     "sourceRevision": "f2e6bc2ece7acb3699c19ac19ffdfdbc6ab82633",
     "contributionState": "closed",
-    "contributionScope": "upstream",
-    "digest": "c3860f9ddd0dcc9c6b585081b0bd5644ad00753271b67a584a8b039bb64c4734"
+    "contributionScope": "own_repository",
+    "digest": "a5e41e62c4a8272b90f53bfbf188bf22116854bcfaaf75f8dd6e31e7445e001e"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/132",
@@ -578,8 +578,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/132",
     "sourceRevision": "f2e6bc2ece7acb3699c19ac19ffdfdbc6ab82633",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "7179754606fd11858f61e36a6818e297fb1c935c2e51129a099111614b7435a4"
+    "contributionScope": "own_repository",
+    "digest": "e4aea574225aee80a1460258d509018aeebae48d5b0a166029bcdf8c96fccf24"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/133",
@@ -605,8 +605,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/133",
     "sourceRevision": "4087032c465632bf2c7e34707aaa8b5e3d19031a",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "75a1827ba79d8eeab7c7397ea770b4bb83c8bc791891d0fc44b6164570d72ab4"
+    "contributionScope": "own_repository",
+    "digest": "a544e318d78d8963b2980f44e19f3bc33f0a260cab115e80da88ec07d16fe423"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/134",
@@ -632,8 +632,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/134",
     "sourceRevision": "718c27fdb1be116a2951433a7f70b6349ccd0197",
     "contributionState": "closed",
-    "contributionScope": "upstream",
-    "digest": "2a66037f717bc02229c6202d2f114a909b741be006e389259997ba4a2e139b1e"
+    "contributionScope": "own_repository",
+    "digest": "07a3689487e0db716c35788927051684e0382507c62c5fb3f14d87ebb70dc2b9"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/135",
@@ -659,8 +659,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/135",
     "sourceRevision": "718c27fdb1be116a2951433a7f70b6349ccd0197",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "fb9c7c148714c6ad73d41756cde62c92319af7cf511e9813229e847f8e7f4dfb"
+    "contributionScope": "own_repository",
+    "digest": "e67d9319bcae7e1bf2c9278ca4239d7ae93d76b227385351f122cca71f7d0af6"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/148",
@@ -686,8 +686,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/148",
     "sourceRevision": "f2e6bc2ece7acb3699c19ac19ffdfdbc6ab82633",
     "contributionState": "closed",
-    "contributionScope": "upstream",
-    "digest": "e3904f3c63c305948b2c0dc18b1b848816b39d6b4300a399a259c67f590ccab4"
+    "contributionScope": "own_repository",
+    "digest": "d56fa0d73855e06e59b493ccaab62ed51582988e09cfcf1984db2267a8933008"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/149",
@@ -713,8 +713,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/149",
     "sourceRevision": "fe272c53d2c313775831ef7914baca476f68ef2c",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "b630f550067dcd1daec03356b353298150117dfb1837a6f830fd8cd8500d0d3b"
+    "contributionScope": "own_repository",
+    "digest": "d383aebf1bc2071f3f3263464eaf10011d0d5e40baa8680e62371e152c322ead"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/150",
@@ -740,8 +740,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/150",
     "sourceRevision": "fd7871b82910d460ba8f7a867dd2492fd0ced78e",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "4252844a70054f79bb4b6668877b68881c010dde06ab610eb441559c9c92b82b"
+    "contributionScope": "own_repository",
+    "digest": "d081aeaccb3f19aee4fdb3b645a28e2f51fbc67acaf962eec8b6e24b00f845d3"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/151",
@@ -767,8 +767,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/151",
     "sourceRevision": "3c28aa6fcc92b4fe692e4c29299cf7fd3b08aea3",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "49b522c753d7852acc2fd79ba425f4fdff397ebaab8d5e6b7321b73de99b3497"
+    "contributionScope": "own_repository",
+    "digest": "8e656e4ddbfda0f6bfe7ff44c38644e6645620b3ec2fee1eac4cbac6c1ca9565"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/152",
@@ -794,8 +794,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/152",
     "sourceRevision": "b5c324ed2d08510b8bd4a8a3f2202954b63c0d52",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "0e2ec236f5275a18353695876f43098b44562e233ff9e354e112cf3ee4086e3a"
+    "contributionScope": "own_repository",
+    "digest": "59ed9e1547be0dc3d9b707bb3ef7f790804df2c707721efc468208d3d8528b7a"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/157",
@@ -821,8 +821,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/157",
     "sourceRevision": "76e1d1e160722235290ec0a6689140d6a3515b79",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "ee0592a9664b0976bd93897c093f79b30ce2fc7375a33b5df7a550952ca71372"
+    "contributionScope": "own_repository",
+    "digest": "6167b7c5769d2a6f71bfc08472a2d6fb3636f85c8c5a7829b4d19d75c3ddf6a7"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/158",
@@ -848,8 +848,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/158",
     "sourceRevision": "8145a38b257e0221bdd7f4276a3028e76de2c92f",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "31cc1b011cd09b7b84865acdf47c09720d1c94d678803c24128b8cf85546cac6"
+    "contributionScope": "own_repository",
+    "digest": "2336daebba76b6775f6e8f71561be12c6a081dac19787e0bf9dcfe2c10e97e73"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/159",
@@ -875,8 +875,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/159",
     "sourceRevision": "9b3bb49d5f04e7441523538c4de8c03972b6d9e0",
     "contributionState": "closed",
-    "contributionScope": "upstream",
-    "digest": "5a56eaf3e710018fdfd68bf050c38fd8a86e5be1b84840927370b0c870013f7d"
+    "contributionScope": "own_repository",
+    "digest": "344800aaed3128c9b3b5615c885acfb99b152a41735a7939488584c6cce47b7a"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/160",
@@ -902,8 +902,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/160",
     "sourceRevision": "c48999cffa1a8f066ec2aff69b9af791d7c06562",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "025c6c2198976036cda6ddae19d618d261e84ffd721b2e36853b59d2f74eea44"
+    "contributionScope": "own_repository",
+    "digest": "a57f7eb0545e1ced1a660d1ff8592ca71dc62ee58f9d33e72a430ef656bc75fb"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/161",
@@ -929,8 +929,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/161",
     "sourceRevision": "ce623006db12278c1efbadc40018216b49e4dfd2",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "3d6da1d205c26634fdfa459a5fc3012383b23cfbb59fb3f61da9c41fb2e67c39"
+    "contributionScope": "own_repository",
+    "digest": "686faa1d90231a38a9e6dfa68a7fde1596446c1dcb1f457d0781ef389e5f7cbd"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/162",
@@ -956,8 +956,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/162",
     "sourceRevision": "ed31622114c11c68fbaeb0eb5322d374e423f968",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "c0a7a0e61a40978b8fb8b0a8d65a8c77fb9f0a5ec93a8102b41cd44627d0b8d5"
+    "contributionScope": "own_repository",
+    "digest": "5f7e87c3317a129bc9d46f41cb5c21681d1567c8ee39c8b9858aa394f0c093ba"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/163",
@@ -983,8 +983,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/163",
     "sourceRevision": "3b541c1888afc80f0a531f712e0e0f48abf13b57",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "40b4385bf2512fb9d90c1bb8e6b6f05d2729e97bb9772203703762a1be1bb266"
+    "contributionScope": "own_repository",
+    "digest": "ab13e3a4dd4d5de2d83ddcfdaf6c066d736fc6413723831030e27269db853100"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/167",
@@ -1010,8 +1010,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/167",
     "sourceRevision": "39150c6d2070a465f3eb031825ace376dbe8e25a",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "d55117dd1c9e4bceab609f53fefe9f16f838f65522facf07f528a9427033ca5f"
+    "contributionScope": "own_repository",
+    "digest": "00e6fab53ca379db7ee214a99413c9d0028857776c79a3d62209b806b7c4c07d"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/168",
@@ -1037,8 +1037,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/168",
     "sourceRevision": "7d2c9b63395055043d725cdfdf9d70ad26b53dd5",
     "contributionState": "closed",
-    "contributionScope": "upstream",
-    "digest": "09b5aeb4a4795cc2ca40493affb21e2a2a25abbe355a35f6465f254b5a48b740"
+    "contributionScope": "own_repository",
+    "digest": "a4692a0f1462e0af6e9a07ed56175b15c7b79004fe5deed0e7f98716926055d8"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/169",
@@ -1064,8 +1064,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/169",
     "sourceRevision": "004815492ad2ae295ba761917ca90b3fca559106",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "7451987330e8d279be620ed054bc2a612004a3aae2f73319ef417aed3472ed40"
+    "contributionScope": "own_repository",
+    "digest": "535ba4976e465044c131f8a3ca5836e0fcc3855ccb0715acfdb84edef4624c2f"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/170",
@@ -1091,8 +1091,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/170",
     "sourceRevision": "729ae63cc43c84b514dd5358a570fa02d6907668",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "5545a2a83782ac8fe9800ba37b96135d9fe5ac8066b49697a1fd378d089cee1c"
+    "contributionScope": "own_repository",
+    "digest": "8c86c62d919b7bd5d69a2c6e640ed3868c725c907f57ea542db510b822fde4fe"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/171",
@@ -1118,8 +1118,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/171",
     "sourceRevision": "4ad81d3254dec81a2245d2d19fab1dc28348601c",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "28b2de004b3348812a94a14fa8b9031b7b1435efee153b5556b1a549819b9022"
+    "contributionScope": "own_repository",
+    "digest": "74767d6ae55c000d6b3e4a5701ccecdbb32e3f9067296dd6ab67376b5994f260"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/172",
@@ -1145,8 +1145,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/172",
     "sourceRevision": "97a00a064d2083b894accac95d0963fd7cf37fce",
     "contributionState": "closed",
-    "contributionScope": "upstream",
-    "digest": "c3c6a96dd512bde4a5039aa628fd9de3d90bd960ddb04cf5a52fc81fafe727f4"
+    "contributionScope": "own_repository",
+    "digest": "5c377bde1cf678fce5b9f4cf18797b8ebd6fc6c26bc165edc399626d0f7e40a1"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/175",
@@ -1172,8 +1172,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/175",
     "sourceRevision": "43a107f37af0d92531641213b14aac62c4f4b43c",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "b8d2355e7ad6d2d3ca3ee2ae90b99c311957b56be407bcbadc0b817b56621915"
+    "contributionScope": "own_repository",
+    "digest": "5c043720002d07a95fdda95e9d4cf938d94490c8322b05a71990e07ef62d2355"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/181",
@@ -1199,8 +1199,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/181",
     "sourceRevision": "91b9b4fa675d945df4388f9e5d1d6db1afc2aff8",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "f7d0a171c3946258636a401b8332095ce2b02778ad7c332b05228853534f3087"
+    "contributionScope": "own_repository",
+    "digest": "0d31cd7b0aa9fb1768c667096fd1ae6d088b69e81ce898bec3425db92bf063b7"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/182",
@@ -1226,8 +1226,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/182",
     "sourceRevision": "d6c735b86e8831fbe87d15368af3008a00d3c001",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "e38d38f86515abbf388ccedf9faa1bd5b7cf8b55b3f82a9dba45a4b14cc2c347"
+    "contributionScope": "own_repository",
+    "digest": "64a6fd06fe30b8adb10fc589a494cd787e50bee73876f5f1917269cc7721c375"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/185",
@@ -1253,8 +1253,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/185",
     "sourceRevision": "2f73ab231a6ae291968386f2ad7decbe8ebc18aa",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "2892f8d99423ee27a4dcb6fe3941210c29421cb266b6468079e125f4af6811fc"
+    "contributionScope": "own_repository",
+    "digest": "b2406b6b829e44a2469d57178da2fb04097e33131e5c16288797817741f8f444"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/186",
@@ -1280,8 +1280,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/186",
     "sourceRevision": "da69d4eb8f39c7eb13d29bc446f3c7c841cfb1c0",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "5ea4d496cfc79edd23a163b9908ac0325d61e3bbf47d4bb782400d9e1ca3c51a"
+    "contributionScope": "own_repository",
+    "digest": "0a4a65f21b7874c2591c5562bb681ff67959f0f6e33225f44faf19bf98dafe39"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/187",
@@ -1307,8 +1307,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/187",
     "sourceRevision": "883ad317ee8e115346441f32155af110fe7477d7",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "2a803f131715aff2ec306dd05c5513da2f3b89cefdb15387ddd981ad46a7d0af"
+    "contributionScope": "own_repository",
+    "digest": "9610fb1a60dd3b760cfea05918c4ddad5876dba12c2c6703215db9649adaa8b5"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/188",
@@ -1334,8 +1334,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/188",
     "sourceRevision": "07f635c3b5807ed6dd27a0348344dbb6df632c45",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "8b469bc2788e689e7877e9fde668aaac7bc9f0a24cdf4bea08ebb45ca8b12bb7"
+    "contributionScope": "own_repository",
+    "digest": "36b2997f3750a46ca22a56d30c44f593e8b9976f614cdcd56b0f3968e021104c"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/189",
@@ -1361,8 +1361,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/189",
     "sourceRevision": "981fcee0d97eb1d88ac590911e8850a6e08621fe",
     "contributionState": "closed",
-    "contributionScope": "upstream",
-    "digest": "75daecd785ba2293408d5f00fd91320fd1fb7e809328f45338d836389361a184"
+    "contributionScope": "own_repository",
+    "digest": "78e9869ce608a8970a8d625d897a672418bac3f3e0b5d35d260d6b9b538d810b"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/190",
@@ -1388,8 +1388,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/190",
     "sourceRevision": "6354f62eb6b2104ab4ce6f8835508e90642ee604",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "01ae2f3db60d8211681515693e95c8e2909201745092140fb815e47cced51304"
+    "contributionScope": "own_repository",
+    "digest": "4e7dabd79d8d6bc875206846c2de6e46385e310877d9f8273aa16579c368593e"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/191",
@@ -1415,8 +1415,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/191",
     "sourceRevision": "2a84e4d41fc685d826a0c470c41c1710064e3fb1",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "8dc9326ae3de4ca56817e777b657972676326ee267af97f375d050974b54fb62"
+    "contributionScope": "own_repository",
+    "digest": "72f6717c407375b5d853775857085ee5983e5dea4b43422eeb1e65b5079f0ef3"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/192",
@@ -1442,8 +1442,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/192",
     "sourceRevision": "ea9d96d875c823bd59cfda52c2c05e7d846ba0d0",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "f575af32724a016233ce0961f2159394ae0ee1001406ecf3df0f494e1d6a2773"
+    "contributionScope": "own_repository",
+    "digest": "dad4b091e3435e326e6ea0c89c48879068bad24be9257924e5069430d0f40899"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/193",
@@ -1469,8 +1469,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/193",
     "sourceRevision": "620a74b8723e29e0c052ac30ab44379f70f43cf9",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "153e9f97295f7f0d992680c5681313d77ee1e962f63abdd7229eb2d23d3f964b"
+    "contributionScope": "own_repository",
+    "digest": "429a7d5b3fb987c2ceb587df42b96f797c8d26de455b14b71ac93abc84393ce3"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/194",
@@ -1496,8 +1496,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/194",
     "sourceRevision": "19e19aa15d093da189a8a2c70864d85833d0bd52",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "d17d24407bc35f498f776703c6128cde25f96ee62727e7db25b90507c71ed7e6"
+    "contributionScope": "own_repository",
+    "digest": "f1a5b3bc39c0422ff06b6377841307b8d7ba272306f4e820f59da8f2e3973b21"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/195",
@@ -1523,8 +1523,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/195",
     "sourceRevision": "790d19f894ac2366dc9a7d7996e20105dbfb7d15",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "9c6c20365eb4256e6d86c03852dc5c62e8f48435d7f7f46a19857591cbf78ccb"
+    "contributionScope": "own_repository",
+    "digest": "f6f3b08ce7201597394167032a5dade4dacc242678ca1acb21e6da4916d159ed"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/2",
@@ -1550,8 +1550,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/2",
     "sourceRevision": "c2f50f9662d4116dd6018c18b78a76711edc0577",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "3791302c8dcf5fe5b7805a849355e919a3d9dacb60cb679d8f022e2690a750ed"
+    "contributionScope": "own_repository",
+    "digest": "680e2d21614f6c8547d63950fce9aa50549322c060943bfc2930905058ed3eb2"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/201",
@@ -1577,8 +1577,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/201",
     "sourceRevision": "ecc94ed9423622ef33ffc7b718aeec02b7da7fcd",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "8ac1e32e2b16cb51794600eaf10c9442ad8fa5a1ea25970999f5258d713da9d2"
+    "contributionScope": "own_repository",
+    "digest": "472ced5ebeca80dfd9cc59ecbcb0ff2ac7ec22da5af9bb48f0e454ac4195d087"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/202",
@@ -1604,8 +1604,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/202",
     "sourceRevision": "5ae3e5885e72400031c4e0a65c2601e500648dec",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "e237d003ed7572cb4a3d88711ac907e1f9e1e8ac0a8fc29bb7b9be7b0b4aa2c3"
+    "contributionScope": "own_repository",
+    "digest": "00fc5c861500eb9e2e3d74450a01cef658b2df47f3a0bb923f77386243c00415"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/203",
@@ -1631,8 +1631,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/203",
     "sourceRevision": "8e4194fb1dbb1c77dd3989b1b53cdb215484fa8a",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "3fa3bd566e5c2a421a3ec2755c048cc53e78ecb465005c63d3c2399a7310f7f2"
+    "contributionScope": "own_repository",
+    "digest": "f9aa218168ba30a17a5372dd5ef55926105f8df226987633e795f6ccf68a51f4"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/205",
@@ -1658,8 +1658,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/205",
     "sourceRevision": "2c1fc494b77b087c3133bb3d75cc2f3c65bd6065",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "9dd87fcdf6346b7651bb1c6f97c6a57b054cd1243c2d639588a594c4cd60208d"
+    "contributionScope": "own_repository",
+    "digest": "312f842b3903545c1e7828de87d16c7396fba72acfaace2ce36aaadc0f75738e"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/206",
@@ -1685,8 +1685,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/206",
     "sourceRevision": "b8957e593921333a900842017049b76fffb5c0f4",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "eb2edfcf5bfdd9f2e22b0367cf9070cd0641942b796f15637556a86a58da7031"
+    "contributionScope": "own_repository",
+    "digest": "8410fe75246306940b91577da762bd516e03dfe2c01e6dfd2c6c0c8680af86da"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/211",
@@ -1712,8 +1712,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/211",
     "sourceRevision": "9ae80efd2ea99f2937cf1761026a74ec480f0fe4",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "08d87ebecdb8c88caea7e452f8e4f3d8b790337ccdd48883964c521065e0552d"
+    "contributionScope": "own_repository",
+    "digest": "530e0b5d6d8b89c64659171ca8315b1c9e63ab0679b276bbab64ec148536e33f"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/212",
@@ -1739,8 +1739,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/212",
     "sourceRevision": "189d6b848253bedc9087ecd276e625811bdff9b5",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "5602f0d5d5ed25a807b0d6d2cfdbbaea8d6ace5b00597f7daccb91495c66d72d"
+    "contributionScope": "own_repository",
+    "digest": "d9328c4ba219688e0fe88a0cf8f78bd36f2c4e6e87c7fdd28bae2a70b0b465e9"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/213",
@@ -1766,8 +1766,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/213",
     "sourceRevision": "38ff32407b7093bc8912c81b79765ae78dc117a3",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "11e7cdf7986e58a797b3d3751516368db9c790c7153662aa6697cedc951b5bb2"
+    "contributionScope": "own_repository",
+    "digest": "9692ebd81942e95bbe51a69969d031d719ff14636c062a36493fc173f954af97"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/214",
@@ -1793,8 +1793,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/214",
     "sourceRevision": "7d8869cfe5705f0bdf2ef636ebdf55707c9ad969",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "f1fde8de2514b3bbf97426b4a541540999fb29c2bc81e1ae1b4afc7b11fd28e3"
+    "contributionScope": "own_repository",
+    "digest": "21be099a17efaee7b97d5884d4b04e080c7ca96fbab4be62d4285d8bb46bbc9c"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/218",
@@ -1820,8 +1820,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/218",
     "sourceRevision": "aa92d0149756ac7883b8e4f27079fdfa28b110b2",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "18480cb3697dfbd91944cc6c2505ea74cd0e289236238bb165c5c83374594a0d"
+    "contributionScope": "own_repository",
+    "digest": "02ed0176f1890b7cd9df25a5456e64be545f4739c7849c4ebc85bf8fbe9c07e4"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/219",
@@ -1847,8 +1847,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/219",
     "sourceRevision": "8dc6cc52580ad6abfb39166c7982e888aa4c4702",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "a736a60c4248d8bec5825918f63c866d5e9aeaf6d56a79066d4bedd1cfa314ec"
+    "contributionScope": "own_repository",
+    "digest": "70513dcbda0b4abe4b13ee2f41d950e16041a052a1e1ba18a4d9e967e8be5a4e"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/220",
@@ -1874,8 +1874,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/220",
     "sourceRevision": "9e954a4251f76698d23823eac9301fa11c271613",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "5dc55efd5ce3e91e174f07296d1152e050cbef3f927764d41be31f27e28f3249"
+    "contributionScope": "own_repository",
+    "digest": "892a7af6f94720aad3f23c8cf47df4905a0b0c8f574df3d75c37716931f2c189"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/221",
@@ -1901,8 +1901,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/221",
     "sourceRevision": "6b7ce5b285166e9ea8a990c786efd74e019bfc8f",
     "contributionState": "closed",
-    "contributionScope": "upstream",
-    "digest": "61ee102fb5e1f1aac348f8253e0dadec47e19c6d91a647e7b9d8d62988093ea2"
+    "contributionScope": "own_repository",
+    "digest": "f3e0c896843fa1fa97f953493aa0949f480345dc7c199b64df3c107c1d09e552"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/222",
@@ -1928,8 +1928,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/222",
     "sourceRevision": "ab8dd32c4cbfcb362cf3daddef0cdfcf7109abd4",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "cea23626d40ee4277aa80d3dc222518bfed8d2e0be34b76c5971a394e3517073"
+    "contributionScope": "own_repository",
+    "digest": "1ffdf4e72ba2bcec9418033656ddcc5864f872f0c7fba308b45d2b92ae1da40d"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/223",
@@ -1955,8 +1955,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/223",
     "sourceRevision": "ca53e6373f2040b6b8cd6a9a7e3042e87a22e7b2",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "336b35184fa4f585e41295d5f73ec4d7da418dbac747154bcc281acefd98cccf"
+    "contributionScope": "own_repository",
+    "digest": "59bbf0565bdfd5da88165f72da886255f8b430401fb8a21d749bcbde1c3eae38"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/224",
@@ -1982,8 +1982,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/224",
     "sourceRevision": "2ed43e12a2b6f27907436844c76f6c6a7a05b859",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "0084a0f246b003e926fa6684f8fac2cb1f000dcd92a6599ba8d7257621f837b9"
+    "contributionScope": "own_repository",
+    "digest": "3b65953e294feb0fcc0ef1c77783c844121780a11e39fe26b4da348556bd8f9e"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/225",
@@ -2009,8 +2009,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/225",
     "sourceRevision": "be1e18b2a156503268b1b947d366f4baa0bc42ca",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "09c01bbd52a061b4e152137cf3dea27ae41f9231940fae9c00d3b28ab6efc044"
+    "contributionScope": "own_repository",
+    "digest": "c92a7e7fe99537a6d861b9b985cba6ffd1e9163ec8f612fc884a76b71dd5d98c"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/226",
@@ -2036,8 +2036,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/226",
     "sourceRevision": "f23abd8cde9e0ede3ca6bc4fa83d6ded836adda7",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "f6bc2ec03569387ae9da2047b3bb8c4d27f17c85ce5fe15b232fa7f3bc90ea58"
+    "contributionScope": "own_repository",
+    "digest": "5637e7f03dc6190be2672dd8ebeab617793be7dfbf0d6c7571d0b50cf4a528cb"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/227",
@@ -2063,8 +2063,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/227",
     "sourceRevision": "c1731d446dca8cbca5d4641dddd2d9aeccda0a4e",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "6996c3ff86a8cfdc9ce8c04bec2bf77c38f3d8b83a1dbf560d2ba2f7542ff979"
+    "contributionScope": "own_repository",
+    "digest": "5b697755227ec1ab19f0bd662b554023def61065c7d6e79554bd2e65155e65ab"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/228",
@@ -2090,8 +2090,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/228",
     "sourceRevision": "cbc6b1574b8da6d6bece92f49e2185c70bc2132c",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "9de1b537159069cb13454d7696905eba1f9667345eae441c5511a7d5d0fb97cd"
+    "contributionScope": "own_repository",
+    "digest": "da81919c9425b2cb9a4e8f01635fcc62f5873dbd95b8f604d9756794b698e282"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/231",
@@ -2117,8 +2117,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/231",
     "sourceRevision": "ec84ae271c6678bb759cd126ca7d1bcbfde50283",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "82e21212ae59af433f9762730b0f669c7283849abb1af58c3fa61adbb0e6cd2d"
+    "contributionScope": "own_repository",
+    "digest": "12c0bf0e8802cc5921b8ee38f00d871d1d63c6b45600d9237a3ecf948d16daa1"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/237",
@@ -2144,8 +2144,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/237",
     "sourceRevision": "77e7a8cea5f725f807da457b884d204060d67f01",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "89a10788cade72aebd0f462bd244509cff14ced2a4e45b165074a211ed27b468"
+    "contributionScope": "own_repository",
+    "digest": "d8e17e0ac618db1a152261fc6a11df6f1de58278c773baffdc6d3a65b1d2dddc"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/238",
@@ -2171,8 +2171,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/238",
     "sourceRevision": "7ebb687c69b39c04200f0dcda6b450c9ccc1f415",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "8151063f97e0529441b87469ac6a9a4e0b7e892246b298e499844bb69a139134"
+    "contributionScope": "own_repository",
+    "digest": "18acac8d8aad0ef3d9b5f9157d7d848929d2979221406a95098b5e3d50b1d68d"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/239",
@@ -2198,8 +2198,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/239",
     "sourceRevision": "deaffa1752ed4c991a9d51dabe7c92052441af18",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "49a387dd0582cd85e802fa66332bdf4ecb4cad624469cdbb12adc537c7f561a6"
+    "contributionScope": "own_repository",
+    "digest": "00b3b9e0e78e52005c6609ab0b286253d20e0dc4f0de4c36b45cceae7cb4bee9"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/29",
@@ -2225,8 +2225,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/29",
     "sourceRevision": "1d1cd30f3f51b1e739faa16b3c796370c486d173",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "54e0ddfb78bbf6d0a71e5a5fc22565de65f6da7ddfaf1a5a965b81e93bc19c8c"
+    "contributionScope": "own_repository",
+    "digest": "9f15a6915d02af5fd8710093def23114cd170cb27c4032939746f06d59785c13"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/3",
@@ -2252,8 +2252,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/3",
     "sourceRevision": "2bfb1f5d801408c226b5772ae995e437ce59e9bb",
     "contributionState": "closed",
-    "contributionScope": "upstream",
-    "digest": "04e83be7525ef49d227eb40c77f4fdafc5ac1a4a22d91892a7df0a5a242b70eb"
+    "contributionScope": "own_repository",
+    "digest": "9515bb5694ad9e58681bbc15c1673109800ac338bb41866522979c0450b954a9"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/30",
@@ -2279,8 +2279,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/30",
     "sourceRevision": "8c82f675b43607595b71e307d098f47edddf60a9",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "d02e2085f4783c7befdf88fbb786d1cb918ae6334a8d0f65bd933bb06a4555ad"
+    "contributionScope": "own_repository",
+    "digest": "12c905a52a896b3594928225acb19d1ad49a683e3750d6ea83a93b1e4482054f"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/32",
@@ -2306,8 +2306,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/32",
     "sourceRevision": "358980587d3ba5c841a2c3556669dbf8d3bb2bdc",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "af8df976728deb3dfde2b731b115b0d6e5861470a80e96f7516ca6b65d02789d"
+    "contributionScope": "own_repository",
+    "digest": "4bec7a5fc1ee944a9a73961b215bd24198147c1d9fa0cd7f819a2d3308c49d89"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/33",
@@ -2333,8 +2333,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/33",
     "sourceRevision": "aa7c1a8354b8be0e7a7b5e931e5edb44aae50a4e",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "a43387fd314d6f30f058f8fde5bc516f6d21b63864c08d2d3d28fa21debdc9c9"
+    "contributionScope": "own_repository",
+    "digest": "0d8a3f2cf9a77de7707e620fac0ca425a401ed18eed50d26dae5e53e15428127"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/34",
@@ -2360,8 +2360,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/34",
     "sourceRevision": "ddb27c52292be5455ea670720449bc2781ae8bf3",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "184c1520532abab31db896ceda8f356f2e256fa27175cc67c824d721909ef56b"
+    "contributionScope": "own_repository",
+    "digest": "add905c9e640aa4fa6afb3b53397c67e8eb0118d8baf6d2fc0ffc7c119933815"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/35",
@@ -2387,8 +2387,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/35",
     "sourceRevision": "702e8ad96b713f4794bb30c98c050a7040db7aa4",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "711001de7c7063c0c44bce4ae50c6fe7d615f4508ebe2f89d2a1f50a27f1590a"
+    "contributionScope": "own_repository",
+    "digest": "cc564a0891bb6384c8cb4c19e658d6671f91cbc4d62f142bfbb14ae0c49db261"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/36",
@@ -2414,8 +2414,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/36",
     "sourceRevision": "3701ef35c6739c35d978394c7d2d75d8c83aa343",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "9d0d024a260b7339253070ae0df41aca3b9fea29189c57b11597b370a2b54531"
+    "contributionScope": "own_repository",
+    "digest": "cf85c96bce53654c11a9f11db4ab953dd35caf0dbac1b89702ebd7d9076cfcce"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/37",
@@ -2441,8 +2441,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/37",
     "sourceRevision": "afcd750376c86ec0d94356af22c6c8df748896d1",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "468bcbee1d0fdca0881ad7c60be9514f56b253e35c9ddbe71febc4c6484559a0"
+    "contributionScope": "own_repository",
+    "digest": "a8825e08e602b71a14f15932f760c562f6923f65080f35496ca070c2aac1ef1d"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/38",
@@ -2468,8 +2468,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/38",
     "sourceRevision": "f537c8cdb73012d8ca4486a376858847a144e8cd",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "337fa47397ddd5a0e994c1a7987f587c35f0003bb184401659e37923e747e62a"
+    "contributionScope": "own_repository",
+    "digest": "a32885f8bf53668587a2ca3346f6d8c74954d948e7a019bf43163f12e8454c22"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/39",
@@ -2495,8 +2495,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/39",
     "sourceRevision": "6d984a93a2f8bc8ef12741fb5c91144127b31dd9",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "00a7c8efffa9ddcfc6db235f02fa20f151160dca94c3e7ab518471e7553cece3"
+    "contributionScope": "own_repository",
+    "digest": "12bbe1205953eea07854acc80c099f1773b32ea0f6a63cc623659e3384296f04"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/4",
@@ -2522,8 +2522,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/4",
     "sourceRevision": "f485f50ee69fad88e190437f6fda15acfb6fee87",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "999f8fc154cb1ed251a2a1cb34df9acdc6fcdca4a944a9dbb48363d7e0a548be"
+    "contributionScope": "own_repository",
+    "digest": "e00ca6cf82d5e070f5979af29ab2b459cec76bee603e80537070d9b0a82f1588"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/40",
@@ -2549,8 +2549,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/40",
     "sourceRevision": "8736c07692526607c6b9dc97e892d597c6ad904b",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "4621937d233d6f3e9948f382a345ad8d5fa27162221e3cb384d23d2340dbe948"
+    "contributionScope": "own_repository",
+    "digest": "b2db59f52a29802476f65e775146bdf83832968e2acaa39aa2faffb5993c6171"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/5",
@@ -2576,8 +2576,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/5",
     "sourceRevision": "07e99e75831790dcc908267ccccbbcd7715aed03",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "43271dc2f9e1d826c835fba9cbc170f06f14cbe2273c148ae5caa5425f9fde67"
+    "contributionScope": "own_repository",
+    "digest": "9a799245de86724bd371d79757575c2bd00e4426fdfb005a15e66e3765440e60"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/6",
@@ -2603,8 +2603,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/6",
     "sourceRevision": "c7e5fcbe0f5dcac10d52a4d6a528b8d396916a56",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "30f319a0ad0c10ecea0344a3ee8ed490b7aeb37e38601a642230f14ad7c95a61"
+    "contributionScope": "own_repository",
+    "digest": "040819435607c842a9bbed1a335c616d6a456db85cea8597af5c1389e7790313"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/7",
@@ -2630,8 +2630,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/7",
     "sourceRevision": "56f7577620e736a96b262d974560ee981562c049",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "e6ea80c06c95a8bf784cb62e64eee82610b3531d63f957cc4d01d36aa4a2335c"
+    "contributionScope": "own_repository",
+    "digest": "c787f7c688b32e0ffdb0ca15302e9d71574a9cfcdcd97111d2b3496e130c4fa4"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/8",
@@ -2657,8 +2657,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/8",
     "sourceRevision": "018ea657b19ef0110a05a27963a08a14a0502433",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "582c0536b6bee37dd56a43ca0ed52236248f490a750363db7282bcecd48ef608"
+    "contributionScope": "own_repository",
+    "digest": "d5819d4c690cd157646b049bb8073ef260060c90286b366d95505d5871def4c5"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/9",
@@ -2684,8 +2684,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/9",
     "sourceRevision": "296eae6589a4ed6710d7edd2f0ba5844acfc4c1d",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "936a13bc3dab95995ff1fa8f90d906dc3be9561820b6e9289f4f38cdf63e4c1f"
+    "contributionScope": "own_repository",
+    "digest": "cbdbe60828cb76fa752670b4fa9137572a32cb50fa9c7cae44d26bf575398d93"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/91",
@@ -2711,8 +2711,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/91",
     "sourceRevision": "9aa9394633871302dcc0453a96cf151e831e29b9",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "4d58ca1026fd047218da67361e0dc3d0429fd1edf76db7baf91ec187464a75ae"
+    "contributionScope": "own_repository",
+    "digest": "6392f8e4e2976d4ad690d0e71dd27c1d5dc1fb262d399818e75801d12852dc54"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/92",
@@ -2738,8 +2738,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/92",
     "sourceRevision": "48555ee200b9126689679f8a6f6d687373ea29b8",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "43c1d868bb250eb9372caca475b14fdec1b8561185c4f50edc14a3f867d54a62"
+    "contributionScope": "own_repository",
+    "digest": "e42adfa77702e4e0017e530402549082395f042126f39d941b7dd4d34ca851d7"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/93",
@@ -2765,8 +2765,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/93",
     "sourceRevision": "cb7b00e6c468f6ad64ecf95c776344bfcf9d59ba",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "771ba84a9d11c9d59e5e52b4ca1e0f9fb86c81706490143766a2d6e5863d8e93"
+    "contributionScope": "own_repository",
+    "digest": "94fbfcce3cbfa2c89e195cf0614c1935dded78c73141599c3237ba098b48a18b"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/94",
@@ -2792,8 +2792,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/94",
     "sourceRevision": "464b3796b52a56698488d085a2656e70d979d1ee",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "dc09f14e177d3fc96d89efcc04101912c27251b0e81cb48277a367f7d5e72657"
+    "contributionScope": "own_repository",
+    "digest": "c69a9cae06ae13d6ef8c6de5d8738008a1ec57f7b4e7e8bf6ea9256f982ac265"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/95",
@@ -2819,8 +2819,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/95",
     "sourceRevision": "688314e2d16a6ea24e2da91dd4a8a684f97a9ab7",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "66664d85cdf6600e9a265ea5a94ef8200f357ef35cbb3b97ff4b118c3f7f0758"
+    "contributionScope": "own_repository",
+    "digest": "369c44f40c990eb694cd2c1b402a13d23083cfa4489b1f0948bad9312cb99389"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/96",
@@ -2846,8 +2846,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/96",
     "sourceRevision": "8154bd2c8d9fd2ea3acc7a450392a3218316b5f6",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "2dc2440b4d72216dfeeebd0632c7928cef5277a6dc07b8277620582396a156c9"
+    "contributionScope": "own_repository",
+    "digest": "894ff6b3e95be403d5754396e839dec3d9732e63d0480a0d796dc6dee8dca4c9"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/97",
@@ -2873,8 +2873,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/97",
     "sourceRevision": "5d430f9133dae5af30b83b066c89d16974f998b5",
     "contributionState": "closed",
-    "contributionScope": "upstream",
-    "digest": "8616afa7cf72c65861c2eca1e1ee353e899d59898df39af131c0f28ceadc4146"
+    "contributionScope": "own_repository",
+    "digest": "a7a4b3fd39d86d68e81ff73c0e458c4834a67d02afac72a5e3ddd6c58a0dcb0d"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/98",
@@ -2900,8 +2900,8 @@
     "source": "https://github.com/AIGovDev/aigov-core/pull/98",
     "sourceRevision": "4f1817e7e23d34fa1eaf91902c3eb4cf2fbc7d10",
     "contributionState": "merged",
-    "contributionScope": "upstream",
-    "digest": "dd58dafd47d780d7802541195e7f26728d5c656989255bb8be2ff072144356ad"
+    "contributionScope": "own_repository",
+    "digest": "26ed7c3629027183d25f0d31dfbe9f8024fd0790ab20d8a0f702666d3c8af57b"
   },
   {
     "id": "https://github.com/alesziegler/CLab_workshop",
