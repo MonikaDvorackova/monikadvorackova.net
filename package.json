@@ -20,7 +20,8 @@
     "agent:maintenance": "node --import tsx scripts/agent-maintenance.ts",
     "prebuild": "node --import tsx scripts/agent-content.ts && node --import tsx scripts/agent-index.ts --if-configured",
     "predev": "node --import tsx scripts/agent-content.ts",
-    "agent:revalidate": "node --import tsx scripts/agent-revalidate.ts"
+    "agent:revalidate": "node --import tsx scripts/agent-revalidate.ts",
+    "agent:deliver": "node --import tsx scripts/agent-deliver.ts"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.32.2",

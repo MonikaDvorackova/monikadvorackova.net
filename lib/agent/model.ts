@@ -1,3 +1,4 @@
+import { career } from "./career";
 import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
@@ -37,6 +38,14 @@ export type RecordData = {
   source: string;
   sourceRevision?: string;
   verifiedAt?: string;
+  contributionState?: "opened" | "closed" | "merged";
+  contributionScope?: "upstream" | "own_repository";
+  details?: {
+    organization: string;
+    qualification?: string;
+    startDate?: string;
+    endDate?: string;
+  };
   digest: string;
 };
 export function canonical(value: unknown): string {
@@ -138,6 +147,55 @@ export async function corpus(lang: Language = "en"): Promise<RecordData[]> {
         url: BASE + "/#publications",
       }),
     );
+  for (const kind of ["experience", "education"] as const)
+    for (const item of career[kind]) {
+      const organizationId =
+        BASE + "/#organization-" + sha256(item.organization).slice(0, 16);
+      docs.push(
+        record({
+          ...common,
+          id: organizationId,
+          kind: "organization",
+          title: item.organization,
+          description: item.organization,
+          body: item.organization,
+          url: item.sourceUrl,
+          source: item.sourceUrl,
+          language: item.language,
+          updatedAt: item.updatedAt,
+        }),
+      );
+      docs.push(
+        record({
+          ...common,
+          id: BASE + "/#" + kind + "-" + item.id,
+          kind,
+          title: item.title,
+          description: item.description,
+          body: item.description,
+          url: item.sourceUrl,
+          source: item.sourceUrl,
+          language: item.language,
+          updatedAt: item.updatedAt,
+          details: {
+            organization: item.organization,
+            qualification: item.qualification,
+            startDate: item.startDate,
+            endDate: item.endDate,
+          },
+          relations: [
+            {
+              type: kind === "education" ? "educationOf" : "experienceOf",
+              target: personId,
+            },
+            {
+              type: kind === "education" ? "studiedAt" : "workedAt",
+              target: organizationId,
+            },
+          ],
+        }),
+      );
+    }
   const topicId = (title: string) =>
     BASE + "/#topic-" + encodeURIComponent(title.toLowerCase());
   for (const title of new Set([

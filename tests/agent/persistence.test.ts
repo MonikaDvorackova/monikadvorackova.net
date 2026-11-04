@@ -63,7 +63,39 @@ test(
       const b = await api(request(), ["inquiries"]);
       assert.equal(a.status, 201);
       assert.equal(b.status, 201);
-      assert.deepEqual((await a.json()).data, (await b.json()).data);
+      const received = (await a.json()).data;
+      assert.deepEqual(received, (await b.json()).data);
+      const { approveNotification, deliverNotification } =
+        await import("../../lib/agent/notifications");
+      process.env.AGENT_NOTIFICATIONS_ENABLED = "true";
+      process.env.AGENT_NOTIFICATION_APPROVAL_ID = suffix;
+      process.env.AGENT_NOTIFICATION_API_KEY = "test-only-provider-key";
+      process.env.AGENT_NOTIFICATION_FROM = "sender@example.com";
+      process.env.AGENT_NOTIFICATION_TO = "operator@example.com";
+      await approveNotification(received.id, suffix);
+      let deliveryCalls = 0;
+      const delivery = await deliverNotification(
+        received.id,
+        async (url, init) => {
+          deliveryCalls++;
+          assert.equal(String(url), "https://api.resend.com/emails");
+          assert.deepEqual(JSON.parse(String(init?.body)).to, [
+            "operator@example.com",
+          ]);
+          assert.equal(init?.redirect, "error");
+          return Response.json({ id: crypto.randomUUID() });
+        },
+      );
+      assert.equal(delivery.status, "delivered");
+      await assert.rejects(
+        deliverNotification(received.id, async () => {
+          deliveryCalls++;
+          return Response.json({});
+        }),
+        /approval/,
+      );
+      assert.equal(deliveryCalls, 1);
+
       process.env.AGENT_A2A_KEY = "a".repeat(32);
       const send = {
         jsonrpc: "2.0",
@@ -103,6 +135,14 @@ test(
     } finally {
       delete process.env.AGENT_INQUIRY_KEY;
       delete process.env.AGENT_A2A_KEY;
+      for (const key of [
+        "AGENT_NOTIFICATIONS_ENABLED",
+        "AGENT_NOTIFICATION_APPROVAL_ID",
+        "AGENT_NOTIFICATION_API_KEY",
+        "AGENT_NOTIFICATION_FROM",
+        "AGENT_NOTIFICATION_TO",
+      ])
+        delete process.env[key];
       await database().end();
     }
   },

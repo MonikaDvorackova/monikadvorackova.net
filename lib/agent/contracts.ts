@@ -29,6 +29,16 @@ export const publicRecord = z.object({
   source: z.url(),
   sourceRevision: z.string().optional(),
   verifiedAt: z.iso.datetime({ offset: true }).optional(),
+  contributionState: z.enum(["opened", "closed", "merged"]).optional(),
+  contributionScope: z.enum(["upstream", "own_repository"]).optional(),
+  details: z
+    .object({
+      organization: z.string(),
+      qualification: z.string().optional(),
+      startDate: z.string().optional(),
+      endDate: z.string().optional(),
+    })
+    .optional(),
   digest: z.string().regex(/^[a-f0-9]{64}$/),
 });
 export const evidenceRecord = z.object({
@@ -148,6 +158,10 @@ const schemas: Record<string, z.ZodType> = {
       lang: z.enum(["en", "cs"]),
     }),
   }),
+  "notifications/approve": z.object({
+    inquiryId: z.string().uuid(),
+    status: z.literal("approved_for_disabled_delivery"),
+  }),
   inquiries: z.object({
     id: z.string().uuid(),
     status: z.literal("stored_for_manual_review"),
@@ -176,6 +190,25 @@ const schemas: Record<string, z.ZodType> = {
     ),
     publications: z.array(
       z.object({ name: z.string(), summary: z.string(), url: z.url() }),
+    ),
+    work: z.array(
+      z.object({
+        name: z.string(),
+        position: z.string(),
+        summary: z.string(),
+        url: z.url(),
+        startDate: z.string().optional(),
+        endDate: z.string().optional(),
+      }),
+    ),
+    education: z.array(
+      z.object({
+        institution: z.string(),
+        studyType: z.string(),
+        url: z.url(),
+        startDate: z.string().optional(),
+        endDate: z.string().optional(),
+      }),
     ),
     meta: z.object({
       version: z.literal(VERSION),

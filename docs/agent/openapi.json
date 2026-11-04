@@ -25,6 +25,16 @@
                 "cs"
               ]
             }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "schema": {
+              "enum": [
+                "json",
+                "markdown"
+              ]
+            }
           }
         ],
         "responses": {
@@ -120,6 +130,42 @@
                           "type": "string",
                           "format": "date-time",
                           "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                        },
+                        "contributionState": {
+                          "type": "string",
+                          "enum": [
+                            "opened",
+                            "closed",
+                            "merged"
+                          ]
+                        },
+                        "contributionScope": {
+                          "type": "string",
+                          "enum": [
+                            "upstream",
+                            "own_repository"
+                          ]
+                        },
+                        "details": {
+                          "type": "object",
+                          "properties": {
+                            "organization": {
+                              "type": "string"
+                            },
+                            "qualification": {
+                              "type": "string"
+                            },
+                            "startDate": {
+                              "type": "string"
+                            },
+                            "endDate": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "organization"
+                          ],
+                          "additionalProperties": false
                         },
                         "digest": {
                           "type": "string",
@@ -638,6 +684,42 @@
                                 "type": "string",
                                 "format": "date-time",
                                 "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                              },
+                              "contributionState": {
+                                "type": "string",
+                                "enum": [
+                                  "opened",
+                                  "closed",
+                                  "merged"
+                                ]
+                              },
+                              "contributionScope": {
+                                "type": "string",
+                                "enum": [
+                                  "upstream",
+                                  "own_repository"
+                                ]
+                              },
+                              "details": {
+                                "type": "object",
+                                "properties": {
+                                  "organization": {
+                                    "type": "string"
+                                  },
+                                  "qualification": {
+                                    "type": "string"
+                                  },
+                                  "startDate": {
+                                    "type": "string"
+                                  },
+                                  "endDate": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "organization"
+                                ],
+                                "additionalProperties": false
                               },
                               "digest": {
                                 "type": "string",
@@ -1195,6 +1277,42 @@
                                 "format": "date-time",
                                 "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
                               },
+                              "contributionState": {
+                                "type": "string",
+                                "enum": [
+                                  "opened",
+                                  "closed",
+                                  "merged"
+                                ]
+                              },
+                              "contributionScope": {
+                                "type": "string",
+                                "enum": [
+                                  "upstream",
+                                  "own_repository"
+                                ]
+                              },
+                              "details": {
+                                "type": "object",
+                                "properties": {
+                                  "organization": {
+                                    "type": "string"
+                                  },
+                                  "qualification": {
+                                    "type": "string"
+                                  },
+                                  "startDate": {
+                                    "type": "string"
+                                  },
+                                  "endDate": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "organization"
+                                ],
+                                "additionalProperties": false
+                              },
                               "digest": {
                                 "type": "string",
                                 "pattern": "^[a-f0-9]{64}$"
@@ -1750,6 +1868,42 @@
                                 "type": "string",
                                 "format": "date-time",
                                 "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                              },
+                              "contributionState": {
+                                "type": "string",
+                                "enum": [
+                                  "opened",
+                                  "closed",
+                                  "merged"
+                                ]
+                              },
+                              "contributionScope": {
+                                "type": "string",
+                                "enum": [
+                                  "upstream",
+                                  "own_repository"
+                                ]
+                              },
+                              "details": {
+                                "type": "object",
+                                "properties": {
+                                  "organization": {
+                                    "type": "string"
+                                  },
+                                  "qualification": {
+                                    "type": "string"
+                                  },
+                                  "startDate": {
+                                    "type": "string"
+                                  },
+                                  "endDate": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "organization"
+                                ],
+                                "additionalProperties": false
                               },
                               "digest": {
                                 "type": "string",
@@ -2307,6 +2461,42 @@
                                 "format": "date-time",
                                 "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
                               },
+                              "contributionState": {
+                                "type": "string",
+                                "enum": [
+                                  "opened",
+                                  "closed",
+                                  "merged"
+                                ]
+                              },
+                              "contributionScope": {
+                                "type": "string",
+                                "enum": [
+                                  "upstream",
+                                  "own_repository"
+                                ]
+                              },
+                              "details": {
+                                "type": "object",
+                                "properties": {
+                                  "organization": {
+                                    "type": "string"
+                                  },
+                                  "qualification": {
+                                    "type": "string"
+                                  },
+                                  "startDate": {
+                                    "type": "string"
+                                  },
+                                  "endDate": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "organization"
+                                ],
+                                "additionalProperties": false
+                              },
                               "digest": {
                                 "type": "string",
                                 "pattern": "^[a-f0-9]{64}$"
@@ -2745,6 +2935,27 @@
             }
           },
           {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "enum": [
+                "opened",
+                "closed",
+                "merged"
+              ]
+            }
+          },
+          {
+            "name": "scope",
+            "in": "query",
+            "schema": {
+              "enum": [
+                "upstream",
+                "own_repository"
+              ]
+            }
+          },
+          {
             "name": "limit",
             "in": "query",
             "schema": {
@@ -2862,6 +3073,42 @@
                                 "type": "string",
                                 "format": "date-time",
                                 "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                              },
+                              "contributionState": {
+                                "type": "string",
+                                "enum": [
+                                  "opened",
+                                  "closed",
+                                  "merged"
+                                ]
+                              },
+                              "contributionScope": {
+                                "type": "string",
+                                "enum": [
+                                  "upstream",
+                                  "own_repository"
+                                ]
+                              },
+                              "details": {
+                                "type": "object",
+                                "properties": {
+                                  "organization": {
+                                    "type": "string"
+                                  },
+                                  "qualification": {
+                                    "type": "string"
+                                  },
+                                  "startDate": {
+                                    "type": "string"
+                                  },
+                                  "endDate": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "organization"
+                                ],
+                                "additionalProperties": false
                               },
                               "digest": {
                                 "type": "string",
@@ -3298,6 +3545,23 @@
                 "en",
                 "cs"
               ]
+            }
+          },
+          {
+            "name": "root",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "depth",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4,
+              "default": 1
             }
           }
         ],
@@ -3933,6 +4197,70 @@
                             "additionalProperties": false
                           }
                         },
+                        "work": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "position": {
+                                "type": "string"
+                              },
+                              "summary": {
+                                "type": "string"
+                              },
+                              "url": {
+                                "type": "string",
+                                "format": "uri"
+                              },
+                              "startDate": {
+                                "type": "string"
+                              },
+                              "endDate": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "name",
+                              "position",
+                              "summary",
+                              "url"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
+                        "education": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "institution": {
+                                "type": "string"
+                              },
+                              "studyType": {
+                                "type": "string"
+                              },
+                              "url": {
+                                "type": "string",
+                                "format": "uri"
+                              },
+                              "startDate": {
+                                "type": "string"
+                              },
+                              "endDate": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "institution",
+                              "studyType",
+                              "url"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
                         "meta": {
                           "type": "object",
                           "properties": {
@@ -3965,6 +4293,8 @@
                         "skills",
                         "projects",
                         "publications",
+                        "work",
+                        "education",
                         "meta"
                       ],
                       "additionalProperties": false
@@ -4346,6 +4676,17 @@
                 "en",
                 "cs"
               ]
+            }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "schema": {
+              "enum": [
+                "csl-json",
+                "bibtex"
+              ],
+              "default": "csl-json"
             }
           },
           {
@@ -4843,6 +5184,14 @@
                 "en",
                 "cs"
               ]
+            }
+          },
+          {
+            "name": "since",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
             }
           },
           {
@@ -5833,6 +6182,42 @@
                                 "format": "date-time",
                                 "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
                               },
+                              "contributionState": {
+                                "type": "string",
+                                "enum": [
+                                  "opened",
+                                  "closed",
+                                  "merged"
+                                ]
+                              },
+                              "contributionScope": {
+                                "type": "string",
+                                "enum": [
+                                  "upstream",
+                                  "own_repository"
+                                ]
+                              },
+                              "details": {
+                                "type": "object",
+                                "properties": {
+                                  "organization": {
+                                    "type": "string"
+                                  },
+                                  "qualification": {
+                                    "type": "string"
+                                  },
+                                  "startDate": {
+                                    "type": "string"
+                                  },
+                                  "endDate": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "organization"
+                                ],
+                                "additionalProperties": false
+                              },
                               "digest": {
                                 "type": "string",
                                 "pattern": "^[a-f0-9]{64}$"
@@ -6346,6 +6731,42 @@
                                 "type": "string",
                                 "format": "date-time",
                                 "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                              },
+                              "contributionState": {
+                                "type": "string",
+                                "enum": [
+                                  "opened",
+                                  "closed",
+                                  "merged"
+                                ]
+                              },
+                              "contributionScope": {
+                                "type": "string",
+                                "enum": [
+                                  "upstream",
+                                  "own_repository"
+                                ]
+                              },
+                              "details": {
+                                "type": "object",
+                                "properties": {
+                                  "organization": {
+                                    "type": "string"
+                                  },
+                                  "qualification": {
+                                    "type": "string"
+                                  },
+                                  "startDate": {
+                                    "type": "string"
+                                  },
+                                  "endDate": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "organization"
+                                ],
+                                "additionalProperties": false
                               },
                               "digest": {
                                 "type": "string",
@@ -7286,6 +7707,14 @@
             }
           },
           {
+            "name": "digest",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          },
+          {
             "name": "id",
             "in": "query",
             "required": true,
@@ -7760,6 +8189,33 @@
             }
           },
           {
+            "name": "kind",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "enum": [
+                "self_reported",
+                "source_verified"
+              ]
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10
+            }
+          },
+          {
             "name": "q",
             "in": "query",
             "required": true,
@@ -7876,6 +8332,42 @@
                                 "type": "string",
                                 "format": "date-time",
                                 "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                              },
+                              "contributionState": {
+                                "type": "string",
+                                "enum": [
+                                  "opened",
+                                  "closed",
+                                  "merged"
+                                ]
+                              },
+                              "contributionScope": {
+                                "type": "string",
+                                "enum": [
+                                  "upstream",
+                                  "own_repository"
+                                ]
+                              },
+                              "details": {
+                                "type": "object",
+                                "properties": {
+                                  "organization": {
+                                    "type": "string"
+                                  },
+                                  "qualification": {
+                                    "type": "string"
+                                  },
+                                  "startDate": {
+                                    "type": "string"
+                                  },
+                                  "endDate": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "organization"
+                                ],
+                                "additionalProperties": false
                               },
                               "digest": {
                                 "type": "string",
@@ -9134,6 +9626,14 @@
                 "cs"
               ]
             }
+          },
+          {
+            "name": "head",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
           }
         ],
         "security": [
@@ -9972,6 +10472,10 @@
           "required": true,
           "content": {
             "application/json": {
+              "example": {
+                "question": "What is AIGov?",
+                "lang": "en"
+              },
               "schema": {
                 "$schema": "https://json-schema.org/draft/2020-12/schema",
                 "type": "object",
@@ -10445,6 +10949,12 @@
           "required": true,
           "content": {
             "application/json": {
+              "example": {
+                "requirements": [
+                  "MLOps"
+                ],
+                "lang": "en"
+              },
               "schema": {
                 "$schema": "https://json-schema.org/draft/2020-12/schema",
                 "type": "object",
@@ -10591,6 +11101,42 @@
                                       "type": "string",
                                       "format": "date-time",
                                       "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                                    },
+                                    "contributionState": {
+                                      "type": "string",
+                                      "enum": [
+                                        "opened",
+                                        "closed",
+                                        "merged"
+                                      ]
+                                    },
+                                    "contributionScope": {
+                                      "type": "string",
+                                      "enum": [
+                                        "upstream",
+                                        "own_repository"
+                                      ]
+                                    },
+                                    "details": {
+                                      "type": "object",
+                                      "properties": {
+                                        "organization": {
+                                          "type": "string"
+                                        },
+                                        "qualification": {
+                                          "type": "string"
+                                        },
+                                        "startDate": {
+                                          "type": "string"
+                                        },
+                                        "endDate": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "organization"
+                                      ],
+                                      "additionalProperties": false
                                     },
                                     "digest": {
                                       "type": "string",
@@ -11013,6 +11559,14 @@
           "required": true,
           "content": {
             "application/json": {
+              "example": {
+                "type": "consulting",
+                "name": "Example Client",
+                "email": "client@example.com",
+                "message": "Please prepare a technical consulting inquiry.",
+                "consent": true,
+                "lang": "en"
+              },
               "schema": {
                 "$schema": "https://json-schema.org/draft/2020-12/schema",
                 "type": "object",
@@ -11529,6 +12083,14 @@
           "required": true,
           "content": {
             "application/json": {
+              "example": {
+                "type": "research",
+                "name": "Example Researcher",
+                "email": "researcher@example.com",
+                "message": "I would like to discuss a research collaboration.",
+                "consent": true,
+                "lang": "en"
+              },
               "schema": {
                 "$schema": "https://json-schema.org/draft/2020-12/schema",
                 "type": "object",
@@ -11660,6 +12222,438 @@
           },
           "201": {
             "description": "Stored for manual review; outbound delivery disabled"
+          },
+          "400": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/notifications/approve": {
+      "post": {
+        "operationId": "notifications_approve",
+        "summary": "notifications/approve",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "inquiryId": "00000000-0000-4000-8000-000000000001",
+                "approvalId": "operator-review-record-0001"
+              },
+              "schema": {
+                "type": "object",
+                "required": [
+                  "inquiryId",
+                  "approvalId"
+                ],
+                "properties": {
+                  "inquiryId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "approvalId": {
+                    "type": "string",
+                    "minLength": 16,
+                    "maxLength": 128
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "inquiryId": {
+                          "type": "string",
+                          "format": "uuid",
+                          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                        },
+                        "status": {
+                          "type": "string",
+                          "const": "approved_for_disabled_delivery"
+                        }
+                      },
+                      "required": [
+                        "inquiryId",
+                        "status"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "apiVersion": {
+                          "type": "string",
+                          "const": "1.0.0"
+                        },
+                        "language": {
+                          "type": "string",
+                          "enum": [
+                            "en",
+                            "cs"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "apiVersion",
+                        "language"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
           },
           "400": {
             "description": "Error",

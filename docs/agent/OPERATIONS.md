@@ -6,7 +6,7 @@ Next.js owns HTML, REST v1, MCP Streamable HTTP and A2A 0.3 JSON-RPC. No FastAPI
 
 `lib/agent/model.ts` reads a deterministic catalog generated from MDX articles/projects before dev/build, the shared `lib/publications.ts` bibliography, shared `lib/stack.ts` technologies and a generated public GitHub snapshot. Changes to these sources automatically flow into discovery, graph, feeds, search, QA and exports. Website visual components consume the same extracted publication/technology arrays. No visual CSS or navigation redesign is included.
 
-A content SHA-256 covers every record field except the digest. These are integrity checks, not signatures or proof of qualifications. Website statements are self-reported. GitHub source verification supports only the repository/PR/release facts returned by the public source, not employment, adoption or impact. Source reachability checks never upgrade verification status. Original-language content falls back to English and declares its language; Czech profile text and API metadata are available. Empty experience/education collections do not infer qualifications.
+A content SHA-256 covers every record field except the digest. These are integrity checks, not signatures or proof of qualifications. Website statements are self-reported. GitHub source verification supports only the repository/PR/release facts returned by the public source, not employment, adoption or impact. Source reachability checks never upgrade verification status. Original-language content falls back to English and declares its language; Czech profile text and API metadata are available. Experience and education are loaded from schema-validated `data/agent/career.json`. Its collections are currently empty because the website does not publish source-reviewed structured career records. Populate only approved public claims with source URLs; manual entries remain self-reported. Empty collections do not infer qualifications.
 
 ## Configuration
 
@@ -23,7 +23,7 @@ A content SHA-256 covers every record field except the digest. These are integri
 | AGENT_EMBEDDING_MODEL | Defaults to text-embedding-3-small. Rebuild the index when changed. |
 | AGENT_GITHUB_TOKEN | Read-only GitHub token for synchronization. Public resources only. |
 
-Outbound delivery is intentionally unimplemented and always disabled. Inquiry preparation returns a draft; submission stores it for manual review. Enabling mail delivery requires a separately reviewed change and explicit authorization. No endpoint books meetings, contacts third parties or executes arbitrary actions.
+Outbound delivery is disabled. A fixed-origin Resend adapter exists in `lib/agent/notifications.ts`; it has not been activated or live-tested. Inquiry preparation returns a draft; submission stores it for manual review. Enabling mail delivery requires explicit authorization, a provider key, approved sender/recipient, AGENT_NOTIFICATIONS_ENABLED=true and AGENT_NOTIFICATION_APPROVAL_ID. Each inquiry additionally needs an authenticated admin approval using the same approval identifier. `npm run agent:deliver -- INQUIRY_UUID` sends only to the configured operator address. No worker is scheduled. Uncertain provider outcomes require manual reconciliation and reapproval; they are not automatically retried. No endpoint books meetings, contacts third parties or executes arbitrary actions.
 
 ## Deploy a preview
 

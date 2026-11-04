@@ -45,7 +45,13 @@ export const readPaths = [
   "ledger/verify",
   "sync/status",
 ];
-export const writePaths = ["ask", "match", "inquiries/prepare", "inquiries"];
+export const writePaths = [
+  "ask",
+  "match",
+  "inquiries/prepare",
+  "inquiries",
+  "notifications/approve",
+];
 export async function api(req: Request, segments: string[]) {
   return observed(req, async () => {
     const result = await execute(req, segments);
@@ -99,15 +105,25 @@ async function execute(req: Request, segments: string[]) {
         { status: "contact_for_availability", url: BASE, commitment: false },
         lang,
       );
-    if (route === "experience" || route === "education")
+    if (route === "experience" || route === "education") {
+      const items = (await corpus(lang))
+        .filter((d) => d.kind === route)
+        .map((doc) => {
+          const { body: _, ...item } = doc;
+          void _;
+          return item;
+        });
       return json(
         {
-          items: (await corpus(lang)).filter((d) => d.kind === route),
-          total: 0,
-          note: "No structured records published; no qualifications inferred.",
+          items,
+          total: items.length,
+          note: items.length
+            ? "Source-linked career claims; see evidence status."
+            : "No structured records published; no qualifications inferred.",
         },
         lang,
       );
+    }
     if (route === "ledger/verify") {
       authorize(req, "admin");
       return json(
@@ -155,7 +171,25 @@ async function execute(req: Request, segments: string[]) {
       if (route === "citations")
         args.format = params.get("format") || "csl-json";
       if (route === "changes") args.since = params.get("since") || undefined;
-      const result = await invoke(tool, args);
+      let result: unknown = await invoke(tool, args);
+      if (route === "contributions" && Array.isArray(result)) {
+        const state = params.get("state");
+        const scope = params.get("scope");
+        if (state) {
+          z.enum(["opened", "closed", "merged"]).parse(state);
+          result = result.filter(
+            (d) =>
+              (d as { contributionState?: string }).contributionState === state,
+          );
+        }
+        if (scope) {
+          z.enum(["upstream", "own_repository"]).parse(scope);
+          result = (result as unknown[]).filter(
+            (d) =>
+              (d as { contributionScope?: string }).contributionScope === scope,
+          );
+        }
+      }
       if (typeof result === "string")
         return new Response(result, {
           headers: {
@@ -187,6 +221,22 @@ async function execute(req: Request, segments: string[]) {
   }
   if (req.method === "POST") {
     const payload = await body(req);
+    if (route === "notifications/approve") {
+      authorize(req, "admin");
+      const input = z
+        .object({
+          inquiryId: z.string().uuid(),
+          approvalId: z.string().min(16).max(128),
+        })
+        .strict()
+        .parse(payload);
+      const { approveNotification } = await import("./notifications");
+      return json(
+        await approveNotification(input.inquiryId, input.approvalId),
+        lang,
+      );
+    }
+
     if (route === "ask" || route === "match" || route === "inquiries/prepare")
       return json(
         await invoke(
@@ -302,6 +352,99 @@ export function openapi() {
       },
     },
   };
+  const queryParameters: Record<
+    string,
+    { name: string; in: string; schema: Record<string, unknown> }[]
+  > = {
+    search: [
+      { name: "kind", in: "query", schema: { type: "string" } },
+      {
+        name: "status",
+        in: "query",
+        schema: { enum: ["self_reported", "source_verified"] },
+      },
+      {
+        name: "limit",
+        in: "query",
+        schema: { type: "integer", minimum: 1, maximum: 100, default: 10 },
+      },
+    ],
+    graph: [
+      { name: "root", in: "query", schema: { type: "string" } },
+      {
+        name: "depth",
+        in: "query",
+        schema: { type: "integer", minimum: 0, maximum: 4, default: 1 },
+      },
+    ],
+    contributions: [
+      {
+        name: "state",
+        in: "query",
+        schema: { enum: ["opened", "closed", "merged"] },
+      },
+      {
+        name: "scope",
+        in: "query",
+        schema: { enum: ["upstream", "own_repository"] },
+      },
+    ],
+    changes: [
+      {
+        name: "since",
+        in: "query",
+        schema: { type: "string", format: "date-time" },
+      },
+    ],
+    citations: [
+      {
+        name: "format",
+        in: "query",
+        schema: { enum: ["csl-json", "bibtex"], default: "csl-json" },
+      },
+    ],
+    profile: [
+      { name: "format", in: "query", schema: { enum: ["json", "markdown"] } },
+    ],
+    "evidence/verify": [
+      {
+        name: "digest",
+        in: "query",
+        schema: { type: "string", pattern: "^[a-f0-9]{64}$" },
+      },
+    ],
+    "ledger/verify": [
+      {
+        name: "head",
+        in: "query",
+        schema: { type: "string", pattern: "^[a-f0-9]{64}$" },
+      },
+    ],
+  };
+  const requestExamples: Record<string, unknown> = {
+    ask: { question: "What is AIGov?", lang: "en" },
+    match: { requirements: ["MLOps"], lang: "en" },
+    inquiries: {
+      type: "research",
+      name: "Example Researcher",
+      email: "researcher@example.com",
+      message: "I would like to discuss a research collaboration.",
+      consent: true,
+      lang: "en",
+    },
+    "inquiries/prepare": {
+      type: "consulting",
+      name: "Example Client",
+      email: "client@example.com",
+      message: "Please prepare a technical consulting inquiry.",
+      consent: true,
+      lang: "en",
+    },
+    "notifications/approve": {
+      inquiryId: "00000000-0000-4000-8000-000000000001",
+      approvalId: "operator-review-record-0001",
+    },
+  };
   const paths: Record<string, unknown> = {};
   for (const name of [...readPaths, ...writePaths]) {
     const post = writePaths.includes(name);
@@ -311,7 +454,10 @@ export function openapi() {
         : name === "match"
           ? "match_capabilities"
           : "prepare_inquiry";
-    const protectedRoute = name === "inquiries" || name === "ledger/verify";
+    const protectedRoute =
+      name === "inquiries" ||
+      name === "ledger/verify" ||
+      name === "notifications/approve";
     paths["/api/v1/" + name] = {
       [post ? "post" : "get"]: {
         operationId: name.replaceAll("/", "_"),
@@ -329,6 +475,7 @@ export function openapi() {
             : []
           : [
               { name: "lang", in: "query", schema: { enum: ["en", "cs"] } },
+              ...(queryParameters[name] || []),
               ...([
                 "skills",
                 "capabilities",
@@ -384,7 +531,23 @@ export function openapi() {
                 required: true,
                 content: {
                   "application/json": {
-                    schema: z.toJSONSchema(tools[requestTool]),
+                    example: requestExamples[name],
+                    schema:
+                      name === "notifications/approve"
+                        ? {
+                            type: "object",
+                            required: ["inquiryId", "approvalId"],
+                            properties: {
+                              inquiryId: { type: "string", format: "uuid" },
+                              approvalId: {
+                                type: "string",
+                                minLength: 16,
+                                maxLength: 128,
+                              },
+                            },
+                            additionalProperties: false,
+                          }
+                        : z.toJSONSchema(tools[requestTool]),
                   },
                 },
               },

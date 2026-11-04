@@ -24,6 +24,28 @@ test("real MCP client negotiates, discovers all 15 tools, calls tools, reads res
       arguments: { lang: "cs" },
     });
     assert(!result.isError);
+    const args: Record<string, Record<string, unknown>> = {
+      search_knowledge: { query: "AIGov" },
+      ask_profile: { question: "What is AIGov?" },
+      get_evidence: { id: "https://monikadvorackova.net/#person" },
+      verify_evidence: { id: "https://monikadvorackova.net/#person" },
+      match_capabilities: { requirements: ["MLOps"] },
+      prepare_inquiry: {
+        type: "research",
+        name: "Test User",
+        email: "test@example.com",
+        message: "A source-linked research inquiry.",
+        consent: true,
+      },
+    };
+    for (const tool of listed.tools) {
+      const value = await client.callTool({
+        name: tool.name,
+        arguments: args[tool.name] || {},
+      });
+      assert(!value.isError, tool.name);
+    }
+
     assert.match(JSON.stringify(result), /inženýrka/);
     assert((await client.listResources()).resources.length >= 2);
     assert(

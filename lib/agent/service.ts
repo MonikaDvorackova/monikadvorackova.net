@@ -175,6 +175,21 @@ export async function invoke(name: ToolName, input: unknown) {
           summary: d.description,
           url: d.url,
         })),
+        work: list("experience").map((d) => ({
+          name: d.details?.organization || "",
+          position: d.title,
+          summary: d.description,
+          url: d.url,
+          ...(d.details?.startDate ? { startDate: d.details.startDate } : {}),
+          ...(d.details?.endDate ? { endDate: d.details.endDate } : {}),
+        })),
+        education: list("education").map((d) => ({
+          institution: d.details?.organization || "",
+          studyType: d.details?.qualification || d.title,
+          url: d.url,
+          ...(d.details?.startDate ? { startDate: d.details.startDate } : {}),
+          ...(d.details?.endDate ? { endDate: d.details.endDate } : {}),
+        })),
         meta: {
           version: "1.0.0",
           language: lang,

@@ -411,3 +411,16 @@ test("retrieved prompt injection is excluded from grounded answers", async () =>
   assert(answer.abstained);
   assert.equal(answer.citations.length, 0);
 });
+
+test("outbound notifications are disabled before any network or database action", async () => {
+  const { deliverNotification } = await import("../../lib/agent/notifications");
+  let called = false;
+  await assert.rejects(
+    deliverNotification(crypto.randomUUID(), async () => {
+      called = true;
+      return Response.json({ id: "x" });
+    }),
+    /explicit operator approval/,
+  );
+  assert.equal(called, false);
+});

@@ -32,7 +32,11 @@ jobs:
         run: npm run agent:sync
         env:
           AGENT_GITHUB_TOKEN: ${{ github.token }}
-      - run: npm run test:agent
+      - name: Agent tests and report
+        run: |
+          set -o pipefail
+          mkdir -p test-results
+          npm run test:agent | tee test-results/agent-tests.log
       - run: python3 tests/agent/sdk_python_test.py
       - run: npm run typecheck
       - run: npm run lint
@@ -40,3 +44,14 @@ jobs:
       - run: npm run build
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
+      - run: node --import tsx scripts/agent-benchmark.ts
+      - name: Upload verification reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: agent-verification
+          path: |
+            test-results/
+            docs/agent/benchmarks.json
+            data/agent/sync-status.json
+          retention-days: 14

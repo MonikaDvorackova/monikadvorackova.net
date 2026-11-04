@@ -37,7 +37,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/1",
     "sourceRevision": "2bfb1f5d801408c226b5772ae995e437ce59e9bb",
-    "digest": "48dd3680b670445ace34c9eb5f265a7973d09670eeb8aadc0a39d736177de35d"
+    "contributionState": "closed",
+    "contributionScope": "upstream",
+    "digest": "a51dbc8259aa30496b77c109260612da163c92e57f2b39bb738b8d98d05bc3a9"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/10",
@@ -62,7 +64,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/10",
     "sourceRevision": "4a274ab65c4a795e10699e981e45b2323443ad71",
-    "digest": "0aec49cbf61eca61e2fdd9a06806f86dcdf32dcea47d2172445b1825f2aeb742"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "9c97ee911a4b9525062c5570783bd0f521c7be07c56ce469fec8f1d298093436"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/109",
@@ -87,7 +91,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/109",
     "sourceRevision": "096eb57b955a2ef5552864cc6f6305d4b0f29aac",
-    "digest": "f70233b03a826d38487c54f9fdafbb90fd3001d70c53f279df37120876e4c1d3"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "470df781516f3fea0dd383b4e3d2825f0054fd86f0a1ccb8ab50a32a7524d75d"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/111",
@@ -112,7 +118,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/111",
     "sourceRevision": "fc46f6710804482031ffc69d3c9f00c409606679",
-    "digest": "41bb7df0ba865c3fd569d1d78bcfab110b0357e04b53a46afc768137e5e80a6c"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "47642a8130099e6bedf6d985de8fdf32d387745a5fe39cd7dd65cf4e2025e9ce"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/112",
@@ -137,7 +145,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/112",
     "sourceRevision": "04fd29bb8436a8f5140de0962dd084d2c557dcb1",
-    "digest": "4296a7a71d615da58fcb1e0696c5c5319bf5c73c1adb0184f056b5efe6cb0096"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "ec93be45c65513da6648237090982279be0a373f944198d08787cb953437e4b3"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/113",
@@ -162,7 +172,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/113",
     "sourceRevision": "06825350c3e3396cd009b984cf7b2b357b1f41af",
-    "digest": "5fb1d048427ff0d8a4f961cb79b92b086f32c4fb1723ba2fad5f6f8bf7cb079d"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "3d4487a395661027fb52f373d3844e0e6b70f9186cb28ff23b4b8070c07aade1"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/114",
@@ -187,7 +199,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/114",
     "sourceRevision": "b73abb38038174d651495fd8c42d3cc0fcf746ac",
-    "digest": "674be7d4c92ff5b1b1813853fc5bca9cc42a7cd82a516fbdfef2fa0006dfea36"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "75ff99c781cc75cf76923f0a2bd9c0a3ee84c3f12557ae072b207e73828e56e8"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/115",
@@ -212,7 +226,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/115",
     "sourceRevision": "69143cb60ee0a92c7b58c79b39a3bbbe691f2561",
-    "digest": "5c5a19dcd9d26f54e12b0282ece4df7d627e71e49e76caed659aa9eac793b977"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "d278bd0f1e6b504aa2fbaef0040ff5bafe13f2810c7f85df2122895ed07427ba"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/118",
@@ -237,7 +253,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/118",
     "sourceRevision": "d6b77555c506898a7d0b8b2d1f6df6c86589ea65",
-    "digest": "bf0c283e81cc71fb466e49219515898820cd63bad50ce73d9e6e07fcc7de3eab"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "01c49a05b6a004db1db74f45c82b5f028ee236cbffaba2f3ef4a115e1c56d2fe"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/119",
@@ -262,7 +280,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/119",
     "sourceRevision": "cd77708b21f0cf92fbfd927ae5bf6ff392a9e6bc",
-    "digest": "8a666f9614982ac34740c65c9aa7e1464833789f0d6533e72ba3b8e8920ac556"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "8c362b25ac6c125751d579e9130c71750659c3a8eeee86785ec2dba679a1951d"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/120",
@@ -287,7 +307,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/120",
     "sourceRevision": "04019884abfebe10781d58540a8f3801d60ead9b",
-    "digest": "3451e1d8bab96b5c84156af601fbc116c7bca6045533a569e28fa0d51f0aceac"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "18ba7e7967954ac155096cc54e6dd695329a891c15a00c26dc703512db7bf53d"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/121",
@@ -312,7 +334,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/121",
     "sourceRevision": "1989371fca929f433fab038f8d1131b61ffbf7df",
-    "digest": "232cf597e622d62d51388404cbf411e38cab4c58385a5d50c9b45063a9245973"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "727231a765fb21104439f1bf3a526724ebfa9cac1c254568d858c83460a2be09"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/123",
@@ -337,7 +361,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/123",
     "sourceRevision": "f769eed39dbf60ea37dcaf3a15571bc80e1aa0c4",
-    "digest": "03c181849c333e56354d6c301adde62efde6b981999666bb7bcb416a0d4c784f"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "7b5958aaf829bcd7db96cf1520bfc7fc0dd64b42a4dde9a94f40b3af97f4a7c6"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/124",
@@ -362,7 +388,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/124",
     "sourceRevision": "6b7ce5b285166e9ea8a990c786efd74e019bfc8f",
-    "digest": "1a6aa5a0d6e840d8dadd0f7b30f021d20a4709732c955337d1d25defb3bbba17"
+    "contributionState": "closed",
+    "contributionScope": "upstream",
+    "digest": "97ca69dc9c414cc93d664e0439769f9819c5f0d27ca7c4a42fb501079e2254ad"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/125",
@@ -387,7 +415,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/125",
     "sourceRevision": "e4ac88cad01ad9e8ee6f8376736513b4af5f65a7",
-    "digest": "81a987292103dbbf1f152c183c69b826d6e3949989c83839b1d205fcc79f6ec7"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "d484b751ead4cf38532d6af496621495452ac96af57fe3d8ad4e7c5fcbcc3701"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/126",
@@ -412,7 +442,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/126",
     "sourceRevision": "bd4162d78d2d83be79046af5818f4d85a271cf45",
-    "digest": "d7f9feda3216c8346306929a51e31d96ad4e015663fc8e71aa248f9f30ccf0f2"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "f78884780d63d4ab34aaec0d5f367e20bd94642a1d479af0a59397cbb70f9c5a"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/128",
@@ -437,7 +469,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/128",
     "sourceRevision": "6b7ce5b285166e9ea8a990c786efd74e019bfc8f",
-    "digest": "c5fd95b0afc275f97cfbf01fcfe5354792c8416b82331d4fd938dffadac687c6"
+    "contributionState": "closed",
+    "contributionScope": "upstream",
+    "digest": "437cd9415e776fd64a8102f78251fca6323b0d9ac4173476ff1dfa27b319d5df"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/129",
@@ -462,7 +496,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/129",
     "sourceRevision": "2bac7666212c01ec9ab675bd2ac4fae08b7d08e8",
-    "digest": "cf1dd8cb1e7cb65480db56bad69623a33e08b1f6d84206cd04d16fac5b204e56"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "7f767467d68371d7cfcb6e6c509e1d0062f97a6ebd7cb9ee8cd7e75f8f8e25ff"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/130",
@@ -487,7 +523,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/130",
     "sourceRevision": "f2e6bc2ece7acb3699c19ac19ffdfdbc6ab82633",
-    "digest": "3b78e82fc7be02fb8f7bd54bb40c8714a1814aefc030a87623776f7a1746b431"
+    "contributionState": "closed",
+    "contributionScope": "upstream",
+    "digest": "24b543fe6740cb49e191dbf689d6632df18240d8b0d1027f21a6bc523235e775"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/131",
@@ -512,7 +550,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/131",
     "sourceRevision": "f2e6bc2ece7acb3699c19ac19ffdfdbc6ab82633",
-    "digest": "ee5052fc7a2af653c86ea4ab02a27a5b4f95b397798977d70a484d1429677389"
+    "contributionState": "closed",
+    "contributionScope": "upstream",
+    "digest": "c3860f9ddd0dcc9c6b585081b0bd5644ad00753271b67a584a8b039bb64c4734"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/132",
@@ -537,7 +577,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/132",
     "sourceRevision": "f2e6bc2ece7acb3699c19ac19ffdfdbc6ab82633",
-    "digest": "12cd6d248a5a50815ee91e1fa7fec527db91f5b92900a218a5c6d49b79f5136c"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "7179754606fd11858f61e36a6818e297fb1c935c2e51129a099111614b7435a4"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/133",
@@ -562,7 +604,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/133",
     "sourceRevision": "4087032c465632bf2c7e34707aaa8b5e3d19031a",
-    "digest": "9bd17ac7f076fb59fa1706b5bc8ddd623a182e0219f73ed221635f16583542d3"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "75a1827ba79d8eeab7c7397ea770b4bb83c8bc791891d0fc44b6164570d72ab4"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/134",
@@ -587,7 +631,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/134",
     "sourceRevision": "718c27fdb1be116a2951433a7f70b6349ccd0197",
-    "digest": "2441eb382c6670fdd798d41cb18c7eb9ac47d3e4e908c775ac040ef0ed4b5120"
+    "contributionState": "closed",
+    "contributionScope": "upstream",
+    "digest": "2a66037f717bc02229c6202d2f114a909b741be006e389259997ba4a2e139b1e"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/135",
@@ -612,7 +658,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/135",
     "sourceRevision": "718c27fdb1be116a2951433a7f70b6349ccd0197",
-    "digest": "4941638a9b08acb236494ef70ec13d14ebefa870652c31265104c9e2b6538f8a"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "fb9c7c148714c6ad73d41756cde62c92319af7cf511e9813229e847f8e7f4dfb"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/148",
@@ -637,7 +685,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/148",
     "sourceRevision": "f2e6bc2ece7acb3699c19ac19ffdfdbc6ab82633",
-    "digest": "fd8a025914cf04f20fe178bce846ea55239aebc3d998f25993e240a2abd87c6b"
+    "contributionState": "closed",
+    "contributionScope": "upstream",
+    "digest": "e3904f3c63c305948b2c0dc18b1b848816b39d6b4300a399a259c67f590ccab4"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/149",
@@ -662,7 +712,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/149",
     "sourceRevision": "fe272c53d2c313775831ef7914baca476f68ef2c",
-    "digest": "b029da733198616b0ecf875ca98636aaf7934d783506247bdef25b522711b346"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "b630f550067dcd1daec03356b353298150117dfb1837a6f830fd8cd8500d0d3b"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/150",
@@ -687,7 +739,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/150",
     "sourceRevision": "fd7871b82910d460ba8f7a867dd2492fd0ced78e",
-    "digest": "5cdbe59d070e538a7b2d2ce6a2a2d22440162aacf6c7b7c6f93073a378222893"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "4252844a70054f79bb4b6668877b68881c010dde06ab610eb441559c9c92b82b"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/151",
@@ -712,7 +766,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/151",
     "sourceRevision": "3c28aa6fcc92b4fe692e4c29299cf7fd3b08aea3",
-    "digest": "02ff67a4e7cdabf8d71f9eed867e158047fa2c2bc48b6dcb337edd807d5fe02e"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "49b522c753d7852acc2fd79ba425f4fdff397ebaab8d5e6b7321b73de99b3497"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/152",
@@ -737,7 +793,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/152",
     "sourceRevision": "b5c324ed2d08510b8bd4a8a3f2202954b63c0d52",
-    "digest": "8d980f4737dfa926f246cd887e36f587a2aa9b3886d7d615c046f18475f0199b"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "0e2ec236f5275a18353695876f43098b44562e233ff9e354e112cf3ee4086e3a"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/157",
@@ -762,7 +820,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/157",
     "sourceRevision": "76e1d1e160722235290ec0a6689140d6a3515b79",
-    "digest": "a5ff6fd17a69473e81f289f0415f864445d00845992c03b235b53c6eaa17c8d8"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "ee0592a9664b0976bd93897c093f79b30ce2fc7375a33b5df7a550952ca71372"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/158",
@@ -787,7 +847,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/158",
     "sourceRevision": "8145a38b257e0221bdd7f4276a3028e76de2c92f",
-    "digest": "4378978442d2a718cd248e4f1053de33fccd9b9569ac224de2d7e506a6b69de1"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "31cc1b011cd09b7b84865acdf47c09720d1c94d678803c24128b8cf85546cac6"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/159",
@@ -812,7 +874,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/159",
     "sourceRevision": "9b3bb49d5f04e7441523538c4de8c03972b6d9e0",
-    "digest": "5c71a1efe1b22e6ea83d606c4e3ba9b95908e9866553abca4789d96898cb54fa"
+    "contributionState": "closed",
+    "contributionScope": "upstream",
+    "digest": "5a56eaf3e710018fdfd68bf050c38fd8a86e5be1b84840927370b0c870013f7d"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/160",
@@ -837,7 +901,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/160",
     "sourceRevision": "c48999cffa1a8f066ec2aff69b9af791d7c06562",
-    "digest": "07bffe568b609f95e180b63a9ffc9d2b5620674c4590c6e88f464d0e1a3ea789"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "025c6c2198976036cda6ddae19d618d261e84ffd721b2e36853b59d2f74eea44"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/161",
@@ -862,7 +928,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/161",
     "sourceRevision": "ce623006db12278c1efbadc40018216b49e4dfd2",
-    "digest": "6505b8178425ef36efcc2b89c3608cdfd45d1480c345368dfe825d8188fcddf8"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "3d6da1d205c26634fdfa459a5fc3012383b23cfbb59fb3f61da9c41fb2e67c39"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/162",
@@ -887,7 +955,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/162",
     "sourceRevision": "ed31622114c11c68fbaeb0eb5322d374e423f968",
-    "digest": "de8aa0fbb43c4a2bfdba7c301f4ab8421dfbb7f1af7f53c8bed7cde70414996e"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "c0a7a0e61a40978b8fb8b0a8d65a8c77fb9f0a5ec93a8102b41cd44627d0b8d5"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/163",
@@ -912,7 +982,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/163",
     "sourceRevision": "3b541c1888afc80f0a531f712e0e0f48abf13b57",
-    "digest": "6e15905198dbca4eece195d93d0a9e0a94e6a1737d1d17a040309d4ecfd6ca26"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "40b4385bf2512fb9d90c1bb8e6b6f05d2729e97bb9772203703762a1be1bb266"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/167",
@@ -937,7 +1009,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/167",
     "sourceRevision": "39150c6d2070a465f3eb031825ace376dbe8e25a",
-    "digest": "790c57e7e71691ffa36a31c09d0545dea27b9b8805331dd4d88a4e6ebbe478ee"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "d55117dd1c9e4bceab609f53fefe9f16f838f65522facf07f528a9427033ca5f"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/168",
@@ -962,7 +1036,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/168",
     "sourceRevision": "7d2c9b63395055043d725cdfdf9d70ad26b53dd5",
-    "digest": "816f3564178f33af56982eb8aa1228de542ecb0e8bec9a5cd5ef75b5d1186cf5"
+    "contributionState": "closed",
+    "contributionScope": "upstream",
+    "digest": "09b5aeb4a4795cc2ca40493affb21e2a2a25abbe355a35f6465f254b5a48b740"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/169",
@@ -987,7 +1063,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/169",
     "sourceRevision": "004815492ad2ae295ba761917ca90b3fca559106",
-    "digest": "bd2c1a5d215e3fc4d251d6bc7e3b2ef1f6ddd8190636d4f92fd1ee8f572295ea"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "7451987330e8d279be620ed054bc2a612004a3aae2f73319ef417aed3472ed40"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/170",
@@ -1012,7 +1090,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/170",
     "sourceRevision": "729ae63cc43c84b514dd5358a570fa02d6907668",
-    "digest": "1f1545d1531ba85a1a7d64b8955dabedae38e04d72d3a14973c927d0aa883b11"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "5545a2a83782ac8fe9800ba37b96135d9fe5ac8066b49697a1fd378d089cee1c"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/171",
@@ -1037,7 +1117,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/171",
     "sourceRevision": "4ad81d3254dec81a2245d2d19fab1dc28348601c",
-    "digest": "7c7cd79c141446a026071f754f7ae4a7a2fa0af2e1a22978e237b18dc17d382a"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "28b2de004b3348812a94a14fa8b9031b7b1435efee153b5556b1a549819b9022"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/172",
@@ -1062,7 +1144,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/172",
     "sourceRevision": "97a00a064d2083b894accac95d0963fd7cf37fce",
-    "digest": "3fe096bb245e9f557c33beb2dc4e9414354d86717083b5c52eb3c4172155082e"
+    "contributionState": "closed",
+    "contributionScope": "upstream",
+    "digest": "c3c6a96dd512bde4a5039aa628fd9de3d90bd960ddb04cf5a52fc81fafe727f4"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/175",
@@ -1087,7 +1171,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/175",
     "sourceRevision": "43a107f37af0d92531641213b14aac62c4f4b43c",
-    "digest": "ca8f27a2038089230f405aa8bc9faca1da10602abb0f72f27897006914cc6daa"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "b8d2355e7ad6d2d3ca3ee2ae90b99c311957b56be407bcbadc0b817b56621915"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/181",
@@ -1112,7 +1198,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/181",
     "sourceRevision": "91b9b4fa675d945df4388f9e5d1d6db1afc2aff8",
-    "digest": "d19d29cb67e6c9278f5533c43bebe55610387979f557f00528d7d552a91d4e7b"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "f7d0a171c3946258636a401b8332095ce2b02778ad7c332b05228853534f3087"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/182",
@@ -1137,7 +1225,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/182",
     "sourceRevision": "d6c735b86e8831fbe87d15368af3008a00d3c001",
-    "digest": "e86ff74928a57a01fde2dedd12741af402682120f29a7c1ec8329976da7bcdfe"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "e38d38f86515abbf388ccedf9faa1bd5b7cf8b55b3f82a9dba45a4b14cc2c347"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/185",
@@ -1162,7 +1252,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/185",
     "sourceRevision": "2f73ab231a6ae291968386f2ad7decbe8ebc18aa",
-    "digest": "bd5e1c6551dafee5a1ab40f04df18dfe6b7728a44bf8d03e173c1b83f3716a1d"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "2892f8d99423ee27a4dcb6fe3941210c29421cb266b6468079e125f4af6811fc"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/186",
@@ -1187,7 +1279,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/186",
     "sourceRevision": "da69d4eb8f39c7eb13d29bc446f3c7c841cfb1c0",
-    "digest": "1ea6252315e6cc6eba332c869f65c380c68f37fec04a39e007ddef26d60bd3e6"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "5ea4d496cfc79edd23a163b9908ac0325d61e3bbf47d4bb782400d9e1ca3c51a"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/187",
@@ -1212,7 +1306,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/187",
     "sourceRevision": "883ad317ee8e115346441f32155af110fe7477d7",
-    "digest": "ad9a34218917c81541b4177702190c4f6d4ac87e8fe197ec35096400fbcceea3"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "2a803f131715aff2ec306dd05c5513da2f3b89cefdb15387ddd981ad46a7d0af"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/188",
@@ -1237,7 +1333,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/188",
     "sourceRevision": "07f635c3b5807ed6dd27a0348344dbb6df632c45",
-    "digest": "0e0ecec584e7c5e27f875f45ca94e2825c3672c152f62319051bf199a5f9ac18"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "8b469bc2788e689e7877e9fde668aaac7bc9f0a24cdf4bea08ebb45ca8b12bb7"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/189",
@@ -1262,7 +1360,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/189",
     "sourceRevision": "981fcee0d97eb1d88ac590911e8850a6e08621fe",
-    "digest": "a792123050e19da1276d0d03d740716c039db88d79d5431b28060d9e55597158"
+    "contributionState": "closed",
+    "contributionScope": "upstream",
+    "digest": "75daecd785ba2293408d5f00fd91320fd1fb7e809328f45338d836389361a184"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/190",
@@ -1287,7 +1387,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/190",
     "sourceRevision": "6354f62eb6b2104ab4ce6f8835508e90642ee604",
-    "digest": "5c71d528e12a9b7a2ea69a5f8efb34e4e940df814b5cc4c6ac05cc2ae24a375a"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "01ae2f3db60d8211681515693e95c8e2909201745092140fb815e47cced51304"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/191",
@@ -1312,7 +1414,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/191",
     "sourceRevision": "2a84e4d41fc685d826a0c470c41c1710064e3fb1",
-    "digest": "d7b3246d92967aed05b3f75d8b558c4161cbb764d7a724f8661dade0d977e200"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "8dc9326ae3de4ca56817e777b657972676326ee267af97f375d050974b54fb62"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/192",
@@ -1337,7 +1441,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/192",
     "sourceRevision": "ea9d96d875c823bd59cfda52c2c05e7d846ba0d0",
-    "digest": "35c85f7fb30afaff0969f8c0009d0994635fcbc8ee60706ef71c79d566590cf8"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "f575af32724a016233ce0961f2159394ae0ee1001406ecf3df0f494e1d6a2773"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/193",
@@ -1362,7 +1468,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/193",
     "sourceRevision": "620a74b8723e29e0c052ac30ab44379f70f43cf9",
-    "digest": "8aee4c6a2ac9527dae305398337285eaa957a84e3406f5d24823f032d14a76b0"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "153e9f97295f7f0d992680c5681313d77ee1e962f63abdd7229eb2d23d3f964b"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/194",
@@ -1387,7 +1495,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/194",
     "sourceRevision": "19e19aa15d093da189a8a2c70864d85833d0bd52",
-    "digest": "f7b6eaf7df17e973f5bbfc56aec0d561e0d5bcc7646c22fdca177d8ed7a74835"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "d17d24407bc35f498f776703c6128cde25f96ee62727e7db25b90507c71ed7e6"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/195",
@@ -1412,7 +1522,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/195",
     "sourceRevision": "790d19f894ac2366dc9a7d7996e20105dbfb7d15",
-    "digest": "9d26fef5aeb08a62a171958ea741acfeb57bbd7c6b9f115a2b1cd860d0c67cbd"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "9c6c20365eb4256e6d86c03852dc5c62e8f48435d7f7f46a19857591cbf78ccb"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/2",
@@ -1437,7 +1549,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/2",
     "sourceRevision": "c2f50f9662d4116dd6018c18b78a76711edc0577",
-    "digest": "a0989b8e8cc0f76bc211744a1ca3cfaf7d1357e7bfaefc6c8e9e1c6e350ec37f"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "3791302c8dcf5fe5b7805a849355e919a3d9dacb60cb679d8f022e2690a750ed"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/201",
@@ -1462,7 +1576,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/201",
     "sourceRevision": "ecc94ed9423622ef33ffc7b718aeec02b7da7fcd",
-    "digest": "ed1607cfd04f4047ab888a591f79ffc254ae5e20502d5d28450604bf9db78b32"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "8ac1e32e2b16cb51794600eaf10c9442ad8fa5a1ea25970999f5258d713da9d2"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/202",
@@ -1487,7 +1603,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/202",
     "sourceRevision": "5ae3e5885e72400031c4e0a65c2601e500648dec",
-    "digest": "8d24518f664ef65a5c1d0de6f339b4bc98683a30405ee8b39c3eb9a4f7a8a9f6"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "e237d003ed7572cb4a3d88711ac907e1f9e1e8ac0a8fc29bb7b9be7b0b4aa2c3"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/203",
@@ -1512,7 +1630,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/203",
     "sourceRevision": "8e4194fb1dbb1c77dd3989b1b53cdb215484fa8a",
-    "digest": "e937e8039350193d9e0f94dfda53ad1b09f76510708195b742c7d008eebb47d8"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "3fa3bd566e5c2a421a3ec2755c048cc53e78ecb465005c63d3c2399a7310f7f2"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/205",
@@ -1537,7 +1657,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/205",
     "sourceRevision": "2c1fc494b77b087c3133bb3d75cc2f3c65bd6065",
-    "digest": "f959f007d9f24e62a6ad01c0434456be1e6eed07a7fd05a0a9c61c579410a8b8"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "9dd87fcdf6346b7651bb1c6f97c6a57b054cd1243c2d639588a594c4cd60208d"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/206",
@@ -1562,7 +1684,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/206",
     "sourceRevision": "b8957e593921333a900842017049b76fffb5c0f4",
-    "digest": "0fd2620dbf0b1bc9bdf316f9327d472061ee9a50b52aa9b56cf3123234af0596"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "eb2edfcf5bfdd9f2e22b0367cf9070cd0641942b796f15637556a86a58da7031"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/211",
@@ -1587,7 +1711,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/211",
     "sourceRevision": "9ae80efd2ea99f2937cf1761026a74ec480f0fe4",
-    "digest": "16f1a5ba66a6ed12e2b0160aba1276f42e38d76d9973d208f460267fb5b72581"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "08d87ebecdb8c88caea7e452f8e4f3d8b790337ccdd48883964c521065e0552d"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/212",
@@ -1612,7 +1738,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/212",
     "sourceRevision": "189d6b848253bedc9087ecd276e625811bdff9b5",
-    "digest": "3bec088f106a6dd890151df5d059a4b1e84a3c3e7d659b03bc6bf68da2a59acc"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "5602f0d5d5ed25a807b0d6d2cfdbbaea8d6ace5b00597f7daccb91495c66d72d"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/213",
@@ -1637,7 +1765,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/213",
     "sourceRevision": "38ff32407b7093bc8912c81b79765ae78dc117a3",
-    "digest": "9e2f880a9557ed57edab40997ea4293c876975892e55914a3afb705ea31730d8"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "11e7cdf7986e58a797b3d3751516368db9c790c7153662aa6697cedc951b5bb2"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/214",
@@ -1662,7 +1792,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/214",
     "sourceRevision": "7d8869cfe5705f0bdf2ef636ebdf55707c9ad969",
-    "digest": "bd364723341e93944c085399840ab47762d24d52158404f53e6b90ef5bd5f7df"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "f1fde8de2514b3bbf97426b4a541540999fb29c2bc81e1ae1b4afc7b11fd28e3"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/218",
@@ -1687,7 +1819,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/218",
     "sourceRevision": "aa92d0149756ac7883b8e4f27079fdfa28b110b2",
-    "digest": "765a213f94e2e4ed31f6ebf7adc6c3bc183717d8270ed3016097cf49c2981745"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "18480cb3697dfbd91944cc6c2505ea74cd0e289236238bb165c5c83374594a0d"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/219",
@@ -1712,7 +1846,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/219",
     "sourceRevision": "8dc6cc52580ad6abfb39166c7982e888aa4c4702",
-    "digest": "73589ed217fbaa79627e78dffc441e24b2824590782f810f7438deac93f07596"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "a736a60c4248d8bec5825918f63c866d5e9aeaf6d56a79066d4bedd1cfa314ec"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/220",
@@ -1737,7 +1873,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/220",
     "sourceRevision": "9e954a4251f76698d23823eac9301fa11c271613",
-    "digest": "c0be2d5ae0bc0d0628c0755ef8bf3ded89709ca79a5e869725e1a0bb2086ec29"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "5dc55efd5ce3e91e174f07296d1152e050cbef3f927764d41be31f27e28f3249"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/221",
@@ -1762,7 +1900,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/221",
     "sourceRevision": "6b7ce5b285166e9ea8a990c786efd74e019bfc8f",
-    "digest": "43805715e5de3a63938e1ec5f4a313b15b1df32cbd8a315fa3984fbf8c324efe"
+    "contributionState": "closed",
+    "contributionScope": "upstream",
+    "digest": "61ee102fb5e1f1aac348f8253e0dadec47e19c6d91a647e7b9d8d62988093ea2"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/222",
@@ -1787,7 +1927,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/222",
     "sourceRevision": "ab8dd32c4cbfcb362cf3daddef0cdfcf7109abd4",
-    "digest": "fa8cff227a5e9af16d92965a9d07b36b29668c464aacbf304123d53d49702ce2"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "cea23626d40ee4277aa80d3dc222518bfed8d2e0be34b76c5971a394e3517073"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/223",
@@ -1812,7 +1954,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/223",
     "sourceRevision": "ca53e6373f2040b6b8cd6a9a7e3042e87a22e7b2",
-    "digest": "b23eabcbf4f6b2b20d324b9efb0aaa13baffe2ad44c1f22621e05015159fb20f"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "336b35184fa4f585e41295d5f73ec4d7da418dbac747154bcc281acefd98cccf"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/224",
@@ -1837,7 +1981,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/224",
     "sourceRevision": "2ed43e12a2b6f27907436844c76f6c6a7a05b859",
-    "digest": "97c53a43886917702d559d84472e61ec72495d651d086124c756cedd6eb63ced"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "0084a0f246b003e926fa6684f8fac2cb1f000dcd92a6599ba8d7257621f837b9"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/225",
@@ -1862,7 +2008,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/225",
     "sourceRevision": "be1e18b2a156503268b1b947d366f4baa0bc42ca",
-    "digest": "49a94d112b080ed87725ddb808b511bc094b901d0ccbb7938749a7d8f676bf29"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "09c01bbd52a061b4e152137cf3dea27ae41f9231940fae9c00d3b28ab6efc044"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/226",
@@ -1887,7 +2035,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/226",
     "sourceRevision": "f23abd8cde9e0ede3ca6bc4fa83d6ded836adda7",
-    "digest": "c8e40c60bffb32139a507a9de18bb5cdf51750b44535256d4969a01cfce36829"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "f6bc2ec03569387ae9da2047b3bb8c4d27f17c85ce5fe15b232fa7f3bc90ea58"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/227",
@@ -1912,7 +2062,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/227",
     "sourceRevision": "c1731d446dca8cbca5d4641dddd2d9aeccda0a4e",
-    "digest": "2b73e6aaef9579eb25c29aa7e16f7c7a80df11d58a8f814ac3696c07999b63d6"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "6996c3ff86a8cfdc9ce8c04bec2bf77c38f3d8b83a1dbf560d2ba2f7542ff979"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/228",
@@ -1937,7 +2089,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/228",
     "sourceRevision": "cbc6b1574b8da6d6bece92f49e2185c70bc2132c",
-    "digest": "f150a3c0eff18e4600f3c7f1d080cb09a02a9795baf7756b843d08773a715596"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "9de1b537159069cb13454d7696905eba1f9667345eae441c5511a7d5d0fb97cd"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/231",
@@ -1962,7 +2116,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/231",
     "sourceRevision": "ec84ae271c6678bb759cd126ca7d1bcbfde50283",
-    "digest": "91604b736cda6c2a2486398894785ae283b564467e87a44b5b3559dd69d6dbfe"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "82e21212ae59af433f9762730b0f669c7283849abb1af58c3fa61adbb0e6cd2d"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/237",
@@ -1987,7 +2143,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/237",
     "sourceRevision": "77e7a8cea5f725f807da457b884d204060d67f01",
-    "digest": "227614b9e2c8ffd457cce7d393506fb5352caf31ae48a8cb5a0e88e5993ad86d"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "89a10788cade72aebd0f462bd244509cff14ced2a4e45b165074a211ed27b468"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/238",
@@ -2012,7 +2170,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/238",
     "sourceRevision": "7ebb687c69b39c04200f0dcda6b450c9ccc1f415",
-    "digest": "f0b7acd7d6f334241b7f98ca4c1fd94772a898215fb5722a2748c30f5504c8f7"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "8151063f97e0529441b87469ac6a9a4e0b7e892246b298e499844bb69a139134"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/239",
@@ -2037,7 +2197,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/239",
     "sourceRevision": "deaffa1752ed4c991a9d51dabe7c92052441af18",
-    "digest": "a70a2ea4182cd26518650135bc4d6a4697bbed7a0f7b52e077c21130e2d7f1c4"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "49a387dd0582cd85e802fa66332bdf4ecb4cad624469cdbb12adc537c7f561a6"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/29",
@@ -2062,7 +2224,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/29",
     "sourceRevision": "1d1cd30f3f51b1e739faa16b3c796370c486d173",
-    "digest": "ac6e8567333fce109de8b9a4b2892625d953c8383e0d0bbc28a80cdda61de966"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "54e0ddfb78bbf6d0a71e5a5fc22565de65f6da7ddfaf1a5a965b81e93bc19c8c"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/3",
@@ -2087,7 +2251,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/3",
     "sourceRevision": "2bfb1f5d801408c226b5772ae995e437ce59e9bb",
-    "digest": "e537d55657f30474efdd7f2eec26c9fd7db13b4c1ca21e22fd9dbadba648b19c"
+    "contributionState": "closed",
+    "contributionScope": "upstream",
+    "digest": "04e83be7525ef49d227eb40c77f4fdafc5ac1a4a22d91892a7df0a5a242b70eb"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/30",
@@ -2112,7 +2278,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/30",
     "sourceRevision": "8c82f675b43607595b71e307d098f47edddf60a9",
-    "digest": "d00695e4550b82140769211e904335a92d029392473d4d7400642ea6961ee838"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "d02e2085f4783c7befdf88fbb786d1cb918ae6334a8d0f65bd933bb06a4555ad"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/32",
@@ -2137,7 +2305,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/32",
     "sourceRevision": "358980587d3ba5c841a2c3556669dbf8d3bb2bdc",
-    "digest": "7f4bf5ad0949bb8e874379c0a477da227a759cc5a99bfeac102de159702a0eb8"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "af8df976728deb3dfde2b731b115b0d6e5861470a80e96f7516ca6b65d02789d"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/33",
@@ -2162,7 +2332,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/33",
     "sourceRevision": "aa7c1a8354b8be0e7a7b5e931e5edb44aae50a4e",
-    "digest": "e569e81db5fce854e1cb75bf6ed1a4c20dd2b8f695b1a1e85fb4784dbba344b3"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "a43387fd314d6f30f058f8fde5bc516f6d21b63864c08d2d3d28fa21debdc9c9"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/34",
@@ -2187,7 +2359,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/34",
     "sourceRevision": "ddb27c52292be5455ea670720449bc2781ae8bf3",
-    "digest": "32d1091279308819e5ad931578ce97a37c97cdc9b8bec7b76c915a2f6593a3ad"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "184c1520532abab31db896ceda8f356f2e256fa27175cc67c824d721909ef56b"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/35",
@@ -2212,7 +2386,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/35",
     "sourceRevision": "702e8ad96b713f4794bb30c98c050a7040db7aa4",
-    "digest": "64fe1607410adc8e57c420be086b684deabf1c95951b6e880b64c46aef1fdadd"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "711001de7c7063c0c44bce4ae50c6fe7d615f4508ebe2f89d2a1f50a27f1590a"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/36",
@@ -2237,7 +2413,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/36",
     "sourceRevision": "3701ef35c6739c35d978394c7d2d75d8c83aa343",
-    "digest": "6600b92c1eb7947c8433cc1bb625fd65f8795944fe173eedc894b691c06bdd92"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "9d0d024a260b7339253070ae0df41aca3b9fea29189c57b11597b370a2b54531"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/37",
@@ -2262,7 +2440,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/37",
     "sourceRevision": "afcd750376c86ec0d94356af22c6c8df748896d1",
-    "digest": "e348a3ff2cf24873b6f57779ffa2885b2df97d418cf7bfb7ae3a39cda477cdef"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "468bcbee1d0fdca0881ad7c60be9514f56b253e35c9ddbe71febc4c6484559a0"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/38",
@@ -2287,7 +2467,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/38",
     "sourceRevision": "f537c8cdb73012d8ca4486a376858847a144e8cd",
-    "digest": "6274e30470a5794bf60a00c5ca78d0afd91197221e7f4e6fc63fd740f64399fa"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "337fa47397ddd5a0e994c1a7987f587c35f0003bb184401659e37923e747e62a"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/39",
@@ -2312,7 +2494,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/39",
     "sourceRevision": "6d984a93a2f8bc8ef12741fb5c91144127b31dd9",
-    "digest": "7d1d085c2f60340783e220e657896ad69d28d359bcf5783596ecb8084b60fe18"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "00a7c8efffa9ddcfc6db235f02fa20f151160dca94c3e7ab518471e7553cece3"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/4",
@@ -2337,7 +2521,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/4",
     "sourceRevision": "f485f50ee69fad88e190437f6fda15acfb6fee87",
-    "digest": "7ac5cba1b075d6789670e64b9749ea93aab45f671085fb5c6170d342a873d6e5"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "999f8fc154cb1ed251a2a1cb34df9acdc6fcdca4a944a9dbb48363d7e0a548be"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/40",
@@ -2362,7 +2548,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/40",
     "sourceRevision": "8736c07692526607c6b9dc97e892d597c6ad904b",
-    "digest": "841f245388f89cfa0a20f2a072edcf5956c943fe41d58bfa1a8775d731973723"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "4621937d233d6f3e9948f382a345ad8d5fa27162221e3cb384d23d2340dbe948"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/5",
@@ -2387,7 +2575,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/5",
     "sourceRevision": "07e99e75831790dcc908267ccccbbcd7715aed03",
-    "digest": "04854593762402f83aad661d49412fd690e294ece1b27af8e9d01f421786d01f"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "43271dc2f9e1d826c835fba9cbc170f06f14cbe2273c148ae5caa5425f9fde67"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/6",
@@ -2412,7 +2602,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/6",
     "sourceRevision": "c7e5fcbe0f5dcac10d52a4d6a528b8d396916a56",
-    "digest": "39f84146cdfd21a8d6e7940aed609ca63fec84fff08b11fa2bd8ae89b5c44964"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "30f319a0ad0c10ecea0344a3ee8ed490b7aeb37e38601a642230f14ad7c95a61"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/7",
@@ -2437,7 +2629,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/7",
     "sourceRevision": "56f7577620e736a96b262d974560ee981562c049",
-    "digest": "7006bad0a1000217a5ff431c17ea9aa277af647422c0505b14dfb08c4f8dbd54"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "e6ea80c06c95a8bf784cb62e64eee82610b3531d63f957cc4d01d36aa4a2335c"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/8",
@@ -2462,7 +2656,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/8",
     "sourceRevision": "018ea657b19ef0110a05a27963a08a14a0502433",
-    "digest": "747f71a99e3762421a80ab2693dafcbc8cc76755bfd4850a812ca4722f82e81b"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "582c0536b6bee37dd56a43ca0ed52236248f490a750363db7282bcecd48ef608"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/9",
@@ -2487,7 +2683,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/9",
     "sourceRevision": "296eae6589a4ed6710d7edd2f0ba5844acfc4c1d",
-    "digest": "fe60d202bcdaeb4ae30709d63b832c4aaa557f52e4fdc909ce5da50f426d6c34"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "936a13bc3dab95995ff1fa8f90d906dc3be9561820b6e9289f4f38cdf63e4c1f"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/91",
@@ -2512,7 +2710,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/91",
     "sourceRevision": "9aa9394633871302dcc0453a96cf151e831e29b9",
-    "digest": "d752453cf28fda6b561d2a03b81704474dc33c7bcbc1564441e942b458e900f6"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "4d58ca1026fd047218da67361e0dc3d0429fd1edf76db7baf91ec187464a75ae"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/92",
@@ -2537,7 +2737,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/92",
     "sourceRevision": "48555ee200b9126689679f8a6f6d687373ea29b8",
-    "digest": "483fa0041cb5222e21fe8f7a59e2687ea3a95bfae7873347985cc7ac71e17fef"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "43c1d868bb250eb9372caca475b14fdec1b8561185c4f50edc14a3f867d54a62"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/93",
@@ -2562,7 +2764,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/93",
     "sourceRevision": "cb7b00e6c468f6ad64ecf95c776344bfcf9d59ba",
-    "digest": "ab0e2edbac7e66833b4a93951f6520737648948971dfb4c8d224403cd9794206"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "771ba84a9d11c9d59e5e52b4ca1e0f9fb86c81706490143766a2d6e5863d8e93"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/94",
@@ -2587,7 +2791,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/94",
     "sourceRevision": "464b3796b52a56698488d085a2656e70d979d1ee",
-    "digest": "929408f809d86bd5e3fe318cca5812714720f11fcc8ef8b717f772fd6da944f5"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "dc09f14e177d3fc96d89efcc04101912c27251b0e81cb48277a367f7d5e72657"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/95",
@@ -2612,7 +2818,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/95",
     "sourceRevision": "688314e2d16a6ea24e2da91dd4a8a684f97a9ab7",
-    "digest": "d9714bf2d60b51547992c6cb861d44719ce578cacce17238dd579072beb712b9"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "66664d85cdf6600e9a265ea5a94ef8200f357ef35cbb3b97ff4b118c3f7f0758"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/96",
@@ -2637,7 +2845,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/96",
     "sourceRevision": "8154bd2c8d9fd2ea3acc7a450392a3218316b5f6",
-    "digest": "648bba8e7d192c784c32cd98bd86cf5bc49744cd26eaf67210af728d069df46b"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "2dc2440b4d72216dfeeebd0632c7928cef5277a6dc07b8277620582396a156c9"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/97",
@@ -2662,7 +2872,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/97",
     "sourceRevision": "5d430f9133dae5af30b83b066c89d16974f998b5",
-    "digest": "3e4f2d3f70f4bbaaaeb02f7f5c7482490e21c1476a6e7c19625dad62769fa109"
+    "contributionState": "closed",
+    "contributionScope": "upstream",
+    "digest": "8616afa7cf72c65861c2eca1e1ee353e899d59898df39af131c0f28ceadc4146"
   },
   {
     "id": "https://github.com/AIGovDev/aigov-core/pull/98",
@@ -2687,7 +2899,9 @@
     ],
     "source": "https://github.com/AIGovDev/aigov-core/pull/98",
     "sourceRevision": "4f1817e7e23d34fa1eaf91902c3eb4cf2fbc7d10",
-    "digest": "4d70fa1d1aa85d872365964791dac5b4405598f233a75d9f0fdb055c129dd147"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "dd58dafd47d780d7802541195e7f26728d5c656989255bb8be2ff072144356ad"
   },
   {
     "id": "https://github.com/alesziegler/CLab_workshop",
@@ -2727,7 +2941,9 @@
     ],
     "source": "https://github.com/alesziegler/CLab_workshop/pull/1",
     "sourceRevision": "162ce0c3db6f82a4dae12385e532dddaa01752ef",
-    "digest": "3699b3f953b17bc3823351a3cc3b5f2ade4d325a5b6f2847125f308f1de2d0e0"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "dd54a2e497ebbf83a63939e1d62554da769cd4078e52add79c4627ad9bbe3b79"
   },
   {
     "id": "https://github.com/alesziegler/clab-project-covid-data",
@@ -2767,7 +2983,9 @@
     ],
     "source": "https://github.com/alesziegler/clab-project-covid-data/pull/1",
     "sourceRevision": "49e4dcb2e137ad9ce8171c29261306286c500b3e",
-    "digest": "d4063a1d2c01798addbd2b12ce6f751be4b2abf0c562bc4901f11641416ef07d"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "7fc11658fe01709cd003ab2678d8420198f1415349ee2796bd935302595b5693"
   },
   {
     "id": "https://github.com/huggingface/candle",
@@ -2807,7 +3025,9 @@
     ],
     "source": "https://github.com/huggingface/candle/pull/4088",
     "sourceRevision": "0cabb2a1e5e00228a9a1e588e5130420e43062eb",
-    "digest": "b4eabf93558527912ff8900f4c019d4f96472b5add4dcd4dc0b295ec44d5522f"
+    "contributionState": "opened",
+    "contributionScope": "upstream",
+    "digest": "f97654e78b44e63995f0a40ebb06e1f0cb1981a7333f45ec9d1869f07860982d"
   },
   {
     "id": "https://github.com/huggingface/datasets",
@@ -2847,7 +3067,9 @@
     ],
     "source": "https://github.com/huggingface/datasets/pull/8866",
     "sourceRevision": "976fe6aaaee59e21d896d7f58b0d37408531401c",
-    "digest": "9ff7b36dbc486c66cd716e4a541729c73de5f7d8754ada14d7a49741cdcb0c27"
+    "contributionState": "opened",
+    "contributionScope": "upstream",
+    "digest": "487f892cbbed98843050c3688556d6f5edc12934c6e4a9be023efe72a667aac0"
   },
   {
     "id": "https://github.com/huggingface/evaluate",
@@ -2887,7 +3109,9 @@
     ],
     "source": "https://github.com/huggingface/evaluate/pull/833",
     "sourceRevision": "b6c113657a122b885b4b8ed05b7f4a9ed413b480",
-    "digest": "a331a180386a79762a777291035563d89b2c40c75d07fb367703cdd4eda0f582"
+    "contributionState": "opened",
+    "contributionScope": "upstream",
+    "digest": "ba6e9238f3c076d06bfb73ab8cf9f4309e776f8c2bd352ab4cf8e14ad9e447c2"
   },
   {
     "id": "https://github.com/huggingface/huggingface_hub",
@@ -2927,7 +3151,9 @@
     ],
     "source": "https://github.com/huggingface/huggingface_hub/pull/5203",
     "sourceRevision": "672e6a49d36882bd8bce6f4a3ee48e6c6d94e75c",
-    "digest": "695c07bdae617c4ba4268f08185324063c142228a29351ad4a6e25b1ef267b3b"
+    "contributionState": "closed",
+    "contributionScope": "upstream",
+    "digest": "530b9147435c6d7e81472b8ad2f3449f1c84d6d19db24b09c723a4de767f55d2"
   },
   {
     "id": "https://github.com/huggingface/huggingface_hub/pull/5287",
@@ -2952,7 +3178,9 @@
     ],
     "source": "https://github.com/huggingface/huggingface_hub/pull/5287",
     "sourceRevision": "93e9f463b3e2f45102b71351dad4386ec2a36492",
-    "digest": "35ec05fa708008fa7176706bdf3c644aa863827d86bab832208c891579c3f648"
+    "contributionState": "opened",
+    "contributionScope": "upstream",
+    "digest": "c42c80a2a06d6d9023d6c5ecdb72259af95e4ef88b97758bb6710eb6d5a87505"
   },
   {
     "id": "https://github.com/jadrnytomas/nhl_project",
@@ -2992,7 +3220,9 @@
     ],
     "source": "https://github.com/jadrnytomas/nhl_project/pull/1",
     "sourceRevision": "23b5dc5046e8e5810b053d8fd2fd0757f14dbcc0",
-    "digest": "5403009826cc4e779b969b862c27e7a0890fa4e83a6b743b271da3a56c64bb78"
+    "contributionState": "opened",
+    "contributionScope": "upstream",
+    "digest": "faae41b95329895d7c088cef88069d79461554a5f47759c6e7606a0cf42bfb16"
   },
   {
     "id": "https://github.com/marcpage/pylavi",
@@ -3032,7 +3262,9 @@
     ],
     "source": "https://github.com/marcpage/pylavi/pull/88",
     "sourceRevision": "47da49305d1f0643f4c006c9466dc95d0d9b1295",
-    "digest": "309b60a3a94e52b1de200b41a22fc0066923741170637401f0e92c48b2ee1ab2"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "6ee16eee47d66b1955ae52606bbbe8992ab22918a2cfb347a222d981160fc2dd"
   },
   {
     "id": "https://github.com/matplotlib/matplotlib",
@@ -3072,7 +3304,9 @@
     ],
     "source": "https://github.com/matplotlib/matplotlib/pull/32568",
     "sourceRevision": "56f77dc3cd065fb9db1decfa15fed0a7dff69edb",
-    "digest": "0fcbf85fba536c8137c6fbdcc6c3ae5e53ab37b1cc551d177a0e14d00df86a0f"
+    "contributionState": "opened",
+    "contributionScope": "upstream",
+    "digest": "34a4fdc4d85df01135d1e6fb549decd79f64830bc56573f6edb7b53c005a1e2e"
   },
   {
     "id": "https://github.com/MichalJemelka/workshop",
@@ -3112,7 +3346,9 @@
     ],
     "source": "https://github.com/MichalJemelka/workshop/pull/1",
     "sourceRevision": "3b6c102561028bbec8b63a801a8ca5115c9b6a99",
-    "digest": "82af49427f23e923b71f380f021de96141070217cd9db4d2292054843563899a"
+    "contributionState": "opened",
+    "contributionScope": "upstream",
+    "digest": "d3f3c04821f13f1637b262d7c38b580029db19e342e1994c54a8c11a4dac1466"
   },
   {
     "id": "https://github.com/MichalJemelka/zaverecny_projekt",
@@ -3152,7 +3388,9 @@
     ],
     "source": "https://github.com/MichalJemelka/zaverecny_projekt/pull/1",
     "sourceRevision": "52aaab76f92111a6560d900498066fc5287cf2dc",
-    "digest": "3c6b936d3e2d4a6c26cddc0b1b346567f0e70669f3c909b9838edd87987bb28b"
+    "contributionState": "opened",
+    "contributionScope": "upstream",
+    "digest": "69ea2aa97175a39921efb6486c962454a3158c4abe0569024dec1cf46068c20d"
   },
   {
     "id": "https://github.com/MonikaDvorackova/agent-language-research",
@@ -3197,7 +3435,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/agent-language-research/pull/1",
     "sourceRevision": "d851ae785b128a0849064b9aa1684feac7ba289d",
-    "digest": "553025a84c345f731f6538f55f6e332395fab6fe46c95a26a562836f9063417e"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "39f39ee7434847f366195a59baec71496776c9cf298c1ae9d98b00c9a169bc2c"
   },
   {
     "id": "https://github.com/MonikaDvorackova/agent-language-research/pull/10",
@@ -3222,7 +3462,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/agent-language-research/pull/10",
     "sourceRevision": "dbe5c070b09cbc2ed47d53abaa1f3ab53233dfa8",
-    "digest": "a02b13fa4850dd8de733ce092068b38f745fa4833e62e343402e61c1bf9e0226"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "46d311f2ae9dae4f613cc40610dded3349df479ee54c53b064e2accb69d16772"
   },
   {
     "id": "https://github.com/MonikaDvorackova/agent-language-research/pull/11",
@@ -3247,7 +3489,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/agent-language-research/pull/11",
     "sourceRevision": "014af2489f792a98a1abdea00b187977d4b2e121",
-    "digest": "58d38786249b803b1b4049fcbdf6b5ba516dda095ced81a985591112397cf5f4"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "0b622f32f94ef24ef90f3a67c1fceebc9c3b63668ce8c638cdeff9d15c33e6eb"
   },
   {
     "id": "https://github.com/MonikaDvorackova/agent-language-research/pull/12",
@@ -3272,7 +3516,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/agent-language-research/pull/12",
     "sourceRevision": "dd7b167835d3de0dbfca78a87bed7112ab954cfe",
-    "digest": "31ef69f960bd257282efd7d84b040706216013b23a025cc0ae85da4ef15844dc"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "f6ef47b488aede306b713a2c5eae54b52186a6912adfc4db6ea5384a3c2d9771"
   },
   {
     "id": "https://github.com/MonikaDvorackova/agent-language-research/pull/13",
@@ -3297,7 +3543,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/agent-language-research/pull/13",
     "sourceRevision": "8a9d876eb8a5ec921e7415601ba43811b1a4214c",
-    "digest": "cff89a136b3f0e81628331b3839047685cb92eff8bb20ac7a9d4247c93aa7bc2"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "dc70e2e342187b93ae6249cff192d0e7456406bf6da6af7e4529b264d435c288"
   },
   {
     "id": "https://github.com/MonikaDvorackova/agent-language-research/pull/14",
@@ -3322,7 +3570,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/agent-language-research/pull/14",
     "sourceRevision": "d1c24b86fb9f83d7bfb74fa08ef8ed736df25b7c",
-    "digest": "d3d85a7c6cea00ed5154730124a4c2eadc122bf62293c61790b3aefdca1173f6"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "0bba04e2c1d3f194252ddbbc90c24845d3cafafb5f9193a588643010d2c44d53"
   },
   {
     "id": "https://github.com/MonikaDvorackova/agent-language-research/pull/15",
@@ -3347,7 +3597,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/agent-language-research/pull/15",
     "sourceRevision": "4380bd9f860d9026e6f1a53c21eac5137d98f1c8",
-    "digest": "9f670aa4466d0c778cae215b2adf94b5d51ef1b32afb83b48cc5c7827260e537"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "5b14940b5e9bef1f8b34a7289d2e9d8d54857a8642214d36e988f01030e89666"
   },
   {
     "id": "https://github.com/MonikaDvorackova/agent-language-research/pull/2",
@@ -3372,7 +3624,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/agent-language-research/pull/2",
     "sourceRevision": "e3fe18d53a2dd8fdd3802c23ed5378030e47a1d9",
-    "digest": "a3e2bb215ca4dcbb91815223109082e18ac9e8cad3c50318185903db30694f4d"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "8622192f3ed950204d3ea05c09928728f2c0fb8bfc3eff54bcf6402eeb333511"
   },
   {
     "id": "https://github.com/MonikaDvorackova/agent-language-research/pull/3",
@@ -3397,7 +3651,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/agent-language-research/pull/3",
     "sourceRevision": "938b26daa8abf54dc3c4339b5ce3906707a86825",
-    "digest": "1c29393abaf6ae320477a80b2b24d0ef760e0e469ee3bde2c472651b26b18930"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "e4bfcd6e99c8e713e905c7a5048d09ae89de763aa894b83c1ff137c84e4e9c86"
   },
   {
     "id": "https://github.com/MonikaDvorackova/agent-language-research/pull/4",
@@ -3422,7 +3678,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/agent-language-research/pull/4",
     "sourceRevision": "450c27a21fa78da5e17ed786280dfa0ae944ed47",
-    "digest": "6d898783dfb1e7853ad76dc69a6eaa179ae8faeca5afaab57e0476e25751347f"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "e6aba9c1ee1089bf7df1e4ddfe8c86da3551550a4a8a5c077da208715df12354"
   },
   {
     "id": "https://github.com/MonikaDvorackova/agent-language-research/pull/5",
@@ -3447,7 +3705,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/agent-language-research/pull/5",
     "sourceRevision": "ef5ad5236423304a774238d9c188660681ea9539",
-    "digest": "87dd97460ccc98da85088df1845ce1ba7358042610f8a5b7eec73dfe06b8bd3d"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "68881def94d978d01c3d18fd2344ae0adab4c02df4b40fe9484b0c1afca2eca8"
   },
   {
     "id": "https://github.com/MonikaDvorackova/agent-language-research/pull/6",
@@ -3472,7 +3732,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/agent-language-research/pull/6",
     "sourceRevision": "c7f220cb2488941902d72da8c690f35b77141a1f",
-    "digest": "34eb2a60742c242f4697d5d5834ce6e40fe9cab398ceabb36b833dad9c54c7ea"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "59fddf45f88b92f709d2437ffd4daf13c96a71ffc86deeeeeb3987c547622628"
   },
   {
     "id": "https://github.com/MonikaDvorackova/agent-language-research/pull/7",
@@ -3497,7 +3759,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/agent-language-research/pull/7",
     "sourceRevision": "a0c39a634de4ae8c743bf69f069e38b8874644eb",
-    "digest": "86b62dca66c56d421748adf305504fe415b93c821b1f817b1e03fee6125601f7"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "2c87c3902e19d53413c8313b7f3e2732b0f1cb79292f63129ae7e860fb99f67d"
   },
   {
     "id": "https://github.com/MonikaDvorackova/agent-language-research/pull/8",
@@ -3522,7 +3786,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/agent-language-research/pull/8",
     "sourceRevision": "d850d15833bb2846ff46945e67b7cf9139ebcd09",
-    "digest": "cf292ddee05dab59e72b99df9d4dd4d08cc6146bc7a9087c64105c4b1c9e268c"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "f0fc9641af043cdd9db50fd2c11a934f1b298d6c95f776fab19f2845b5759a11"
   },
   {
     "id": "https://github.com/MonikaDvorackova/agent-language-research/pull/9",
@@ -3547,7 +3813,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/agent-language-research/pull/9",
     "sourceRevision": "4c972c257212bc7b64fa7a0f73e85b8791e070aa",
-    "digest": "dd8fb463f098bb6726a1705ff6b4f4883a4a49cf403b95ad6387a67b3b2eefa9"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "7f92fe991aeb69a66e79a37aa9adc9fb43c195f619d7129efeb5c22c9651db6a"
   },
   {
     "id": "https://github.com/MonikaDvorackova/attrs",
@@ -3692,7 +3960,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/content-video-engine/pull/1",
     "sourceRevision": "b6121afedc0bfda6e7ff8273284dc04b91f23354",
-    "digest": "170664384645952743e56404f1185cf89b8afea4f9ca5369d44216105f164d2a"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "b6f8ce0ff7a5634b87f3a63a6a4c3b9577c535ac7daacdcfde040d32edb0e1c0"
   },
   {
     "id": "https://github.com/MonikaDvorackova/content-video-engine/pull/2",
@@ -3717,7 +3987,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/content-video-engine/pull/2",
     "sourceRevision": "d2cbb0e89171e8a22dad4c0e247aa7ee0461e48d",
-    "digest": "d2bef7df9713c7e507a26b80ab13cb6ae653aa4db224a2ac2bd49750a4eaa6a8"
+    "contributionState": "opened",
+    "contributionScope": "own_repository",
+    "digest": "cd89b0aa751a17a174d13aab1365ea849e960b999cf8785cfb00f94801756586"
   },
   {
     "id": "https://github.com/MonikaDvorackova/cpython",
@@ -3862,7 +4134,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/draftify-io.github.io/pull/1",
     "sourceRevision": "8505cae1ffd6740c1644ebef1ab2dd34756f75a9",
-    "digest": "3aa49c93a178cffb10bd90fce37e9734052de5ea467498a061faa0c9b9cf89b8"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "6272e725d2db7aaee2cc836715c52746e70d12c10bc5027afcea1997e77393c9"
   },
   {
     "id": "https://github.com/MonikaDvorackova/E2B",
@@ -4087,7 +4361,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/16",
     "sourceRevision": "6f5e59c17030f7990e535da9615dbcd6dcaec1cc",
-    "digest": "ad2e60cdf33634383148803922aa45933f397f158683f8feee2e3d61fbe5e815"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "d087cc01f70289b12488a9d8429e4b8f65bf23dd8e35f7827032eced818bdec6"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/17",
@@ -4112,7 +4388,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/17",
     "sourceRevision": "6667a5f00e1f315f9353c96b63ac2a691f5567f7",
-    "digest": "5d267f3017855d17cb617d8a8acf6935852e000656c731181c6a51040e19f118"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "db0a83103d0bca91540f2e01ef24f6eab14e5340f02d6d558a5775d13ea2b2c2"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/18",
@@ -4137,7 +4415,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/18",
     "sourceRevision": "2b8a7f7812816a77eceb6ca82c1d20e8b2209905",
-    "digest": "2ca84d22b4bc63e00b058f3f5988f40cf0c6058b933d93ed784ef207c84884da"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "06d9e7232355d40c58ccbbf2ac2259574774d2c99f7aa677790dce44ce439f1c"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/19",
@@ -4162,7 +4442,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/19",
     "sourceRevision": "9eacb73f81feb5effb6759134255edc33dfdf82b",
-    "digest": "a3325e1152cb112b9704dbb68ff5bf34ac1f6df7bfae5364eda9b60db9227aad"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "6b9b8a9ee2e66ad85327014e16b209a9b3933c18e7d48cc9ee8cfe2586f74aed"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/20",
@@ -4187,7 +4469,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/20",
     "sourceRevision": "ccb4f7de75924059697428b1e3e4b4ee649a27bd",
-    "digest": "822e2ef8dfc0ebd92e25a71c8fa2919f4bc099e3a6c13de730811f5fd0d5028a"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "b599838af82a8033c6a1adbcd57c8cf065b480aeb868b272f46c4b96e16ea33a"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/21",
@@ -4212,7 +4496,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/21",
     "sourceRevision": "9603edca9864e0f95d6a3a4c79122ffe4fca1f2a",
-    "digest": "b6377237244aab23e0264d7adf71908ddde9287cd94577b54516942eb7d004e5"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "c8187a2858a273cdfb0a812e80662c5eb35a897790c6ccc8e66f99555423a770"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/22",
@@ -4237,7 +4523,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/22",
     "sourceRevision": "fa6ede54b71183da2b73a69b9eb163644828dea5",
-    "digest": "21e22829310e92d0b1041211d327f5e4035ec4a1f157762578008c9e69192022"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "99844cca7d18ce0ea9083844cc0757375ab8f72b991c7cb95b931768fd261557"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/23",
@@ -4262,7 +4550,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/23",
     "sourceRevision": "f61623a30319756ca98bcc041eddb55454f3a90b",
-    "digest": "1fcfe8c1bfb3150dba4eb6582b9ede4931300cceffbe37d1c6995d6dd3f2e861"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "544854c3250885990f1479a8ac33a1d2a38b317bdcd35a8f037febf9acbe92cb"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/24",
@@ -4287,7 +4577,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/24",
     "sourceRevision": "889d52389be713805822e9685ff6d6a569884847",
-    "digest": "b85504fa31bb57b325749bf0d732d754a0fba3cd58a706cb628745cecfb2e905"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "5066416f72357429a549e1efbaf2c3098c6e99588e40c70dea41e21f24a63d2b"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/25",
@@ -4312,7 +4604,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/25",
     "sourceRevision": "d107427c880b5da030748fe25033e699ecf59318",
-    "digest": "6b0284897a42391ad06dcd72f3c539172e6616f04692d35835487edfe36d8750"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "9d19013302663403d7af34bb6c8fa98be0ec3b62443d5e2c62376f0bd533faa5"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/26",
@@ -4337,7 +4631,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/26",
     "sourceRevision": "3a90c38bbc02aa2edcfc35cbfba9930bcaa99ab5",
-    "digest": "045235eb36fcf4a9ab63f7ebc299a2df9a6831bf386e3e8b1cc12626e6bc5e96"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "16c042f8e65852e5d3b6d6d640c93ea7f3d0dda333fb807988e31677a8728930"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/27",
@@ -4362,7 +4658,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/27",
     "sourceRevision": "2c7d7706baacd551c8e42a19681c37cfc657be92",
-    "digest": "8a75d6e7657185e1921caa273070e850a14090a6b9582cec3bf2b6ee323e13de"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "6ba6dabab6c1c14f23e4273afe3b1928ea1d93d7c802eb71daf5d323f399d8c1"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/28",
@@ -4387,7 +4685,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/28",
     "sourceRevision": "fcfda1619f53884a0ea1692cacdd9154651b01fb",
-    "digest": "bd48c39485e62b62bc919e5db3b193662482398873c997a6854757354a750906"
+    "contributionState": "closed",
+    "contributionScope": "own_repository",
+    "digest": "b5863e2c06a880b723f70d4ef14b6e218267e79fa023d4a7ae67f5e9f9bcd52c"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/29",
@@ -4412,7 +4712,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/29",
     "sourceRevision": "460e923f2cae3f5c32bca2c31247186555fe4a2b",
-    "digest": "156e8f352b43aa6732df985232449451039ea689d916c49b8d8b43d78af828a1"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "f26ecfbf77b1a0bc5217a8a2b7ccfeac1f7a43f8c6d86d0e7693f42401b125e1"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/30",
@@ -4437,7 +4739,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/30",
     "sourceRevision": "889c55709f6d7ac2159aab2925fe27c09c737e28",
-    "digest": "bf8f7e88d42a9b1c67b3429a79ce52f3c52458a64635c57b59d23870d5cabb57"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "73c62685adde174e15a2f344e030f99ed5fce78eab9f775b5fc6472aaa5acbb0"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/31",
@@ -4462,7 +4766,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/31",
     "sourceRevision": "f2e6d2a1d8d600a3d5c6d410a92f705ee3a05c40",
-    "digest": "95f184f9a7f95a5645418973ff9f0b2ff14f75b45e954e5db12977a0548d30f4"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "475790afceace0b796fc01c74c1dddf20435c5ab4a8b3ef86d47da4f9dddef1a"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/32",
@@ -4487,7 +4793,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/32",
     "sourceRevision": "7149480061d89608afd81998121f72e88176a636",
-    "digest": "e19690f671ebda25c701bd0038a8054c6b8702d4ca345065d54760ed9a088646"
+    "contributionState": "closed",
+    "contributionScope": "own_repository",
+    "digest": "3692d90efc279e7b1cffe4504eae3e09d3b0b99d066c857b8b91a16142444c34"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/33",
@@ -4512,7 +4820,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/33",
     "sourceRevision": "dc7a7ff57cf8af40105b6fd5ebf89b66bf59ad51",
-    "digest": "e477d37d2f7179b690760dbeb1c1f6e66b26a4049cedb6edeb67921c77495a59"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "bd7237ed4df9d3f4b0787aaf2941fe415532d5d24dfe0f8b6075540cc076c16c"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/34",
@@ -4537,7 +4847,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/34",
     "sourceRevision": "7149480061d89608afd81998121f72e88176a636",
-    "digest": "de1d255aa930e5bac08524c0dc35f040a6d773882b4537b01000a2fdf53edd05"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "1caa6f57b43446317649d23d0fbf5afd2a2c27339e4b980b885eff2e2566380d"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/35",
@@ -4562,7 +4874,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/35",
     "sourceRevision": "e6aca003ea68a50a023446a3cfd49c91fd9d7604",
-    "digest": "654583e92262cfdeb2d0e9b53c2c45852b87d1c2c27165221f07ed199f8e7d24"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "ee6efeffcbc7ed2bd9a8db54c1491ff4bc26551c86111fdcdd0454a1e655bd7a"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/36",
@@ -4587,7 +4901,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/36",
     "sourceRevision": "fabb842bfcf3952a88b4fb85308a984833ec918e",
-    "digest": "4552337510e9766ed48f2cca400a627fdbef844b3828521fe30ea9ab472a6353"
+    "contributionState": "closed",
+    "contributionScope": "own_repository",
+    "digest": "3077b1431a4552044ba512df9360b16be73a7bd14b5da575e0f35caa890b8c9c"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/37",
@@ -4612,7 +4928,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/37",
     "sourceRevision": "bdafdb05a994cb1cde3fcfe4b5b5cecd703490f6",
-    "digest": "c2b3f2ce9d8507e74c5ce5ee59de44b29d99e0a0c9adf99f8cea9b0f509eeeac"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "6cab3e2befd7c98a0e4cf2fe9f5e38f4a85a0ba45cdb6ee526bd4f83b59269ca"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/38",
@@ -4637,7 +4955,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/38",
     "sourceRevision": "a79a05aed78fbdaece7ca50003b95fb80db11f74",
-    "digest": "366266c8a70aa684a32dd41339dbb7522cd6bd1b4e77c01396cdb82aaa72dd58"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "7ca28bb786eb3ad3b36cbf33eda6f913856623d06ad6c75fe1cb6f721b99cf44"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/39",
@@ -4662,7 +4982,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/39",
     "sourceRevision": "5eeac46ecd5cbed222ac7524d168d5009847e98b",
-    "digest": "02fbb5c0a47b14f0d8e01b333f49874fda42699ddd833bc101aae9974621af21"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "9adf560d2d12798e785643c2719f7e117d87b0c2376ea2d4dded17304bd78edd"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/40",
@@ -4687,7 +5009,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/40",
     "sourceRevision": "a717794fc0b080f2bb36dc572c3cb0d7398458cf",
-    "digest": "f6b0c0f7b45df0853c025310d38a9f2dc3f0948c637202508d4877629ed4beb1"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "d17746c4f6165c79554c624fa6b2cf8e7905f0de1810ad1990344efb172c5ced"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/41",
@@ -4712,7 +5036,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/41",
     "sourceRevision": "8601bf74898cb7c87e25c13d894b7ff3114b20ca",
-    "digest": "803e04084e50b2b85a35d3f8ccd9790061c418b1e9eeb7527b7ffe19389733cd"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "41c9f68b04908553d9d65bf13093ea94a83c384f5efc9906209f66e858f2334c"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/42",
@@ -4737,7 +5063,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/42",
     "sourceRevision": "528a2be5805c5b863ac3ff0eec32a0808ee7000e",
-    "digest": "f8fd933aba2d68ff33c655b5666ec3a63e2214be50f8d7b50021283cda75e0c7"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "71a3f330e91cee0d460427786a421de2772bf2d39a552271c9acbab4bca64216"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/43",
@@ -4762,7 +5090,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/43",
     "sourceRevision": "64bfac55d3d70a96ab1ecec856006a736ebff08d",
-    "digest": "0be7aa07f5e29d470f9640387bb8d1b4fd4926aa9048ef63c4599a0c7cd6f955"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "aec9e4639ee05226a19dcc5de75766b67d5eaa106598e39870cad57caf749c5a"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/44",
@@ -4787,7 +5117,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/44",
     "sourceRevision": "31dccedf275690f3493caa1a4d7dc831fd41f1fa",
-    "digest": "5fda9e20776eb253064b1f6c5b7ec86fe0ecffb3d6ea118999cd4f556aebe482"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "a6ae7bb74dd6f1aa846df67171d858b0950e90fe2364dc97235d266419a65abf"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/45",
@@ -4812,7 +5144,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/45",
     "sourceRevision": "213b2654e80148e289f5913d4617384e3f6fea92",
-    "digest": "9f271d6d46d7c4441a12090ab1146a7ff34272dd0a57bb2d8d10ebcc84697841"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "4f56dbe6e21b46c614c13d725897fdee3021c7ffa9c74de81845cbda50b039cf"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/46",
@@ -4837,7 +5171,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/46",
     "sourceRevision": "cd4f1c7c01ab7b87a03b666e8b87f043a024b54d",
-    "digest": "75dddb7dafd260d5de14781b99411c38a47b2f70e84c55a2614dedc4b44d8d65"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "a059704b5c661d14bae69137f11a74c4264c4d0ad02f0a05bff54918c91ac09e"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/47",
@@ -4862,7 +5198,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/47",
     "sourceRevision": "c4bcd4d9dd6697b3ccb293d19c069a3ccf399f64",
-    "digest": "a6af871fc469ffa5407c3bec1e00a430f7ea3b177a44a4dd70da8c2f5b9a291a"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "8eba47f6e56ab2bdd97ed2283fc076a900de1e7b66d24d633978b2aac5b308b9"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/48",
@@ -4887,7 +5225,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/48",
     "sourceRevision": "ede8fbed875b76c61e6c9c792dbfd577f8ab5d7a",
-    "digest": "d596ac8a920c5e337bf4d2ec63819e4c68259d726ecb83549eb2cff2dff92cdf"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "f036307b5864b8cedfe4741a360ebe46938549254297b6266dd707c1ab3cfa5b"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/49",
@@ -4912,7 +5252,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/49",
     "sourceRevision": "0dd0c3f14503c98b49a50180b82d6b7250b45c95",
-    "digest": "e1e3869e3e069147c89c65657659b34f3342eccbd95611c11ecd5a1df4e88249"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "f9927bb57a9fc080a7f6d2ca593fde3d3d37dad70b221f16ef1237e8e7f679bc"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/50",
@@ -4937,7 +5279,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/50",
     "sourceRevision": "8b3e3e543e09ffbc02e8f8601ac63a35accd4099",
-    "digest": "789605781b054b9ba3d1e1f20b6f84feab5866a8575aaaaf0a1df8e79d69b41c"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "8e21156f57d166826064b564d2f5bf8c8dcf2433106043e18dbabc330e27d08e"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/51",
@@ -4962,7 +5306,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/51",
     "sourceRevision": "d10bf17f07f52ac26ad9d36a95b6a6f71b990ebc",
-    "digest": "1455f7d2d88730c3121e31d4ce2011992be5a1ff65428de33f5201683d1bf6b0"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "99d49a1e27ab6c3028e2da693bd67e6b5cbd590f0c86a2fac0ea1823ecfca7ec"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/52",
@@ -4987,7 +5333,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/52",
     "sourceRevision": "9d75fc845655cd5ad4c09a1d1a4eedf7ba690116",
-    "digest": "14b5a204064b585385fdd80c64b3c5336e2f3adf5a0378e742677cd749b933b5"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "46bd633f946acde385c101721e9b3902f20f1d650c10b2d20e2a0bc922a3d54e"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/53",
@@ -5012,7 +5360,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/53",
     "sourceRevision": "a403f30ca93fdb213c45846f1a1deb3e4e1a90b8",
-    "digest": "9d6f4a0971d0c969abae0db665fc8ab1921ce9b41f536ef27f22c0e88c6c17bd"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "58db3cfd52152cf6a4c30f2221100f45d0238aab69cb20e1c209ae87ebd5e66b"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/54",
@@ -5037,7 +5387,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/54",
     "sourceRevision": "3f641d64a85f3be8862cdcc4d3c9a578d246b10c",
-    "digest": "9913fce69b3b4a889fa25e0762a41ae2b3be8fdadc0d454ef33f2352a0cd8686"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "5aa552942a7fff0c1547ce662b06d1bd25415ad1060b1e76aaca119b4149a72a"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/55",
@@ -5062,7 +5414,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/55",
     "sourceRevision": "f7a3e10492da5e2b3ee843e243b78d06c1b000fb",
-    "digest": "df6aa8d74d10e043b3faa663b072964c4e89e25ada0d6066a20df6139aed649c"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "bcfcfffe00bf913bbecea83bcdb4916294a1e352c1faaebbdd2175e94cafa4ae"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/56",
@@ -5087,7 +5441,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/56",
     "sourceRevision": "08f8e13ec1d28dbc0aa8b940abe0e8b1a872a46b",
-    "digest": "3461ce9705d46737fada82d92e9c159d7d70d8fdc184173ff5bbe5e1f4d4036f"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "4de1ba06185224799640622c7536be07aa794139cd4c830c24a450131d6db285"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/57",
@@ -5112,7 +5468,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/57",
     "sourceRevision": "36e18945862d2b5553fb302633a16042de6234e5",
-    "digest": "370ef2fcdfae11579dcfa0f668a0ef0d23964895de18931520bfe3aa1a152359"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "e597c5a5e0af12fcced7d6acc403d17f79fdc530ee1f67ac84bddba0ac320b07"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/58",
@@ -5137,7 +5495,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/58",
     "sourceRevision": "a30bd1bd4c601a2c71a52defe930bf28f0aafc21",
-    "digest": "774fca65cd9091399aaf4cba413487c7fe32a8a488df8c2f1e5c2947cd9f9ef4"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "2bebd650c5dde1cc9909da6422918536a1cd8d4240a632582ee5180b0b721584"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/59",
@@ -5162,7 +5522,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/59",
     "sourceRevision": "707b81ac75dd9e5b15c3dad10d753b772844d8cc",
-    "digest": "86b91b864d0a4c813a11578d98bdfafe3f79884d0234b6031a1d045c3388e5bc"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "407a1b49ecef0225e995cfc6699861c138bda4a463157cc8417a823bfc1cd347"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/60",
@@ -5187,7 +5549,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/60",
     "sourceRevision": "2c302943a4b772cdae70b82e3cf1c7c9e122ed04",
-    "digest": "d496e123b4903019bddd9aa426a64d4cf30323b1a01a00d7d445a9e4a69f4575"
+    "contributionState": "opened",
+    "contributionScope": "own_repository",
+    "digest": "29f502aee0bbff61d3d6a8e2e896496835cced9300d16aad8d611010b3a16812"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/61",
@@ -5212,7 +5576,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/61",
     "sourceRevision": "853833d50dea5dc6edd03d726bbe35570103c097",
-    "digest": "f5b28d91371ffb3028be8f3df16b0b2c32b1c03263493093e6cde861056a6427"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "00bff207fbd5cbab707df977ad83d24f0478892152afe9a8b4b36fba3c01b514"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/62",
@@ -5237,7 +5603,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/62",
     "sourceRevision": "71623bc8505e2a4f928dbbf3f7c4f9bd2300d01c",
-    "digest": "8ef82173cc72594549d7b867affdf7317eb352279f9a591f7a3d8cdc78a1ce04"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "0280ed1da79d8d5e8d534bef83096a5a98abcb54cbd88e00dd86a1d742c91b2f"
   },
   {
     "id": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/63",
@@ -5262,7 +5630,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/monikadvorackova.net/pull/63",
     "sourceRevision": "1714f845d8200e6e65828c98cc2eb5a72e66d44f",
-    "digest": "c584025aa957ec7d8ae5cdc53e7d9131b0bab8a3f4820b2eb7c621d0bdc32e08"
+    "contributionState": "opened",
+    "contributionScope": "own_repository",
+    "digest": "0ab63baacd294d048ed7329cccca998dce8e94afc56e491cc19dc051e0bb6dec"
   },
   {
     "id": "https://github.com/MonikaDvorackova/ndarray",
@@ -5387,7 +5757,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/pylavi/pull/1",
     "sourceRevision": "47da49305d1f0643f4c006c9466dc95d0d9b1295",
-    "digest": "a584dcdbe1ceedfbca429b6936863d518c54c98169dec16b4990583e4c3ef8d4"
+    "contributionState": "closed",
+    "contributionScope": "own_repository",
+    "digest": "fc437dc039a36274ba70a1650fe37a6a21cba17b42854bb9497d48143eeb4351"
   },
   {
     "id": "https://github.com/MonikaDvorackova/PythonProDataScience",
@@ -5472,7 +5844,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/research/pull/10",
     "sourceRevision": "c68b378da7a3822c50942caf7a2d79c87c28d40a",
-    "digest": "c9e8bd45187f14ac706203825dd5dc84620c08830249ab6e12c4f9f3e8ff68b5"
+    "contributionState": "opened",
+    "contributionScope": "own_repository",
+    "digest": "741336c4599083e53e71aa1103825267f733c30807a0d43682322051013d2aee"
   },
   {
     "id": "https://github.com/MonikaDvorackova/research/pull/2",
@@ -5497,7 +5871,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/research/pull/2",
     "sourceRevision": "ed130d21eaa6d5c264472c5fdcde3362ee74870d",
-    "digest": "46eed8419ca025c8fa76d34a0d6eb94b1762ce6c6df9c568219585c51fb518c3"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "632fc0eeb48a49509f3b33c2d6ac83550b60ab5695b7849deed357a6712b0b89"
   },
   {
     "id": "https://github.com/MonikaDvorackova/research/pull/3",
@@ -5522,7 +5898,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/research/pull/3",
     "sourceRevision": "09aaf1f84cbaeb093e1a80d226e3b295e5b2d2c5",
-    "digest": "a4246b586695b29d8df69278f4c916464a9fd7c6434b190fb34d2843a4a56661"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "ba2a5a9a1d6d00e245855e8bf2089290807525d55a2aac4cdbeb8ef329a12d12"
   },
   {
     "id": "https://github.com/MonikaDvorackova/research/pull/4",
@@ -5547,7 +5925,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/research/pull/4",
     "sourceRevision": "bca5b1654f899badfdb7764cad46c9f1bc204457",
-    "digest": "72ceaca4d97338029706dd3477687b2dabac493c6f4da744e47cc479a3a2ee3d"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "e2146a99ddbe288be8e80c4cb2408ad14e3bc96cdba5a0e73c071e0fe6eb177e"
   },
   {
     "id": "https://github.com/MonikaDvorackova/research/pull/5",
@@ -5572,7 +5952,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/research/pull/5",
     "sourceRevision": "d5e8c8c151a8fb8e6093ea170a67fc84e0068c1a",
-    "digest": "86a0e3fd0827f69fd78f067002c26ba80d3a620e601dfbaa8e71656fcacab0d0"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "05103ce759eb0c8d279dee406315cb527d37dde3101b630ee9cf9fc92d07bcd6"
   },
   {
     "id": "https://github.com/MonikaDvorackova/research/pull/6",
@@ -5597,7 +5979,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/research/pull/6",
     "sourceRevision": "8511f4bbb5ce0128a0f442c1a9529c93b888de29",
-    "digest": "b4842d818dd486153c47090205760bd34bfb470aab59bb421421b1618ebe9666"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "7d4cc3b1392df7f932789cb7c1d4e6ab4c1ee1732942b26ed332d16bce925c14"
   },
   {
     "id": "https://github.com/MonikaDvorackova/research/pull/7",
@@ -5622,7 +6006,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/research/pull/7",
     "sourceRevision": "391ff80849a65ff6e6cc9719fe3497f72d087d87",
-    "digest": "d0ee6002f6d54a6129dde9921feae6c89c0654445a0a5e4e8029602ed3c19e49"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "86c0d98bb059c035a9799ed14e78e73ce229f12c0a988e4675f50b5ea02104e1"
   },
   {
     "id": "https://github.com/MonikaDvorackova/research/pull/8",
@@ -5647,7 +6033,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/research/pull/8",
     "sourceRevision": "3fc5a5f81b56ce32347d30f38a7e2f950e41d0ab",
-    "digest": "2763284d32e726b964090665346d2bf82cdc9fcdd3c521175d44f37086a98f33"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "1b31f2fdb3046401aa2d28431785c8af2c30dc6934ce98abdf09f9720fbf40a4"
   },
   {
     "id": "https://github.com/MonikaDvorackova/research/pull/9",
@@ -5672,7 +6060,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/research/pull/9",
     "sourceRevision": "fb2f521f41b516d8f6e37fcb3d2abbfb27313ce1",
-    "digest": "72fe3119aebbe023280416ace258b71d7d3a9deb9b94827b18bcdb3a05ad3c4d"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "ca5ec079a5ee26c4016e74f707304e9e4c17697cc6842bde049488f09ad4b989"
   },
   {
     "id": "https://github.com/MonikaDvorackova/scikit-image",
@@ -5757,7 +6147,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/static-agent-verification-experiment/pull/1",
     "sourceRevision": "5034d237c2875baa5d833afc60c41ddd1466c5b5",
-    "digest": "462a88c01f77e36d4a1fb1501b92b199b338ca5352cda06a86cc022facffce9c"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "0185c92282dee46ed0ebf70de6b922c2e74dbe19a5fdc9290dc640660c498fdc"
   },
   {
     "id": "https://github.com/MonikaDvorackova/static-agent-verification-experiment/pull/2",
@@ -5782,7 +6174,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/static-agent-verification-experiment/pull/2",
     "sourceRevision": "1ce71d37edbd44b913b1ccf91a07ef859abf010d",
-    "digest": "b6f0c2db9510b2bcee30e4c80ece12d935f595c76b25d3f7c452c3fb3defe28a"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "71f4d4ca0d14a3eac58a5cee9cc49e87a82f6bf70fc4e79abeb31df836d06d09"
   },
   {
     "id": "https://github.com/MonikaDvorackova/static-agent-verification-experiment/pull/3",
@@ -5807,7 +6201,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/static-agent-verification-experiment/pull/3",
     "sourceRevision": "fc18513e799a8806353ab2f5827e82ed219268e3",
-    "digest": "a7913a0d23073ad16c2578d2090544ed768621689929681c5ad62892b3ec0970"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "2e2006fc0c6ba5974b1585e35e1f685b340bbd3398e79305f9abc17735e3e095"
   },
   {
     "id": "https://github.com/MonikaDvorackova/static-agent-verification-experiment/pull/4",
@@ -5832,7 +6228,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/static-agent-verification-experiment/pull/4",
     "sourceRevision": "aadfd4096c8c3517196efea09762bae4848df074",
-    "digest": "2dbc92b3277a941ecf6a7baa4867b044cc29e736f173a9e77ff5e91f8b3e4de5"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "f2b2bd676b06aece75f9f673d132a27275520b24629e681ca5f960d18f514ac4"
   },
   {
     "id": "https://github.com/MonikaDvorackova/static-agent-verification-experiment/pull/5",
@@ -5857,7 +6255,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/static-agent-verification-experiment/pull/5",
     "sourceRevision": "a52c78772f8140075a180bec444b323dcf0aacc0",
-    "digest": "70ebf030c9e9638ebbb99de97a9882432ed5e3959311709f1809663b4a98b13d"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "34261de148e9c0cb203bb24c8cf132194f95d2c38ec52ec2d42c469455dd3534"
   },
   {
     "id": "https://github.com/MonikaDvorackova/static-agent-verification-experiment/pull/6",
@@ -5882,7 +6282,9 @@
     ],
     "source": "https://github.com/MonikaDvorackova/static-agent-verification-experiment/pull/6",
     "sourceRevision": "9be9f86bc9cbe1cdad6023963c3f937f3e45abd7",
-    "digest": "6b20490ae551c697cd5ab7bc103be0ad5a0013b03269f72080cc296a22a0614e"
+    "contributionState": "merged",
+    "contributionScope": "own_repository",
+    "digest": "d9a4fbaf2a13676189c7508200df9712cf9e106c554f08d0c637b30f73c9873e"
   },
   {
     "id": "https://github.com/MonikaDvorackova/trackio",
@@ -6042,7 +6444,9 @@
     ],
     "source": "https://github.com/pandas-dev/pandas/pull/71798",
     "sourceRevision": "3c1333fd9fffeac3d2602293ed778b76ccd14013",
-    "digest": "9a0d4dfc815b8bb7d2821bcfa0eb2010a708c59f4ba55f99730369be86208961"
+    "contributionState": "opened",
+    "contributionScope": "upstream",
+    "digest": "a54f5d15661ac13ad2fe0640930b5468fc57ce6b101413ea6030f8ef29c8c521"
   },
   {
     "id": "https://github.com/pandas-dev/pandas/pull/71807",
@@ -6067,7 +6471,9 @@
     ],
     "source": "https://github.com/pandas-dev/pandas/pull/71807",
     "sourceRevision": "ee36a5390bb1239e72e98699baade44ecfbb0b27",
-    "digest": "6bb8e2a9a13c33f8a782c3ca526dbeefe0f00c3bd14e8d9a194cc03fac34da2f"
+    "contributionState": "closed",
+    "contributionScope": "upstream",
+    "digest": "39cb7f2d90f73b23ac855a818e86710f90483718bdcc203db43f09a80cb580ae"
   },
   {
     "id": "https://github.com/python-attrs/attrs",
@@ -6107,7 +6513,9 @@
     ],
     "source": "https://github.com/python-attrs/attrs/pull/1651",
     "sourceRevision": "adc22ad1027fe07e39aec88066c67d32bb26af99",
-    "digest": "933645887f3a1f05de80477ec65d7fc1778984fc783dc981f72ec71229dcc767"
+    "contributionState": "opened",
+    "contributionScope": "upstream",
+    "digest": "6ecea413f95f5e75c1c6e1acc8c5bb2d44f0acbcc23f70497083a497eaa25875"
   },
   {
     "id": "https://github.com/python-attrs/attrs/pull/1652",
@@ -6132,7 +6540,9 @@
     ],
     "source": "https://github.com/python-attrs/attrs/pull/1652",
     "sourceRevision": "68092234ee99a215a4fd290ba4b070bc75dcee04",
-    "digest": "951d47c6bec46ab6bc7e2f1abf42dc0a699f215eb34e818bfda5a8cdebe91768"
+    "contributionState": "opened",
+    "contributionScope": "upstream",
+    "digest": "d0f76ac2baf1059a84641f2e9806284dc044f32b2bfd6035da6b11a07af51313"
   },
   {
     "id": "https://github.com/python/cpython",
@@ -6172,7 +6582,9 @@
     ],
     "source": "https://github.com/python/cpython/pull/160980",
     "sourceRevision": "feb3718b7b285dc587538f4da44cac43d917c767",
-    "digest": "fd79f2f86df34bf44499720af1949103032e02a49cfbdc7a991f4168a4f2ce64"
+    "contributionState": "opened",
+    "contributionScope": "upstream",
+    "digest": "9092852dd2662717dad070987c4561ed3b308861efe01d1b4866542d2a09c2ff"
   },
   {
     "id": "https://github.com/pyvista/pyvista",
@@ -6212,7 +6624,9 @@
     ],
     "source": "https://github.com/pyvista/pyvista/pull/9530",
     "sourceRevision": "a7cd27c31a7202df1d2ccfe8dad28cb4e7c3fb0b",
-    "digest": "4520adfaf567c1bd7a711c2c75e38dab40fff8d2bf1e2edd22ffefd41e647c19"
+    "contributionState": "opened",
+    "contributionScope": "upstream",
+    "digest": "650a06c8495f36578ad2db5cdf6ee5ad319bd4827da115de868a71f9c53b3f31"
   },
   {
     "id": "https://github.com/radoexpr-blip/CodersLab_ukoly",
@@ -6252,7 +6666,9 @@
     ],
     "source": "https://github.com/radoexpr-blip/CodersLab_ukoly/pull/1",
     "sourceRevision": "c5c20c649ffcf50731479936c1256b713a667fb2",
-    "digest": "4d2c344f8909b01721eb5437c3fda382f40d3d9d39beb5fd66998b0555958cd8"
+    "contributionState": "opened",
+    "contributionScope": "upstream",
+    "digest": "c79ef7b12d25288a348cf8478a9b93cb29a3b3223e2225a605663b0e28506066"
   },
   {
     "id": "https://github.com/rust-ndarray/ndarray",
@@ -6292,7 +6708,9 @@
     ],
     "source": "https://github.com/rust-ndarray/ndarray/pull/1626",
     "sourceRevision": "611aad940be614e9d11f31ebea66e443b788e7e1",
-    "digest": "bf277514c91e14bbcefaa94144d824d25caed927623aef714fb2a8bc43c93283"
+    "contributionState": "opened",
+    "contributionScope": "upstream",
+    "digest": "88f328cfc8d114fe32f92ea72cde620b6ae482ebafbb999d38c5711bf912c700"
   },
   {
     "id": "https://github.com/scikit-image/scikit-image",
@@ -6332,7 +6750,9 @@
     ],
     "source": "https://github.com/scikit-image/scikit-image/pull/8389",
     "sourceRevision": "07ffce050e50859413d1c25b5ab2e6025fa048fa",
-    "digest": "9867b3bca858dd2db2e6431a1e6f3a6d2efd88597e6942f2adcacb76baf8bb5d"
+    "contributionState": "merged",
+    "contributionScope": "upstream",
+    "digest": "55bc0bedc644187276755ef0328d82adf713964c7753fe7b2cb1c753ba459f72"
   },
   {
     "id": "https://github.com/scipy/scipy",
@@ -6372,7 +6792,9 @@
     ],
     "source": "https://github.com/scipy/scipy/pull/26592",
     "sourceRevision": "2f52e1d7169c7284e2e1fcaf8e1507632a7b5382",
-    "digest": "5fdbf2e171fe18376e8945b2766b7ad19729912f9ebd30e67aeb2e487c42f200"
+    "contributionState": "opened",
+    "contributionScope": "upstream",
+    "digest": "c12e966ba7ad11d916bd3480afd1a043a1f0429e7db14d743956abebc43a7d58"
   },
   {
     "id": "https://github.com/trustyai-explainability/trustyai-detoxify",
@@ -6412,7 +6834,9 @@
     ],
     "source": "https://github.com/trustyai-explainability/trustyai-detoxify/pull/14",
     "sourceRevision": "95a261a974dc51d27e9e8b904ac6e8f77b4d3e7c",
-    "digest": "972940f76f3b9dff9ce6ef6189eef186c40839a5b1f09647f936b7ac7b84717f"
+    "contributionState": "opened",
+    "contributionScope": "upstream",
+    "digest": "cb10552810a89156354a8f366bd9ab054237841caee4650205e925577ef74607"
   },
   {
     "id": "https://github.com/warpdotdev/warp",
@@ -6452,6 +6876,8 @@
     ],
     "source": "https://github.com/warpdotdev/warp/pull/10405",
     "sourceRevision": "dd00b3b4ee84816c0520c6e896e173caedeb0588",
-    "digest": "5269fb6c3da549cfd18134336f11e20eae4c9925681c355f879de61a52da80c3"
+    "contributionState": "closed",
+    "contributionScope": "upstream",
+    "digest": "f192a29f8d4c60789ae711f3490dd810ff1c0c2c3a56f7d7ab06563391d5a9bc"
   }
 ]

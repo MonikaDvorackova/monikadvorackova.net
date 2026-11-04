@@ -74,6 +74,12 @@ export function contribution(pr: Pull): RecordData | null {
   return record({
     id: pr.html_url,
     kind: "contribution",
+    contributionState: status,
+    contributionScope: pr.base.repo.full_name
+      .toLowerCase()
+      .startsWith("monikadvorackova/")
+      ? "own_repository"
+      : "upstream",
     title: pr.title,
     description: `${pr.base.repo.full_name} #${pr.number}: ${status}.`,
     body: `Pull request status: ${status}. Commit: ${pr.head.sha}.`,
@@ -137,36 +143,48 @@ export async function syncGitHub(
           map.set(old.id, old);
         continue;
       }
-      const releases = (await get(
-        "/repos/" + repo.full_name + "/releases?per_page=100",
-      )) as {
-        id: number;
-        html_url: string;
-        name: string;
-        tag_name: string;
-        published_at: string;
-        draft: boolean;
-        target_commitish: string;
-      }[];
-      for (const release of releases.filter((r) => !r.draft && r.published_at))
-        map.set(
-          release.html_url,
-          record({
-            id: release.html_url,
-            kind: "release",
-            title: release.name || release.tag_name,
-            description: repo.full_name + " release " + release.tag_name,
-            body: release.tag_name,
-            url: release.html_url,
-            source: release.html_url,
-            sourceRevision: release.target_commitish,
-            language: "en",
-            status: "source_verified",
-            verifiedAt: new Date().toISOString(),
-            updatedAt: release.published_at,
-            relations: [{ type: "releaseOf", target: repo.html_url }],
-          }),
-        );
+      for (let releasePage = 1; releasePage <= 20; releasePage++) {
+        const releases = (await get(
+          "/repos/" +
+            repo.full_name +
+            "/releases?per_page=100" +
+            (releasePage === 1 ? "" : "&page=" + releasePage),
+        )) as {
+          id: number;
+          html_url: string;
+          name: string;
+          tag_name: string;
+          published_at: string;
+          draft: boolean;
+          target_commitish: string;
+        }[];
+        for (const release of releases.filter(
+          (r) => !r.draft && r.published_at,
+        ))
+          map.set(
+            release.html_url,
+            record({
+              id: release.html_url,
+              kind: "release",
+              title: release.name || release.tag_name,
+              description: repo.full_name + " release " + release.tag_name,
+              body: release.tag_name,
+              url: release.html_url,
+              source: release.html_url,
+              sourceRevision: release.target_commitish,
+              language: "en",
+              status: "source_verified",
+              verifiedAt: new Date().toISOString(),
+              updatedAt: release.published_at,
+              relations: [{ type: "releaseOf", target: repo.html_url }],
+            }),
+          );
+        if (releases.length < 100) break;
+        if (releasePage === 20)
+          throw new Error(
+            "Release pagination incomplete; refusing partial snapshot",
+          );
+      }
     }
     if (repos.length < 100) break;
   }
