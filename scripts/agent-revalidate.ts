@@ -6,4 +6,6 @@ revalidateSources()
     console.error("Revalidation failed");
     process.exitCode = 1;
   })
-  .finally(() => database().end());
+  .finally(() =>
+    process.env.AGENT_DATABASE_URL ? database().end() : undefined,
+  );

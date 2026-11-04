@@ -2,7 +2,12 @@
 import json
 from urllib.error import HTTPError
 from urllib.parse import urlencode
-from urllib.request import Request, urlopen
+from urllib.request import Request, build_opener, HTTPRedirectHandler
+
+
+class _NoRedirect(HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
 
 
 class AgentAPIError(Exception):
@@ -31,7 +36,7 @@ class AgentClient:
             data = json.dumps(payload).encode("utf-8")
         request = Request(self.base_url + "/api/v1/" + path + "?" + urlencode({"lang": self.lang, **query}), data=data, headers=headers)
         try:
-            with urlopen(request, timeout=10) as response:
+            with build_opener(_NoRedirect).open(request, timeout=10) as response:
                 return json.load(response)["data"]
         except HTTPError as error:
             try:

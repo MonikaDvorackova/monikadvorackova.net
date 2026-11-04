@@ -27,6 +27,7 @@ export const publicRecord = z.object({
   relations: z.array(relation),
   source: z.url(),
   sourceRevision: z.string().optional(),
+  verifiedAt: z.iso.datetime({ offset: true }).optional(),
   digest: z.string().regex(/^[a-f0-9]{64}$/),
 });
 export const evidenceRecord = z.object({

@@ -103,7 +103,7 @@ test("QA abstains and uses exact source descriptions with status", async () => {
           d.source === citation.url,
       ),
     );
-    assert.equal(citation.status, "self_reported");
+    assert.equal(citation.status, docs.find(d=>d.id===citation.id)!.status);
   }
 });
 test("schemas reject arbitrary fields, missing consent and oversized input", () => {

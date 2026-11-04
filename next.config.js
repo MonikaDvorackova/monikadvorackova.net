@@ -5,6 +5,7 @@ const withMDX = require('@next/mdx')({ extension: /\.mdx?$/ });
 module.exports = withMDX({
   output: 'standalone',
   outputFileTracingIncludes: { '/*': ['./posts/**/*', './content/**/*', './data/agent/**/*'] },
+  outputFileTracingExcludes: { '/*': ['./.git/**/*', './.next/cache/**/*', './.next/standalone/**/*', './tests/**/*', './docs/**/*'] },
   pageExtensions: ['tsx', 'ts', 'jsx', 'js', 'mdx'],
   async redirects() {
     return [

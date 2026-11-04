@@ -58,7 +58,13 @@ interface Pull {
   body?: string | null;
 }
 export function contribution(pr: Pull): RecordData | null {
-  if (pr.base.repo.private || !pr.html_url.startsWith("https://github.com/"))
+  if (
+    pr.base.repo.private ||
+    /(?:secret|credential|2fa|reset|backup|incident)/i.test(
+      pr.base.repo.full_name,
+    ) ||
+    !pr.html_url.startsWith("https://github.com/")
+  )
     return null;
   const status = pr.merged_at
     ? "merged"
@@ -74,6 +80,7 @@ export function contribution(pr: Pull): RecordData | null {
     url: pr.html_url,
     language: "en",
     status: "source_verified",
+    verifiedAt: new Date().toISOString(),
     updatedAt: pr.updated_at,
     relations: [
       { type: "contributor", target: BASE + "/#person" },
@@ -95,7 +102,11 @@ export async function syncGitHub(
     const repos = (await get(
       "/users/MonikaDvorackova/repos?type=owner&per_page=100&page=" + page,
     )) as Repository[];
-    for (const repo of repos.filter((r) => !r.private)) {
+    for (const repo of repos.filter(
+      (r) =>
+        !r.private &&
+        !/(?:secret|credential|2fa|reset|backup|incident)/i.test(r.full_name),
+    )) {
       map.set(
         repo.html_url,
         record({
@@ -108,6 +119,7 @@ export async function syncGitHub(
           source: repo.html_url,
           language: "en",
           status: "source_verified",
+          verifiedAt: new Date().toISOString(),
           updatedAt: repo.updated_at,
           relations: [{ type: "owner", target: BASE + "/#person" }],
         }),
@@ -150,6 +162,7 @@ export async function syncGitHub(
             sourceRevision: release.target_commitish,
             language: "en",
             status: "source_verified",
+            verifiedAt: new Date().toISOString(),
             updatedAt: release.published_at,
             relations: [{ type: "releaseOf", target: repo.html_url }],
           }),
@@ -186,8 +199,28 @@ export async function syncGitHub(
         continue;
       const pr = (await get(url.pathname)) as Pull;
       const doc = contribution(pr);
-      if (doc) map.set(doc.id, doc);
-      else map.delete(pr.html_url);
+      if (doc) {
+        map.set(doc.id, doc);
+        const repo = pr.base.repo;
+        if (!map.has(repo.html_url))
+          map.set(
+            repo.html_url,
+            record({
+              id: repo.html_url,
+              kind: "repository",
+              title: repo.full_name,
+              description: repo.description || repo.full_name,
+              body: repo.description || repo.full_name,
+              url: repo.html_url,
+              source: repo.html_url,
+              language: "en",
+              status: "source_verified",
+              verifiedAt: now,
+              updatedAt: repo.updated_at,
+              relations: [],
+            }),
+          );
+      } else map.delete(pr.html_url);
     }
     if (result.items.length < 100) break;
   }

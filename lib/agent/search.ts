@@ -119,7 +119,12 @@ export async function search(docs: RecordData[], query: string, limit = 10) {
   if (process.env.AGENT_EMBEDDING_KEY)
     try {
       const index = JSON.parse(
-        await readFile("data/agent/embeddings.json", "utf8"),
+        await readFile(
+          "data/agent/embeddings." +
+            (docs[0]?.language === "cs" ? "cs" : "en") +
+            ".json",
+          "utf8",
+        ),
       ) as EmbeddingIndex;
       if (index.corpusDigest !== sha256(docs.map((d) => [d.id, d.digest])))
         throw new Error("Stale index");
@@ -138,12 +143,10 @@ export async function search(docs: RecordData[], query: string, limit = 10) {
     }
   return {
     mode,
-    results: results
-      .slice(0, limit)
-      .map(({ body, ...doc }) => ({
-        ...doc,
-        excerpt: body.replace(/<[^>]*>/g, "").slice(0, 1000),
-      })),
+    results: results.slice(0, limit).map(({ body, ...doc }) => ({
+      ...doc,
+      excerpt: body.replace(/<[^>]*>/g, "").slice(0, 1000),
+    })),
   };
 }
 export async function ask(docs: RecordData[], question: string) {

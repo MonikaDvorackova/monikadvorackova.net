@@ -15,7 +15,7 @@ jobs:
           POSTGRES_PASSWORD: test-only-password
           POSTGRES_DB: agent_test
         ports: ['5432:5432']
-        options: --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+        options: --health-cmd pg_isready -U postgres --health-interval 5s --health-timeout 5s --health-retries 10
     env:
       AGENT_DATABASE_URL: postgres://postgres:test-only-password@localhost:5432/agent_test
     steps:
@@ -28,7 +28,12 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run agent:migrate
+      - name: Live public GitHub synchronization
+        run: npm run agent:sync
+        env:
+          AGENT_GITHUB_TOKEN: ${{ github.token }}
       - run: npm run test:agent
+      - run: python3 tests/agent/sdk_python_test.py
       - run: npm run typecheck
       - run: npm run lint
       - run: npm audit --omit=dev --audit-level=high

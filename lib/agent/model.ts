@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
-import { readdir, readFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
-import matter from "gray-matter";
+import CONTENT from "./content.generated.json";
 import { PUBLICATIONS_DATA } from "../publications";
 import { STACK_GROUPS } from "../stack";
 
@@ -35,6 +35,7 @@ export type RecordData = {
   relations: { type: string; target: string }[];
   source: string;
   sourceRevision?: string;
+  verifiedAt?: string;
   digest: string;
 };
 export function canonical(value: unknown): string {
@@ -155,41 +156,25 @@ export async function corpus(lang: Language = "en"): Promise<RecordData[]> {
         ],
       }),
     );
-  for (const [folder, kind] of [
-    ["posts", "article"],
-    ["content/projects", "project"],
-  ] as const) {
-    for (const file of (await readdir(path.join(process.cwd(), folder)))
-      .filter((f) => /^[a-z0-9-]+\.mdx?$/.test(f))
-      .sort()) {
-      const raw = await readFile(
-        path.join(process.cwd(), folder, file),
-        "utf8",
-      );
-      const { data, content } = matter(raw);
-      const slug = file.replace(/\.mdx?$/, "");
-      const url = BASE + "/blog/" + slug;
-      docs.push(
-        record({
-          ...common,
-          id: BASE + "/#" + kind + "-" + slug,
-          kind,
-          title: String(data.title || slug),
-          description: String(
-            data.description || data.tldr || data.title || slug,
-          ),
-          body: content,
-          url,
-          language: data.language === "cs" ? "cs" : "en",
-          source: url,
-          updatedAt: data.date
-            ? new Date(data.date).toISOString()
-            : snapshotDate,
-          relations: [{ type: "author", target: personId }],
-        }),
-      );
-    }
+  for (const entry of CONTENT) {
+    const url = BASE + "/blog/" + entry.slug;
+    docs.push(
+      record({
+        ...common,
+        id: BASE + "/#" + entry.kind + "-" + entry.slug,
+        kind: entry.kind as Kind,
+        title: entry.title,
+        description: entry.description,
+        body: entry.body,
+        url,
+        language: entry.language === "cs" ? "cs" : "en",
+        source: url,
+        updatedAt: entry.updatedAt,
+        relations: [{ type: "author", target: personId }],
+      }),
+    );
   }
+
   try {
     const synced = JSON.parse(
       await readFile(
@@ -212,7 +197,7 @@ export function evidence(d: RecordData) {
     status: d.status,
     confidence:
       d.status === "source_verified" ? "source_attested" : "self_reported",
-    checkedAt: d.status === "source_verified" ? d.updatedAt : null,
+    checkedAt: d.status === "source_verified" ? d.verifiedAt || null : null,
     integrity: { algorithm: "SHA-256", digest: d.digest },
     independentVerification:
       d.status === "source_verified"
@@ -221,37 +206,53 @@ export function evidence(d: RecordData) {
   };
 }
 export function graph(docs: RecordData[], root?: string, depth = 1) {
-  let ids = new Set(docs.map((d) => d.id));
+  const evidenceId = (id: string) =>
+    BASE + "/#evidence-" + sha256(id).slice(0, 24);
+  const nodes = docs.flatMap((d) => [
+    {
+      id: d.id,
+      type: d.kind as string,
+      label: d.title,
+      provenance: evidence(d),
+    },
+    {
+      id: evidenceId(d.id),
+      type: "evidence",
+      label: d.title,
+      provenance: evidence(d),
+    },
+  ]);
+  const edges = docs.flatMap((d) => [
+    ...d.relations.map((r) => ({
+      source: d.id,
+      target: r.target,
+      type: r.type,
+      sourceUrl: d.source,
+      updatedAt: d.updatedAt,
+    })),
+    {
+      source: d.id,
+      target: evidenceId(d.id),
+      type: "supportedBy",
+      sourceUrl: d.source,
+      updatedAt: d.updatedAt,
+    },
+  ]);
+  let ids = new Set(nodes.map((n) => n.id));
   if (root) {
     ids = new Set([root]);
-    for (let n = 0; n < depth; n++)
-      for (const d of docs)
-        for (const r of d.relations)
-          if (ids.has(d.id) || ids.has(r.target)) {
-            ids.add(d.id);
-            ids.add(r.target);
-          }
+    for (let n = 0; n < depth; n++) {
+      const before = new Set(ids);
+      for (const edge of edges)
+        if (before.has(edge.source) || before.has(edge.target)) {
+          ids.add(edge.source);
+          ids.add(edge.target);
+        }
+    }
   }
   return {
-    nodes: docs
-      .filter((d) => ids.has(d.id))
-      .map((d) => ({
-        id: d.id,
-        type: d.kind,
-        label: d.title,
-        provenance: evidence(d),
-      })),
-    edges: docs
-      .flatMap((d) =>
-        d.relations.map((r) => ({
-          source: d.id,
-          target: r.target,
-          type: r.type,
-          sourceUrl: d.source,
-          updatedAt: d.updatedAt,
-        })),
-      )
-      .filter((e) => ids.has(e.source) && ids.has(e.target)),
+    nodes: nodes.filter((n) => ids.has(n.id)),
+    edges: edges.filter((e) => ids.has(e.source) && ids.has(e.target)),
   };
 }
 export function structuredData(docs: RecordData[]) {
@@ -273,13 +274,15 @@ export function structuredData(docs: RecordData[]) {
         description: d.description,
         url: d.url,
         inLanguage: d.language,
-        ...(d.kind !== "person" && d.kind !== "organization"
-          ? { author: { "@id": personId } }
-          : {
-              knowsAbout: docs
-                .filter((x) => x.kind === "skill")
-                .map((x) => x.title),
-            }),
+        ...(d.kind === "organization"
+          ? {}
+          : d.kind !== "person"
+            ? { author: { "@id": personId } }
+            : {
+                knowsAbout: docs
+                  .filter((x) => x.kind === "skill")
+                  .map((x) => x.title),
+              }),
       })),
   };
 }

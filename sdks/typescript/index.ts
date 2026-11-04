@@ -31,7 +31,8 @@ export class AgentClient {
     if (!/^[a-z][a-z0-9/-]*$/.test(path)) throw new Error("Invalid API path");
     const url = new URL("/api/v1/" + path, this.baseUrl);
     url.searchParams.set("lang", this.lang);
-    for(const [key,value] of Object.entries(options.query||{}))url.searchParams.set(key,String(value));
+    for (const [key, value] of Object.entries(options.query || {}))
+      url.searchParams.set(key, String(value));
     const response = await fetch(url, {
       method: options.method || "GET",
       headers: {
@@ -84,16 +85,71 @@ export class AgentClient {
   }) {
     return this.request("inquiries/prepare", { method: "POST", body: input });
   }
-  collection<T=unknown>(name:'skills'|'projects'|'publications'|'contributions'|'experience'|'education'|'evidence'|'changes',limit=20,offset=0){return this.request<{items:T[];total:number;offset:number;limit:number;nextOffset:number|null}>(name,{query:{limit,offset}});}
-  search(query:string,kind?:string){return this.request('search',{query:{q:query,...(kind?{kind}:{})}});}
-  graph(root?:string,depth=1){return this.request('graph',{query:{depth,...(root?{root}:{})}});}
-  evidence(id:string,digest?:string){return this.request('evidence/verify',{query:{id,...(digest?{digest}:{})}});}
-  match(requirements:string[]){return this.request('match',{method:'POST',body:{requirements,lang:this.lang}});}
-  resume(){return this.request('resume');}
-  citations(){return this.request('citations');}
-  availability(){return this.request('availability');}
-  health(){return this.request('health');}
-  readiness(){return this.request('readiness');}
-  submitInquiry(input:Parameters<AgentClient['prepareInquiry']>[0],idempotencyKey:string){return this.request('inquiries',{method:'POST',body:input,idempotencyKey});}
-
+  collection<T = unknown>(
+    name:
+      | "skills"
+      | "projects"
+      | "publications"
+      | "contributions"
+      | "experience"
+      | "education"
+      | "evidence"
+      | "changes",
+    limit = 20,
+    offset = 0,
+  ) {
+    return this.request<{
+      items: T[];
+      total: number;
+      offset: number;
+      limit: number;
+      nextOffset: number | null;
+    }>(name, { query: { limit, offset } });
+  }
+  search(query: string, kind?: string) {
+    return this.request("search", {
+      query: { q: query, ...(kind ? { kind } : {}) },
+    });
+  }
+  graph(root?: string, depth = 1) {
+    return this.request("graph", {
+      query: { depth, ...(root ? { root } : {}) },
+    });
+  }
+  evidence(id: string, digest?: string) {
+    return this.request("evidence/verify", {
+      query: { id, ...(digest ? { digest } : {}) },
+    });
+  }
+  match(requirements: string[]) {
+    return this.request("match", {
+      method: "POST",
+      body: { requirements, lang: this.lang },
+    });
+  }
+  resume() {
+    return this.request("resume");
+  }
+  citations() {
+    return this.request("citations");
+  }
+  availability() {
+    return this.request("availability");
+  }
+  health() {
+    return this.request("health");
+  }
+  readiness() {
+    return this.request("readiness");
+  }
+  submitInquiry(
+    input: Parameters<AgentClient["prepareInquiry"]>[0],
+    idempotencyKey: string,
+  ) {
+    return this.request("inquiries", {
+      method: "POST",
+      body: input,
+      idempotencyKey,
+    });
+  }
 }
