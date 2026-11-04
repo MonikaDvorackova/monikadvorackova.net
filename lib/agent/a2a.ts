@@ -329,6 +329,21 @@ export async function handleA2A(req: Request) {
       }
       return dispatchA2A(payload, owner, persistentTasks(client));
     });
+    const method = requestSchema.safeParse(payload);
+    console.info(
+      JSON.stringify({
+        event: "a2a_rpc",
+        method:
+          method.success &&
+          ["message/send", "tasks/get", "tasks/cancel"].includes(
+            method.data.method,
+          )
+            ? method.data.method
+            : "unknown",
+        status: result.error ? "error" : "ok",
+        errorCode: result.error?.code,
+      }),
+    );
     return Response.json(result, { headers: { "Cache-Control": "no-store" } });
   });
 }
