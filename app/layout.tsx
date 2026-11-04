@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import VercelMetrics from "@/components/VercelMetrics";
+import { corpus, structuredData } from "@/lib/agent/model";
 import RootFooter from "@/components/RootFooter";
 
 const SITE_URL =
@@ -57,10 +58,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className="min-h-screen w-full">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData(await corpus())).replace(/</g, "\u003c") }} />
         {children}
         <RootFooter />
         <VercelMetrics />

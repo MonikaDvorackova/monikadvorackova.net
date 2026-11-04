@@ -1,5 +1,6 @@
 // app/page.tsx
 "use client";
+import { STACK_GROUPS } from "@/lib/stack";
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import Image from "next/image";
@@ -253,13 +254,7 @@ const SERVICES = [
   },
 ] as const;
 
-const STACK_GROUPS = [
-  { label: "AI / ML", items: ["PyTorch", "TensorFlow", "Hugging Face", "OpenAI", "Anthropic", "LangChain", "LlamaIndex", "AI Agents", "Function Calling", "Pydantic", "Structured Output", "RAG", "Fine-tuning", "LoRA", "Prompt Engineering", "Embeddings", "Jupyter", "MLflow", "W&B", "Transformers", "CNNs", "RNNs", "GANs", "SVMs", "GBMs", "Deep Learning", "NLP", "Reinforcement Learning"] },
-  { label: "Languages", items: ["Python", "Rust", "TypeScript", "SQL", "Bash"] },
-  { label: "Data", items: ["PostgreSQL", "MongoDB", "Neo4j", "Redis", "Kafka", "Celery", "Pinecone", "Qdrant", "S3", "GCS"] },
-  { label: "Infra", items: ["Docker", "Kubernetes", "AWS", "GCP", "Azure", "Sentry", "GitHub Actions", "GitLab CI", "pytest", "Linux", "Git"] },
-  { label: "Web", items: ["FastAPI", "Streamlit", "Next.js", "React", "Node.js", "Supabase", "Tailwind CSS", "Vercel"] },
-] as const;
+
 
 /** Shared uppercase rail labels (Services uses slightly stronger tone) */
 const overlayLabelServices =

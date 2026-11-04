@@ -3,7 +3,9 @@ const withMDX = require('@next/mdx')({ extension: /\.mdx?$/ });
 
 /** @type {import('next').NextConfig} */
 module.exports = withMDX({
-  experimental: { serverActions: {} },
+  output: 'standalone',
+  outputFileTracingIncludes: { '/*': ['./posts/**/*', './content/**/*', './data/agent/**/*'] },
+  outputFileTracingExcludes: { '/*': ['./.git/**/*', './.next/cache/**/*', './.next/standalone/**/*', './tests/**/*', './docs/**/*'] },
   pageExtensions: ['tsx', 'ts', 'jsx', 'js', 'mdx'],
   async redirects() {
     return [
@@ -23,6 +25,12 @@ module.exports = withMDX({
   },
   async headers() {
     return [
+      { source: '/(.*)', headers: [
+        { key: 'X-Content-Type-Options', value: 'nosniff' },
+        { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+        { key: 'X-Frame-Options', value: 'DENY' },
+        { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+      ] },
       {
         source: '/favicon-monika-v2.png',
         headers: [

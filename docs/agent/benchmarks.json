@@ -1,0 +1,22 @@
+{
+  "runtime": "v24.22.1",
+  "records": 419,
+  "mode": "local lexical, warm process; no HTTP or embedding latency",
+  "samples": {
+    "corpus": {
+      "p50Ms": 7.42,
+      "p95Ms": 16.01,
+      "runs": 30
+    },
+    "search": {
+      "p50Ms": 5.94,
+      "p95Ms": 10.45,
+      "runs": 30
+    },
+    "ask": {
+      "p50Ms": 6.02,
+      "p95Ms": 13.28,
+      "runs": 30
+    }
+  }
+}
