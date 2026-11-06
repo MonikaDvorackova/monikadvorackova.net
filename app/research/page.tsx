@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Research | Monika Dvořáčková",
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
 export default function ResearchPage() {
   return (
     <main className="mx-auto min-h-screen max-w-3xl px-6 py-16 text-neutral-900">
-      <a className="text-sm underline" href="/">Home</a>
+      <Link className="text-sm underline" href="/">Home</Link>
       <h1 className="mt-10 text-4xl font-semibold">Research & publications</h1>
       <p className="mt-5 leading-7">I work on reliable machine learning systems, decision reconstructability, audit evidence and AI governance engineering. The entries below distinguish published work from ongoing research.</p>
       <section className="mt-12">
@@ -29,7 +30,7 @@ export default function ResearchPage() {
         <h2 className="text-2xl font-semibold">Research in progress</h2>
         <p className="mt-3">Current research interests include evidence-based AI governance, production ML traceability and reliable ML pipelines. Works under review or in preparation are not listed as accepted publications.</p>
       </section>
-      <a className="mt-10 inline-block underline" href="/open-source">Selected open-source contributions</a>
+      <Link className="mt-10 inline-block underline" href="/open-source">Selected open-source contributions</Link>
     </main>
   );
 }
