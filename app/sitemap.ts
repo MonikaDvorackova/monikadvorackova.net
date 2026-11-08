@@ -11,7 +11,7 @@ const BASE =
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const urls: MetadataRoute.Sitemap = [];
 
-  const staticPaths = ["/", "/blog"];
+  const staticPaths = ["/", "/blog", "/open-source", "/agent/docs"];
   for (const p of staticPaths) {
     urls.push({
       url: `${BASE}${p}`,

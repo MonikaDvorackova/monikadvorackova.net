@@ -1,0 +1,57 @@
+name: Agent platform quality
+on:
+  pull_request:
+  push:
+    branches: [feat/agent-native-platform]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_PASSWORD: test-only-password
+          POSTGRES_DB: agent_test
+        ports: ['5432:5432']
+        options: --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      AGENT_DATABASE_URL: postgres://postgres:test-only-password@localhost:5432/agent_test
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run agent:migrate
+      - name: Live public GitHub synchronization
+        run: npm run agent:sync
+        env:
+          AGENT_GITHUB_TOKEN: ${{ github.token }}
+      - name: Agent tests and report
+        run: |
+          set -o pipefail
+          mkdir -p test-results
+          npm run test:agent | tee test-results/agent-tests.log
+      - run: python3 tests/agent/sdk_python_test.py
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm audit --omit=dev --audit-level=high
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+      - run: node --import tsx scripts/agent-benchmark.ts
+      - name: Upload verification reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: agent-verification
+          path: |
+            test-results/
+            docs/agent/benchmarks.json
+            data/agent/sync-status.json
+          retention-days: 14

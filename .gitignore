@@ -36,3 +36,9 @@ yarn-error.log*
 .next
 
 
+
+# Agent verification output
+/test-results/
+/playwright-report/
+*.tmp
+__pycache__/

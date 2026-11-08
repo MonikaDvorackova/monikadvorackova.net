@@ -1,0 +1,385 @@
+import { career } from "./career";
+import { createHash } from "node:crypto";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+import CONTENT from "./content.generated.json";
+import { PUBLICATIONS_DATA } from "../publications";
+import { STACK_GROUPS } from "../stack";
+
+export const BASE = "https://monikadvorackova.net";
+export const VERSION = "1.0.0";
+export type Language = "en" | "cs";
+export type Kind =
+  | "person"
+  | "project"
+  | "publication"
+  | "article"
+  | "skill"
+  | "technology"
+  | "organization"
+  | "experience"
+  | "education"
+  | "contribution"
+  | "repository"
+  | "release"
+  | "issue"
+  | "research_topic";
+export type RecordData = {
+  id: string;
+  kind: Kind;
+  title: string;
+  description: string;
+  body: string;
+  url: string;
+  language: Language;
+  status: "self_reported" | "source_verified";
+  updatedAt: string;
+  relations: { type: string; target: string }[];
+  source: string;
+  sourceRevision?: string;
+  verifiedAt?: string;
+  contributionState?: "opened" | "closed" | "merged";
+  contributionScope?: "upstream" | "own_repository";
+  details?: {
+    organization: string;
+    qualification?: string;
+    startDate?: string;
+    endDate?: string;
+  };
+  digest: string;
+};
+export function canonical(value: unknown): string {
+  if (Array.isArray(value)) return "[" + value.map(canonical).join(",") + "]";
+  if (value && typeof value === "object")
+    return (
+      "{" +
+      Object.entries(value)
+        .filter(([, v]) => v !== undefined)
+        .sort(([a], [b]) => a.localeCompare(b, "en"))
+        .map(([k, v]) => JSON.stringify(k) + ":" + canonical(v))
+        .join(",") +
+      "}"
+    );
+  return JSON.stringify(value);
+}
+export const sha256 = (value: unknown) =>
+  createHash("sha256").update(canonical(value)).digest("hex");
+export function record(input: Omit<RecordData, "digest">): RecordData {
+  return { ...input, digest: sha256(input) };
+}
+export function verifyRecord(input: RecordData) {
+  const { digest, ...payload } = input;
+  return digest === sha256(payload);
+}
+export const personId = BASE + "/#person";
+const snapshotDate = "2026-11-04T00:00:00.000Z";
+const descriptions = {
+  en: "AI/ML engineer and consultant specializing in NLP, MLOps and AI governance.",
+  cs: "AI/ML inženýrka a konzultantka se zaměřením na NLP, MLOps a správu AI.",
+};
+export async function corpus(lang: Language = "en"): Promise<RecordData[]> {
+  const common = {
+    language: lang,
+    status: "self_reported" as const,
+    updatedAt: snapshotDate,
+    relations: [],
+    source: BASE,
+  };
+  const docs: RecordData[] = [
+    record({
+      ...common,
+      id: personId,
+      kind: "person",
+      title: "Monika Dvořáčková",
+      description: descriptions[lang],
+      body: descriptions[lang],
+      url: BASE,
+    }),
+  ];
+  for (const group of STACK_GROUPS)
+    for (const title of group.items)
+      docs.push(
+        record({
+          ...common,
+          id: BASE + "/#technology-" + encodeURIComponent(title.toLowerCase()),
+          kind: "technology",
+          language: "en",
+          title,
+          description: group.label,
+          body: title,
+          url: BASE,
+          relations: [{ type: "knownBy", target: personId }],
+        }),
+      );
+  for (const title of [
+    "NLP",
+    "MLOps",
+    "AI Governance",
+    "RAG",
+    "Machine Learning",
+    "Teaching",
+  ])
+    docs.push(
+      record({
+        ...common,
+        id: BASE + "/#skill-" + encodeURIComponent(title.toLowerCase()),
+        kind: "skill",
+        title,
+        description:
+          lang === "cs"
+            ? "Oblast odborného zaměření uváděná na webu."
+            : "Self-reported professional specialization.",
+        body: title,
+        url: BASE,
+        relations: [{ type: "knownBy", target: personId }],
+      }),
+    );
+  for (const outlet of new Set(PUBLICATIONS_DATA.map((p) => p.outlet)))
+    docs.push(
+      record({
+        ...common,
+        id: BASE + "/#publisher-" + encodeURIComponent(outlet),
+        kind: "organization",
+        language: "en",
+        title: outlet,
+        description: "Publication outlet named in the public bibliography.",
+        body: outlet,
+        url: BASE + "/#publications",
+      }),
+    );
+  for (const kind of ["experience", "education"] as const)
+    for (const item of career[kind]) {
+      const organizationId =
+        BASE + "/#organization-" + sha256(item.organization).slice(0, 16);
+      docs.push(
+        record({
+          ...common,
+          id: organizationId,
+          kind: "organization",
+          title: item.organization,
+          description: item.organization,
+          body: item.organization,
+          url: item.sourceUrl,
+          source: item.sourceUrl,
+          language: item.language,
+          updatedAt: item.updatedAt,
+        }),
+      );
+      docs.push(
+        record({
+          ...common,
+          id: BASE + "/#" + kind + "-" + item.id,
+          kind,
+          title: item.title,
+          description: item.description,
+          body: item.description,
+          url: item.sourceUrl,
+          source: item.sourceUrl,
+          language: item.language,
+          updatedAt: item.updatedAt,
+          details: {
+            organization: item.organization,
+            qualification: item.qualification,
+            startDate: item.startDate,
+            endDate: item.endDate,
+          },
+          relations: [
+            {
+              type: kind === "education" ? "educationOf" : "experienceOf",
+              target: personId,
+            },
+            {
+              type: kind === "education" ? "studiedAt" : "workedAt",
+              target: organizationId,
+            },
+          ],
+        }),
+      );
+    }
+  const topicId = (title: string) =>
+    BASE + "/#topic-" + encodeURIComponent(title.toLowerCase());
+  for (const title of new Set([
+    ...PUBLICATIONS_DATA.flatMap((p) => p.tags || []),
+    ...CONTENT.flatMap((p) => p.topics),
+  ]))
+    docs.push(
+      record({
+        ...common,
+        id: topicId(title),
+        kind: "research_topic",
+        language: "en",
+        title,
+        description: "Topic referenced in public writing.",
+        body: title,
+        url: BASE + "/blog",
+      }),
+    );
+  for (const p of PUBLICATIONS_DATA)
+    docs.push(
+      record({
+        ...common,
+        id: BASE + "/#" + p.id,
+        kind: "publication",
+        title: p.title,
+        description: p.blurb,
+        body: p.blurb,
+        url: p.href || BASE + "/#publications",
+        language: "en",
+        source: p.href || BASE,
+        relations: [
+          ...(p.tags || []).map((title) => ({
+            type: "about",
+            target: topicId(title),
+          })),
+          { type: "author", target: personId },
+          {
+            type: "publisher",
+            target: BASE + "/#publisher-" + encodeURIComponent(p.outlet),
+          },
+        ],
+      }),
+    );
+  for (const entry of CONTENT) {
+    const url = BASE + "/blog/" + entry.slug;
+    docs.push(
+      record({
+        ...common,
+        id: BASE + "/#" + entry.kind + "-" + entry.slug,
+        kind: entry.kind as Kind,
+        title: entry.title,
+        description: entry.description,
+        body: entry.body,
+        url,
+        language: entry.language === "cs" ? "cs" : "en",
+        source: url,
+        updatedAt: entry.updatedAt,
+        sourceRevision: entry.sourceRevision,
+        relations: [
+          { type: "author", target: personId },
+          ...entry.topics.map((title) => ({
+            type: "about",
+            target: topicId(title),
+          })),
+        ],
+      }),
+    );
+  }
+
+  try {
+    const synced = JSON.parse(
+      await readFile(
+        path.join(process.cwd(), "data/agent/github.json"),
+        "utf8",
+      ),
+    ) as RecordData[];
+    docs.push(...synced.filter((d) => verifyRecord(d)));
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+  }
+  return [...new Map(docs.map((d) => [d.id, d])).values()];
+}
+export function evidence(d: RecordData) {
+  return {
+    id: d.id,
+    claim: d.title,
+    sourceUrl: d.source,
+    sourceRevision: d.sourceRevision ?? null,
+    status: d.status,
+    confidence:
+      d.status === "source_verified" ? "source_attested" : "self_reported",
+    checkedAt: d.status === "source_verified" ? d.verifiedAt || null : null,
+    integrity: { algorithm: "SHA-256", digest: d.digest },
+    independentVerification:
+      d.status === "source_verified"
+        ? "Source supports this record; no broader qualification claim."
+        : "None",
+  };
+}
+export function graph(docs: RecordData[], root?: string, depth = 1) {
+  const evidenceId = (id: string) =>
+    BASE + "/#evidence-" + sha256(id).slice(0, 24);
+  const nodes = docs.flatMap((d) => [
+    {
+      id: d.id,
+      type: d.kind as string,
+      label: d.title,
+      provenance: evidence(d),
+    },
+    {
+      id: evidenceId(d.id),
+      type: "evidence",
+      label: d.title,
+      provenance: evidence(d),
+    },
+  ]);
+  const edges = docs.flatMap((d) => [
+    ...d.relations.map((r) => ({
+      source: d.id,
+      target: r.target,
+      type: r.type,
+      sourceUrl: d.source,
+      updatedAt: d.updatedAt,
+    })),
+    {
+      source: d.id,
+      target: evidenceId(d.id),
+      type: "supportedBy",
+      sourceUrl: d.source,
+      updatedAt: d.updatedAt,
+    },
+  ]);
+  let ids = new Set(nodes.map((n) => n.id));
+  if (root) {
+    ids = new Set([root]);
+    for (let n = 0; n < depth; n++) {
+      const before = new Set(ids);
+      for (const edge of edges)
+        if (before.has(edge.source) || before.has(edge.target)) {
+          ids.add(edge.source);
+          ids.add(edge.target);
+        }
+    }
+  }
+  return {
+    nodes: nodes.filter((n) => ids.has(n.id)),
+    edges: edges.filter((e) => ids.has(e.source) && ids.has(e.target)),
+  };
+}
+export function structuredData(docs: RecordData[]) {
+  const types: Partial<Record<Kind, string>> = {
+    person: "Person",
+    project: "SoftwareApplication",
+    publication: "ScholarlyArticle",
+    article: "CreativeWork",
+    organization: "Organization",
+  };
+  return {
+    "@context": "https://schema.org",
+    "@graph": docs
+      .filter((d) => types[d.kind])
+      .map((d) => ({
+        "@id": d.id,
+        "@type": types[d.kind],
+        ...(d.relations.some((r) => r.type === "publisher")
+          ? {
+              publisher: {
+                "@id": d.relations.find((r) => r.type === "publisher")!.target,
+              },
+            }
+          : {}),
+        name: d.title,
+        description: d.description,
+        url: d.url,
+        inLanguage: d.language,
+        ...(d.kind === "organization"
+          ? {}
+          : d.kind !== "person"
+            ? { author: { "@id": personId } }
+            : {
+                knowsAbout: docs
+                  .filter((x) => x.kind === "skill")
+                  .map((x) => x.title),
+              }),
+      })),
+  };
+}
