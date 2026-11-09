@@ -861,7 +861,18 @@ export default function HomePage() {
               <a href="https://www.oreilly.com/radar/the-preservation-gap-in-the-ai-stack-why-capability-is-advancing-faster-than-reconstructability/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 hover:text-[#004cff]"><img src="https://www.oreilly.com/favicon.ico" width="18" height="18" alt="" loading="lazy" />O’Reilly Radar <span className="text-zinc-400">· Author</span></a>
               <a href="https://doi.org/10.37819/Jaike.26.0013" target="_blank" rel="noopener noreferrer" className="hover:text-[#004cff]">JAIKE <span className="text-zinc-400">· Published research</span></a>
               <Link href="/blog" className="hover:text-[#004cff]">AI Tinkerers <span className="text-zinc-400">· Speaker &amp; Spotlight</span></Link>
-              <a href="https://www.mere-ai-workshop.com/" target="_blank" rel="noopener noreferrer" className="hover:text-[#004cff]">MERe AI 2026 <span className="text-zinc-400">· Reviewer</span></a>
+              <motion.a
+                href="https://www.mere-ai-workshop.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="MERe AI 2026 — Reviewer"
+                className="inline-flex items-center gap-1 rounded-full border border-black/10 bg-white/80 px-3 py-1 text-[10px] sm:text-xs text-zinc-800 shadow-sm hover:text-[#004cff]"
+                animate={{ y: [0, -4, 0] }}
+                transition={{ duration: 3, ease: "easeInOut", repeat: Infinity }}
+                whileHover={{ scale: 1.05 }}
+              >
+                MERe AI 2026 <span className="text-zinc-400">· Reviewer</span>
+              </motion.a>
             </div>
           </section>
 
