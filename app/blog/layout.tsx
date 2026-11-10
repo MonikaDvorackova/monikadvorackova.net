@@ -4,6 +4,7 @@ import BlogScrollLock from "@/components/BlogScrollLock";
 
 export const metadata: Metadata = {
   title: "Blog",
+  alternates: { canonical: "/blog" },
   description:
     "Articles on AI, machine learning, LLMs, RAG, MLOps, EU AI Act compliance, and responsible AI by Monika Dvořáčková.",
   openGraph: {

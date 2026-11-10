@@ -20,8 +20,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { tag } = await params;
   const raw = decodeURIComponent(tag);
   const label = formatTagLabel(raw) || raw;
+  const canonicalTag = raw.trim().toLowerCase();
   return {
     title: label,
+    alternates: { canonical: `/tags/${encodeURIComponent(canonicalTag)}` },
     description: `All posts and software tagged “${label}”.`,
     openGraph: {
       title: `${label} — Tags`,

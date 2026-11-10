@@ -29,7 +29,7 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { slug } = await props.params;
   const title = await getPostTitle(slug);
-  return { title };
+  return { title, alternates: { canonical: `/blog/${encodeURIComponent(slug)}` } };
 }
 
 export default function BlogPostLayout({

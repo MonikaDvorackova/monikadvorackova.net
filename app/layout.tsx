@@ -10,6 +10,7 @@ const SITE_URL =
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  alternates: { canonical: "/" },
   title: {
     default: "Dvorackova — ML/AI Engineer",
     template: "%s | Dvorackova",
