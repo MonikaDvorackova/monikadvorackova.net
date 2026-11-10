@@ -3,6 +3,7 @@ import { getAllPostsMeta } from "@/lib/getAllPostsMeta";
 
 export const metadata = {
   title: "Open Source Contributions",
+  alternates: { canonical: "/open-source" },
   description: "Upstream contributions and monthly engineering notes by Monika Dvořáčková.",
 };
 
