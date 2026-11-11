@@ -12,10 +12,10 @@ I split the work into two parts. The first asks what can be inferred with a stri
 
 ## Finite-memory hypothesis testing
 
-The source emits a sequence of zeros and ones. There are two hypotheses, $H = +1$ and $H=-1$. At the start, the source draws a hidden phase $Z$ uniformly from $\{0,1\}$. The phase decides which parity of time indices carries information about $H$. Given $H = h$ and $Z = z$, the observations are independent. For a bias parameter $0<c<\frac12$, the two cases are
+The source emits a sequence of zeros and ones. There are two hypotheses, $H = +1$ and $H=-1$. At the start, the source draws a hidden phase $Z$ uniformly from $\{0,1\}$. The phase decides which parity of time indices carries information about $H$. Given $H = h$ and $Z = z$, the observations are independent. For a bias parameter $0<c<\frac12$, write $q_t(h,z)$ for the conditional probability $\Pr(X_t=1\mid H=h,Z=z)$. It takes two values
 
 $$
-\Pr(X_t = 1 \mid H = h, Z = z) =
+q_t(h,z) =
 \begin{cases}
 \frac12 + hc, & t \bmod 2 = z,\\
 \frac12, & t \bmod 2 \ne z.

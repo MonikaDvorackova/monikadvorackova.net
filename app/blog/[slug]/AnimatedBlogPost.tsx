@@ -248,9 +248,13 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
                 }
 
                 .prose .katex-display {
-                  overflow-x: auto;
-                  overflow-y: hidden;
                   padding: 0.25rem 0;
+                }
+
+                @media (max-width: 639px) {
+                  .prose .katex-display {
+                    font-size: 0.82em;
+                  }
                 }
 
                 .post-table-scroll {
