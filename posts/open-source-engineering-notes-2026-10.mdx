@@ -3,7 +3,7 @@ title: "Open Source Engineering Notes — October and November 2026"
 date: "2026-10-30"
 type: "article"
 tags: ["Open Source", "Engineering", "Python"]
-description: "Technical notes and a public contribution index covering Python, scientific computing, ML systems, and AIGov Core."
+description: "Technical notes and a public contribution index covering Python, scientific computing and ML systems."
 ---
 
 *Updated November 11, 2026.*
@@ -39,12 +39,6 @@ These notes started with a one-line Python packaging fix. The work since then ha
 **PyTorch.** The Dynamo proposal preserves explicit dynamic-dimension annotations on parameters. The original recompilation behavior was reproduced on an installed wheel. Runtime validation of the modified source checkout remained pending in the PR record. The Inductor proposal folds eligible foreach copy epilogues while guarding mutation ordering, partial groups, and aliasing. Its controlled comparison reduced the pre-fusion IR from nine nodes to six. CPU tests covered the affected foreach paths, and the PR reports the IR count as a structural result. [Dynamo #203991](https://github.com/pytorch/pytorch/pull/203991) · [Inductor #204039](https://github.com/pytorch/pytorch/pull/204039)
 
 **Runtime and evaluation.** The Claude Agent SDK proposal addresses callback starvation when message consumers stall. The proposed unbounded buffer introduces a memory trade-off if consumers remain stalled. Other open contributions cover fused BERT CPU softmax in Candle, paired toxicity reporting in TrustyAI, and two alpha-beta-CROWN changes involving adversarial input bounds and interval-sensitivity branching. The private top-k proposal in OpenDP was closed without a merge. [Claude Agent SDK #1481](https://github.com/anthropics/claude-agent-sdk-python/pull/1481) · [Candle #4088](https://github.com/huggingface/candle/pull/4088) · [TrustyAI #14](https://github.com/trustyai-explainability/trustyai-detoxify/pull/14) · [alpha-beta-CROWN #110](https://github.com/Verified-Intelligence/alpha-beta-CROWN/pull/110) · [alpha-beta-CROWN #109](https://github.com/Verified-Intelligence/alpha-beta-CROWN/pull/109) · [OpenDP #3141](https://github.com/opendp/opendp/pull/3141)
-
-## AIGov Core and public research projects
-
-AIGov Core is the open-source audit and governance engine I maintain. October work addressed false chain-break reports when an export filtered events from a shared ledger, added offline Ed25519 signing and verification for plain JSON exports, and introduced provider-neutral decision-time evidence with full, redacted, and digest-only capture profiles. November work added offline replay and a readiness check to the demo. A replay can reconstruct the original governance verdict while readiness remains partial because a policy archive is unavailable. The runtime smoke documentation also spells out which checks support each claim. [AIGov Core](https://github.com/AIGovDev/aigov-core) · [Export continuity #228](https://github.com/AIGovDev/aigov-core/pull/228) · [Signing #227](https://github.com/AIGovDev/aigov-core/pull/227) · [Provider traces #237](https://github.com/AIGovDev/aigov-core/pull/237) · [Offline replay #242](https://github.com/AIGovDev/aigov-core/pull/242) · [Runtime smoke #409](https://github.com/AIGovDev/aigov-core/pull/409) · [AIGov Core PR history](https://github.com/AIGovDev/aigov-core/pulls?q=is%3Apr+author%3AMonikaDvorackova)
-
-My public research and engineering repositories cover model-based planning, agent reliability, numerical kernels, uncertainty and calibration, privacy accounting, and governance infrastructure. Each repository describes its own scope and licensing. [GitHub repositories](https://github.com/MonikaDvorackova?tab=repositories)
 
 ## Public pull request index
 
