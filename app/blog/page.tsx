@@ -126,7 +126,7 @@ export default function BlogPage() {
     });
   }, [isLoaded]);
 
-  const softwarePosts = posts.filter((p) => p.type === "software" && p.slug !== "di360");
+  const softwarePosts = posts.filter((p) => p.type === "software");
   const articlePosts = posts.filter(
     (p) => p.type !== "software" && p.type !== "publication"
   );
