@@ -12,35 +12,46 @@ I split the work into two parts. The first asks what can be inferred with a stri
 
 ## Finite-memory hypothesis testing
 
-The source emits a sequence of zeros and ones. There are two hypotheses, `H = +1` and `H = −1`. At the start, the source draws a hidden phase `Z` uniformly from `{0, 1}`. The phase decides which parity of time indices carries information about `H`. Given `H = h` and `Z = z`, the observations are independent. For a bias parameter `0 < c < ½`, the two cases are
+The source emits a sequence of zeros and ones. There are two hypotheses, $H = +1$ and $H=-1$. At the start, the source draws a hidden phase $Z$ uniformly from $\{0,1\}$. The phase decides which parity of time indices carries information about $H$. Given $H = h$ and $Z = z$, the observations are independent. For a bias parameter $0<c<\frac12$, the two cases are
 
-> **Informative positions:** `Pr(Xₜ = 1 | H = h, Z = z) = ½ + hc` when `t mod 2 = z`.
->
-> **Other positions:** `Pr(Xₜ = 1 | H = h, Z = z) = ½`.
+$$
+\Pr(X_t = 1 \mid H = h, Z = z) =
+\begin{cases}
+\frac12 + hc, & t \bmod 2 = z,\\
+\frac12, & t \bmod 2 \ne z.
+\end{cases}
+$$
 
-For example, if `Z = 1`, observations one and three carry a bias and observations two and four are fair coin flips. The observer sees the bits but has to infer which hypothesis generated them without being told the phase.
+For example, if $Z = 1$, observations one and three carry a bias and observations two and four are fair coin flips. The observer sees the bits but has to infer which hypothesis generated them without being told the phase.
 
-Now give the observer three internal states. A deterministic observer has one destination state for each pair of current state and observed bit. A randomized observer assigns a probability distribution to the destination. After the final observation, the test can use only the final state. The objective is the **total variation distance** between the two distributions of that final state, where `p₊(s)` and `p₋(s)` are its probabilities under the two hypotheses.
+Now give the observer three internal states. A deterministic observer has one destination state for each pair of current state and observed bit. A randomized observer assigns a probability distribution to the destination. After the final observation, the test can use only the final state. The objective is the **total variation distance** between the two distributions of that final state, where $p_+(s)$ and $p_-(s)$ are its probabilities under the two hypotheses.
 
-> `TV(p₊, p₋) = ½ Σₛ |p₊(s) − p₋(s)|`
->
-> `Minimum error with equal priors = ½ × (1 − TV)`
+$$
+\begin{aligned}
+\operatorname{TV}(p_+,p_-) &= \frac12\sum_s |p_+(s)-p_-(s)|,\\
+P_{\mathrm{error}}^{\min} &= \frac12\bigl(1-\operatorname{TV}(p_+,p_-)\bigr).
+\end{aligned}
+$$
 
-The second equation explains why a larger distance matters. It lowers the best achievable probability of making the wrong decision from the final state.
+With equal priors, the second equation explains why a larger distance matters. It lowers the best achievable probability of making the wrong decision from the final state.
 
-**Manuscript 1 — Four observations.** At the four-observation horizon, the best deterministic three-state observer in the comparison achieves total variation `5c/4`. An explicit randomized observer reaches `9403c/7500`. The gap is positive for every `c > 0` in the model, with the same three-state budget.
+**Manuscript 1 — Four observations.** At the four-observation horizon, the best deterministic three-state observer in the comparison achieves total variation $\frac{5c}{4}$. An explicit randomized observer reaches $\frac{9403c}{7500}$. The gap is positive for every $c > 0$ in the model, with the same three-state budget.
 
-> `9403c/7500 − 5c/4 = 7c/1875 > 0`
+$$
+\frac{9403c}{7500} - \frac{5c}{4} = \frac{7c}{1875} > 0
+$$
 
 The gain is small and exact. This construction shows that randomized transitions can improve the decision without adding a state. This manuscript was prepared for the *Journal of Applied Probability*.
 
-**Manuscript 2 — Three and five observations.** The second manuscript computes exact deterministic optima at both horizons and gives rational randomized transition probabilities that achieve strictly greater total variation for `0 < c < ½`. The comparison covers a range of source biases rather than a single numerical example. Submitted to *Stochastic Models*.
+**Manuscript 2 — Three and five observations.** The second manuscript computes exact deterministic optima at both horizons and gives rational randomized transition probabilities that achieve strictly greater total variation for $0<c<\frac12$. The comparison covers a range of source biases rather than a single numerical example. Submitted to *Stochastic Models*.
 
-**Manuscript 3 — Exact and approximate testing.** Here the reference is the optimal decision using all `n` observations. Write `P₊⁽ⁿ⁾(w)` and `P₋⁽ⁿ⁾(w)` for the probabilities of observing the entire binary word `w` under the two hypotheses. Then the full-history benchmark is
+**Manuscript 3 — Exact and approximate testing.** Here the reference is the optimal decision using all $n$ observations. Write $P_+^{(n)}(w)$ and $P_-^{(n)}(w)$ for the probabilities of observing the entire binary word $w$ under the two hypotheses. Then the full-history benchmark is
 
-> `Bₙ(c) = ½ Σ_w |P₊⁽ⁿ⁾(w) − P₋⁽ⁿ⁾(w)|`.
+$$
+B_n(c) = \frac12\sum_{w\in\{0,1\}^n}\left|P_+^{(n)}(w)-P_-^{(n)}(w)\right|
+$$
 
-For odd `n`, the manuscript gives a lower bound of `C(n, (n−1)/2)` states for matching this benchmark exactly, where `C(n,k)` counts the ways to choose `k` elements from `n`. With fixed positive tolerance `ε`, a reflected counter can instead use `O((1 + log(1/ε))/c)` states once the horizon is sufficiently long. These bounds count **states**. The number of bits needed to encode `m` states is `⌈log₂ m⌉`. Submitted to *IEEE Transactions on Information Theory*.
+For odd $n$, the manuscript gives a lower bound of $\binom{n}{(n-1)/2}$ states for matching this benchmark exactly, where $\binom{n}{k}$ counts the ways to choose $k$ elements from $n$. With fixed positive tolerance $\varepsilon$, a reflected counter can instead use $O\!\left(\frac{1+\log(1/\varepsilon)}{c}\right)$ states once the horizon is sufficiently long. These bounds count **states**. The number of bits needed to encode $m$ states is $\lceil \log_2 m\rceil$. Submitted to *IEEE Transactions on Information Theory*.
 
 ## World models
 
@@ -48,11 +59,17 @@ A world model learns how a state changes after an action. A planner can use the 
 
 For a concrete example, imagine a planner deciding whether to brake now or in two steps. The learned model slightly underestimates how far the system will travel at each step. That difference may be small in a prediction report, yet after several steps it may make the late-braking option look safer than it is. A larger error elsewhere may leave the preferred action unchanged. I want to measure both effects by comparing the model’s forecasts with the reference environment and checking whether the model changes which action the planner prefers.
 
-The first practical step is to measure how errors accumulate. In my Latent Dynamics Benchmark, a linear transition model is fitted on seeded synthetic trajectories. The benchmark evaluates free-running predictions on held-out trajectories, reports error over a specified rollout horizon, and compares it with a persistence baseline that predicts the state will stay where it is. The reference dynamics are known, so the error is directly measurable. In the benchmark, `xₜ` is the state and `uₜ` is the action.
+The first practical step is to measure how errors accumulate. In my Latent Dynamics Benchmark, a linear transition model is fitted on seeded synthetic trajectories. The benchmark evaluates free-running predictions on held-out trajectories, reports error over a specified rollout horizon, and compares it with a persistence baseline that predicts the state will stay where it is. The reference dynamics are known, so the error is directly measurable. In the benchmark, $x_t$ is the state and $u_t$ is the action.
 
-> **Reference system:** `xₜ₊₁ = 0.92xₜ + 0.35uₜ`
->
-> **Rollout error over T steps:** `RMSE = √[(1/T) Σₜ (x̂ₜ − xₜ)²]`
+$$
+x_{t+1}=0.92x_t+0.35u_t
+$$
+
+The rollout error over $T$ steps is
+
+$$
+\operatorname{RMSE}=\sqrt{\frac1T\sum_{t=1}^T(\hat{x}_t-x_t)^2}.
+$$
 
 The sum compares each predicted state with its corresponding reference state. The rollout feeds each predicted state back into the fitted model, so the metric reflects errors that accumulate over multiple steps. This experiment measures state prediction in a one-dimensional system. The next experiment adds planning and evaluates the selected action sequence in the reference environment. [Latent Dynamics Benchmark](https://github.com/MonikaDvorackova/latent-dynamics-bench)
 

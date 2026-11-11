@@ -4,6 +4,9 @@
 import React from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import "katex/dist/katex.min.css";
 import ArticleHeader from "@/components/ArticleHeader";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -214,7 +217,7 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
 
             <article>
               <div className="mobile-pad prose prose-sm max-w-[720px] mx-auto text-left text-neutral-900 px-4 py-4 sm:px-5 sm:py-6">
-                <Markdown remarkPlugins={[remarkGfm]} components={components}>
+                <Markdown remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[rehypeKatex]} components={components}>
                   {content}
                 </Markdown>
               </div>
@@ -242,6 +245,12 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
                 .mobile-pad code {
                   max-width: 100%;
                   overflow-wrap: anywhere;
+                }
+
+                .prose .katex-display {
+                  overflow-x: auto;
+                  overflow-y: hidden;
+                  padding: 0.25rem 0;
                 }
 
                 .post-table-scroll {
