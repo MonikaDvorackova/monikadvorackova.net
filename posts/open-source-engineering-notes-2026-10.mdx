@@ -1,27 +1,116 @@
 ---
-title: "Open Source Engineering Notes — October 2026"
+title: "Open Source Engineering Notes — October and November 2026"
 date: "2026-10-30"
 type: "article"
 tags: ["Open Source", "Engineering", "Python"]
-description: "An October Python packaging fix, with November follow-ups on recursive object-store copies and concurrent joblib cache misses."
+description: "Technical notes and a public contribution index covering Python, scientific computing, ML systems, and AIGov Core."
 ---
 
-My October upstream contribution was a one-line Python packaging fix. Two November follow-ups took more investigation. One concerns how recursive file operations treat virtual directories. The other concerns what happens when several workers miss the same cache entry.
+*Updated November 11, 2026.*
 
-## October — Removing a deprecated license classifier in pylavi
+These notes started with a one-line Python packaging fix. The work since then has ranged from a null symbol in LLVM to duplicate computation in a local cache. Here I record what each change addresses, how it was checked, and where it stands upstream. The index below also includes earlier public pull requests and links to my own public projects.
 
-PyPI warned about the `License :: OSI Approved :: The Unlicense (Unlicense)` classifier. I removed that classifier from `setup.py` and kept the existing `license="Unlicense"` declaration. The strict package metadata check passed, and the PR records 46 passing tests. The change merged upstream on October 30. [pylavi PR #88](https://github.com/marcpage/pylavi/pull/88)
+## Python and data infrastructure
 
-## November 11 update
+**CPython.** On POSIX, the optimized paths in `fnmatch.filter()` and `fnmatch.filterfalse()` could bypass normalization of individual names. A `pathlib.Path` then reached the pattern matcher in a form it could not handle. The patch normalizes each name and adds regression coverage for both filters. The targeted `test_fnmatch` suite passed locally. The PR remains open. [CPython #160980](https://github.com/python/cpython/pull/160980)
 
-### fsspec — Recursive moves on object storage
+**fsspec.** A recursive copy can enumerate both files and directories. On S3, a virtual directory can appear in that listing without an object at the directory path for `cp_file` to copy. The proposed fix handles directories with `makedirs(exist_ok=True)` in the synchronous and asynchronous paths. Errors copying real files still propagate and stop a move before it deletes the source. Eight regressions failed on the original code and passed after the change. The relevant suites reported 891 passes, 36 skips and one expected failure. A local Moto S3 test verified destination bytes and removal of the source objects after a successful move. The PR remains open. [fsspec #2448](https://github.com/fsspec/filesystem_spec/pull/2448)
 
-A recursive copy can enumerate both files and directories. On S3, a virtual directory can appear in that listing even when there is no object at the directory path for `cp_file` to copy. The patch handles directories through `makedirs(exist_ok=True)` in the synchronous and asynchronous copy paths. Errors copying real files still propagate, so a failed copy stops the move before source deletion.
+**joblib.** Concurrent `Memory` calls can each compute the same missing result. The opt-in `singleflight=True` prototype takes a local advisory lock per cache key and rechecks the cache after acquiring it. In the threaded reproduction, six calls executed the function three times before the change and once with the prototype. Different keys can still run concurrently. A follow-up moved custom backend validation ahead of cache initialization. The focused suites passed 113 tests and all 33 checks passed on commit `04c7087`. The PR is open for review. Lock-file reclamation and concurrent cache maintenance remain design questions, and the prototype targets local filesystems. [joblib #1946](https://github.com/joblib/joblib/pull/1946)
 
-Eight regression cases failed before the change and passed afterward. The relevant suites reported 891 passes, 36 skips and one expected failure. A recursive move using `s3fs` and a local Moto S3 server verified both the destination bytes and removal of the source objects after a successful copy. The PR is open upstream. [fsspec PR #2448](https://github.com/fsspec/filesystem_spec/pull/2448)
+**Polars.** A small `scan_csv().head()` could prefetch much more data than the slice required. The proposal caps default prefetch for positive slices of up to 1,000 rows and honors explicit environment overrides. On a 40-million-row CSV with 24 threads, three local `head(5)` runs used 102, 104 and 103 MiB peak RSS. Each returned five rows. These are measurements from one workload and environment. [Polars #30700](https://github.com/pola-rs/polars/pull/30700)
 
-### joblib — Coalescing concurrent cache misses
+**pylavi and Hugging Face.** pylavi removed a deprecated PyPI classifier while keeping its existing Unlicense declaration. The strict package metadata check and 46 tests passed, and the one-line change merged on October 30. On the Hugging Face Hub, the streaming filesystem PR restricts a read-only path to binary read mode. Newer fsspec versions could accept exclusive write modes and discard those writes. The Datasets and Evaluate proposals address custom HTTP user-agent forwarding and import-time lazy loading respectively. [pylavi #88](https://github.com/marcpage/pylavi/pull/88) · [Hub #5287](https://github.com/huggingface/huggingface_hub/pull/5287) · [Datasets #8866](https://github.com/huggingface/datasets/pull/8866) · [Evaluate #833](https://github.com/huggingface/evaluate/pull/833)
 
-Concurrent calls to `joblib.Memory` can each compute the same missing result. The opt-in `singleflight=True` prototype takes a local advisory lock per cache key and rechecks the cache after acquiring it. In the threaded reproduction, six calls ran the underlying function three times before the change and once with the prototype. Calls with different keys can still run concurrently.
+## Scientific Python and numerical behavior
 
-A follow-up moved validation of custom store backends ahead of cache initialization and added a regression test. The focused Memory suites passed 113 tests. The patch coverage check and the threading CI job both passed on the updated commit. The PR is open for review, and the prototype is scoped to local filesystems. [joblib PR #1946](https://github.com/joblib/joblib/pull/1946)
+**Matplotlib.** Following review, validation moved to `FixedLocator`, where NaN and infinity can be rejected as invalid tick positions before rendering starts. The PR records 566 passing ticker tests and Ruff checks. The fix merged on November 7. [Matplotlib #32575](https://github.com/matplotlib/matplotlib/pull/32575)
+
+**NeuralForecast.** Two open patches address different numerical issues. `MQLoss` and `HuberMQLoss` were using the length of the leading dimension of a reshaped quantile tensor. Using its final dimension gives the intended mean across quantiles and changes gradient scale for multi-quantile training. In RevIN denormalization, a sign-preserving lower bound on the magnitude of the affine denominator prevents division by zero. The PR records 49 passing focused RevIN tests and describes the behavior near zero. [NeuralForecast #1731](https://github.com/Nixtla/neuralforecast/pull/1731) · [NeuralForecast #1734](https://github.com/Nixtla/neuralforecast/pull/1734)
+
+**Scientific APIs and examples.** The merged scikit-image edit documents that the lily microscopy dataset has three fluorescence channels and one DIC channel, with 12-bit precision stored in `uint16`. The pandas reference now exposes `ExtensionDtype.empty` through autosummary. Open documentation PRs explain DIA sparse-storage indexing in SciPy, custom font loading in Matplotlib, slicing in Rust ndarray, and an interactive sphere widget in PyVista. [scikit-image #8389](https://github.com/scikit-image/scikit-image/pull/8389) · [pandas #71798](https://github.com/pandas-dev/pandas/pull/71798) · [SciPy #26592](https://github.com/scipy/scipy/pull/26592) · [Matplotlib #32568](https://github.com/matplotlib/matplotlib/pull/32568) · [ndarray #1626](https://github.com/rust-ndarray/ndarray/pull/1626) · [PyVista #9530](https://github.com/pyvista/pyvista/pull/9530)
+
+**Numerical investigations without submitted patches.** Three local C++ patches exercised SciPy's XSF kernels directly. The complex Legendre recurrence patch passed 16 assertions, the incomplete gamma prefactor patch passed 34, and the convergence patch passed 13. The first two issues already have matching upstream XSF PRs. The convergence patch remains local for human review, particularly around subnormal tails. Validation used standalone C++ tests and high-precision references. Full SciPy integration is pending. [Legendre issue #26452](https://github.com/scipy/scipy/issues/26452) · [XSF #390](https://github.com/scipy/xsf/pull/390) · [Gamma prefactor issue #26535](https://github.com/scipy/scipy/issues/26535) · [XSF #419](https://github.com/scipy/xsf/pull/419) · [Gamma convergence issue #26471](https://github.com/scipy/scipy/issues/26471)
+
+## Compilers, ML systems, and verification
+
+**LLVM/MLIR.** An indirect function with a missing resolver symbol could hit an assertion during verification. The merged fix checks for a null lookup result and lets the verifier emit its existing diagnostic. The added invalid-IR case passed under `llvm-lit`. [LLVM #240111](https://github.com/llvm/llvm-project/pull/240111)
+
+**PyTorch.** The Dynamo proposal preserves explicit dynamic-dimension annotations on parameters. The original recompilation behavior was reproduced on an installed wheel. Runtime validation of the modified source checkout remained pending in the PR record. The Inductor proposal folds eligible foreach copy epilogues while guarding mutation ordering, partial groups, and aliasing. Its controlled comparison reduced the pre-fusion IR from nine nodes to six. CPU tests covered the affected foreach paths, and the PR reports the IR count as a structural result. [Dynamo #203991](https://github.com/pytorch/pytorch/pull/203991) · [Inductor #204039](https://github.com/pytorch/pytorch/pull/204039)
+
+**Runtime and evaluation.** The Claude Agent SDK proposal addresses callback starvation when message consumers stall. The proposed unbounded buffer introduces a memory trade-off if consumers remain stalled. Other open contributions cover fused BERT CPU softmax in Candle, paired toxicity reporting in TrustyAI, and two alpha-beta-CROWN changes involving adversarial input bounds and interval-sensitivity branching. The private top-k proposal in OpenDP was closed without a merge. [Claude Agent SDK #1481](https://github.com/anthropics/claude-agent-sdk-python/pull/1481) · [Candle #4088](https://github.com/huggingface/candle/pull/4088) · [TrustyAI #14](https://github.com/trustyai-explainability/trustyai-detoxify/pull/14) · [alpha-beta-CROWN #110](https://github.com/Verified-Intelligence/alpha-beta-CROWN/pull/110) · [alpha-beta-CROWN #109](https://github.com/Verified-Intelligence/alpha-beta-CROWN/pull/109) · [OpenDP #3141](https://github.com/opendp/opendp/pull/3141)
+
+## AIGov Core and public research projects
+
+AIGov Core is the open-source audit and governance engine I maintain. October work addressed false chain-break reports when an export filtered events from a shared ledger, added offline Ed25519 signing and verification for plain JSON exports, and introduced provider-neutral decision-time evidence with full, redacted, and digest-only capture profiles. November work added offline replay and a readiness check to the demo. A replay can reconstruct the original governance verdict while readiness remains partial because a policy archive is unavailable. The runtime smoke documentation also spells out which checks support each claim. [AIGov Core](https://github.com/AIGovDev/aigov-core) · [Export continuity #228](https://github.com/AIGovDev/aigov-core/pull/228) · [Signing #227](https://github.com/AIGovDev/aigov-core/pull/227) · [Provider traces #237](https://github.com/AIGovDev/aigov-core/pull/237) · [Offline replay #242](https://github.com/AIGovDev/aigov-core/pull/242) · [Runtime smoke #409](https://github.com/AIGovDev/aigov-core/pull/409) · [AIGov Core PR history](https://github.com/AIGovDev/aigov-core/pulls?q=is%3Apr+author%3AMonikaDvorackova)
+
+My public research and engineering repositories cover model-based planning, agent reliability, numerical kernels, uncertainty and calibration, privacy accounting, and governance infrastructure. Each repository describes its own scope and licensing. [GitHub repositories](https://github.com/MonikaDvorackova?tab=repositories)
+
+## Public pull request index
+
+GitHub's public search returned 37 pull requests authored under my account in third-party repositories as of November 11, including earlier teaching and workshop collaborations. The status below reflects the GitHub record on that date. [GitHub search](https://github.com/search?q=is%3Apr+is%3Apublic+author%3AMonikaDvorackova+-user%3AMonikaDvorackova+-org%3AAIGovDev&type=pullrequests)
+
+| Project | Pull request | Status |
+| --- | --- | --- |
+| joblib | [ENH: prototype opt-in singleflight for local Memory calls](https://github.com/joblib/joblib/pull/1946) | Open |
+| filesystem_spec | [Handle virtual directories in recursive copies and moves](https://github.com/fsspec/filesystem_spec/pull/2448) | Open |
+| polars | [fix(python): Reduce CSV prefetch memory for small head slices](https://github.com/pola-rs/polars/pull/30700) | Open |
+| claude-agent-sdk-python | [fix: prevent control callback starvation when message consumers stall](https://github.com/anthropics/claude-agent-sdk-python/pull/1481) | Open |
+| alpha-beta-CROWN | [Fix swapped input bounds when checking clean adversarial examples](https://github.com/Verified-Intelligence/alpha-beta-CROWN/pull/110) | Open |
+| alpha-beta-CROWN | [Add multi-specification interval-sensitivity branching](https://github.com/Verified-Intelligence/alpha-beta-CROWN/pull/109) | Open |
+| pytorch | [Inductor: fold foreach input mutation copy epilogues](https://github.com/pytorch/pytorch/pull/204039) | Open |
+| pytorch | [Dynamo: respect explicit mark_dynamic on parameters](https://github.com/pytorch/pytorch/pull/203991) | Open |
+| llvm-project | [\[mlir\]\[LLVM\] Handle a missing ifunc resolver symbol](https://github.com/llvm/llvm-project/pull/240111) | Merged 2026-11-08 |
+| opendp | [Add private top-k selection to Polars expressions](https://github.com/opendp/opendp/pull/3141) | Closed without merge |
+| matplotlib | [FIX: Handle non-finite tick locations in FixedLocator](https://github.com/matplotlib/matplotlib/pull/32575) | Merged 2026-11-07 |
+| neuralforecast | [Fix RevINMultivariate division by zero in denormalization](https://github.com/Nixtla/neuralforecast/pull/1734) | Open |
+| neuralforecast | [Fix multi-quantile loss normalization in MQLoss and HuberMQLoss](https://github.com/Nixtla/neuralforecast/pull/1731) | Open |
+| trustyai-detoxify | [Fix toxicity evaluation and paired reporting](https://github.com/trustyai-explainability/trustyai-detoxify/pull/14) | Open |
+| candle | [PERF use fused softmax for BERT CPU inference](https://github.com/huggingface/candle/pull/4088) | Open |
+| ndarray | [DOC fix slicing links in ArrayRef documentation](https://github.com/rust-ndarray/ndarray/pull/1626) | Open |
+| matplotlib | [DOC clarify custom font loading](https://github.com/matplotlib/matplotlib/pull/32568) | Open |
+| scikit-image | [DOC clarify lily microscopy channels](https://github.com/scikit-image/scikit-image/pull/8389) | Merged 2026-11-03 |
+| pyvista | [DOC add an example for add_sphere_widget](https://github.com/pyvista/pyvista/pull/9530) | Open |
+| scipy | [DOC clarify DIA sparse storage indexing](https://github.com/scipy/scipy/pull/26592) | Open |
+| pandas | [DOC restore dev documentation link](https://github.com/pandas-dev/pandas/pull/71807) | Closed without merge |
+| pandas | [DOC add ExtensionDtype.empty to extension docs](https://github.com/pandas-dev/pandas/pull/71798) | Merged 2026-11-06 |
+| cpython | [gh-160900: support path-like objects in fnmatch filters](https://github.com/python/cpython/pull/160980) | Open |
+| huggingface_hub | [fix(hf_file_system): reject write modes in streaming files](https://github.com/huggingface/huggingface_hub/pull/5287) | Open |
+| pylavi | [fix: remove deprecated license classifier](https://github.com/marcpage/pylavi/pull/88) | Merged 2026-10-30 |
+| attrs | [Support docstrings for slotted attributes](https://github.com/python-attrs/attrs/pull/1652) | Open |
+| attrs | [docs: explain decorator defaults in subclasses](https://github.com/python-attrs/attrs/pull/1651) | Open |
+| datasets | [Fix forwarding custom User-Agent to fsspec HTTP requests](https://github.com/huggingface/datasets/pull/8866) | Open |
+| evaluate | [Speed up evaluate imports with lazy loading](https://github.com/huggingface/evaluate/pull/833) | Open |
+| huggingface_hub | [Preserve existing local files when downloads fail](https://github.com/huggingface/huggingface_hub/pull/5203) | Closed without merge |
+| clab-project-covid-data | [Fix P0 review issues for reproducibility and dashboard correctness](https://github.com/alesziegler/clab-project-covid-data/pull/1) | Merged 2026-06-27 |
+| nhl_project | [fix: correct analysis bugs and improve reproducibility](https://github.com/jadrnytomas/nhl_project/pull/1) | Open |
+| CLab_workshop | [Improve workshop readability and naming consistency](https://github.com/alesziegler/CLab_workshop/pull/1) | Merged 2026-05-31 |
+| warp | [Lighten agent input toolbar chip outlines](https://github.com/warpdotdev/warp/pull/10405) | Closed without merge |
+| zaverecny_projekt | [Add feedback and comments to COVID visualization project](https://github.com/MichalJemelka/zaverecny_projekt/pull/1) | Open |
+| workshop | [Zpětná vazba DataDownload](https://github.com/MichalJemelka/workshop/pull/1) | Open |
+| CodersLab_ukoly | [Zpětná vazba k DataDownload](https://github.com/radoexpr-blip/CodersLab_ukoly/pull/1) | Open |
+
+## Public project repositories
+
+- Compare policy outcomes in learned and reference environments. [model-based-eval-suite](https://github.com/MonikaDvorackova/model-based-eval-suite)
+- Reproducible baseline for learning compact world-model dynamics. [latent-dynamics-bench](https://github.com/MonikaDvorackova/latent-dynamics-bench)
+- Constraint verification and counterexample-oriented safety checks. [formal-ai-verification](https://github.com/MonikaDvorackova/formal-ai-verification)
+- Small, testable numerical kernels and performance baselines. [ml-systems-engineering](https://github.com/MonikaDvorackova/ml-systems-engineering)
+- Deterministic agent tool-call reliability benchmark. [agent-reliability-bench](https://github.com/MonikaDvorackova/agent-reliability-bench)
+- Neural scoring with explicit symbolic constraint checking. [neurosymbolic-reasoning](https://github.com/MonikaDvorackova/neurosymbolic-reasoning)
+- Synthetic causal inference benchmarks with known treatment effects. [causal-ml-benchmarks](https://github.com/MonikaDvorackova/causal-ml-benchmarks)
+- Reproducible latent-dynamics experiments and model-based planning. [world-models-lab](https://github.com/MonikaDvorackova/world-models-lab)
+- Evaluation of model quality across data splits and subgroups. [distribution-shift-eval](https://github.com/MonikaDvorackova/distribution-shift-eval)
+- JSONL episode schema and validator for world-model trajectories. [trajectory-dataset-spec](https://github.com/MonikaDvorackova/trajectory-dataset-spec)
+- Cross-entropy method planning with model uncertainty penalties. [world-model-planner](https://github.com/MonikaDvorackova/world-model-planner)
+- Counterfactual interventions for model rollout error analysis. [counterfactual-rollout-lab](https://github.com/MonikaDvorackova/counterfactual-rollout-lab)
+- Fault injection harness for model input robustness. [robustness-fault-injection](https://github.com/MonikaDvorackova/robustness-fault-injection)
+- Reference implementation of Renyi differential privacy accounting. [privacy-accounting-engine](https://github.com/MonikaDvorackova/privacy-accounting-engine)
+- Audit metrics for explanation stability and intervention checks. [explanation-consistency-audit](https://github.com/MonikaDvorackova/explanation-consistency-audit)
+- HTTP service for model, dataset, evaluation, and deployment lineage. [model-lineage-service](https://github.com/MonikaDvorackova/model-lineage-service)
+- Calibration, selective risk, and abstention metrics. [selective-prediction-calibration](https://github.com/MonikaDvorackova/selective-prediction-calibration)
+- Versioned policy rules evaluated against audit evidence. [obligation-evidence-compiler](https://github.com/MonikaDvorackova/obligation-evidence-compiler)
+- Append-only AI governance evidence log with hash-linked records, integrity verification, and deterministic replay. [evidence-ledger-core](https://github.com/MonikaDvorackova/evidence-ledger-core)
+- Randomized testing of fail-closed approval invariants. [governance-chaos-harness](https://github.com/MonikaDvorackova/governance-chaos-harness)
+- Policy state machine for fail-closed model deployment gates. [policy-gated-runtime](https://github.com/MonikaDvorackova/policy-gated-runtime)
+- Research materials. [research](https://github.com/MonikaDvorackova/research)
