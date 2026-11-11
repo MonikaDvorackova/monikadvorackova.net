@@ -1,0 +1,27 @@
+---
+title: "Finite-Memory Hypothesis Testing and World Models"
+date: "2026-11-11"
+type: "publication"
+tags: ["Mathematics", "Hypothesis Testing", "World Models"]
+description: "Three mathematical manuscripts on finite-memory testing and a research direction on world models inspired by Nick Bostrom’s simulation argument."
+---
+
+I became interested in what an observer can infer from inside a system after reading Nick Bostrom’s 2003 paper on the simulation argument. It made me want to explore a related question through world models. What can an agent learn about the process generating its observations, and when is a model of that process good enough to support a decision? [Bostrom’s paper](https://doi.org/10.1111/1467-9213.00309)
+
+I approach that question in two parts. The first uses a mathematical model small enough to analyze exactly. The second takes the question into learned dynamics and planning.
+
+## Finite-memory hypothesis testing
+
+The mathematical series studies a source with a hidden phase. An observer receives a stream of observations and can summarize everything it has seen in only a fixed number of internal states. Each of the three manuscripts looks at a different aspect of that constraint.
+
+1. **Randomization with four observations.** The first manuscript compares deterministic and randomized observers with three memory states. It gives an exact example in which randomized state transitions improve the test after four observations.
+2. **Randomization with three and five observations.** The second manuscript compares the best deterministic three-state tests with explicit randomized constructions at both horizons. It also examines how the improvement depends on the strength of the source bias.
+3. **Memory for exact and approximate testing.** The third manuscript asks how the memory required for an exact test grows with the observation horizon. It then studies how much memory is sufficient when the test may incur a small loss in accuracy.
+
+I will add publication details and links here as they become available.
+
+## World models
+
+A world model learns how an environment evolves so an agent can compare the likely consequences of different actions. My next line of work asks when small prediction errors grow over several simulated steps and when they become large enough to change the action a planner chooses. Comparing decisions made in the learned model with outcomes in a reference environment gives a concrete way to study that question.
+
+This is where I want to take the thread that began with Bostrom. The connection is the observer’s access to the process behind its experience and what it can infer from that access. In world models, the effect of limited or inaccurate observations can be tested against a known environment.
