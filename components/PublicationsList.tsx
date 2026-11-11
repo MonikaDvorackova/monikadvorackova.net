@@ -30,8 +30,20 @@ function estimateReadingMinutes(...parts: (string | undefined)[]): number {
   return Math.max(1, Math.round(words / 200));
 }
 
-/** Curated external publications (not MDX posts). */
+/** Curated publications and research articles. */
 export const PUBLICATIONS_DATA: PublicationItem[] = [
+  {
+    id: "finite-memory-and-world-models",
+    title: "Finite-Memory Hypothesis Testing and World Models",
+    subtitle: "Research overview",
+    blurb:
+      "Three mathematical manuscripts on testing with limited memory, followed by a research direction on learned models and planning inspired by Nick Bostrom’s simulation argument.",
+    outlet: "Research",
+    href: "/blog/finite-memory-and-world-models",
+    date: "2026",
+    caption: "Work in progress",
+    tags: ["Mathematics", "World Models"],
+  },
   {
     id: "jaike-auditability-2026",
     title: "Why Auditability Fails in Current Generative AI Systems: A Governance Perspective",
@@ -83,6 +95,7 @@ function PublicationCard({
   onPointerInsideCard?: () => void;
 }) {
   const hasLink = Boolean(item.href?.trim());
+  const isExternal = hasLink && !item.href?.startsWith("/");
   const readingMinutes =
     typeof item.readingMinutes === "number" && item.readingMinutes > 0
       ? item.readingMinutes
@@ -119,7 +132,7 @@ function PublicationCard({
               >
                 {item.title}
               </div>
-              {hasLink ? (
+              {isExternal ? (
                 <FaExternalLinkAlt
                   className="mt-0.5 h-3 w-3 shrink-0 text-black transition-colors group-hover:text-[#004cff]"
                   aria-hidden
@@ -218,9 +231,9 @@ function PublicationCard({
     return (
       <a
         href={item.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`${item.title}${item.subtitle ? `. ${item.subtitle}` : ""}. Opens in a new tab.`}
+        target={isExternal ? "_blank" : undefined}
+        rel={isExternal ? "noopener noreferrer" : undefined}
+        aria-label={`${item.title}${item.subtitle ? `. ${item.subtitle}` : ""}${isExternal ? ". Opens in a new tab." : ""}`}
         className={`${cardHoverClass} cursor-pointer`}
         style={cardStyle}
         onPointerEnter={onPointerInsideCard}

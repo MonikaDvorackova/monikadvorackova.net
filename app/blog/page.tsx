@@ -158,31 +158,6 @@ export default function BlogPage() {
                 <div className="w-full max-w-3xl mx-auto">
                   <SectionLabel>Research &amp; Software</SectionLabel>
                   <SectionPanel>
-                    <div className="mb-5 space-y-5 border-b border-black/10 px-2 pb-5 sm:mb-6 sm:px-3">
-                      <section id="finite-memory-hypothesis-testing" aria-labelledby="finite-memory-heading" className="scroll-mt-20">
-                        <h2 id="finite-memory-heading" className="text-lg font-semibold tracking-tight text-neutral-900">
-                          Finite-Memory Hypothesis Testing
-                        </h2>
-                        <p className="mt-1 text-sm leading-relaxed text-neutral-700">
-                          In a series of three manuscripts, I study how much a statistical test can infer
-                          about a source with a hidden phase when it has only a few memory states.
-                        </p>
-                        <ul className="mt-3 space-y-2 text-sm leading-relaxed text-neutral-700">
-                          <li><strong className="text-neutral-900">Four observations.</strong>{" "}
-                            An exact example where randomization improves a test with three memory states.</li>
-                          <li><strong className="text-neutral-900">Three and five observations.</strong>{" "}
-                            A comparison of randomized tests with the best deterministic tests, including how the gain depends on source bias.</li>
-                          <li><strong className="text-neutral-900">Exact and approximate testing.</strong>{" "}
-                            How the memory required for an exact test grows with the number of observations, and how much memory is sufficient when approximation is allowed.</li>
-                        </ul>
-                      </section>
-                      <section aria-labelledby="world-models-heading">
-                        <h2 id="world-models-heading" className="text-base font-semibold text-neutral-900">World Models</h2>
-                        <p className="mt-1 text-sm leading-relaxed text-neutral-700">
-                          I study when prediction errors in learned dynamics compound enough to change a planner’s decisions.
-                        </p>
-                      </section>
-                    </div>
                     <ClientBlog posts={softwarePosts} extras={[
                       { slug: "aigov-core-external", title: "AIGov Core", date: "2026", tags: ["Open Source", "Rust", "AI Governance"], description: "Rust engine: append-only decision evidence, policy evaluation, deterministic governance replay, audit exports and verification endpoints.", externalHref: "https://github.com/AIGovDev/aigov-core" },
                       { slug: "decision-reconstructability-research", title: "Decision Reconstructability Research", date: "2026", tags: ["Research", "Auditability"], description: "Published JAIKE paper (DOI: 10.37819/Jaike.26.0013): explains why model outputs alone cannot reconstruct decisions and identifies decision-time evidence needed for audit.", externalHref: "https://doi.org/10.37819/Jaike.26.0013" },
