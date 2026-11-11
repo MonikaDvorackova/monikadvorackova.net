@@ -12,17 +12,35 @@ I split the work into two parts. The first asks what can be inferred with a stri
 
 ## Finite-memory hypothesis testing
 
-Imagine watching a stream of zeros and ones. The chance of seeing a one alternates between a higher and a lower value, but you cannot see which phase the source started in. The test has to decide which of two possible sources generated the stream. In this setting the hidden phase is sampled once, at the start. The observations provide indirect evidence about it.
+The source emits a sequence of zeros and ones. There are two hypotheses, `H = +1` and `H = −1`. At the start, the source draws a hidden phase `Z` uniformly from `{0, 1}`. The phase decides which parity of time indices carries information about `H`. Given `H = h` and `Z = z`, the observations are independent. For a bias parameter `0 < c < ½`, the two cases are
 
-Now give the observer just three internal states. After each observation it can move to another state, but it cannot keep the full history. At the end, the state it occupies is all it has available for the decision. A deterministic observer always makes the same transition for a given state and observation. A randomized observer can choose between transitions with fixed probabilities. Both have the same number of states. The question is whether changing the transitions alone can improve the final decision.
+> **Informative positions:** `Pr(Xₜ = 1 | H = h, Z = z) = ½ + hc` when `t mod 2 = z`.
+>
+> **Other positions:** `Pr(Xₜ = 1 | H = h, Z = z) = ½`.
 
-**Manuscript 1 — Four observations.** The first manuscript gives an exact example in which a randomized three-state observer does better than the best deterministic observer in the comparison. The four-observation horizon is short enough to compare the constructions exactly. The result matters because the improvement comes with the same memory budget. Randomization changes how evidence is carried forward through those three states.
+For example, if `Z = 1`, observations one and three carry a bias and observations two and four are fair coin flips. The observer sees the bits but has to infer which hypothesis generated them without being told the phase.
 
-**Manuscript 2 — Three and five observations.** The second manuscript asks how the comparison changes when the observer has to decide earlier or later. It works out the deterministic optima and gives explicit randomized constructions at three and five observations. It also examines the source bias, which controls how strongly the high- and low-probability phases differ. This lets me ask how the gap changes as the underlying signal gets weaker, rather than relying on one numerical instance.
+Now give the observer three internal states. A deterministic observer has one destination state for each pair of current state and observed bit. A randomized observer assigns a probability distribution to the destination. After the final observation, the test can use only the final state. The objective is the **total variation distance** between the two distributions of that final state, where `p₊(s)` and `p₋(s)` are its probabilities under the two hypotheses.
 
-**Manuscript 3 — Exact and approximate testing.** The third manuscript changes what is held fixed. Instead of giving the observer three states, it asks how many states are needed to match the optimal decision rule exactly as the number of observations grows. It then studies what happens when we allow a small increase in the probability of error. In the model studied, exact testing requires a state budget that grows with the horizon. For a fixed positive tolerance, a bounded counter can suffice once the horizon is long enough. The counter preserves an accumulated signal up to a limit, giving a concrete way to trade a small amount of accuracy for a smaller memory budget.
+> `TV(p₊, p₋) = ½ Σₛ |p₊(s) − p₋(s)|`
+>
+> `Minimum error with equal priors = ½ × (1 − TV)`
 
-I will add publication details and links for the three manuscripts as they become available.
+The second equation explains why a larger distance matters. It lowers the best achievable probability of making the wrong decision from the final state.
+
+**Manuscript 1 — Four observations.** At the four-observation horizon, the best deterministic three-state observer in the comparison achieves total variation `5c/4`. An explicit randomized observer reaches `9403c/7500`. The gap is positive for every `c > 0` in the model, with the same three-state budget.
+
+> `9403c/7500 − 5c/4 = 7c/1875 > 0`
+
+The gain is small and exact. This construction shows that randomized transitions can improve the decision without adding a state. This manuscript was prepared for the *Journal of Applied Probability*.
+
+**Manuscript 2 — Three and five observations.** The second manuscript computes exact deterministic optima at both horizons and gives rational randomized transition probabilities that achieve strictly greater total variation for `0 < c < ½`. The comparison covers a range of source biases rather than a single numerical example. Submitted to *Stochastic Models*.
+
+**Manuscript 3 — Exact and approximate testing.** Here the reference is the optimal decision using all `n` observations. Write `P₊⁽ⁿ⁾(w)` and `P₋⁽ⁿ⁾(w)` for the probabilities of observing the entire binary word `w` under the two hypotheses. Then the full-history benchmark is
+
+> `Bₙ(c) = ½ Σ_w |P₊⁽ⁿ⁾(w) − P₋⁽ⁿ⁾(w)|`.
+
+For odd `n`, the manuscript gives a lower bound of `C(n, (n−1)/2)` states for matching this benchmark exactly, where `C(n,k)` counts the ways to choose `k` elements from `n`. With fixed positive tolerance `ε`, a reflected counter can instead use `O((1 + log(1/ε))/c)` states once the horizon is sufficiently long. These bounds count **states**. The number of bits needed to encode `m` states is `⌈log₂ m⌉`. Submitted to *IEEE Transactions on Information Theory*.
 
 ## World models
 
@@ -30,6 +48,12 @@ A world model learns how a state changes after an action. A planner can use the 
 
 For a concrete example, imagine a planner deciding whether to brake now or in two steps. The learned model slightly underestimates how far the system will travel at each step. That difference may be small in a prediction report, yet after several steps it may make the late-braking option look safer than it is. A larger error elsewhere may leave the preferred action unchanged. I want to measure both effects by comparing the model’s forecasts with the reference environment and checking whether the model changes which action the planner prefers.
 
-The first practical step is to measure how errors accumulate. In my Latent Dynamics Benchmark, a linear transition model is fitted on seeded synthetic trajectories. The benchmark evaluates free-running predictions on held-out trajectories, reports error over a specified rollout horizon, and compares it with a persistence baseline that predicts the state will stay where it is. The reference dynamics are known, so the error is directly measurable. This experiment measures state prediction in a one-dimensional system. The next experiment adds planning and evaluates the selected action sequence in the reference environment. [Latent Dynamics Benchmark](https://github.com/MonikaDvorackova/latent-dynamics-bench)
+The first practical step is to measure how errors accumulate. In my Latent Dynamics Benchmark, a linear transition model is fitted on seeded synthetic trajectories. The benchmark evaluates free-running predictions on held-out trajectories, reports error over a specified rollout horizon, and compares it with a persistence baseline that predicts the state will stay where it is. The reference dynamics are known, so the error is directly measurable. In the benchmark, `xₜ` is the state and `uₜ` is the action.
+
+> **Reference system:** `xₜ₊₁ = 0.92xₜ + 0.35uₜ`
+>
+> **Rollout error over T steps:** `RMSE = √[(1/T) Σₜ (x̂ₜ − xₜ)²]`
+
+The sum compares each predicted state with its corresponding reference state. The rollout feeds each predicted state back into the fitted model, so the metric reflects errors that accumulate over multiple steps. This experiment measures state prediction in a one-dimensional system. The next experiment adds planning and evaluates the selected action sequence in the reference environment. [Latent Dynamics Benchmark](https://github.com/MonikaDvorackova/latent-dynamics-bench)
 
 The connection to Bostrom is the question about what an observer can infer about a system it experiences from within. For world models, I can make part of that question testable by fixing a reference environment, controlling what the agent sees, and measuring the consequences of planning with a learned model.
