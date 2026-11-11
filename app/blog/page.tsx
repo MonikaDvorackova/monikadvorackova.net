@@ -183,6 +183,45 @@ export default function BlogPage() {
                     <SectionLabel>Publications</SectionLabel>
                     <SectionPanel>
                       <PublicationsList />
+                      <section
+                        id="finite-memory-hypothesis-testing"
+                        aria-labelledby="finite-memory-heading"
+                        className="mt-6 scroll-mt-20 border-t border-black/10 px-1 pt-5 sm:mt-8 sm:px-3 sm:pt-6"
+                      >
+                        <h2 id="finite-memory-heading" className="text-lg font-semibold tracking-tight text-neutral-900">
+                          Finite-Memory Hypothesis Testing
+                        </h2>
+                        <p className="mt-2 text-sm leading-relaxed text-neutral-700">
+                          How much memory does a statistical test need when the data source has a hidden phase?
+                          In this series of three manuscripts, I study what a finite-state observer can infer
+                          from a stream of observations when it can retain only a limited internal state.
+                        </p>
+                        <ol className="mt-4 list-decimal space-y-3 pl-5 text-sm leading-relaxed text-neutral-700 marker:font-medium">
+                          <li>
+                            <strong className="text-neutral-900">Randomization with four observations.</strong>{" "}
+                            The first manuscript compares deterministic and randomized observers with three memory
+                            states. It gives an exact four-observation example where randomized state transitions
+                            improve the final test.
+                          </li>
+                          <li>
+                            <strong className="text-neutral-900">Randomization at three and five observations.</strong>{" "}
+                            The second manuscript compares the best deterministic three-state tests with explicit
+                            randomized constructions at these two horizons and examines how the improvement depends
+                            on the strength of the source bias.
+                          </li>
+                          <li>
+                            <strong className="text-neutral-900">Memory for exact and approximate tests.</strong>{" "}
+                            The third manuscript studies how the number of states needed for an exact test grows
+                            with the observation horizon and how much memory suffices when a small loss in accuracy
+                            is allowed.
+                          </li>
+                        </ol>
+                        <h3 className="mt-5 text-sm font-semibold text-neutral-900">World Models</h3>
+                        <p className="mt-1 text-sm leading-relaxed text-neutral-700">
+                          I am also exploring how learned dynamics models accumulate errors over multiple steps
+                          and when those errors change the decisions a planner makes.
+                        </p>
+                      </section>
                     </SectionPanel>
                   </div>
                 </motion.section>
