@@ -3,21 +3,25 @@ title: "Open Source Engineering Notes — October 2026"
 date: "2026-10-30"
 type: "article"
 tags: ["Open Source", "Engineering", "Python"]
-description: "An October 2026 record of upstream engineering contributions, with links to verifiable changes."
+description: "An October Python packaging fix, with November follow-ups on recursive object-store copies and concurrent joblib cache misses."
 ---
 
-This month's open-source work included a maintenance fix to the Python packaging metadata of an upstream project. The focus here is on the actual change and its verification, rather than the number of pull requests submitted.
+My October upstream contribution was a one-line Python packaging fix. Two November follow-ups took more investigation. One concerns how recursive file operations treat virtual directories. The other concerns what happens when several workers miss the same cache entry.
 
-## pylavi: remove a deprecated license classifier
+## October — Removing a deprecated license classifier in pylavi
 
-In [marcpage/pylavi PR #88](https://github.com/marcpage/pylavi/pull/88), I removed the deprecated `License :: OSI Approved :: The Unlicense (Unlicense)` classifier from `setup.py`. The package retains its existing `license="Unlicense"` metadata; the change does not attempt to relicense the project.
+PyPI warned about the `License :: OSI Approved :: The Unlicense (Unlicense)` classifier. I removed that classifier from `setup.py` and kept the existing `license="Unlicense"` declaration. The strict package metadata check passed, and the PR records 46 passing tests. The change merged upstream on October 30. [pylavi PR #88](https://github.com/marcpage/pylavi/pull/88)
 
-The upstream pull request was merged on October 30, 2026. The PR records a strict package-metadata check and a test run reporting 46 passing tests. This is a small compatibility and maintenance change, not a functional change to the library's behavior.
+## November 11 update
 
-## Further upstream work
+### fsspec — Recursive moves on object storage
 
-Other October contributions are not included here until their merge status and technical scope are independently verified. The monthly generator will collect externally merged pull requests for editorial review.
+A recursive copy can enumerate both files and directories. On S3, a virtual directory can appear in that listing even when there is no object at the directory path for `cp_file` to copy. The patch handles directories through `makedirs(exist_ok=True)` in the synchronous and asynchronous copy paths. Errors copying real files still propagate, so a failed copy stops the move before source deletion.
 
-## Sources
+Eight regression cases failed before the change and passed afterward. The relevant suites reported 891 passes, 36 skips and one expected failure. A recursive move using `s3fs` and a local Moto S3 server verified both the destination bytes and removal of the source objects after a successful copy. The PR is open upstream. [fsspec PR #2448](https://github.com/fsspec/filesystem_spec/pull/2448)
 
-- [pylavi PR #88 — merged upstream](https://github.com/marcpage/pylavi/pull/88)
+### joblib — Coalescing concurrent cache misses
+
+Concurrent calls to `joblib.Memory` can each compute the same missing result. The opt-in `singleflight=True` prototype takes a local advisory lock per cache key and rechecks the cache after acquiring it. In the threaded reproduction, six calls ran the underlying function three times before the change and once with the prototype. Calls with different keys can still run concurrently.
+
+A follow-up moved validation of custom store backends ahead of cache initialization and added a regression test. The focused Memory suites passed 113 tests. The patch coverage check and the threading CI job both passed on the updated commit. The PR is open for review, and the prototype is scoped to local filesystems. [joblib PR #1946](https://github.com/joblib/joblib/pull/1946)
