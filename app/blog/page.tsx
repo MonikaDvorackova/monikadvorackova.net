@@ -158,6 +158,31 @@ export default function BlogPage() {
                 <div className="w-full max-w-3xl mx-auto">
                   <SectionLabel>Research &amp; Software</SectionLabel>
                   <SectionPanel>
+                    <div className="mb-5 space-y-5 border-b border-black/10 px-2 pb-5 sm:mb-6 sm:px-3">
+                      <section id="finite-memory-hypothesis-testing" aria-labelledby="finite-memory-heading" className="scroll-mt-20">
+                        <h2 id="finite-memory-heading" className="text-lg font-semibold tracking-tight text-neutral-900">
+                          Finite-Memory Hypothesis Testing
+                        </h2>
+                        <p className="mt-1 text-sm leading-relaxed text-neutral-700">
+                          In a series of three manuscripts, I study how much a statistical test can infer
+                          about a source with a hidden phase when it has only a few memory states.
+                        </p>
+                        <ul className="mt-3 space-y-2 text-sm leading-relaxed text-neutral-700">
+                          <li><strong className="text-neutral-900">Four observations.</strong>{" "}
+                            An exact example where randomization improves a test with three memory states.</li>
+                          <li><strong className="text-neutral-900">Three and five observations.</strong>{" "}
+                            A comparison of randomized tests with the best deterministic tests, including how the gain depends on source bias.</li>
+                          <li><strong className="text-neutral-900">Exact and approximate testing.</strong>{" "}
+                            How the memory required for an exact test grows with the number of observations, and how much memory is sufficient when approximation is allowed.</li>
+                        </ul>
+                      </section>
+                      <section aria-labelledby="world-models-heading">
+                        <h2 id="world-models-heading" className="text-base font-semibold text-neutral-900">World Models</h2>
+                        <p className="mt-1 text-sm leading-relaxed text-neutral-700">
+                          I study when prediction errors in learned dynamics compound enough to change a planner’s decisions.
+                        </p>
+                      </section>
+                    </div>
                     <ClientBlog posts={softwarePosts} extras={[
                       { slug: "aigov-core-external", title: "AIGov Core", date: "2026", tags: ["Open Source", "Rust", "AI Governance"], description: "Rust engine: append-only decision evidence, policy evaluation, deterministic governance replay, audit exports and verification endpoints.", externalHref: "https://github.com/AIGovDev/aigov-core" },
                       { slug: "decision-reconstructability-research", title: "Decision Reconstructability Research", date: "2026", tags: ["Research", "Auditability"], description: "Published JAIKE paper (DOI: 10.37819/Jaike.26.0013): explains why model outputs alone cannot reconstruct decisions and identifies decision-time evidence needed for audit.", externalHref: "https://doi.org/10.37819/Jaike.26.0013" },
@@ -183,45 +208,6 @@ export default function BlogPage() {
                     <SectionLabel>Publications</SectionLabel>
                     <SectionPanel>
                       <PublicationsList />
-                      <section
-                        id="finite-memory-hypothesis-testing"
-                        aria-labelledby="finite-memory-heading"
-                        className="mt-6 scroll-mt-20 border-t border-black/10 px-1 pt-5 sm:mt-8 sm:px-3 sm:pt-6"
-                      >
-                        <h2 id="finite-memory-heading" className="text-lg font-semibold tracking-tight text-neutral-900">
-                          Finite-Memory Hypothesis Testing
-                        </h2>
-                        <p className="mt-2 text-sm leading-relaxed text-neutral-700">
-                          How much memory does a statistical test need when the data source has a hidden phase?
-                          In this series of three manuscripts, I study what a finite-state observer can infer
-                          from a stream of observations when it can retain only a limited internal state.
-                        </p>
-                        <ol className="mt-4 list-decimal space-y-3 pl-5 text-sm leading-relaxed text-neutral-700 marker:font-medium">
-                          <li>
-                            <strong className="text-neutral-900">Randomization with four observations.</strong>{" "}
-                            The first manuscript compares deterministic and randomized observers with three memory
-                            states. It gives an exact four-observation example where randomized state transitions
-                            improve the final test.
-                          </li>
-                          <li>
-                            <strong className="text-neutral-900">Randomization at three and five observations.</strong>{" "}
-                            The second manuscript compares the best deterministic three-state tests with explicit
-                            randomized constructions at these two horizons and examines how the improvement depends
-                            on the strength of the source bias.
-                          </li>
-                          <li>
-                            <strong className="text-neutral-900">Memory for exact and approximate tests.</strong>{" "}
-                            The third manuscript studies how the number of states needed for an exact test grows
-                            with the observation horizon and how much memory suffices when a small loss in accuracy
-                            is allowed.
-                          </li>
-                        </ol>
-                        <h3 className="mt-5 text-sm font-semibold text-neutral-900">World Models</h3>
-                        <p className="mt-1 text-sm leading-relaxed text-neutral-700">
-                          I am also exploring how learned dynamics models accumulate errors over multiple steps
-                          and when those errors change the decisions a planner makes.
-                        </p>
-                      </section>
                     </SectionPanel>
                   </div>
                 </motion.section>
