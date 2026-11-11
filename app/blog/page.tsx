@@ -126,7 +126,7 @@ export default function BlogPage() {
     });
   }, [isLoaded]);
 
-  const softwarePosts = posts.filter((p) => p.type === "software");
+  const softwarePosts = posts.filter((p) => p.type === "software" && p.slug !== "di360");
   const articlePosts = posts.filter(
     (p) => p.type !== "software" && p.type !== "publication"
   );
@@ -159,6 +159,8 @@ export default function BlogPage() {
                   <SectionLabel>Research &amp; Software</SectionLabel>
                   <SectionPanel>
                     <ClientBlog posts={softwarePosts} extras={[
+                      { slug: "latent-dynamics-bench", title: "Latent Dynamics Benchmark", date: "2026", tags: ["World Models", "Evaluation", "Python"], description: "Fits a linear dynamics model on seeded synthetic trajectories and measures multi-step rollout error on held-out trajectories against a persistence baseline.", externalHref: "https://github.com/MonikaDvorackova/latent-dynamics-bench" },
+                      { slug: "agent-reliability-bench", title: "Agent Reliability Benchmark", date: "2026", tags: ["Agents", "Evaluation", "Python"], description: "A deterministic benchmark for checking whether observed tool-call sequences match the expected protocol.", externalHref: "https://github.com/MonikaDvorackova/agent-reliability-bench" },
                       { slug: "aigov-core-external", title: "AIGov Core", date: "2026", tags: ["Open Source", "Rust", "AI Governance"], description: "Rust engine: append-only decision evidence, policy evaluation, deterministic governance replay, audit exports and verification endpoints.", externalHref: "https://github.com/AIGovDev/aigov-core" },
                       { slug: "decision-reconstructability-research", title: "Decision Reconstructability Research", date: "2026", tags: ["Research", "Auditability"], description: "Published JAIKE paper (DOI: 10.37819/Jaike.26.0013): explains why model outputs alone cannot reconstruct decisions and identifies decision-time evidence needed for audit.", externalHref: "https://doi.org/10.37819/Jaike.26.0013" },
                       { slug: "huggingface-evaluate-lazy-imports", title: "Hugging Face Evaluate — faster imports (PR #833)", date: "2026", tags: ["Open Source", "Python", "Performance"], description: "Lazy loading reduced plain import evaluate from 1.419 s to 0.024 s (about 59×) in a local benchmark; 11 regression tests passed. Other imports vary.", externalHref: "https://github.com/huggingface/evaluate/pull/833" },
