@@ -44,39 +44,68 @@ These notes started with a one-line Python packaging fix. The work since then ha
 
 The pull requests below are contributions to third-party open-source projects. Statuses reflect the GitHub record on November 11, 2026.
 
-| Project | Pull request | Status |
+### Documentation and examples
+
+| Project | Contribution | Status |
 | --- | --- | --- |
-| joblib | [ENH: prototype opt-in singleflight for local Memory calls](https://github.com/joblib/joblib/pull/1946) | Open |
-| filesystem_spec | [Handle virtual directories in recursive copies and moves](https://github.com/fsspec/filesystem_spec/pull/2448) | Open |
-| polars | [fix(python): Reduce CSV prefetch memory for small head slices](https://github.com/pola-rs/polars/pull/30700) | Open |
-| claude-agent-sdk-python | [fix: prevent control callback starvation when message consumers stall](https://github.com/anthropics/claude-agent-sdk-python/pull/1481) | Open |
-| alpha-beta-CROWN | [Fix swapped input bounds when checking clean adversarial examples](https://github.com/Verified-Intelligence/alpha-beta-CROWN/pull/110) | Open |
-| alpha-beta-CROWN | [Add multi-specification interval-sensitivity branching](https://github.com/Verified-Intelligence/alpha-beta-CROWN/pull/109) | Open |
-| pytorch | [Inductor: fold foreach input mutation copy epilogues](https://github.com/pytorch/pytorch/pull/204039) | Open |
-| pytorch | [Dynamo: respect explicit mark_dynamic on parameters](https://github.com/pytorch/pytorch/pull/203991) | Open |
-| llvm-project | [\[mlir\]\[LLVM\] Handle a missing ifunc resolver symbol](https://github.com/llvm/llvm-project/pull/240111) | Merged 2026-11-08 |
-| opendp | [Add private top-k selection to Polars expressions](https://github.com/opendp/opendp/pull/3141) | Closed without merge |
-| matplotlib | [FIX: Handle non-finite tick locations in FixedLocator](https://github.com/matplotlib/matplotlib/pull/32575) | Merged 2026-11-07 |
-| neuralforecast | [Fix RevINMultivariate division by zero in denormalization](https://github.com/Nixtla/neuralforecast/pull/1734) | Open |
-| neuralforecast | [Fix multi-quantile loss normalization in MQLoss and HuberMQLoss](https://github.com/Nixtla/neuralforecast/pull/1731) | Open |
-| trustyai-detoxify | [Fix toxicity evaluation and paired reporting](https://github.com/trustyai-explainability/trustyai-detoxify/pull/14) | Open |
-| candle | [PERF use fused softmax for BERT CPU inference](https://github.com/huggingface/candle/pull/4088) | Open |
-| ndarray | [DOC fix slicing links in ArrayRef documentation](https://github.com/rust-ndarray/ndarray/pull/1626) | Open |
-| matplotlib | [DOC clarify custom font loading](https://github.com/matplotlib/matplotlib/pull/32568) | Open |
-| scikit-image | [DOC clarify lily microscopy channels](https://github.com/scikit-image/scikit-image/pull/8389) | Merged 2026-11-03 |
-| pyvista | [DOC add an example for add_sphere_widget](https://github.com/pyvista/pyvista/pull/9530) | Open |
-| scipy | [DOC clarify DIA sparse storage indexing](https://github.com/scipy/scipy/pull/26592) | Open |
-| pandas | [DOC restore dev documentation link](https://github.com/pandas-dev/pandas/pull/71807) | Closed without merge |
-| pandas | [DOC add ExtensionDtype.empty to extension docs](https://github.com/pandas-dev/pandas/pull/71798) | Merged 2026-11-06 |
-| cpython | [gh-160900: support path-like objects in fnmatch filters](https://github.com/python/cpython/pull/160980) | Open |
-| huggingface_hub | [fix(hf_file_system): reject write modes in streaming files](https://github.com/huggingface/huggingface_hub/pull/5287) | Open |
-| pylavi | [fix: remove deprecated license classifier](https://github.com/marcpage/pylavi/pull/88) | Merged 2026-10-30 |
-| attrs | [Support docstrings for slotted attributes](https://github.com/python-attrs/attrs/pull/1652) | Open |
-| attrs | [docs: explain decorator defaults in subclasses](https://github.com/python-attrs/attrs/pull/1651) | Open |
-| datasets | [Fix forwarding custom User-Agent to fsspec HTTP requests](https://github.com/huggingface/datasets/pull/8866) | Open |
-| evaluate | [Speed up evaluate imports with lazy loading](https://github.com/huggingface/evaluate/pull/833) | Open |
-| huggingface_hub | [Preserve existing local files when downloads fail](https://github.com/huggingface/huggingface_hub/pull/5203) | Closed without merge |
-| warp | [Lighten agent input toolbar chip outlines](https://github.com/warpdotdev/warp/pull/10405) | Closed without merge |
+| attrs | [#1651](https://github.com/python-attrs/attrs/pull/1651) · Explains that decorator-based defaults can reference fields declared in the same class and shows how a subclass can redeclare an inherited field to define a default. | Open |
+| matplotlib | [#32568](https://github.com/matplotlib/matplotlib/pull/32568) · Explains which Linux font directories Matplotlib searches, how to refresh the font cache, and when to register a font with FontManager.addfont. | Open |
+| ndarray | [#1626](https://github.com/rust-ndarray/ndarray/pull/1626) · Repairs slicing links in the Rust ndarray ArrayRef documentation so readers can reach the relevant API reference. | Open |
+| pandas | [#71798](https://github.com/pandas-dev/pandas/pull/71798) · Adds ExtensionDtype.empty to the extension dtype method summary so Sphinx generates its API reference entry. | Merged 2026-11-06 |
+| pandas | [#71807](https://github.com/pandas-dev/pandas/pull/71807) · Proposes a symlink so the development documentation URL resolves after the publishing workflow runs. | Closed without merge |
+| pyvista | [#9530](https://github.com/pyvista/pyvista/pull/9530) · Adds an interactive example that uses a sphere widget callback to move a point. | Open |
+| scikit-image | [#8389](https://github.com/scikit-image/scikit-image/pull/8389) · Identifies the lily dataset's three fluorescence channels and one DIC channel and distinguishes 12-bit precision from uint16 storage. | Merged 2026-11-03 |
+| scipy | [#26592](https://github.com/scipy/scipy/pull/26592) · Explains how matrix coordinates map to DIA storage rows and when trailing zeros can be omitted. | Open |
+
+### Python APIs and packaging
+
+| Project | Contribution | Status |
+| --- | --- | --- |
+| attrs | [#1652](https://github.com/python-attrs/attrs/pull/1652) · Proposes an optional field docstring for slotted attrs classes, accessible through Python introspection and attrs field metadata. | Open |
+| cpython | [#160980](https://github.com/python/cpython/pull/160980) · Normalizes path-like inputs in both fnmatch filters, including on POSIX, and adds tests for pathlib.Path. | Open |
+| pylavi | [#88](https://github.com/marcpage/pylavi/pull/88) · Removes the deprecated Unlicense package classifier while retaining the project's existing license metadata. | Merged 2026-10-30 |
+
+### Filesystems, caching, and data processing
+
+| Project | Contribution | Status |
+| --- | --- | --- |
+| datasets | [#8866](https://github.com/huggingface/datasets/pull/8866) · Forwards a configured user-agent to fsspec HTTP and HTTPS downloads while respecting an explicitly supplied header. | Open |
+| filesystem_spec | [#2448](https://github.com/fsspec/filesystem_spec/pull/2448) · Creates virtual directories during recursive object-store copies and propagates file-copy errors before a move can delete its source. | Open |
+| huggingface_hub | [#5203](https://github.com/huggingface/huggingface_hub/pull/5203) · Proposes preserving the existing local file until its replacement downloads successfully, including when the copy fails partway through. | Closed without merge |
+| huggingface_hub | [#5287](https://github.com/huggingface/huggingface_hub/pull/5287) · Restricts the Hub's read-only streaming file to binary read mode so exclusive write modes cannot silently discard data. | Open |
+| joblib | [#1946](https://github.com/joblib/joblib/pull/1946) · Prototypes a per-key lock and cache recheck so concurrent calls can share a single computation for the same local cache miss. | Open |
+| polars | [#30700](https://github.com/pola-rs/polars/pull/30700) · Limits CSV prefetching for small head slices to reduce peak memory, while honoring explicit configuration overrides. | Open |
+
+### Compilers, runtime, and performance
+
+| Project | Contribution | Status |
+| --- | --- | --- |
+| candle | [#4088](https://github.com/huggingface/candle/pull/4088) · Uses fused softmax for untracked BERT attention on CPU and retains the generic implementation for autograd and other devices. | Open |
+| claude-agent-sdk-python | [#1481](https://github.com/anthropics/claude-agent-sdk-python/pull/1481) · Proposes allowing control callbacks to continue when the message consumer stalls, with a memory trade-off from an unbounded buffer. | Open |
+| evaluate | [#833](https://github.com/huggingface/evaluate/pull/833) · Defers loading heavyweight dependencies during a plain import while preserving the existing package-level API. | Open |
+| llvm-project | [#240111](https://github.com/llvm/llvm-project/pull/240111) · Lets the MLIR verifier report a missing indirect-function resolver using its existing diagnostic instead of triggering an assertion. | Merged 2026-11-08 |
+| pytorch | [#203991](https://github.com/pytorch/pytorch/pull/203991) · Proposes honoring explicit dynamic-dimension annotations on parameters when Dynamo would otherwise specialize their shapes. | Open |
+| pytorch | [#204039](https://github.com/pytorch/pytorch/pull/204039) · Folds eligible foreach copy epilogues in Inductor while guarding against aliasing, partial groups, and changes in mutation order. | Open |
+
+### Numerical correctness, evaluation, and verification
+
+| Project | Contribution | Status |
+| --- | --- | --- |
+| alpha-beta-CROWN | [#109](https://github.com/Verified-Intelligence/alpha-beta-CROWN/pull/109) · Proposes choosing ReLU branches using relaxation uncertainty and sensitivity across multiple specifications. | Open |
+| alpha-beta-CROWN | [#110](https://github.com/Verified-Intelligence/alpha-beta-CROWN/pull/110) · Corrects the order of lower and upper bounds when finalizing a clean adversarial counterexample, preserving the original in-range input. | Open |
+| matplotlib | [#32575](https://github.com/matplotlib/matplotlib/pull/32575) · Rejects NaN and infinite fixed tick positions during locator construction, before plotting reaches rendering. | Merged 2026-11-07 |
+| neuralforecast | [#1731](https://github.com/Nixtla/neuralforecast/pull/1731) · Normalizes multi-quantile losses over the actual quantile axis, correcting both the reported loss and the gradient scale. | Open |
+| neuralforecast | [#1734](https://github.com/Nixtla/neuralforecast/pull/1734) · Applies a sign-preserving lower bound to the RevIN affine denominator to prevent division by zero during denormalization. | Open |
+| opendp | [#3141](https://github.com/opendp/opendp/pull/3141) · Proposes selecting private top-k indices from fixed-size numeric score arrays in Polars with OpenDP privacy accounting. | Closed without merge |
+| trustyai-detoxify | [#14](https://github.com/trustyai-explainability/trustyai-detoxify/pull/14) · Corrects sample limiting, prompt truncation, and generated-text decoding, then reports paired toxicity changes with confidence intervals. | Open |
+
+### Developer interfaces
+
+| Project | Contribution | Status |
+| --- | --- | --- |
+| warp | [#10405](https://github.com/warpdotdev/warp/pull/10405) · Proposes lighter outlines for the agent input toolbar chips to reduce their visual weight. | Closed without merge |
+
+**Note.** I update these tables as new contributions are submitted and existing pull requests change status.
 
 ## Public project repositories
 
