@@ -50,22 +50,9 @@ function MarkdownComponents() {
       <p className="mb-3">{children}</p>
     ),
     table: ({ children }: { children?: React.ReactNode }) => (
-      <table
-        style={{
-          margin: "1.5rem auto",
-          width: "fit-content",
-          borderCollapse: "collapse",
-          background: "transparent",
-        }}
-      >
-        {children}
-      </table>
-    ),
-    th: ({ children }: { children?: React.ReactNode }) => (
-      <th style={{ border: "none", background: "transparent", padding: 0 }}>{children}</th>
-    ),
-    td: ({ children }: { children?: React.ReactNode }) => (
-      <td style={{ border: "none", background: "transparent", padding: 0 }}>{children}</td>
+      <div className="post-table-scroll">
+        <table>{children}</table>
+      </div>
     ),
     a: ({
       href,
@@ -252,10 +239,31 @@ export default function AnimatedBlogPost({ meta, content }: AnimatedBlogPostProp
                 .mobile-pad img,
                 .mobile-pad video,
                 .mobile-pad pre,
-                .mobile-pad code,
-                .mobile-pad table {
+                .mobile-pad code {
                   max-width: 100%;
                   overflow-wrap: anywhere;
+                }
+
+                .post-table-scroll {
+                  max-width: 100%;
+                  overflow-x: auto;
+                }
+
+                .prose .post-table-scroll table {
+                  width: 100%;
+                  overflow-wrap: normal;
+                }
+
+                .prose .post-table-scroll th,
+                .prose .post-table-scroll td {
+                  padding: 0.45rem 0.5rem !important;
+                  text-align: left;
+                  vertical-align: top;
+                }
+
+                .prose .post-table-scroll th:first-child,
+                .prose .post-table-scroll td:first-child {
+                  white-space: nowrap;
                 }
 
                 .mermaid-rendered svg {
